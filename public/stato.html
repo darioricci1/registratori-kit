@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.2.2 (10/11/2026) - il kit 998 (Roma, via Gramsci) e' il kit di prova di Dario: fuori dal confronto.
+<!-- version: 2.3.1 (10/11/2026) - le telecamere che registrano a sensore non sono «ferme»: «a sensore, ultima HH:MM».
+     2.3.0 - i giorni come grafico a barre (Dario: «invece che 100% 100% fai un grafico»): una barra per
+     giorno alta quanto la percentuale, la piu' recente a sinistra; date piu' corte in Dal e Al.
+     2.2.2 - il kit 998 (Roma, via Gramsci) e' il kit di prova di Dario: fuori dal confronto.
      2.2.1 - i canali con il nome di UVMS (CH 01 = il primo), non da 0.
      2.2.0 - raggruppata per kit (Dario: «comune e kit solo una volta, anche se dopo i canali sono tre»),
      i kit a colori alterni.
@@ -40,6 +43,10 @@ tr.kitA td { background:var(--carta) } tr.kitB td { background:var(--grigio-chia
 tr.primaKit td { border-top:2px solid var(--bordo) }
 .tenue { color:var(--tenue) } .no { color:var(--rosso); font-weight:600 } .ok { color:var(--verde); font-weight:600 } .mezzo { color:var(--arancio); font-weight:600 }
 .giorni { display:flex; gap:2px; max-width:62vw; overflow-x:auto; padding-bottom:2px }
+.grafico { display:block; max-width:62vw; overflow-x:auto }
+.grafico svg { display:block }
+.grafico .b100 { fill:var(--verde) } .grafico .b50 { fill:var(--arancio) } .grafico .b0 { fill:var(--rosso) }
+.grafico text { font-size:9px; fill:var(--tenue) }
 .g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
 .g b { display:block; font-size:12px }
 .g100 { background:var(--verde-chiaro); color:var(--verde) } .g50 { background:var(--arancio-chiaro); color:var(--arancio) }
@@ -75,7 +82,7 @@ h2 { font-size:16px; margin:18px 0 6px }
       <th data-chiave="ultimo" data-verso="giu" title="La registrazione più recente">Al</th>
       <th data-chiave="nGiorni" data-verso="giu" title="Giorni con registrazioni sul disco">Giorni</th>
       <th data-chiave="media" title="Media della percentuale di registrato sui giorni sul disco (24 ore = 100%)">Media</th>
-      <th data-ordina="no" title="Ogni casella è un giorno, dal più recente a sinistra: la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%">Giorni, dal più recente</th>
+      <th data-ordina="no" title="Una barra per giorno, la più recente a sinistra, alta quanto la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%. Passa sopra una barra per vedere giorno e percentuale">Giorni, dal più recente</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
@@ -90,6 +97,19 @@ let righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordin
 const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
 const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
+const breve = (t) => { const m = String(t || "").match(/^\d{4}-(\d\d)-(\d\d) (\d\d:\d\d)/); return m ? `${m[2]}/${m[1]} ${m[3]}` : (t || ""); };
+/** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
+function grafico(perc) {
+  if (!perc.length) return '<span class="tenue">-</span>';
+  const L = 9, H = 30, w = perc.length * L;
+  const barre = perc.map(([g, p], i) => {
+    const h = Math.max(1.5, H * p / 100), cl = p >= 90 ? "b100" : p >= 30 ? "b50" : "b0";
+    return `<rect class="${cl}" x="${i * L + 1}" y="${H - h}" width="${L - 2}" height="${h}" rx="1"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></rect>`;
+  }).join("");
+  // un'etichetta ogni 7 giorni, e sempre la prima
+  const etichette = perc.map(([g], i) => (i % 7 === 0 ? `<text x="${i * L + 1}" y="${H + 10}">${giornoIt(g)}</text>` : "")).join("");
+  return `<span class="grafico"><svg width="${w + 24}" height="${H + 12}" role="img" aria-label="registrato per giorno">${barre}${etichette}</svg></span>`;
+}
 // «09:50-10:02 continua, 10:06-13:14 continua» -> [[inizio, fine], ...] in minuti
 const tratti = (t) => [...String(t || "").matchAll(/(\d\d):(\d\d)-(\d\d):(\d\d)/g)].map((x) => [+x[1] * 60 + +x[2], +x[3] * 60 + +x[4]]);
 
@@ -118,13 +138,14 @@ function costruisci(d) {
       if (!haRegistrato) continue;
       funzionanti++;
       const ultimo = tr.length ? Math.max(...tr.map((z) => z[1])) : null;
-      const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : "ferma dalle " + hm(ultimo);
+      const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
+      const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
       const perc = elenco.map(([g, m]) => [g, Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440)))]);
       const passati = perc.filter(([g]) => g !== oggiIso);
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
-        adessoOrd: adesso === "registra" ? 2 : adesso.startsWith("ferma") ? 1 : 0,
+        adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
         primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "",
         nGiorni: x.arc ? Object.keys(giorni).length : null, perc,
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
@@ -195,10 +216,10 @@ function disegna() {
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
     <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
     <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}">${r.adesso}</td>
-    <td class="tenue">${r.primo || "archivio da leggere"}</td><td class="tenue">${r.ultimo}</td>
+    <td class="tenue" style="white-space:nowrap">${r.primo ? breve(r.primo) : "da leggere"}</td><td class="tenue" style="white-space:nowrap">${breve(r.ultimo)}</td>
     <td class="num">${r.nGiorni ?? "-"}</td>
     <td class="num ${r.media == null ? "tenue" : r.media >= 90 ? "ok" : r.media >= 30 ? "mezzo" : "no"}">${r.media == null ? "-" : r.media + "%"}</td>
-    <td><div class="giorni">${r.perc.map(([g, p]) => `<span class="g ${p >= 90 ? "g100" : p >= 30 ? "g50" : "g0"}" title="${giornoIt(g)}: ${p}% delle 24 ore">${giornoIt(g)}<b>${p}%</b></span>`).join("") || '<span class="tenue">-</span>'}</div></td>
+    <td>${grafico(r.perc)}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista} alle ${r.foto.dalle}">` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span>` : ""}</td>
   </tr>`).join("")).join("");
   const nt = nonTorna.filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
