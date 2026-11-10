@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.27.0 (10/11/2026) - la colonna «Alimentazione» (solare, 220 V, batteria, dalla colonna BATT dell'anagrafica),
+<!-- version: 2.28.0 (10/11/2026) - sotto ogni kit con un ODM la riga dell'ODM (numero, aperto il, tipo, note); «non è l'host» diventa
+     «spento o senza rete» (Dario).
+     2.27.0 - la colonna «Alimentazione» (solare, 220 V, batteria, dalla colonna BATT dell'anagrafica),
      da ordinare e filtrare (Dario: «mi dici se sono solari o non solari?»).
      2.26.0 - nella tabella principale la colonna «Stato» (attivo, ODM parziale, ODM totale, non risponde senza
      ODM), da ordinare e filtrare; ci sono anche i kit che non rispondono, con una riga sola, così ordinando per comune ogni kit
@@ -322,7 +324,7 @@ function costruisci(d) {
   righe = []; kitFermi = [];
   for (const k of d.kit) {
     const e = k.esito || {};
-    if (k.stato === "fallito") { kitFermi.push({ ...k, perche: "non risponde: " + (e.collegamento || e.errore || "?") }); continue; }
+    if (k.stato === "fallito") { kitFermi.push({ ...k, perche: "non risponde: " + chiaro(e.collegamento || e.errore || "?") }); continue; }
     if (!k.stato) continue;
     const t = new Date(k.finito_il), minOra = t.getHours() * 60 + t.getMinutes();
     const oggiIso = new Date(t.getTime() - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
@@ -423,6 +425,21 @@ const VALORE = {
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
 };
+/** 2.28.0 (Dario: «cosa vuol dire non è l'host»): i messaggi del server P2P di Focus in parole chiare. */
+function chiaro(m) {
+  const s = String(m || "");
+  if (/non e'? l'host|not.*host/i.test(s)) return "spento o senza rete (il server P2P non lo trova)";
+  if (/nessuna risposta in/i.test(s)) return "non risponde in tempo (rete lenta o kit che si spegne)";
+  if (/sconosciuto/i.test(s)) return "rifiuta il collegamento (di solito la password)";
+  return s;
+}
+/** 2.28.0 (Dario: «se c'è un odm mi puoi dire data di apertura e testo»): l'ODM sotto il kit, a tutta larghezza. */
+function rigaOdm(kit, col, cls = "") {
+  const l = odmLista(parseInt(kit, 10));
+  if (!l.length) return "";
+  const tipo = (x) => [x.tipo, x.stato].filter(Boolean).join(" ");
+  return `<tr class="notaOdm ${cls}"><td colspan="${col}">` + l.map((x) => `<b>ODM ${esc(x.n || "")}</b>${x.aperto ? ` aperto il ${esc(x.aperto)}` : ""}${tipo(x) ? ` · ${esc(tipo(x))}` : ""}${x.note ? `: ${esc(x.note)}` : ""}`).join("<br>") + "</td></tr>";
+}
 /** 2.27.0 (Dario: «mi dici se sono solari o non solari?»): l'alimentazione dalla colonna BATT dell'anagrafica. */
 function alimentazione(kit) {
   const b = String((ANA.get(parseInt(kit, 10)) || {}).batt || "").toLowerCase();
@@ -571,7 +588,7 @@ function disegna() {
     ${r.fermo ? "" : `<td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
     <td>${griglia(r)}${notaPrima(r) ? `<div class="prima">${notaPrima(r)}</div>` : ""}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
-  </tr>`}`).join("")).join("");
+  </tr>`}`).join("") + rigaOdm(String(rs[0].nome).match(/^\s*(\d+)/)?.[1], 8, ik % 2 ? "kitB" : "kitA")).join("");
   const nt = nonTorna.filter((x) => passaFiltri("nonTorna", x)).filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
     .sort((a, b) => { const x = a[ordNT.chiave] ?? "", y = b[ordNT.chiave] ?? ""; return (x > y ? 1 : x < y ? -1 : 0) * ordNT.verso; });
   const quando = (dati.anagrafica || [])[0] ? new Date(dati.anagrafica[0].aggiornata_il).toLocaleString("it-IT") : "";
