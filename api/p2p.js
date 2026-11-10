@@ -1,4 +1,6 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.9.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.10.0 (10/11/2026)
+// 1.10.0: un giro riparte appena finito il precedente (Dario: «appena hai finito il primo giro riparti»), non piu' ogni
+//         ora; e l'archivio di un registratore si rilegge subito se non ha ancora le ore dei giorni (ponte 0.7.0).
 // 1.9.0: l'archivio tiene anche le ore di ogni giorno (colonna ore, dal ponte 0.7.0), lette a parte con op=ore una volta
 //        all'apertura della pagina (op=stato si rilegge ogni minuto e resta leggero).
 // 1.8.0: l'anagrafica porta anche gli ODM aperti di ogni kit (colonna odm, dal ponte 0.5.0): la pagina li mostra accanto
@@ -153,12 +155,12 @@ export default async function handler(req, res) {
       await sql`insert into nvr_remoto.pc (nome, visto_il, versione) values (${nome}, now(), ${String(b.versione || "").slice(0, 20)})
                 on conflict (nome) do update set visto_il = now(), versione = excluded.versione`;
       if (op === "prendi") {
-        // il giro di ogni ora: se nessun giro e' in coda e l'ultimo e' partito da piu' di 55 minuti
+        // 1.10.0: il giro riparte appena il precedente e' finito (almeno 5 minuti dopo che era partito)
         const [g] = await sql`select (select count(*) from nvr_remoto.richieste where priorita = 0 and stato in ('in coda', 'in corso'))::int as aperti,
           coalesce(extract(epoch from now() - (select max(chiesto_il) from nvr_remoto.richieste where priorita = 0)), 1e9)::int as secondi`;
-        if (g.aperti === 0 && g.secondi > 55 * 60) {
+        if (g.aperti === 0 && g.secondi > 5 * 60) {
           await sql`insert into nvr_remoto.richieste (kit, uid, priorita) select distinct on (uid) gruppo || ' · ' || nome, uid, 0 from nvr_remoto.registratori order by uid, nome`;
-          await sql`delete from nvr_remoto.richieste where chiesto_il < now() - interval '7 days'`;
+          await sql`delete from nvr_remoto.richieste where chiesto_il < now() - interval '3 days' and priorita = 0`;
         }
         // una richiesta presa da piu' di 5 minuti e mai finita torna in coda (il PC si e' spento a meta')
         await sql`update nvr_remoto.richieste set stato = 'in coda', pc = null where stato = 'in corso' and preso_il < now() - interval '5 minutes'`;
@@ -169,9 +171,11 @@ export default async function handler(req, res) {
           where id = (select id from nvr_remoto.richieste where stato = 'in coda' and priorita >= ${minima} order by priorita desc, id limit 1 for update skip locked)
           returning id, kit, uid, canale, priorita`;
         if (r[0]) {
-          const a = await sql`select count(*)::int as n, coalesce(min(letto_il) < now() - interval '24 hours', true) as vecchio
+          const a = await sql`select count(*)::int as n, coalesce(min(letto_il) < now() - interval '24 hours', true) as vecchio,
+              coalesce(bool_or(ore is null), true) as senza_ore
             from nvr_remoto.archivio where uid = ${r[0].uid}`;
-          r[0].serve_archivio = (a[0].n === 0 || a[0].vecchio) && !/ 0\.[0-3]\./.test(String(b.versione || ""));
+          const conOre = !/ 0\.[0-6]\./.test(String(b.versione || ""));   // le ore le manda il ponte 0.7.0
+          r[0].serve_archivio = (a[0].n === 0 || a[0].vecchio || (a[0].senza_ore && conOre)) && !/ 0\.[0-3]\./.test(String(b.versione || ""));
         }
         return res.json({ richiesta: r[0] || null });
       }
