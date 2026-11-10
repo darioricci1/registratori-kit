@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.12.0 (10/11/2026) - fumetti con piu' informazioni (Dario: «quando ci vai sopra ti da' piu' info»): su ogni punto
+<!-- version: 2.12.1 (10/11/2026) - i canali che non hanno mai registrato (niente oggi e niente dal 27/10) non si mostrano (Dario:
+     «se ci sono solo 3 canali su 8 non far vedere gli altri 5»).
+     2.12.0 - fumetti con piu' informazioni (Dario: «quando ci vai sopra ti da' piu' info»): su ogni punto
      giorno, percentuale e ore registrate; su «Adesso» l'ultimo controllo, il tipo di registrazione e i tratti di oggi.
      2.11.1 - media e giorni contati dal 27/10; i valori uguali di fila scritti una volta.
      2.11.0 - il grafico come i Target di darioleads: linea blu scura, punti colorati, righe dello 0, 50 e
@@ -217,7 +219,11 @@ function costruisci(d) {
       const daRileggere = tr.length && passatiArc.length > 0 && passatiArc.every(([, m]) => !m);
       if (daRileggere) for (const [g] of passatiArc) giorni[g] = null;
       const elenco = Object.entries(giorni).sort((a, b) => (a[0] < b[0] ? 1 : -1));
-      const haRegistrato = tr.length || (x.arc && x.arc.primo) || (x.giro && x.giro.minuti_24h > 0);
+      // un canale si mostra solo se ha registrato qualcosa: oggi, nelle ultime 24 ore o in un giorno dal 27/10. Un canale
+      // con l'archivio tutto a zero (o senza archivio) e niente oggi e' un canale senza telecamera: non si mostra
+      const giorniVeri = Object.entries(giorni).some(([g, m]) => g >= DAL && m > 0);
+      const haRegistrato = tr.length || (x.giro && x.giro.minuti_24h > 0) || giorniVeri ||
+        (x.arc && x.arc.primo && Object.values(giorni).some((m) => m == null));   // archivio letto a meta': nel dubbio si mostra
       if (!haRegistrato) continue;
       funzionanti++;
       const ultimo = tr.length ? Math.max(...tr.map((z) => z[1])) : null;
