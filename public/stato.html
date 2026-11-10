@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.24.0 (10/11/2026) - «Meno telecamere di quelle attese» solo per i kit senza un ODM aperto e non già fra quelli da
+<!-- version: 2.25.0 (10/11/2026) - gli ODM di guasto totale su kit che rispondono divisi fra «registra tutto il giorno» (da chiudere) e
+     «registra solo una parte del giorno» (da aggiornare), con le ore delle ultime 24.
+     2.24.0 - «Meno telecamere di quelle attese» solo per i kit senza un ODM aperto e non già fra quelli da
      aprire (Dario: «solo quelle effettivamente da aprire»).
      2.23.0 - le note dell'ODM sotto il kit, a tutta larghezza, invece che in una colonna stretta (Dario).
      2.22.0 - un canale fermo da giorni non conta fra quelli che funzionano (580: l'ODM «CH3-CH4 spente» è
@@ -491,8 +493,13 @@ function confronta(d) {
     // uno parziale (una telecamera sgranata, spostata) può restare aperto anche se il kit registra: si guarda
     if (a.odm && tutte) {
       const totale = /TOTALE/i.test(odmCol(n).tipo || "") || /offline|non risp/i.test(odmCol(n).note || "");
-      nonTorna.push({ tipo: totale ? "ODM di guasto totale ma il kit risponde e registra" : "ODM parziale e il kit registra (da guardare)", kit: n, dove,
-        det: `oggi registrano ${k.funzionanti}${attese ? " su " + attese : ""} telecamere` });
+      // 2.25.0 (Dario: «quindi odm da chiudere ora funzionano perfettamente?»): si chiude solo chi registra tutto il giorno;
+      // chi risponde ma registra poche ore al giorno ha un ODM da aggiornare (si spegne: batteria, pannello), non da chiudere
+      const min24 = ((k.esito || {}).canali || []).map((c) => Number(c.minuti_24h) || 0).filter((m) => m > 0);
+      const ore24 = min24.length ? Math.round(Math.min(...min24) / 60) : 0;
+      const pieno = ore24 >= 23;
+      nonTorna.push({ tipo: !totale ? "ODM parziale e il kit registra (da guardare)" : pieno ? "ODM di guasto totale ma il kit registra tutto il giorno" : "ODM di guasto totale: il kit risponde ma registra solo una parte del giorno", kit: n, dove,
+        det: `oggi registrano ${k.funzionanti}${attese ? " su " + attese : ""} telecamere` + (totale ? `, ${ore24} ore nelle ultime 24` : "") });
     }
     if (!a.odm && male) {
       const perche = k.stato === "fallito" ? "il registratore non risponde" + (/password/i.test((k.esito || {}).collegamento || "") ? " (password)" : "")
