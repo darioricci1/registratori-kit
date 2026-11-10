@@ -1,4 +1,6 @@
-"""Compito p2p_ponte6 (10/11/2026): come p2p_ponte5, piu' due cose.
+"""0.8.0 (10/11/2026, sera): sul COMPUTERONE fa partire anche Qwen3-VL (vlm.py 0.2.0, staccato, in ~/kr_vlm) che giudica
+le 173 carte di Scorri per il confronto con Claude e con Dario (Dario: «perche' non partiamo da qwen3-vl?»).
+Compito p2p_ponte6 (10/11/2026): come p2p_ponte5, piu' due cose.
 1) La prova dei video lunghi (Dario: «scaricare un video lungo un'ora da un NVR, in un'ora in cui c'e' stato un abbandono
    e lo sappiamo gia', e vedere se quell'abbandono viene trovato»): sul COMPUTERONE, una volta, per ogni prova di lungo.json
    scarica in P2P i minuti chiesti di ogni telecamera a pezzi di 3 minuti (il relay si chiude dopo 5), li unisce, e li fa
@@ -29,7 +31,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.7.0"""
+version: 0.8.0"""
 import base64
 import datetime
 import json
@@ -47,7 +49,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.7.0"
+VERSIONE = "p2p_ponte 0.8.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -556,6 +558,34 @@ t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
 av(f"parto: {VERSIONE} sul PC {PC}, ascolto fino alle {time.strftime('%H:%M', time.localtime(t_fine))}")
+def parti_qwen():
+    """0.8.0: Qwen3-VL in un processo staccato (come il compito vlm1), se non gira gia'."""
+    casa = os.path.expanduser("~")
+    viv = os.path.join(casa, "kr_vlm", "vivo.txt")
+    try:
+        if time.time() - float(open(viv).read().strip()) < 15 * 60:
+            av("qwen: gira gia'"); return
+    except (OSError, ValueError):
+        pass
+    d = os.path.join(casa, "kr_lavori", "vlm2")
+    os.makedirs(d, exist_ok=True)
+    shutil.copy2(os.path.join(C, "vlm.py"), os.path.join(d, "compito.py"))
+    for f in ("vlm_giudica.py", "carte.zip"):
+        shutil.copy2(os.path.join(C, f), os.path.join(d, f))
+    env = dict(os.environ)
+    for k in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "KR_PROCESSORI_COMPITO"):
+        env.pop(k, None)
+    p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=env, stdin=subprocess.DEVNULL,
+                         stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
+                         creationflags=0x00000008 | 0x00000200 | 0x00004000, close_fds=True)
+    av(f"qwen: partito (pid {p.pid}) in {d}")
+
+
+if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "vlm.py")):
+    try:
+        parti_qwen()
+    except Exception as ex:   # noqa: BLE001
+        av(f"qwen: {type(ex).__name__}: {str(ex)[:300]}")
 errori = 0
 analisi_lunghe = []    # (processo, risultati, uscita, partenza) in corso
 da_scaricare = []
