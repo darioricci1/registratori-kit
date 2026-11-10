@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.4.0 (10/11/2026) - accanto al grafico si dice cosa c'e' prima del primo giorno: archivio letto e disco vuoto
+<!-- version: 2.4.1 (10/11/2026) - i giorni senza registrazioni fra il primo sul disco e oggi compaiono come 0% (prima sparivano).
+     2.4.0 - accanto al grafico si dice cosa c'e' prima del primo giorno: archivio letto e disco vuoto
      prima di quella data, oppure archivio non ancora letto (Dario: «mi devi dire se hai misurato e non hai trovato nulla
      o se ancora non hai misurato»).
      2.3.1 - le telecamere che registrano a sensore non sono «ferme»: «a sensore, ultima HH:MM».
@@ -145,6 +146,15 @@ function costruisci(d) {
       const tr = tratti(x.giro && x.giro.registrato_oggi);
       const giorni = { ...((x.arc && !Array.isArray(x.arc.giorni) && x.arc.giorni) || {}) };
       if (tr.length) giorni[oggiIso] = tr.reduce((s, [a, b]) => s + (b - a), 0);
+      // l'archivio elenca solo i giorni con registrazioni: dal primo sul disco a oggi (al massimo 90) gli altri valgono 0
+      if (x.arc && x.arc.primo) {
+        const inizio = x.arc.primo.slice(0, 10), oggiD = new Date(oggiIso + "T12:00:00");
+        for (let i = 0; i < 90; i++) {
+          const g = new Date(oggiD - i * 864e5).toISOString().slice(0, 10);
+          if (g < inizio) break;
+          if (!(g in giorni)) giorni[g] = 0;
+        }
+      }
       const elenco = Object.entries(giorni).sort((a, b) => (a[0] < b[0] ? 1 : -1));
       const haRegistrato = tr.length || (x.arc && x.arc.primo) || (x.giro && x.giro.minuti_24h > 0);
       if (!haRegistrato) continue;
