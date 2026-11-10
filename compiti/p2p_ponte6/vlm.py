@@ -2,7 +2,8 @@
 sacchi di gpu2 non scrive piu' ~\\kr_gpu\\vivo.txt da 20 minuti), prepara un Python suo (~\\kr_vlm, uv), scarica
 Qwen3-VL (Apache 2.0) e fa giudicare le carte di Scorri (carte/): prima 8B in 4 bit, poi 4B in 4 bit, poi 2B.
 Risultati su Drive in vlm_pcN.zip ogni 30 minuti e alla fine.
-version: 0.2.0 (10/11/2026, sera) - non aspetta piu' la scheda libera: la RTX 3070 da 8 GB la divide con Kit_Rifiuti
+version: 0.2.1 (10/11/2026, sera) - torch 2.6 (transformers 5 non parte con la 2.5: «PyTorch >= 2.6 is required»).
+0.2.0 (10/11/2026, sera) - non aspetta piu' la scheda libera: la RTX 3070 da 8 GB la divide con Kit_Rifiuti
 (RF-DETR in DirectML usa poco); parte dal 4B in 4 bit (circa 3 GB), poi l'8B; se manca uv lo scarica da GitHub.
 Stamattina la 0.1.0 aspettava una scheda che non si liberava mai (Dario: «perche' non partiamo da qwen3-vl?»)."""
 import glob
@@ -100,7 +101,7 @@ try:
         scrivi(f"uv scaricato: {os.path.exists(UV)}")
     if not os.path.exists(PY):
         esegui([UV, "venv", os.path.join(G, "venv"), "--python", "3.11"], "installa.txt", env)
-    esegui([UV, "pip", "install", "--python", PY, "torch==2.5.1", "torchvision==0.20.1",
+    esegui([UV, "pip", "install", "--python", PY, "torch==2.6.0", "torchvision==0.21.0",
             "--index-url", "https://download.pytorch.org/whl/cu124"], "installa.txt", env)
     esegui([UV, "pip", "install", "--python", PY, "transformers>=4.57.1", "accelerate", "bitsandbytes>=0.45",
             "pillow", "huggingface_hub"], "installa.txt", env)
