@@ -20,7 +20,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.4.0"""
+version: 0.4.1"""
 import base64
 import datetime
 import json
@@ -38,7 +38,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.4.0"
+VERSIONE = "p2p_ponte 0.4.1"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -363,8 +363,24 @@ def aggiorna_anagrafica():
     av(f"anagrafica: {r}")
 
 
+def aggiorna_elenco_kit():
+    """0.4.1 (Dario: «unisci queste info a Elenco KIT, almeno anagrafica e odm»): una volta al giorno lo stato dei
+    registratori nelle colonne «REG» dell'ANAGRAFICA KIT e dell'ODM (elenco_kit.py, solo colonne sue)."""
+    import elenco_kit
+    import drive_alma
+    from google.oauth2 import service_account
+    from google.auth.transport.requests import AuthorizedSession
+    req = urllib.request.Request(f"{API}?op=stato", headers={"Authorization": "Bearer " + biglietto()})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        stato = json.loads(r.read().decode())
+    chiave = drive_alma.file_chiave((C, os.path.dirname(sys.executable)))
+    s = AuthorizedSession(service_account.Credentials.from_service_account_file(chiave, scopes=["https://www.googleapis.com/auth/drive"]))
+    elenco_kit.scrivi(s, stato, log=av)
+
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
+ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
 av(f"parto: {VERSIONE} sul PC {PC}, ascolto fino alle {time.strftime('%H:%M', time.localtime(t_fine))}")
 errori = 0
 while time.time() < t_fine:
@@ -378,6 +394,12 @@ while time.time() < t_fine:
             aggiorna_anagrafica()
         except Exception as ex:   # noqa: BLE001
             av(f"anagrafica: {type(ex).__name__}: {str(ex)[:200]}")
+    if time.time() - ultimo_elenco > 24 * 3600:
+        ultimo_elenco = time.time()
+        try:
+            aggiorna_elenco_kit()
+        except Exception as ex:   # noqa: BLE001
+            av(f"Elenco KIT: {type(ex).__name__}: {str(ex)[:200]}")
     try:
         d = chiama("prendi", {"pc": PC, "versione": VERSIONE})
         errori = 0
