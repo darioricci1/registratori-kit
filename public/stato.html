@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.21.0 (10/11/2026) - fra le cose che non tornano i kit installati senza «N. TELECAMERE» (il ponte 0.9.2 legge
+<!-- version: 2.22.0 (10/11/2026) - un canale fermo da giorni non conta fra quelli che funzionano (580: l'ODM «CH3-CH4 spente» è
+     giusto); la foto di un canale fermo è l'ultima registrata, col giorno («ultima registrazione: 02/11 14:35», ponte 0.9.3).
+     2.21.0 - fra le cose che non tornano i kit installati senza «N. TELECAMERE» (il ponte 0.9.2 legge
      anche «2+SAT»); i giorni a 0% o al 100% senza le ore lette si disegnano ora per ora (tutto rosso o tutto verde);
      il fumetto dice «niente dalle 07 alle 15» invece di elencare le ore una per una.
      2.20.0 - i kit che non registrano e non hanno un ODM in un elenco a parte, con «Scarica in Excel» (Dario);
@@ -186,6 +188,7 @@ const oreMin = (m) => `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")
 const breve = (t) => { const m = String(t || "").match(/^\d{4}-(\d\d)-(\d\d) (\d\d:\d\d)/); return m ? `${m[2]}/${m[1]} ${m[3]}` : (t || ""); };
 /** Quando e' stata fatta la foto: il giorno della prova e l'ora del pezzo di video («dalle»). */
 function quandoFoto(f) {
+  if (/^\d\d\/\d\d \d\d:\d\d$/.test(f.dalle || "")) return `ultima registrazione: ${f.dalle}`;   // 2.22.0, ponte 0.9.3
   const g = f.il ? new Date(f.il).toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit" }) : "";
   const ora = /^\d\d:\d\d$/.test(f.dalle || "") ? f.dalle : (f.il ? new Date(f.il).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : "");
   return `foto del ${g} ${ora}`.trim();
@@ -345,7 +348,9 @@ function costruisci(d) {
       const oltreUvms = Number(k.canali_uvms) > 0 && n >= Number(k.canali_uvms);
       const dubbio = !vero && !oltreUvms && x.arc && x.arc.primo && Object.values(giorni).some((m) => m == null) && !!(x.giro && x.giro.titolo);
       if (!vero && !dubbio) continue;
-      if (vero) funzionanti++;
+      // 2.22.0: funziona chi ha registrato oggi o nelle ultime 24 ore; un canale fermo da giorni (580, CH3 dal 2/11) si
+      // mostra ma non conta fra le telecamere che funzionano (prima l'ODM «CH3-CH4 spente» risultava «il kit registra»)
+      if (tr.length || (x.giro && x.giro.minuti_24h > 0)) funzionanti++;
       const um = x.giro && x.giro.ultimo_minuto != null ? Number(x.giro.ultimo_minuto) : null;
       const ultimo = tr.length || um != null ? Math.max(um ?? -1, ...tr.map((z) => z[1])) : null;
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));

@@ -31,7 +31,9 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.2 (10/11/2026): «N. TELECAMERE» scritto «2+SAT», «2+2SAT» si legge come numero (3, 4): prima 228 kit
+version: 0.9.3 (10/11/2026): un canale che oggi non ha registrato manda la foto dell'ultima registrazione dei giorni prima
+  (kit 580, CH3 ferma dal 2/11), con giorno e ora.
+0.9.2 (10/11/2026): «N. TELECAMERE» scritto «2+SAT», «2+2SAT» si legge come numero (3, 4): prima 228 kit
   installati risultavano senza numero.
 0.9.1 (10/11/2026): un giorno impossibile nell archivio di un registratore (kit 544) non ferma piu tutto il kit;
   la prova dei video lunghi manda anche le clip annotate degli abbandoni
@@ -53,7 +55,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.2"
+VERSIONE = "p2p_ponte 0.9.3"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -219,16 +221,43 @@ def giudica_immagine(jpg):
     return "si vede", round(luce, 1), round(contrasto, 1)
 
 
+def ultima_registrazione(reg, h, oggi, mesi=2):
+    """0.9.3: per un canale che oggi non ha registrato, il momento in cui finisce l'ultima registrazione dei giorni prima
+    (al massimo nei 2 mesi indietro), o None. Una domanda al registratore per mese e una per il giorno trovato."""
+    if h is None:
+        return None
+    m = datetime.date(oggi.year, oggi.month, 1)
+    for _ in range(mesi):
+        gg = reg.giorni_registrati(h, datetime.datetime(m.year, m.month, 1)) or []
+        giorni = []
+        for g in gg:
+            try:
+                d = datetime.date(m.year, m.month, g)
+            except (ValueError, TypeError):
+                continue
+            if d < oggi.date():
+                giorni.append(d)
+        for d in sorted(giorni, reverse=True)[:3]:
+            tr = reg.minuti_registrati(h, datetime.datetime(d.year, d.month, d.day)) or []
+            if tr:
+                return datetime.datetime(d.year, d.month, d.day) + datetime.timedelta(minutes=max(b for _, b, _ in tr))
+        m = (m - datetime.timedelta(days=1)).replace(day=1)
+    return None
+
+
 def foto_camere(reg, oggi, canali, rid):
     """Per ogni canale: 3 secondi dall'ultimo minuto registrato oggi, una foto da 480 pixel e il giudizio."""
     out = []
     per_num = {num: h for num, h, _ in reg.canali()}
     for c in canali[:9]:
         num, ultimo = c["numero"], c.get("ultimo_minuto")
+        vecchia = None
         if ultimo is None:
-            out.append({"canale": num, "vista": "niente", "dalle": "niente registrato oggi"})
-            continue
-        inizio = oggi + datetime.timedelta(minutes=max(0, ultimo - 2))
+            vecchia = ultima_registrazione(reg, per_num.get(num), oggi)   # 0.9.3: l'ultima immagine che c'e' (Dario, kit 580)
+            if vecchia is None:
+                out.append({"canale": num, "vista": "niente", "dalle": "niente registrato oggi"})
+                continue
+        inizio = vecchia - datetime.timedelta(minutes=2) if vecchia else oggi + datetime.timedelta(minutes=max(0, ultimo - 2))
         try:
             res = reg.scarica(num, per_num[num], inizio, 3, os.path.join(U, "foto"), attesa_vuoto=15, ffmpeg=ffmpeg())
             f = res.get("file")
@@ -242,7 +271,8 @@ def foto_camere(reg, oggi, canali, rid):
                     pass
             if os.path.exists(jpg):
                 vista, luce, contrasto = giudica_immagine(jpg)
-                out.append({"canale": num, "vista": vista, "luce": luce, "contrasto": contrasto, "dalle": f"{inizio:%H:%M}",
+                out.append({"canale": num, "vista": vista, "luce": luce, "contrasto": contrasto,
+                            "dalle": f"{inizio:%d/%m %H:%M}" if vecchia else f"{inizio:%H:%M}",
                             "foto": base64.b64encode(open(jpg, "rb").read()).decode()})
                 os.remove(jpg)
             else:
