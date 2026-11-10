@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.17.0 (10/11/2026) - al posto della linea delle percentuali le 24 ore di ogni giorno (Dario: «invece che
+<!-- version: 2.18.0 (10/11/2026) - fra le cose che non tornano anche gli ODM da chiudere (il kit ha un ODM aperto ma registra
+     tutte le telecamere attese) e gli ODM da aprire (il kit non risponde, non registra niente o registra meno telecamere e non
+     ha nessun ODM aperto) (Dario).
+     2.17.0 - al posto della linea delle percentuali le 24 ore di ogni giorno (Dario: «invece che
      100% le 24 ore, in verde dove ha funzionato: per capire se non funziona solo in ore precise»): una colonna per giorno, mezzanotte
      in alto, verde dove ha registrato, giallo un pezzo dell'ora, rosso niente, grigio non letto. Le ore arrivano col ponte 0.7.0
      (op=ore, letto una volta); per i giorni letti prima c'e' solo il totale e la colonna ne ha il colore, piu' chiaro.
@@ -424,6 +427,24 @@ function confronta(d) {
         nonTorna.push({ tipo: "Meno telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}`) });
       if (a && a.stato === "INSTALLATO" && k.stato === "fatto" && a.telecamere && k.funzionanti > a.telecamere)
         nonTorna.push({ tipo: "Più telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}`) });
+    }
+  }
+  // 2.18.0: gli ODM da chiudere e quelli da aprire, solo per i kit INSTALLATI
+  for (const [n, a] of ana) {
+    if (a.stato !== "INSTALLATO" || DI_PROVA.has(n) || SOSPESI[n]) continue;
+    const vivi = (perKit.get(n) || []).filter((k) => !nonInst(k));
+    if (!vivi.length) continue;
+    const k = vivi.find((x) => x.stato === "fatto") || vivi[0];
+    const dove = `${k.gruppo} / ${k.nome}`;
+    const attese = a.telecamere || 0;
+    const tutte = k.stato === "fatto" && k.funzionanti > 0 && (!attese || k.funzionanti >= attese);
+    const male = k.stato === "fallito" || (k.stato === "fatto" && (!k.funzionanti || (attese && k.funzionanti < attese)));
+    if (a.odm && tutte)
+      nonTorna.push({ tipo: "ODM aperto ma il kit registra", kit: n, dove, det: `oggi registrano ${k.funzionanti}${attese ? " su " + attese : ""} telecamere · ODM aperto: ${a.odm}` });
+    if (!a.odm && male) {
+      const perche = k.stato === "fallito" ? "il registratore non risponde" + (/password/i.test((k.esito || {}).collegamento || "") ? " (password)" : "")
+        : !k.funzionanti ? "nessuna telecamera ha registrato oggi" : `registrano ${k.funzionanti} telecamere su ${attese}`;
+      nonTorna.push({ tipo: "Non funziona e non c'è un ODM", kit: n, dove, det: perche });
     }
   }
 }
