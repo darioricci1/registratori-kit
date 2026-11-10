@@ -1,4 +1,7 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.10.1 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.11.0 (10/11/2026)
+// 1.11.0: un kit che non risponde e che ha nell'ODM le ore in cui e' acceso («risponde solo di sera», «acceso solo dalle
+//         10 alle 16») si mette in coda davanti al giro proprio in quelle ore, al massimo una volta ogni 45 minuti (Dario:
+//         «se un odm ti dice che il kit funziona solo in alcuni orari, prova ad accedere in quegli orari»; api/_orari.js).
 // 1.10.1: l'ODM arriva coi campi separati (JSON, ponte 0.9.0): si tiene fino a 4000 caratteri.
 // 1.10.0: un giro riparte appena finito il precedente (Dario: «appena hai finito il primo giro riparti»), non piu' ogni
 //         ora; e l'archivio di un registratore si rilegge subito se non ha ancora le ore dei giorni (ponte 0.7.0).
@@ -33,6 +36,7 @@
 // Neon, schema nvr_remoto.
 import { neon } from "@neondatabase/serverless";
 import { chiE } from "./_accesso.js";
+import { finestreAccese, dentro, noteOdm } from "./_orari.js";
 
 const DESTINATARIO = "https://mappakit.alma/nvr-remoto";
 const ACCOUNT = "account-di-servizio@almasicurezza-479911.iam.gserviceaccount.com";
@@ -163,6 +167,21 @@ export default async function handler(req, res) {
           await sql`insert into nvr_remoto.richieste (kit, uid, priorita) select distinct on (uid) gruppo || ' · ' || nome, uid, 0 from nvr_remoto.registratori order by uid, nome`;
           await sql`delete from nvr_remoto.richieste where chiesto_il < now() - interval '3 days' and priorita = 0`;
         }
+        // 1.11.0: i kit che rispondono solo in certe ore, in quelle ore (una volta ogni venti prese, per non pesare)
+        if (Math.random() < 0.05) try {
+          const ora = Number(new Intl.DateTimeFormat("it-IT", { hour: "numeric", hourCycle: "h23", timeZone: "Europe/Rome" }).format(new Date()));
+          const odm = await sql`select a.kit, a.odm, g.uid, g.gruppo || ' · ' || g.nome as nome from nvr_remoto.anagrafica a
+            join nvr_remoto.registratori g on substring(g.nome from '^ *([0-9]{2,4})')::int = a.kit
+            where a.stato = 'INSTALLATO' and coalesce(a.odm, '') <> ''`;
+          for (const x of odm) {
+            if (!dentro(finestreAccese(noteOdm(x.odm)), ora)) continue;
+            await sql`insert into nvr_remoto.richieste (kit, uid, priorita) select ${x.nome}, ${x.uid}, 1
+              where not exists (select 1 from nvr_remoto.richieste q where q.uid = ${x.uid}
+                and (q.stato in ('in coda', 'in corso') or (q.priorita >= 1 and q.chiesto_il > now() - interval '45 minutes')))
+              and coalesce((select r.stato from nvr_remoto.richieste r where r.uid = ${x.uid} and r.stato in ('fatto', 'fallito')
+                order by r.id desc limit 1), 'fallito') = 'fallito'`;
+          }
+        } catch (e) { console.error("orari degli ODM:", e.message); }   // non deve mai fermare il giro
         // una richiesta presa da piu' di 5 minuti e mai finita torna in coda (il PC si e' spento a meta')
         await sql`update nvr_remoto.richieste set stato = 'in coda', pc = null where stato = 'in corso' and preso_il < now() - interval '5 minutes'`;
         // il ponte 0.1.0 scarica sempre 15 secondi: il giro lo lascia al 0.2.0 quando ce n'e' uno acceso

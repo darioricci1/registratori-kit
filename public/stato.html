@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.20.0 (10/11/2026) - i kit che non registrano e non hanno un ODM in un elenco a parte, con «Scarica in Excel» (Dario);
+<!-- version: 2.21.0 (10/11/2026) - fra le cose che non tornano i kit installati senza «N. TELECAMERE» (il ponte 0.9.2 legge
+     anche «2+SAT»); i giorni a 0% o al 100% senza le ore lette si disegnano ora per ora (tutto rosso o tutto verde);
+     il fumetto dice «niente dalle 07 alle 15» invece di elencare le ore una per una.
+     2.20.0 - i kit che non registrano e non hanno un ODM in un elenco a parte, con «Scarica in Excel» (Dario);
      l'elenco dei kit fermi tiene solo quelli con un ODM aperto. I canali oltre quelli di UVMS che non registrano non si mostrano (533).
      Gli ODM su kit che registrano divisi in «guasto totale» (da chiudere) e «parziale» (da guardare).
      2.19.1 - via la frase «Archivio letto il...» sotto la griglia (resta solo «da rileggere»).
@@ -211,14 +214,20 @@ function griglia(r) {
     const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
     if (d < DAL) continue;
     const x = W - M.dx - passo * (i + 1), w = Math.max(1, passo - 1);
-    const s = r.ore[d], p = perc.get(d);
+    const p = perc.get(d);
+    // 2.21.0 (Dario: «se è 0% puoi mettere tutte righine»): a 0% ogni ora è vuota e al 100% ogni ora è piena, anche
+    // quando le ore di quel giorno non sono state lette
+    const s = r.ore[d] || (d !== r.oggiIso && p === 0 ? "0".repeat(24) : d !== r.oggiIso && p === 100 ? "A".repeat(24) : null);
     let spiega;
     if (s && s.length === 24) {
       for (let o = 0; o < 24; o++) { const c = d === r.oggiIso && o * 60 >= r.minOra ? null : col(s[o]); if (c) celle += `<rect x="${x.toFixed(1)}" y="${(M.su + o * alto).toFixed(1)}" width="${w.toFixed(1)}" height="${(alto - 0.4).toFixed(1)}" fill="${c}"/>`; }
       const buchi = [...s].map((c, o) => (c === "0" ? o : null)).filter((o) => o != null);
       const parz = [...s].map((c, o) => (c !== "0" && c !== "A" && c !== "9" && c !== "-" ? o : null)).filter((o) => o != null);
-      const ore = (l) => l.map((o) => String(o).padStart(2, "0")).join(", ");
-      spiega = `${giornoIt(d)}: ${p != null ? p + "% · " : ""}` + (buchi.length ? `niente alle ore ${ore(buchi)}` : "nessuna ora vuota") + (parz.length ? `; a pezzi alle ${ore(parz)}` : "");
+      // 2.21.0 (Dario: «dimmi che non ha niente dalle x alle y»): le ore di fila diventano una fascia
+      const hh = (o) => String(o).padStart(2, "0");
+      const fasce = (l) => { const f = []; for (const o of l) { const u = f[f.length - 1]; if (u && u[1] === o) u[1] = o + 1; else f.push([o, o + 1]); }
+        return f.map(([a, b]) => `dalle ${hh(a)} alle ${hh(b)}`).join(", ").replace(/, ([^,]*)$/, " e $1"); };
+      spiega = `${giornoIt(d)}: ${p != null ? p + "% · " : ""}` + (buchi.length ? `niente ${fasce(buchi)}` : "nessuna ora vuota") + (parz.length ? `; a pezzi ${fasce(parz)}` : "");
     } else if (p != null) {
       const c = p >= 90 ? "#2e9e5b" : p > 0 ? "#e0a800" : "var(--rosso)";
       celle += `<rect x="${x.toFixed(1)}" y="${M.su}" width="${w.toFixed(1)}" height="${(24 * alto).toFixed(1)}" fill="${c}" opacity=".35"/>`;
@@ -452,6 +461,9 @@ function confronta(d) {
         nonTorna.push({ tipo: "Più telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}`) });
     }
   }
+  // 2.21.0: un kit installato senza «N. TELECAMERE» non si può confrontare con quello che registra
+  for (const [n, a] of ana) if (a.stato === "INSTALLATO" && !a.telecamere && !DI_PROVA.has(n))
+    nonTorna.push({ tipo: "Installato senza numero di telecamere", kit: n, dove: `${a.cloud} · ${a.indirizzo}`, det: "scrivere «N. TELECAMERE» nell'ANAGRAFICA KIT (per esempio 3 oppure 2+SAT)" });
   // 2.18.0: gli ODM da chiudere e quelli da aprire, solo per i kit INSTALLATI (i campi dell'ODM li aggiunge «colonneOdm»)
   for (const [n, a] of ana) {
     if (a.stato !== "INSTALLATO" || DI_PROVA.has(n) || SOSPESI[n]) continue;
@@ -530,6 +542,7 @@ function disegna() {
   $("#titolo-fermi").textContent = f.length ? `Non rispondono o senza registrazioni oggi, con un ODM aperto (${f.length})` : "";
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${esc(k.odm_n)}</td><td>${esc(k.odm_ap)}</td><td>${esc(k.odm_tipo)}</td><td class="tenue">${esc(k.odm_note)}</td></tr>`).join("");
   $("#fermi thead").hidden = !kitFermi.length;
+  $("#senzaOdm thead").hidden = !senzaOdm().length;
 }
 let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {

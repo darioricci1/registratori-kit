@@ -31,7 +31,9 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.1 (10/11/2026): un giorno impossibile nell archivio di un registratore (kit 544) non ferma piu tutto il kit;
+version: 0.9.2 (10/11/2026): «N. TELECAMERE» scritto «2+SAT», «2+2SAT» si legge come numero (3, 4): prima 228 kit
+  installati risultavano senza numero.
+0.9.1 (10/11/2026): un giorno impossibile nell archivio di un registratore (kit 544) non ferma piu tutto il kit;
   la prova dei video lunghi manda anche le clip annotate degli abbandoni
 0.9.0"""
 import base64
@@ -51,7 +53,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.1"
+VERSIONE = "p2p_ponte 0.9.2"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -363,6 +365,23 @@ def aggiorna_registratori():
 FOGLIO_KIT = "1I3-xl5rlQu0xCUA9mj9c5BC_zR27Tioy0X6FRwXqKRw"   # «Elenco KIT Date Registrazioni», scheda ANAGRAFICA KIT
 
 
+def telecamere_da_testo(t):
+    """0.9.2: «N. TELECAMERE» dell'ANAGRAFICA KIT come numero. «3» = 3; «2+SAT» = 3 (la satellite e' una telecamera in
+    piu'); «2+2SAT» o «2+2 SAT» = 4; «3 ?» = 3; vuoto o senza cifre = None. Funzione pura."""
+    import re
+    s = str(t or "").upper().replace(" ", "")
+    if not s:
+        return None
+    tot, trovato = 0, False
+    for parte in s.split("+"):
+        m = re.match(r"(\d+)?(SAT)?", parte)
+        if m.group(1):
+            tot += int(m.group(1)); trovato = True
+        elif m.group(2):
+            tot += 1; trovato = True
+    return tot if trovato and tot > 0 else None
+
+
 def righe_anagrafica(testo):
     """Dal CSV della scheda ANAGRAFICA KIT: una riga per kit, quella «INSTALLATO» se c'e', se no l'ultima."""
     import csv
@@ -378,7 +397,8 @@ def righe_anagrafica(testo):
         r = {"kit": int(k), "stato": x[i["STATO"]].strip(), "indirizzo": x[i["INDIRIZZO"]].strip(), "cloud": x[i["CLOUD"]].strip(),
              "cliente": x[i["CLIENTE"]].strip(), "installato_il": x[i.get("DATA INSTALLAZIONE", 0)].strip()}
         t = x[i["N. TELECAMERE"]].strip() if "N. TELECAMERE" in i else ""
-        r["telecamere"] = int(t) if t.isdigit() else None
+        r["telecamere"] = telecamere_da_testo(t)   # 0.9.2: «2+SAT» sono 3 telecamere (prima valeva vuoto: 228 kit)
+        r["telecamere_testo"] = t
         if r["kit"] not in per or per[r["kit"]]["stato"] != "INSTALLATO":
             per[r["kit"]] = r
     return list(per.values())
