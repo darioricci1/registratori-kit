@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.19.0 (10/11/2026) - l'ODM in colonne come nella scheda ODM: numero, aperto il, tipo, note (Dario), nelle cose
+<!-- version: 2.19.1 (10/11/2026) - via la frase «Archivio letto il...» sotto la griglia (resta solo «da rileggere»).
+     2.19.0 - l'ODM in colonne come nella scheda ODM: numero, aperto il, tipo, note (Dario), nelle cose
      che non tornano, nei kit che non rispondono e negli Excel.
      2.18.0 - fra le cose che non tornano anche gli ODM da chiudere (il kit ha un ODM aperto ma registra
      tutte le telecamere attese) e gli ODM da aprire (il kit non risponde, non registra niente o registra meno telecamere e non
@@ -181,14 +182,10 @@ function quandoFoto(f) {
   const ora = /^\d\d:\d\d$/.test(f.dalle || "") ? f.dalle : (f.il ? new Date(f.il).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" }) : "");
   return `foto del ${g} ${ora}`.trim();
 }
-/** Cosa c'e' prima del primo giorno del grafico: misurato e vuoto, oppure non ancora misurato. */
+/** 2.19.1: sotto la griglia solo l'avviso che serve (Dario, 10/11: «Archivio letto il... questo tipo di frase non mi interessa»). */
 function notaPrima(r) {
-  const quando = r.letto ? new Date(r.letto).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "";
-  if (!r.arcLetto) return "Prima di oggi: archivio non ancora letto (lo legge il giro del PC).";
-  if (r.daRileggere) return `Archivio da rileggere: il ${quando} il collegamento è caduto durante la lettura (i giorni grigi non sono stati letti, non sono vuoti).`;
-  if (r.arcVuoto) return `Archivio letto il ${quando}: sul disco non c'è niente di questo canale.`;
-  if (r.troncato) return `Archivio letto il ${quando}: qui gli ultimi 90 giorni; il disco ha registrazioni dal ${breve(r.primo)}.`;
-  return `Archivio letto il ${quando}: prima del ${breve(r.primo)} il disco non ha niente (registrazioni già sovrascritte, o il kit non registrava).`;
+  if (r.arcLetto && r.daRileggere) return "Archivio da rileggere: il collegamento è caduto durante la lettura, i giorni grigi non sono stati letti.";
+  return "";
 }
 /** 2.17.0: i minuti di ogni ora di oggi dai tratti (le ore dopo il controllo restano vuote: «-»). */
 function oreDaTratti(tr, minOra) {
@@ -494,7 +491,7 @@ function disegna() {
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
     <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
     <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
-    <td>${griglia(r)}<div class="prima">${notaPrima(r)}</div></td>
+    <td>${griglia(r)}${notaPrima(r) ? `<div class="prima">${notaPrima(r)}</div>` : ""}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
   </tr>`).join("")).join("");
   const nt = nonTorna.filter((x) => passaFiltri("nonTorna", x)).filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
