@@ -31,7 +31,9 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.0"""
+version: 0.9.1 (10/11/2026): un giorno impossibile nell archivio di un registratore (kit 544) non ferma piu tutto il kit;
+  la prova dei video lunghi manda anche le clip annotate degli abbandoni
+0.9.0"""
 import base64
 import datetime
 import json
@@ -49,7 +51,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.0"
+VERSIONE = "p2p_ponte 0.9.1"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -281,7 +283,10 @@ def archivio(reg):
             if gg is None and m >= DAL_ARCHIVIO.replace(day=1):
                 mesi_muti.append(m)
             for g in gg or []:
-                date.append(datetime.date(m.year, m.month, g))
+                try:   # 0.9.1: il kit 544 dice di avere registrazioni in un giorno che il mese non ha (ValueError)
+                    date.append(datetime.date(m.year, m.month, g))
+                except (ValueError, TypeError):
+                    continue
             m = datetime.date(m.year + (m.month == 12), m.month % 12 + 1, 1)
         giorni, ore = {}, {}
         for mm in mesi_muti:
@@ -525,8 +530,8 @@ def scarico_lungo(p):
 
 
 def copia_risultati(risultati, u, t0, codice):
-    """Del risultato dell'analisi vanno su Drive il report, i dati e poche immagini: le clip restano sul PC."""
-    n_img = 0
+    """Del risultato dell'analisi vanno su Drive il report, i dati, poche immagini e (0.9.1) le clip annotate degli abbandoni."""
+    n_img, n_clip = 0, [0]
     for radice, _, files in os.walk(risultati):
         for f in files:
             p = os.path.join(radice, f)
@@ -535,6 +540,8 @@ def copia_risultati(risultati, u, t0, codice):
                 shutil.copy(p, os.path.join(u, f))
             elif est in ("jpg", "png") and n_img < 40 and os.path.getsize(p) < 400e3:
                 shutil.copy(p, os.path.join(u, f)); n_img += 1
+            elif est == "mp4" and "abbandono" in f and f.endswith("_annotata.mp4") and n_clip[0] < 6 and os.path.getsize(p) < 15e6:
+                shutil.copy(p, os.path.join(u, f)); n_clip[0] += 1   # 0.9.1: per vedere l'abbandono trovato (e l'orologio)
     with open(os.path.join(u, "fine.txt"), "w", encoding="utf-8") as fh:
         fh.write(f"analisi finita con codice {codice} in {round(time.time() - t0)} s\n")
 

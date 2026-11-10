@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.19.1 (10/11/2026) - via la frase «Archivio letto il...» sotto la griglia (resta solo «da rileggere»).
+<!-- version: 2.20.0 (10/11/2026) - i kit che non registrano e non hanno un ODM in un elenco a parte, con «Scarica in Excel» (Dario);
+     l'elenco dei kit fermi tiene solo quelli con un ODM aperto. I canali oltre quelli di UVMS che non registrano non si mostrano (533).
+     Gli ODM su kit che registrano divisi in «guasto totale» (da chiudere) e «parziale» (da guardare).
+     2.19.1 - via la frase «Archivio letto il...» sotto la griglia (resta solo «da rileggere»).
      2.19.0 - l'ODM in colonne come nella scheda ODM: numero, aperto il, tipo, note (Dario), nelle cose
      che non tornano, nei kit che non rispondono e negli Excel.
      2.18.0 - fra le cose che non tornano anche gli ODM da chiudere (il kit ha un ODM aperto ma registra
@@ -163,13 +166,15 @@ th:focus-within { z-index:5 }
     </tr></thead>
     <tbody></tbody>
   </table>
+  <h2><span id="titolo-senzaOdm"></span> <button data-scarica="senzaOdm" title="Scarica in un file Excel (.xlsx) i kit che non registrano e non hanno un ODM aperto">Scarica in Excel</button></h2>
+  <table id="senzaOdm"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="attese">Telecamere</th></tr></thead><tbody></tbody></table>
   <h2><span id="titolo-fermi"></span> <button data-scarica="fermi" title="Scarica i kit che non rispondono">Scarica in Excel</button></h2>
   <table id="fermi"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="odm_n">ODM</th><th data-ordina="no">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th><th data-ordina="no">Note ODM</th></tr></thead><tbody></tbody></table>
 </main>
 <div id="grande" hidden></div>
 <script>
 const $ = (s) => document.querySelector(s);
-let ANA = new Map(), righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordine = { chiave: "gruppo", verso: 1 }, ordNT = { chiave: "tipo", verso: 1 }, ordFe = { chiave: "gruppo", verso: 1 };
+let ANA = new Map(), righe = [], kitFermi = [], ordSo = { chiave: "gruppo", verso: 1 }, nonTorna = [], dati = {}, filtro = "tutti", ordine = { chiave: "gruppo", verso: 1 }, ordNT = { chiave: "tipo", verso: 1 }, ordFe = { chiave: "gruppo", verso: 1 };
 const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
 const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
@@ -327,7 +332,9 @@ function costruisci(d) {
       const vero = tr.length || (x.giro && x.giro.minuti_24h > 0) || giorniVeri;
       // archivio letto a meta': nel dubbio si mostra, ma solo se il canale ha un nome nel registratore, e non conta fra
       // le telecamere che funzionano (2.16.0: i canali vuoti facevano «piu' telecamere di quelle attese», Barbara 10/11)
-      const dubbio = !vero && x.arc && x.arc.primo && Object.values(giorni).some((m) => m == null) && !!(x.giro && x.giro.titolo);
+      // 2.20.0: un canale oltre quelli che UVMS conta per il kit (533: 4 in UVMS, 9 nel registratore) non è una telecamera
+      const oltreUvms = Number(k.canali_uvms) > 0 && n >= Number(k.canali_uvms);
+      const dubbio = !vero && !oltreUvms && x.arc && x.arc.primo && Object.values(giorni).some((m) => m == null) && !!(x.giro && x.giro.titolo);
       if (!vero && !dubbio) continue;
       if (vero) funzionanti++;
       const um = x.giro && x.giro.ultimo_minuto != null ? Number(x.giro.ultimo_minuto) : null;
@@ -361,7 +368,7 @@ function costruisci(d) {
   if (ana.size) kitFermi = kitFermi.filter((k) => (ana.get(parseInt(k.kit, 10)) || {}).stato === "INSTALLATO");
   for (const x of nonTorna) { const c = odmCol(Number(x.kit)); x.odm_n = c.n; x.odm_ap = c.aperto; x.odm_ap_ord = aaaammgg(c.aperto); x.odm_tipo = c.tipo; x.odm_note = c.note; }
   for (const k of kitFermi) { const c = odmCol(parseInt(k.kit, 10)); k.odm_n = c.n; k.odm_ap = c.aperto; k.odm_tipo = c.tipo; k.odm_note = c.note; }
-  preparaFiltri("tab", righe); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi);
+  preparaFiltri("tab", righe); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi.filter((k) => k.odm_n)); preparaFiltri("senzaOdm", senzaOdm());
 }
 /** 2.19.0: gli ODM aperti di un kit come elenco di campi; legge anche il testo dei ponti prima del 0.9.0. */
 function odmLista(n) {
@@ -376,7 +383,7 @@ const odmCol = (n) => { const l = odmLista(n); return { n: l.map((x) => x.n).fil
 const aaaammgg = (d) => { const m = String(d || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? m[3] + m[2].padStart(2, "0") + m[1].padStart(2, "0") : ""; };
 const odmDi = (k) => odmCol(parseInt(k.kit, 10)).n;
 /** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
-const FILTRI = { tab: {}, nonTorna: {}, fermi: {} };
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {} };
 const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
@@ -384,7 +391,11 @@ const VALORE = {
   tab: { gruppo: (r) => r.gruppo || "-", nome: (r) => r.nome || "-", canale: canaleIt, adessoOrd: (r) => tipoAdesso(r.adesso) },
   nonTorna: { tipo: (x) => x.tipo, kit: (x) => String(x.kit || "-"), dove: (x) => x.dove || "-", odm_n: (x) => x.odm_n || "-", odm_tipo: (x) => x.odm_tipo || "-" },
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
+  senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
 };
+/** 2.20.0: le telecamere che l'ANAGRAFICA KIT dice per il kit («-» se non lo dice). */
+const attesaDi = (k) => String((ANA.get(parseInt(k.kit, 10)) || {}).telecamere || "-");
+const senzaOdm = () => kitFermi.filter((k) => !k.odm_n);
 const passaFiltri = (t, x) => Object.entries(FILTRI[t]).every(([c, s]) => !s.size || s.has(VALORE[t][c](x)));
 const firme = {};
 /** Mette (o aggiorna) la tendina sotto ogni intestazione con i valori che ci sono nella colonna. */
@@ -451,8 +462,13 @@ function confronta(d) {
     const attese = a.telecamere || 0;
     const tutte = k.stato === "fatto" && k.funzionanti > 0 && (!attese || k.funzionanti >= attese);
     const male = k.stato === "fallito" || (k.stato === "fatto" && (!k.funzionanti || (attese && k.funzionanti < attese)));
-    if (a.odm && tutte)
-      nonTorna.push({ tipo: "ODM aperto ma il kit registra", kit: n, dove, det: `oggi registrano ${k.funzionanti}${attese ? " su " + attese : ""} telecamere` });
+    // 2.20.0: un ODM di guasto totale («offline», «non risponde») su un kit che risponde e registra si può chiudere;
+    // uno parziale (una telecamera sgranata, spostata) può restare aperto anche se il kit registra: si guarda
+    if (a.odm && tutte) {
+      const totale = /TOTALE/i.test(odmCol(n).tipo || "") || /offline|non risp/i.test(odmCol(n).note || "");
+      nonTorna.push({ tipo: totale ? "ODM di guasto totale ma il kit risponde e registra" : "ODM parziale e il kit registra (da guardare)", kit: n, dove,
+        det: `oggi registrano ${k.funzionanti}${attese ? " su " + attese : ""} telecamere` });
+    }
     if (!a.odm && male) {
       const perche = k.stato === "fallito" ? "il registratore non risponde" + (/password/i.test((k.esito || {}).collegamento || "") ? " (password)" : "")
         : !k.funzionanti ? "nessuna telecamera ha registrato oggi" : `registrano ${k.funzionanti} telecamere su ${attese}`;
@@ -500,11 +516,18 @@ function disegna() {
   $("#vediNonTorna").textContent = `Cose che non tornano (${nt.length})`;
   $("#titolo-nonTorna").textContent = `Cose che non tornano (${nt.length})` + (quando ? ` · anagrafica letta il ${quando}` : " · anagrafica non ancora caricata");
   $("#nonTorna tbody").innerHTML = nt.map((x) => `<tr><td class="no">${x.tipo}</td><td class="num">${x.kit}</td><td>${x.dove}</td><td class="tenue">${x.det}</td><td class="num">${esc(x.odm_n)}</td><td>${esc(x.odm_ap)}</td><td>${esc(x.odm_tipo)}</td><td class="tenue">${esc(x.odm_note)}</td></tr>`).join("");
-  const f = kitFermi.filter((k) => ok(k) && passaFiltri("fermi", k)).sort((a, b) => {
+  // 2.20.0 (Dario: «dove non c'è un guasto ma non registra, un elenco a parte, esportabile in Excel»)
+  const so = senzaOdm().filter((k) => ok(k) && passaFiltri("senzaOdm", k)).sort((a, b) => {
+    const v = (k) => (ordSo.chiave === "controllo" ? k.finito_il || "" : VALORE.senzaOdm[ordSo.chiave](k));
+    const x = v(a), y = v(b); return (x > y ? 1 : x < y ? -1 : 0) * ordSo.verso;
+  });
+  $("#titolo-senzaOdm").textContent = `Non registrano e non hanno un ODM (${so.length})`;
+  $("#senzaOdm tbody").innerHTML = so.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${attesaDi(k)}</td></tr>`).join("");
+  const f = kitFermi.filter((k) => k.odm_n && ok(k) && passaFiltri("fermi", k)).sort((a, b) => {
     const v = (k) => (ordFe.chiave === "controllo" ? k.finito_il || "" : VALORE.fermi[ordFe.chiave](k));
     const x = v(a), y = v(b); return (x > y ? 1 : x < y ? -1 : 0) * ordFe.verso;
   });
-  $("#titolo-fermi").textContent = f.length ? `Kit che non rispondono o senza registrazioni oggi (${f.length})` : "";
+  $("#titolo-fermi").textContent = f.length ? `Non rispondono o senza registrazioni oggi, con un ODM aperto (${f.length})` : "";
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${esc(k.odm_n)}</td><td>${esc(k.odm_ap)}</td><td>${esc(k.odm_tipo)}</td><td class="tenue">${esc(k.odm_note)}</td></tr>`).join("");
   $("#fermi thead").hidden = !kitFermi.length;
 }
@@ -525,6 +548,7 @@ async function carica() {
   disegna();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#senzaOdm"), { alCambio: (chiave, verso) => { ordSo = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
 $("#cerca").addEventListener("input", disegna);
@@ -557,8 +581,10 @@ document.addEventListener("click", (e) => {
     scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", ...giorni.map(giornoIt)],
       righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, ...giorni.map(() => 6)]);
   }
+  if (b.dataset.scarica === "senzaOdm")
+    scaricaXlsx("Non registrano senza ODM", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "Telecamere", "Nota (Barbara)", "ODM aperto (numero)"], senzaOdm().map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", attesaDi(k), "", ""]), [26, 36, 44, 20, 11, 40, 18]);
   if (b.dataset.scarica === "fermi")
-    scaricaXlsx("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "ODM", "Aperto il", "Tipo ODM", "Note ODM", "Nota (Barbara)", "Fatto"], kitFermi.map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", k.odm_n, k.odm_ap, k.odm_tipo, k.odm_note, "", ""]), [26, 36, 44, 20, 8, 11, 18, 60, 40, 8]);
+    scaricaXlsx("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "ODM", "Aperto il", "Tipo ODM", "Note ODM", "Nota (Barbara)", "Fatto"], kitFermi.filter((k) => k.odm_n).map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", k.odm_n, k.odm_ap, k.odm_tipo, k.odm_note, "", ""]), [26, 36, 44, 20, 8, 11, 18, 60, 40, 8]);
 });
 $("#grande").addEventListener("click", () => { $("#grande").hidden = true; });
 $("#tab").addEventListener("click", (e) => { const i = e.target.closest("img.mini"); if (i) { $("#grande").innerHTML = `<img src="${i.src}">`; $("#grande").hidden = false; } });
