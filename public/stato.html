@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.11.1 (10/11/2026) - media e giorni contati dal 27/10; i valori uguali di fila scritti una volta.
+<!-- version: 2.12.0 (10/11/2026) - fumetti con piu' informazioni (Dario: «quando ci vai sopra ti da' piu' info»): su ogni punto
+     giorno, percentuale e ore registrate; su «Adesso» l'ultimo controllo, il tipo di registrazione e i tratti di oggi.
+     2.11.1 - media e giorni contati dal 27/10; i valori uguali di fila scritti una volta.
      2.11.0 - il grafico come i Target di darioleads: linea blu scura, punti colorati, righe dello 0, 50 e
      100% con l'etichetta, il valore accanto a ogni punto.
      2.10.0 - dal 27/10; via le colonne Dal e Al; la data della foto sotto la foto; i tratti fra i punti
@@ -127,6 +129,8 @@ let righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordin
 const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
 const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
+const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const oreMin = (m) => `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")} min`;
 const breve = (t) => { const m = String(t || "").match(/^\d{4}-(\d\d)-(\d\d) (\d\d:\d\d)/); return m ? `${m[2]}/${m[1]} ${m[3]}` : (t || ""); };
 /** Quando e' stata fatta la foto: il giorno della prova e l'ora del pezzo di video («dalle»). */
 function quandoFoto(f) {
@@ -153,11 +157,14 @@ function grafico(perc) {
   const oggi = new Date(perc[0][0] + "T12:00:00");
   const xg = (g) => 98 - (98 - sx - 1) * Math.round((oggi - new Date(g + "T12:00:00")) / 864e5) / Math.max(1, N - 1);
   const yp = (p) => top + (basso - top) * (1 - p / 100);
-  const punti = [...perc].reverse().filter(([g]) => g >= DAL).map(([g, p]) => [xg(g), p == null ? basso : yp(p), g, p]);
+  const punti = [...perc].reverse().filter(([g]) => g >= DAL).map(([g, p, m, su]) => [xg(g), p == null ? basso : yp(p), g, p, m, su]);
   const rif = [0, 50, 100].map((v) => `<line class="${v ? "rif" : "rif0"}" x1="${sx}%" x2="99%" y1="${yp(v)}" y2="${yp(v)}"/><text x="${sx - 0.6}%" y="${yp(v) + 3}" text-anchor="end">${v}%</text>`).join("");
   const tratti = punti.slice(1).filter((pt, i) => pt[3] != null && punti[i][3] != null)
     .map((pt) => { const i = punti.indexOf(pt) - 1; return `<line class="tratto" x1="${punti[i][0].toFixed(2)}%" y1="${punti[i][1].toFixed(1)}" x2="${pt[0].toFixed(2)}%" y2="${pt[1].toFixed(1)}"/>`; }).join("");
-  const pallini = punti.map(([x, y, g, p]) => `<circle class="${p == null ? "pnull" : p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="3"><title>${giornoIt(g)}: ${p == null ? "non letto" : p + "% delle 24 ore"}</title></circle>`).join("");
+  const fumetto = (g, p, m, su) => p == null ? `${giornoIt(g)}: non letto (il registratore non ha risposto)`
+    : `${giornoIt(g)}${su < 1440 ? " (fino alle " + hm(su) + ")" : ""}: ${p}%, ${oreMin(m)} registrati su ${su < 1440 ? oreMin(su) : "24 h"}`;
+  const pallini = punti.map(([x, y, g, p, m, su]) => `<circle class="${p == null ? "pnull" : p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="3"/>` +
+    `<circle cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="9" fill="transparent" data-spiega="${esc(fumetto(g, p, m, su))}"></circle>`).join("");
   // il valore accanto al punto: sopra, o sotto se il punto e' in alto; i 100% di fila non si ripetono
   const valori = punti.map(([x, y, , p], i) => {
     if (p == null || (i > 0 && punti[i - 1][3] === p && i < punti.length - 1)) return "";
@@ -217,10 +224,13 @@ function costruisci(d) {
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
       const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
-      const perc = elenco.map(([g, m]) => [g, m == null ? null : Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440)))]);
+      const perc = elenco.map(([g, m]) => [g, m == null ? null : Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440))), m, g === oggiIso ? minOra : 1440]);
       const passati = perc.filter(([g, p]) => g !== oggiIso && p != null && g >= DAL);
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
+        info: [`Ultimo controllo: ${new Date(k.finito_il).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
+          sensore ? "Registra a sensore (solo quando succede qualcosa)" : tr.length ? "Registrazione continua" : "",
+          x.giro && x.giro.registrato_oggi ? "Oggi: " + x.giro.registrato_oggi : "", (x.giro && x.giro.titolo) ? "Nome nel registratore: " + x.giro.titolo : ""].filter(Boolean).join("\n"),
         adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
         primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "", letto: (x.arc && x.arc.letto_il) || "",
         arcLetto: !!x.arc, daRileggere, arcVuoto: !!(x.arc && !x.arc.primo), troncato: !!(x.arc && x.arc.giorni && Object.keys(x.arc.giorni).length >= 90),
@@ -298,7 +308,7 @@ function disegna() {
   $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
     <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
-    <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}">${r.adesso}</td>
+    <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
     <td class="num">${r.nGiorni ?? "-"}</td>
     <td class="num ${r.media == null ? "tenue" : r.media >= 90 ? "ok" : r.media >= 30 ? "mezzo" : "no"}">${r.media == null ? "-" : r.media + "%"}</td>
     <td>${grafico(r.perc)}<div class="prima">${notaPrima(r)}</div></td>
