@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.13.1 (10/11/2026) - i riquadri dei conti restano fermi in alto mentre si scorre (Dario).
+<!-- version: 2.14.0 (10/11/2026) - «Cose che non tornano» e' un bottone dopo «Prove singole»: apre e chiude la sua tabella (Dario).
+     2.13.1 - i riquadri dei conti restano fermi in alto mentre si scorre (Dario).
      2.13.0 - il grafico copiato dai Target di darioleads (src/components/amici/andamenti.tsx): asse con
      tacche e griglia leggera, zero marcato, linea #1f4e78 da 2 con gli angoli tondi, punti con l'anello bianco (piu' grandi e
      colorati fuori norma: giallo sopra zero, rosso a zero), numeri con l'alone messi sopra o sotto dove non toccano la linea.
@@ -62,6 +63,7 @@ main { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; padding:0 12px 
 button { font:inherit; min-height:40px; padding:6px 14px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); cursor:pointer }
 button.primo { background:var(--blu); color:#fff; border-color:var(--blu) }
 button.scelto { outline:2px solid var(--blu) }
+button[aria-pressed="true"] { background:var(--blu); color:#fff; border-color:var(--blu) }
 input { font:inherit; min-height:40px; padding:6px 10px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); width:min(280px,100%) }
 .conti { flex:none; display:flex; flex-wrap:wrap; gap:8px; padding:8px 12px; background:var(--sfondo); border-bottom:1px solid var(--bordo) }
 .conto { padding:4px 10px !important }
@@ -110,11 +112,14 @@ h2 { font-size:16px; margin:18px 0 6px }
   <button data-filtro="problemi" title="Telecamere ferme adesso o con giorni sotto il 90%">Solo problemi</button>
   <button id="giro" title="Mette in coda tutti i registratori: il PC dell'ufficio li controlla uno alla volta">Ricontrolla tutti</button>
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
+  <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
 </header>
 <div class="conti" id="conti"></div>
 <main>
+  <div id="sezNonTorna" hidden>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:22%"><col style="width:6%"><col style="width:36%"><col style="width:36%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
+  </div>
   <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
     <colgroup><col style="width:11%"><col style="width:13%"><col style="width:5%"><col style="width:10%"><col style="width:5%"><col style="width:5%"><col style="width:41%"><col style="width:10%"></colgroup>
@@ -347,6 +352,7 @@ function disegna() {
   const nt = nonTorna.filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
     .sort((a, b) => { const x = a[ordNT.chiave] ?? "", y = b[ordNT.chiave] ?? ""; return (x > y ? 1 : x < y ? -1 : 0) * ordNT.verso; });
   const quando = (dati.anagrafica || [])[0] ? new Date(dati.anagrafica[0].aggiornata_il).toLocaleString("it-IT") : "";
+  $("#vediNonTorna").textContent = `Cose che non tornano (${nt.length})`;
   $("#titolo-nonTorna").textContent = `Cose che non tornano (${nt.length})` + (quando ? ` · anagrafica letta il ${quando}` : " · anagrafica non ancora caricata");
   $("#nonTorna tbody").innerHTML = nt.map((x) => `<tr><td class="no">${x.tipo}</td><td class="num">${x.kit}</td><td>${x.dove}</td><td class="tenue">${x.det}</td></tr>`).join("");
   const f = kitFermi.filter(ok);
@@ -369,6 +375,11 @@ for (const b of document.querySelectorAll("button[data-filtro]")) b.addEventList
   filtro = b.dataset.filtro; document.querySelectorAll("button[data-filtro]").forEach((x) => x.classList.toggle("scelto", x === b)); disegna();
 });
 $("#entra").addEventListener("click", () => { location.href = "/api/entra"; });
+$("#vediNonTorna").addEventListener("click", () => {
+  const sez = $("#sezNonTorna"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediNonTorna").setAttribute("aria-pressed", String(apri));
+  if (apri) $("main").scrollTop = 0;
+});
 $("#prova").addEventListener("click", () => { location.href = "/"; });
 $("#giro").addEventListener("click", async () => {
   const r = await fetch("/api/p2p?op=accoda", { method: "POST" });
