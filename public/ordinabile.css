@@ -1,0 +1,6 @@
+/* attrezzi/tabelle-ordinabili/ordinabile.css · VERSION: 1.0.0 (nato in fiere-italia) */
+th.ordinabile { cursor: pointer; user-select: none; white-space: nowrap; }
+th.ordinabile:hover, th.ordinabile:focus-visible { color: var(--accento, #1d4e89); outline: none; }
+th.ordinabile::after { content: "↕"; display: inline-block; margin-left: 4px; opacity: .35; font-size: .9em; }
+th.ordinabile[aria-sort="ascending"]::after { content: "↑"; opacity: 1; color: var(--accento, #1d4e89); }
+th.ordinabile[aria-sort="descending"]::after { content: "↓"; opacity: 1; color: var(--accento, #1d4e89); }

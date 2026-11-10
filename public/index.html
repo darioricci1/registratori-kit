@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova registratori da remoto</title>
+<!-- version: 1.4.0 (10/11/2026) - il bottone per la pagina dello stato di tutti i kit; - il kit si sceglie dall'elenco di UVMS - - si entra col Google di Alma, senza token per il P2P - si arriva al registratore di un kit da remoto? RMS Connect (a traffico) e P2P dal PC dell'ufficio (gratis) -->
+<script src="fumetti-neri.js"></script>
+<script src="ordinabile.js"></script>
+<link rel="stylesheet" href="ordinabile.css">
+<style>
+:root { --sfondo:#f5f6f8; --carta:#fff; --testo:#1d2330; --tenue:#667085; --bordo:#d9dde5; --blu:#2457c5; --verde:#1d7a46; --rosso:#b42318; --giallo:#fff4ce; --raggio:10px; }
+@media (prefers-color-scheme: dark) { :root { --sfondo:#14171d; --carta:#1d212a; --testo:#e7e9ee; --tenue:#9aa3b2; --bordo:#323846; --blu:#6f9bff; --verde:#4cc283; --rosso:#ff7a6e; --giallo:#3b3417; } }
+* { box-sizing:border-box }
+html, body { height:100%; margin:0 }
+body { font:15px/1.45 system-ui, sans-serif; background:var(--sfondo); color:var(--testo); display:flex; flex-direction:column; overflow:hidden }
+header { flex:none; padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; border-bottom:1px solid var(--bordo); background:var(--carta) }
+h1 { font-size:18px; margin:0 12px 0 0 }
+main { flex:1; min-height:0; overflow:auto; padding:12px 16px }
+button { font:inherit; min-height:40px; padding:6px 14px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); cursor:pointer }
+button.primo { background:var(--blu); color:#fff; border-color:var(--blu) }
+input { font:inherit; min-height:40px; padding:6px 10px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); width:min(360px,100%) }
+.riquadro { background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px; margin-bottom:12px }
+.esito { padding:10px; border-radius:var(--raggio); background:var(--giallo); margin-top:8px; white-space:pre-wrap }
+table { border-collapse:collapse; width:100%; background:var(--carta) }
+th, td { padding:6px 8px; border-bottom:1px solid var(--bordo); text-align:left; vertical-align:middle }
+th { position:sticky; top:0; background:var(--carta); vertical-align:bottom; z-index:1 }
+.on { color:var(--verde); font-weight:600 } .off { color:var(--rosso) }
+.tenue { color:var(--tenue) }
+</style>
+</head>
+<body>
+<header>
+  <h1>Prova registratori da remoto</h1>
+  <button id="vaistato" title="Tutti i kit e tutte le telecamere: chi registra e chi no" onclick="location.href='/stato.html'">Stato di tutti i kit</button>
+  <button id="entra" class="primo" title="Entra col tuo account Google di Alma, come nel gestionale: basta questo per il P2P">Entra con Alma</button>
+  <span id="chi" class="tenue"></span>
+  <input id="tok" type="password" placeholder="Token RMS (solo per RMS)" autocomplete="off" title="Il token personale di Teltonika RMS (account assistenza): serve solo per l'elenco dei kit e RMS Connect, non per il P2P. Resta solo in questo browser.">
+  <button class="primo" id="carica" title="Legge da RMS tutti i router dei kit con lo stato">Carica i kit</button>
+  <button id="crediti" title="Quanti crediti RMS ha ancora Alma: RMS Connect si paga a traffico">Crediti RMS</button>
+  <input id="cerca" placeholder="Cerca un kit (es. 524)" title="Filtra per nome del kit">
+</header>
+<main>
+  <div class="riquadro">
+    <b title="Il collegamento P2P usa la libreria Focus, che gira solo su Windows: lo fa il PC dell'ufficio con Kit_Rifiuti, che legge questa coda ogni 15 secondi. Non usa il traffico RMS.">P2P dal PC dell'ufficio</b>
+    <span id="pcstato" class="tenue">…</span>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+      <input id="p2pkit" placeholder="Cerca il kit: numero, via o comune" style="width:320px" title="Scrivi e scegli dall'elenco dei registratori di UVMS: l'UID si compila da solo">
+      <div id="p2pscelte" class="riquadro" hidden style="position:absolute;z-index:5;max-height:300px;overflow:auto;margin-top:44px;width:min(520px,92vw);padding:4px"></div>
+      <input id="p2puid" placeholder="UID P2P (20 caratteri)" style="width:260px" title="Il codice P2P del registratore: in UVMS, o nella pagina del registratore in Rete, P2P">
+      <input id="p2pcan" placeholder="Canale (vuoto = tutti)" style="width:170px" inputmode="numeric" title="Da quale telecamera prendere il fotogramma: vuoto prova tutti i canali">
+      <button class="primo" id="p2pvai" title="Mette la prova in coda: il PC si collega in P2P, legge canali e ore registrate e scarica 15 secondi per farne una foto">Prova P2P</button>
+    </div>
+    <table id="p2ptab" style="margin-top:8px">
+      <thead><tr><th data-chiave="id" data-verso="giu">N.</th><th data-chiave="kit">Kit</th><th data-chiave="stato">Stato</th><th data-ordina="no">Esito</th><th data-ordina="no">Foto</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="riquadro" id="stato">Scrivi il token RMS e premi «Carica i kit».</div>
+  <table id="tab">
+    <thead><tr><th data-chiave="nome">Kit</th><th data-chiave="online">Stato</th><th data-chiave="ultima" data-verso="giu">Ultima connessione</th><th data-chiave="modello">Router</th><th data-ordina="no">Registratore</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+let kit = [], ordine = { chiave: "nome", verso: 1 };
+try { $("#tok").value = localStorage.getItem("rms_tok") || ""; } catch {}
+async function api(q) {
+  const tok = $("#tok").value.trim();
+  try { localStorage.setItem("rms_tok", tok); } catch {}
+  const r = await fetch("/api/rms?" + q, { headers: { "X-Rms-Token": tok } });
+  const d = await r.json().catch(() => ({ errore: "risposta non leggibile" }));
+  if (!r.ok && !d.errore) d.errore = "HTTP " + r.status;
+  return d;
+}
+const scrivi = (t) => { $("#stato").textContent = t; };
+function disegna() {
+  const f = $("#cerca").value.trim().toLowerCase();
+  const righe = kit.filter((k) => !f || k.nome.toLowerCase().includes(f))
+    .sort((a, b) => { const x = a[ordine.chiave], y = b[ordine.chiave]; return (x > y ? 1 : x < y ? -1 : 0) * ordine.verso; });
+  $("#tab tbody").innerHTML = righe.map((k) => `<tr><td>${k.nome}</td><td class="${k.online ? "on" : "off"}">${k.online ? "online" : "offline"}</td><td class="tenue">${k.ultima}</td><td class="tenue">${k.modello || ""}</td><td><button data-id="${k.id}" ${k.online ? "" : "disabled title=\"Il router è offline: RMS non ci arriva\""}>Apri registratore</button><div class="esito" hidden></div></td></tr>`).join("");
+}
+tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
+$("#cerca").addEventListener("input", disegna);
+$("#carica").addEventListener("click", async () => {
+  scrivi("Leggo i router da RMS…");
+  const d = await api("op=kit");
+  if (d.errore) return scrivi("RMS: " + d.errore);
+  kit = d; disegna();
+  const on = d.filter((k) => k.online).length;
+  scrivi(`${d.length} kit su RMS: ${on} online, ${d.length - on} offline. «Apri registratore» chiede a RMS un link temporaneo (15 minuti) alla pagina del registratore 192.168.1.2.`);
+});
+$("#crediti").addEventListener("click", async () => {
+  const d = await api("op=crediti");
+  if (d.errore) return scrivi("RMS: " + d.errore);
+  scrivi("Crediti RMS di Alma:\n" + d.map((c) => `${c.nome}: ${c.rimasti} rimasti su ${c.quanti} (dal ${c.dal.slice(0, 10)})`).join("\n"));
+  $("#stato").style.whiteSpace = "pre-wrap";
+});
+$("#tab").addEventListener("click", async (e) => {
+  const b = e.target.closest("button[data-id]"); if (!b) return;
+  const out = b.nextElementSibling; out.hidden = false; b.disabled = true;
+  out.textContent = "Cerco l'accesso al registratore…";
+  const acc = await api("op=accessi&id=" + b.dataset.id);
+  const nvr = Array.isArray(acc) && (acc.find((a) => a.ip === "192.168.1.2") || acc[0]);
+  if (!nvr) { out.textContent = "Questo router non ha un accesso remoto verso il registratore."; b.disabled = false; return; }
+  out.textContent = `Apro ${nvr.nome} (${nvr.ip}:${nvr.porta})… fino a 25 secondi.`;
+  const r = await api("op=apri&id=" + nvr.id);
+  b.disabled = false;
+  if (r.link) { out.innerHTML = ""; const a = document.createElement("button"); a.className = "primo"; a.textContent = "Vai al registratore"; a.title = r.link; a.onclick = () => window.open(r.link, "_blank", "noopener"); out.append(a, document.createTextNode(" " + r.link)); return; }
+  out.textContent = "RMS dice: " + r.errore + (/no data left/i.test(r.errore || "") ? "\nIl traffico RMS Connect di Alma è finito: servono crediti RMS (si comprano nel portale RMS, Crediti)." : "");
+});
+// ---------------------------------------------------------------- P2P
+let p2p = [], ordP = { chiave: "id", verso: -1 }, fotoUrl = {};
+const quando = (s) => s ? new Date(s).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "";
+function esitoTesto(r) {
+  const e = r.esito || {};
+  if (r.stato === "in coda") return "aspetta il PC";
+  if (r.stato === "in corso") return "il PC " + (r.pc || "") + " ci sta provando dalle " + quando(r.preso_il);
+  const pezzi = [e.collegamento || e.errore || ""];
+  if (e.modo) pezzi.push("modo: " + e.modo);
+  if (e.secondi_collegamento != null) pezzi.push("collegato in " + e.secondi_collegamento + " s");
+  if (e.canali) pezzi.push(e.canali.length + " canali: " + e.canali.map((c) => c.numero + " " + (c.registrato_oggi || "")).join("; "));
+  if (e.scarico) pezzi.push("scarico: " + e.scarico);
+  if (e.nota) pezzi.push(e.nota);
+  return pezzi.filter(Boolean).join("\n");
+}
+async function fotoDi(id) {
+  if (fotoUrl[id]) return fotoUrl[id];
+  const r = await fetch("/api/p2p?op=foto&id=" + id, { headers: { "X-Rms-Token": $("#tok").value.trim() } });
+  if (!r.ok) return null;
+  return (fotoUrl[id] = URL.createObjectURL(await r.blob()));
+}
+async function disegnaP2P() {
+  const righe = [...p2p].sort((a, b) => { const x = a[ordP.chiave], y = b[ordP.chiave]; return (x > y ? 1 : x < y ? -1 : 0) * ordP.verso; });
+  $("#p2ptab tbody").innerHTML = righe.map((r) => `<tr><td>${r.id}</td><td>${r.kit || ""}<div class="tenue">${r.uid}${r.canale ? " · canale " + r.canale : ""}</div></td><td class="${r.stato === "fatto" ? "on" : r.stato === "fallito" ? "off" : ""}">${r.stato}<div class="tenue">${quando(r.chiesto_il)}</div></td><td style="white-space:pre-wrap">${esitoTesto(r)}</td><td>${r.ha_foto ? `<img data-foto="${r.id}" alt="fotogramma" style="max-width:240px;border-radius:8px">` : ""}</td></tr>`).join("");
+  for (const img of document.querySelectorAll("img[data-foto]")) fotoDi(img.dataset.foto).then((u) => { if (u) img.src = u; });
+}
+tabellaOrdinabile($("#p2ptab"), { alCambio: (chiave, verso) => { ordP = { chiave, verso }; disegnaP2P(); } });
+$("#entra").addEventListener("click", () => { location.href = "/api/entra"; });
+fetch("/api/p2p?op=chi").then((r) => r.json()).then((d) => { if (d.email) { $("#chi").textContent = "dentro come " + d.email; $("#entra").hidden = true; } }).catch(() => {});
+async function aggiornaP2P() {
+  const r0 = await fetch("/api/p2p?op=elenco", { headers: { "X-Rms-Token": $("#tok").value.trim() } }).catch(() => null);
+  const d = r0 ? await r0.json().catch(() => ({ errore: "risposta non leggibile" })) : { errore: "rete" };
+  if (d.errore) { $("#pcstato").textContent = d.errore; return; }
+  const vivo = (d.pc || []).filter((p) => p.secondi < 90);
+  $("#pcstato").textContent = vivo.length ? "PC in ascolto: " + vivo.map((p) => p.nome + (p.versione ? " (" + p.versione + ")" : "")).join(", ")
+    : (d.pc || []).length ? "nessun PC in ascolto adesso (l'ultimo: " + d.pc[0].nome + ", " + Math.round(d.pc[0].secondi / 60) + " minuti fa)" : "nessun PC si è ancora fatto vivo";
+  p2p = d.richieste || []; disegnaP2P();
+}
+$("#p2pvai").addEventListener("click", async () => {
+  const tok = $("#tok").value.trim();
+  const r = await fetch("/api/p2p?op=chiedi", { method: "POST", headers: { "X-Rms-Token": tok, "Content-Type": "application/json" },
+    body: JSON.stringify({ kit: $("#p2pkit").value, uid: $("#p2puid").value, canale: $("#p2pcan").value }) });
+  const d = await r.json().catch(() => ({ errore: "risposta non leggibile" }));
+  if (d.errore) { $("#pcstato").textContent = d.errore; return; }
+  aggiornaP2P();
+});
+let registratori = [];
+fetch("/api/p2p?op=registratori", { headers: { "X-Rms-Token": $("#tok").value.trim() } }).then((r) => r.json()).then((d) => { if (Array.isArray(d)) registratori = d; }).catch(() => {});
+const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+$("#p2pkit").addEventListener("input", () => {
+  const parole = norm($("#p2pkit").value).split(/\s+/).filter(Boolean), box = $("#p2pscelte");
+  if (!parole.length || !registratori.length) { box.hidden = true; return; }
+  const trovati = registratori.filter((r) => { const t = norm(r.gruppo + " " + r.nome + " " + r.modello); return parole.every((p) => t.includes(p)); }).slice(0, 40);
+  box.innerHTML = trovati.map((r, i) => `<button data-i="${registratori.indexOf(r)}" style="display:block;width:100%;text-align:left;margin:2px 0;border:0">${r.nome}<div class="tenue">${r.gruppo} · ${r.modello || "?"} · ${r.canali || "?"} canali</div></button>`).join("") || "<div class='tenue' style='padding:8px'>nessun kit trovato</div>";
+  box.hidden = false;
+});
+$("#p2pscelte").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-i]"); if (!b) return;
+  const r = registratori[Number(b.dataset.i)];
+  $("#p2pkit").value = r.gruppo + " · " + r.nome; $("#p2puid").value = r.uid; $("#p2pscelte").hidden = true;
+});
+aggiornaP2P(); setInterval(aggiornaP2P, 5000);
+</script>
+</body>
+</html>

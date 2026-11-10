@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registrazioni dei kit</title>
+<!-- version: 2.2.2 (10/11/2026) - il kit 998 (Roma, via Gramsci) e' il kit di prova di Dario: fuori dal confronto.
+     2.2.1 - i canali con il nome di UVMS (CH 01 = il primo), non da 0.
+     2.2.0 - raggruppata per kit (Dario: «comune e kit solo una volta, anche se dopo i canali sono tre»),
+     i kit a colori alterni.
+     2.1.0 - con l'ANAGRAFICA KIT: «Cose che non tornano» (kit installati senza registratore, registratori di
+     kit non installati, stesso kit su due registratori, telecamere attese e telecamere che registrano, password sbagliate).
+     2.0.0 - una riga per ogni telecamera che funziona (Dario: «non mi interessa quanti sono i canali
+     in tutto»): la registrazione piu' vecchia e la piu' recente che ha in pancia, e la percentuale di registrato di ogni
+     giorno sulle 24 ore, dall'ultimo giorno indietro. I kit che non rispondono stanno in fondo. -->
+<script src="fumetti-neri.js"></script>
+<script src="ordinabile.js"></script>
+<link rel="stylesheet" href="ordinabile.css">
+<style>
+:root { --sfondo:#f5f6f8; --carta:#fff; --testo:#1d2330; --tenue:#667085; --bordo:#d9dde5; --blu:#2457c5; --verde:#1d7a46; --verde-chiaro:#dcf3e5; --rosso:#b42318; --rosso-chiaro:#fde4e1; --arancio:#9a5b00; --arancio-chiaro:#fff0d1; --grigio-chiaro:#eceff3; --raggio:10px; }
+@media (prefers-color-scheme: dark) { :root { --sfondo:#14171d; --carta:#1d212a; --testo:#e7e9ee; --tenue:#9aa3b2; --bordo:#323846; --blu:#6f9bff; --verde:#4cc283; --verde-chiaro:#173a27; --rosso:#ff7a6e; --rosso-chiaro:#46201c; --arancio:#f2b34c; --arancio-chiaro:#3d2e12; --grigio-chiaro:#2a2f3a; } }
+* { box-sizing:border-box }
+html, body { height:100%; margin:0 }
+body { font:15px/1.45 system-ui, sans-serif; background:var(--sfondo); color:var(--testo); display:flex; flex-direction:column; overflow:hidden }
+header { flex:none; padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--bordo); background:var(--carta) }
+h1 { font-size:18px; margin:0 10px 0 0 }
+main { flex:1; min-height:0; overflow:auto; padding:0 16px 16px }
+button { font:inherit; min-height:40px; padding:6px 14px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); cursor:pointer }
+button.primo { background:var(--blu); color:#fff; border-color:var(--blu) }
+button.scelto { outline:2px solid var(--blu) }
+input { font:inherit; min-height:40px; padding:6px 10px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); width:min(280px,100%) }
+.conti { display:flex; flex-wrap:wrap; gap:8px; padding:10px 0 }
+.conto { background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:6px 12px }
+.conto b { font-size:18px }
+table { border-collapse:collapse; width:100%; background:var(--carta) }
+th, td { padding:5px 8px; border-bottom:1px solid var(--bordo); text-align:left; vertical-align:middle }
+th { position:sticky; top:0; background:var(--carta); vertical-align:bottom; z-index:1 }
+td.num { text-align:right; white-space:nowrap }
+tr.kitA td { background:var(--carta) } tr.kitB td { background:var(--grigio-chiaro) }
+tr.primaKit td { border-top:2px solid var(--bordo) }
+.tenue { color:var(--tenue) } .no { color:var(--rosso); font-weight:600 } .ok { color:var(--verde); font-weight:600 } .mezzo { color:var(--arancio); font-weight:600 }
+.giorni { display:flex; gap:2px; max-width:62vw; overflow-x:auto; padding-bottom:2px }
+.g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
+.g b { display:block; font-size:12px }
+.g100 { background:var(--verde-chiaro); color:var(--verde) } .g50 { background:var(--arancio-chiaro); color:var(--arancio) }
+.g0 { background:var(--rosso-chiaro); color:var(--rosso) }
+img.mini { width:96px; border-radius:6px; cursor:zoom-in; display:block }
+h2 { font-size:16px; margin:18px 0 6px }
+#grande { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:9 }
+#grande[hidden] { display:none }
+#grande img { max-width:95vw; max-height:90vh; cursor:zoom-out }
+</style>
+</head>
+<body>
+<header>
+  <h1>Registrazioni dei kit</h1>
+  <span id="chi" class="tenue"></span>
+  <button id="entra" class="primo" hidden title="Entra col tuo account Google di Alma">Entra con Alma</button>
+  <input id="cerca" placeholder="Cerca kit, via o comune" title="Filtra per numero, via, comune o cliente">
+  <button data-filtro="tutti" class="scelto" title="Tutte le telecamere che funzionano">Tutte</button>
+  <button data-filtro="problemi" title="Telecamere ferme adesso o con giorni sotto il 90%">Solo problemi</button>
+  <button id="giro" title="Mette in coda tutti i registratori: il PC dell'ufficio li controlla uno alla volta">Ricontrolla tutti</button>
+  <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
+</header>
+<main>
+  <div class="conti" id="conti"></div>
+  <h2 id="titolo-nonTorna"></h2>
+  <table id="nonTorna"><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
+  <h2>Telecamere che funzionano</h2>
+  <table id="tab">
+    <thead><tr>
+      <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="canale">Canale</th>
+      <th data-chiave="adessoOrd" title="Dall'ultimo controllo del giro: registra adesso, ferma da un'ora, o niente oggi">Adesso</th>
+      <th data-chiave="primo" title="La registrazione più vecchia che il registratore ha sul disco">Dal</th>
+      <th data-chiave="ultimo" data-verso="giu" title="La registrazione più recente">Al</th>
+      <th data-chiave="nGiorni" data-verso="giu" title="Giorni con registrazioni sul disco">Giorni</th>
+      <th data-chiave="media" title="Media della percentuale di registrato sui giorni sul disco (24 ore = 100%)">Media</th>
+      <th data-ordina="no" title="Ogni casella è un giorno, dal più recente a sinistra: la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%">Giorni, dal più recente</th>
+      <th data-ordina="no">Foto</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+  <h2 id="titolo-fermi"></h2>
+  <table id="fermi"><tbody></tbody></table>
+</main>
+<div id="grande" hidden></div>
+<script>
+const $ = (s) => document.querySelector(s);
+let righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordine = { chiave: "gruppo", verso: 1 }, ordNT = { chiave: "tipo", verso: 1 };
+const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
+// «09:50-10:02 continua, 10:06-13:14 continua» -> [[inizio, fine], ...] in minuti
+const tratti = (t) => [...String(t || "").matchAll(/(\d\d):(\d\d)-(\d\d):(\d\d)/g)].map((x) => [+x[1] * 60 + +x[2], +x[3] * 60 + +x[4]]);
+
+/** Le righe: una per ogni canale che ha registrato qualcosa (oggi nel giro, o nell'archivio). */
+function costruisci(d) {
+  const cm = {}, am = {};
+  for (const c of d.camere || []) (cm[c.uid] = cm[c.uid] || {})[c.canale] = c;
+  for (const a of d.archivio || []) (am[a.uid] = am[a.uid] || {})[a.canale] = a;
+  righe = []; kitFermi = [];
+  for (const k of d.kit) {
+    const e = k.esito || {};
+    if (k.stato === "fallito") { kitFermi.push({ ...k, perche: "non risponde: " + (e.collegamento || e.errore || "?") }); continue; }
+    if (!k.stato) continue;
+    const t = new Date(k.finito_il), minOra = t.getHours() * 60 + t.getMinutes();
+    const oggiIso = new Date(t.getTime() - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+    const canali = new Map();
+    for (const c of e.canali || []) canali.set(c.numero, { giro: c });
+    for (const [n, a] of Object.entries(am[k.uid] || {})) { const x = canali.get(+n) || {}; x.arc = a; canali.set(+n, x); }
+    let funzionanti = 0;
+    for (const [n, x] of canali) {
+      const tr = tratti(x.giro && x.giro.registrato_oggi);
+      const giorni = { ...((x.arc && !Array.isArray(x.arc.giorni) && x.arc.giorni) || {}) };
+      if (tr.length) giorni[oggiIso] = tr.reduce((s, [a, b]) => s + (b - a), 0);
+      const elenco = Object.entries(giorni).sort((a, b) => (a[0] < b[0] ? 1 : -1));
+      const haRegistrato = tr.length || (x.arc && x.arc.primo) || (x.giro && x.giro.minuti_24h > 0);
+      if (!haRegistrato) continue;
+      funzionanti++;
+      const ultimo = tr.length ? Math.max(...tr.map((z) => z[1])) : null;
+      const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : "ferma dalle " + hm(ultimo);
+      // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
+      const perc = elenco.map(([g, m]) => [g, Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440)))]);
+      const passati = perc.filter(([g]) => g !== oggiIso);
+      righe.push({
+        uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
+        adessoOrd: adesso === "registra" ? 2 : adesso.startsWith("ferma") ? 1 : 0,
+        primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "",
+        nGiorni: x.arc ? Object.keys(giorni).length : null, perc,
+        media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
+        foto: (cm[k.uid] || {})[n],
+      });
+    }
+    if (!funzionanti) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
+    k.funzionanti = funzionanti;
+  }
+  confronta(d);
+}
+/** Le cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT. */
+function confronta(d) {
+  nonTorna = [];
+  const ana = new Map((d.anagrafica || []).map((a) => [a.kit, a]));
+  const perKit = new Map();
+  for (const k of d.kit) { const n = parseInt(k.kit, 10); if (n) (perKit.get(n) || perKit.set(n, []).get(n)).push(k); }
+  const nonInst = (k) => /NON INSTALLATI/i.test(k.gruppo);
+  const DI_PROVA = new Set([998]);   // il kit di prova di Dario (Roma, via Gramsci, 10/11)
+  for (const [n, a] of ana) {
+    if (a.stato === "INSTALLATO" && !perKit.has(n) && !DI_PROVA.has(n))
+      nonTorna.push({ tipo: "Installato ma non è in UVMS", kit: n, dove: `${a.cloud} · ${a.indirizzo}`, det: "senza il registratore in UVMS non si guarda e il giro non lo controlla" });
+  }
+  for (const [n, ks] of perKit) {
+    const a = ana.get(n);
+    const vivi = ks.filter((k) => !nonInst(k));
+    if (vivi.length > 1) nonTorna.push({ tipo: "Stesso kit su più registratori", kit: n, dove: vivi.map((k) => `${k.gruppo} / ${k.nome}`).join(" · "), det: "di solito è il registratore vecchio rimasto dopo una sostituzione" });
+    for (const k of vivi) {
+      if (a && a.stato !== "INSTALLATO") nonTorna.push({ tipo: "In UVMS fra gli installati, l'anagrafica no", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: `anagrafica: ${a.stato || "senza stato"}` });
+      if (!a) nonTorna.push({ tipo: "In UVMS ma non nell'anagrafica", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: "" });
+      const e = k.esito || {};
+      if (k.stato === "fallito" && /password/i.test(e.collegamento || "")) nonTorna.push({ tipo: "Password del registratore diversa", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: "la password comune non entra: va scritta quella giusta" });
+      if (a && a.stato === "INSTALLATO" && k.stato === "fatto" && a.telecamere && k.funzionanti < a.telecamere)
+        nonTorna.push({ tipo: "Meno telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}` });
+      if (a && a.stato === "INSTALLATO" && k.stato === "fatto" && a.telecamere && k.funzionanti > a.telecamere)
+        nonTorna.push({ tipo: "Più telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}` });
+    }
+  }
+}
+function disegna() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const ok = (r) => parole.every((p) => norm(r.gruppo + " " + r.nome + " " + r.modello).includes(p));
+  const problema = (r) => r.adessoOrd < 2 || (r.media != null && r.media < 90) || r.perc.slice(1, 8).some(([, p]) => p < 90);
+  // i canali di un kit stanno insieme: si ordina per kit (per una colonna dei canali vale il canale peggiore del kit)
+  const gruppi = new Map();
+  for (const r of righe) if (ok(r) && (filtro === "tutti" || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
+  const chiaveKit = (rs) => {
+    const c = ordine.chiave;
+    if (c === "gruppo" || c === "nome") return rs[0][c];
+    const v = rs.map((r) => r[c]).filter((x) => x != null && x !== "");
+    if (!v.length) return null;
+    return ordine.verso > 0 ? v.reduce((a, b) => (b < a ? b : a)) : v.reduce((a, b) => (b > a ? b : a));
+  };
+  const kitOrdinati = [...gruppi.values()].map((rs) => ({ rs: rs.sort((a, b) => a.canale - b.canale), k: chiaveKit(rs) }))
+    .sort((a, b) => {
+      if (a.k == null && b.k != null) return 1;
+      if (b.k == null && a.k != null) return -1;
+      const d = (a.k > b.k ? 1 : a.k < b.k ? -1 : 0) * ordine.verso;
+      return d || (a.rs[0].gruppo + a.rs[0].nome > b.rs[0].gruppo + b.rs[0].nome ? 1 : -1);
+    });
+  const kitOk = new Set(righe.map((r) => r.uid));
+  $("#conti").innerHTML = [
+    ["Telecamere che funzionano", righe.length], ["Registrano adesso", righe.filter((r) => r.adessoOrd === 2).length],
+    ["Ferme o niente oggi", righe.filter((r) => r.adessoOrd < 2).length], ["Kit con telecamere che funzionano", kitOk.size],
+    ["Kit che non rispondono o senza registrazioni", kitFermi.length], ["Registratori in coda al PC", dati.coda || 0],
+  ].map(([t, n]) => `<div class="conto">${t}<br><b>${n}</b></div>`).join("");
+  $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
+    ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
+    <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
+    <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}">${r.adesso}</td>
+    <td class="tenue">${r.primo || "archivio da leggere"}</td><td class="tenue">${r.ultimo}</td>
+    <td class="num">${r.nGiorni ?? "-"}</td>
+    <td class="num ${r.media == null ? "tenue" : r.media >= 90 ? "ok" : r.media >= 30 ? "mezzo" : "no"}">${r.media == null ? "-" : r.media + "%"}</td>
+    <td><div class="giorni">${r.perc.map(([g, p]) => `<span class="g ${p >= 90 ? "g100" : p >= 30 ? "g50" : "g0"}" title="${giornoIt(g)}: ${p}% delle 24 ore">${giornoIt(g)}<b>${p}%</b></span>`).join("") || '<span class="tenue">-</span>'}</div></td>
+    <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista} alle ${r.foto.dalle}">` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span>` : ""}</td>
+  </tr>`).join("")).join("");
+  const nt = nonTorna.filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
+    .sort((a, b) => { const x = a[ordNT.chiave] ?? "", y = b[ordNT.chiave] ?? ""; return (x > y ? 1 : x < y ? -1 : 0) * ordNT.verso; });
+  const quando = (dati.anagrafica || [])[0] ? new Date(dati.anagrafica[0].aggiornata_il).toLocaleString("it-IT") : "";
+  $("#titolo-nonTorna").textContent = `Cose che non tornano (${nt.length})` + (quando ? ` · anagrafica letta il ${quando}` : " · anagrafica non ancora caricata");
+  $("#nonTorna tbody").innerHTML = nt.map((x) => `<tr><td class="no">${x.tipo}</td><td class="num">${x.kit}</td><td>${x.dove}</td><td class="tenue">${x.det}</td></tr>`).join("");
+  const f = kitFermi.filter(ok);
+  $("#titolo-fermi").textContent = f.length ? `Kit che non rispondono o senza registrazioni oggi (${f.length})` : "";
+  $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td class="no">${k.perche}</td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td></tr>`).join("");
+}
+async function carica() {
+  const r = await fetch("/api/p2p?op=stato");
+  const d = await r.json().catch(() => ({}));
+  if (d.entra || r.status === 401) { $("#entra").hidden = false; $("#chi").textContent = "entra con Alma per vedere i kit"; return; }
+  if (!d.kit) return;
+  dati = d; costruisci(d); disegna();
+}
+tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
+$("#cerca").addEventListener("input", disegna);
+for (const b of document.querySelectorAll("button[data-filtro]")) b.addEventListener("click", () => {
+  filtro = b.dataset.filtro; document.querySelectorAll("button[data-filtro]").forEach((x) => x.classList.toggle("scelto", x === b)); disegna();
+});
+$("#entra").addEventListener("click", () => { location.href = "/api/entra"; });
+$("#prova").addEventListener("click", () => { location.href = "/"; });
+$("#giro").addEventListener("click", async () => {
+  const r = await fetch("/api/p2p?op=accoda", { method: "POST" });
+  const d = await r.json().catch(() => ({}));
+  $("#chi").textContent = d.accodati != null ? `${d.accodati} registratori messi in coda` : (d.errore || "non riuscito");
+  carica();
+});
+$("#grande").addEventListener("click", () => { $("#grande").hidden = true; });
+$("#tab").addEventListener("click", (e) => { const i = e.target.closest("img.mini"); if (i) { $("#grande").innerHTML = `<img src="${i.src}">`; $("#grande").hidden = false; } });
+fetch("/api/p2p?op=chi").then((r) => r.json()).then((d) => { if (d.email) $("#chi").textContent = "dentro come " + d.email; }).catch(() => {});
+carica(); setInterval(carica, 60000);
+</script>
+</body>
+</html>
