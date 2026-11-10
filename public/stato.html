@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.16.0 (10/11/2026) - dalle correzioni di Barbara: un canale senza nome e senza niente registrato non conta
+<!-- version: 2.16.1 (10/11/2026) - quando il registratore ha tanti tratti (continua e sensore alternati) il testo dei tratti
+     arriva tagliato a 200 caratteri: l'ultima registrazione si prende da ultimo_minuto e i minuti di oggi almeno da minuti_24h
+     (kit 460: diceva «a sensore, ultima 11:09» e registrava ancora alle 15:42).
+     2.16.0 - dalle correzioni di Barbara: un canale senza nome e senza niente registrato non conta
      come telecamera anche se l'archivio e' letto a meta' (i «piu' telecamere di quelle attese» erano canali vuoti); accanto
      alle cose che non tornano e ai kit che non rispondono l'ODM aperto, se c'e' (dal ponte 0.5.0).
      2.15.0 - ogni intestazione e' anche una tendina con ricerca che filtra la colonna (Dario: «permetti di usare
@@ -250,7 +253,11 @@ function costruisci(d) {
     for (const [n, x] of canali) {
       const tr = tratti(x.giro && x.giro.registrato_oggi);
       const giorni = { ...((x.arc && !Array.isArray(x.arc.giorni) && x.arc.giorni) || {}) };
-      if (tr.length) giorni[oggiIso] = tr.reduce((s, [a, b]) => s + (b - a), 0);
+      // 2.16.1: il testo dei tratti puo' essere tagliato; i minuti di oggi sono almeno quelli delle ultime 24 ore meno ieri
+      const m24 = x.giro && Number(x.giro.minuti_24h);
+      const daTratti = tr.reduce((s, [a, b]) => s + (b - a), 0);
+      const minOggi = x.giro && x.giro.minuti_oggi != null ? Number(x.giro.minuti_oggi) : Math.max(daTratti, m24 ? Math.min(minOra, m24 - (1440 - minOra)) : 0);
+      if (tr.length || minOggi > 0) giorni[oggiIso] = minOggi;
       // l'archivio elenca solo i giorni con registrazioni: dal primo sul disco a oggi (al massimo 90) gli altri valgono 0
       if (x.arc && x.arc.primo) {
         const inizio = x.arc.primo.slice(0, 10), oggiD = new Date(oggiIso + "T12:00:00");
@@ -274,7 +281,8 @@ function costruisci(d) {
       const dubbio = !vero && x.arc && x.arc.primo && Object.values(giorni).some((m) => m == null) && !!(x.giro && x.giro.titolo);
       if (!vero && !dubbio) continue;
       if (vero) funzionanti++;
-      const ultimo = tr.length ? Math.max(...tr.map((z) => z[1])) : null;
+      const um = x.giro && x.giro.ultimo_minuto != null ? Number(x.giro.ultimo_minuto) : null;
+      const ultimo = tr.length || um != null ? Math.max(um ?? -1, ...tr.map((z) => z[1])) : null;
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
       const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo

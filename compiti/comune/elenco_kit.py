@@ -2,7 +2,7 @@
 KIT, almeno fogli anagrafica e odm»). Scrive SOLO colonne sue, in fondo, coi nomi che cominciano con «REG»: nelle righe
 INSTALLATO dell'ANAGRAFICA KIT e nelle righe aperte (senza data di chiusura) dell'ODM. Le colonne che ci sono non si
 toccano. Funzioni pure per i testi (provate qui sotto) e una funzione che scrive col Sheets API.
-version: 1.0.0"""
+version: 1.0.1"""
 import datetime
 import re
 
@@ -35,8 +35,11 @@ def stato_kit(k, attese, archivio_kit):
             continue
         if not tr:
             problemi.append("CH %02d niente oggi" % (c["numero"] + 1))
-        elif all(ty == "continua" for *_, ty in tr) and ora - max(b for _, b, _ in tr) > 30:
-            problemi.append("CH %02d ferma dalle %02d:%02d" % ((c["numero"] + 1,) + divmod(max(b for _, b, _ in tr), 60)))
+        else:
+            # 1.0.1: il testo dei tratti arriva tagliato a 200 caratteri: l'ultimo minuto vero e' ultimo_minuto
+            fine = max([b for _, b, _ in tr] + ([c["ultimo_minuto"]] if c.get("ultimo_minuto") is not None else []))
+            if all(ty == "continua" for *_, ty in tr) and ora - fine > 30:
+                problemi.append("CH %02d ferma dalle %02d:%02d" % ((c["numero"] + 1,) + divmod(fine, 60)))
     medie = []
     for a in archivio_kit:
         g = a.get("giorni") or {}
