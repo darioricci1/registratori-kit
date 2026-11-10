@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.3.1 (10/11/2026) - le telecamere che registrano a sensore non sono «ferme»: «a sensore, ultima HH:MM».
+<!-- version: 2.4.0 (10/11/2026) - accanto al grafico si dice cosa c'e' prima del primo giorno: archivio letto e disco vuoto
+     prima di quella data, oppure archivio non ancora letto (Dario: «mi devi dire se hai misurato e non hai trovato nulla
+     o se ancora non hai misurato»).
+     2.3.1 - le telecamere che registrano a sensore non sono «ferme»: «a sensore, ultima HH:MM».
      2.3.0 - i giorni come grafico a barre (Dario: «invece che 100% 100% fai un grafico»): una barra per
      giorno alta quanto la percentuale, la piu' recente a sinistra; date piu' corte in Dal e Al.
      2.2.2 - il kit 998 (Roma, via Gramsci) e' il kit di prova di Dario: fuori dal confronto.
@@ -46,6 +49,7 @@ tr.primaKit td { border-top:2px solid var(--bordo) }
 .grafico { display:block; max-width:62vw; overflow-x:auto }
 .grafico svg { display:block }
 .grafico .b100 { fill:var(--verde) } .grafico .b50 { fill:var(--arancio) } .grafico .b0 { fill:var(--rosso) }
+.prima { font-size:12px; color:var(--tenue); white-space:normal; max-width:62vw; margin-top:2px }
 .grafico text { font-size:9px; fill:var(--tenue) }
 .g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
 .g b { display:block; font-size:12px }
@@ -98,6 +102,14 @@ const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-
 const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
 const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
 const breve = (t) => { const m = String(t || "").match(/^\d{4}-(\d\d)-(\d\d) (\d\d:\d\d)/); return m ? `${m[2]}/${m[1]} ${m[3]}` : (t || ""); };
+/** Cosa c'e' prima del primo giorno del grafico: misurato e vuoto, oppure non ancora misurato. */
+function notaPrima(r) {
+  const quando = r.letto ? new Date(r.letto).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "";
+  if (!r.arcLetto) return "Prima di oggi: archivio non ancora letto (lo legge il giro del PC).";
+  if (r.arcVuoto) return `Archivio letto il ${quando}: sul disco non c'è niente di questo canale.`;
+  if (r.troncato) return `Archivio letto il ${quando}: qui gli ultimi 90 giorni; il disco ha registrazioni dal ${breve(r.primo)}.`;
+  return `Archivio letto il ${quando}: prima del ${breve(r.primo)} il disco non ha niente (registrazioni già sovrascritte, o il kit non registrava).`;
+}
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
 function grafico(perc) {
   if (!perc.length) return '<span class="tenue">-</span>';
@@ -146,7 +158,8 @@ function costruisci(d) {
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
         adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
-        primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "",
+        primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "", letto: (x.arc && x.arc.letto_il) || "",
+        arcLetto: !!x.arc, arcVuoto: !!(x.arc && !x.arc.primo), troncato: !!(x.arc && x.arc.giorni && Object.keys(x.arc.giorni).length >= 90),
         nGiorni: x.arc ? Object.keys(giorni).length : null, perc,
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
         foto: (cm[k.uid] || {})[n],
@@ -219,7 +232,7 @@ function disegna() {
     <td class="tenue" style="white-space:nowrap">${r.primo ? breve(r.primo) : "da leggere"}</td><td class="tenue" style="white-space:nowrap">${breve(r.ultimo)}</td>
     <td class="num">${r.nGiorni ?? "-"}</td>
     <td class="num ${r.media == null ? "tenue" : r.media >= 90 ? "ok" : r.media >= 30 ? "mezzo" : "no"}">${r.media == null ? "-" : r.media + "%"}</td>
-    <td>${grafico(r.perc)}</td>
+    <td>${grafico(r.perc)}<div class="prima">${notaPrima(r)}</div></td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista} alle ${r.foto.dalle}">` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span>` : ""}</td>
   </tr>`).join("")).join("");
   const nt = nonTorna.filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))

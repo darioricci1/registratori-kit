@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.6.1 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.6.2 (10/11/2026)
+// 1.6.2: op=stato da' anche quando e' stato letto l'archivio di ogni telecamera (letto_il).
 // 1.6.1: anche l'account di servizio legge le viste della pagina (per l'Excel delle correzioni).
 // 1.6.0: l'ANAGRAFICA KIT (foglio «Elenco KIT Date Registrazioni») accanto ai registratori, per trovare le cose che non
 //        tornano: nvr_remoto.anagrafica, caricata dall'account di servizio (op=anagrafica, POST), letta con op=stato.
@@ -218,7 +219,7 @@ export default async function handler(req, res) {
           (select count(*) from nvr_remoto.camera_storia s where s.uid = c.uid and s.canale = c.canale and s.il > now() - interval '24 hours')::int as giri_24h,
           (select count(*) from nvr_remoto.camera_storia s where s.uid = c.uid and s.canale = c.canale and s.il > now() - interval '24 hours' and s.vista = 'si vede')::int as viste_24h
         from nvr_remoto.camera c`;
-      const arc = await sql`select uid, canale, primo, ultimo, giorni from nvr_remoto.archivio`;
+      const arc = await sql`select uid, canale, primo, ultimo, giorni, letto_il from nvr_remoto.archivio`;
       const ana = await sql`select kit, stato, indirizzo, cloud, cliente, telecamere, installato_il, aggiornata_il from nvr_remoto.anagrafica`;
       return res.json({ ora: new Date().toISOString(), coda: coda[0].n, kit: righe, camere: cam, archivio: arc, anagrafica: ana });
     }
