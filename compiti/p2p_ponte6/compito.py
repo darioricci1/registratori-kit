@@ -29,7 +29,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.6.1"""
+version: 0.6.2"""
 import base64
 import datetime
 import json
@@ -47,7 +47,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.6.1"
+VERSIONE = "p2p_ponte 0.6.2"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -121,7 +121,9 @@ def prova(r):
         return False, {"errore": "sul PC manca focus_accesso.txt con utente e password dei registratori"}, None
     for i, cr in enumerate(lista):
         ok, es, foto = prova_con(r, cr)
-        if ok or "password" not in str(es.get("collegamento", "")) or i == len(lista) - 1:
+        # 0.6.2: anche «motivo sconosciuto» prova la password dopo (kit 136, 10/11: con la prima rispondeva cosi' e la
+        # seconda non veniva mai provata)
+        if ok or not any(w in str(es.get("collegamento", "")) for w in ("password", "sconosciuto", "utente")) or i == len(lista) - 1:
             if i:
                 es["credenziali"] = f"entrato con la {i + 1}a password provata" if ok else "nessuna password giusta"
             return ok, es, foto
@@ -433,7 +435,7 @@ def collega_con(reg, uid, kit):
     testo = "nessuna credenziale"
     for cr in credenziali(uid, kit):
         ok, testo = reg.collega(uid, cr[0], cr[1], 9010, True, attesa=40)
-        if ok or "password" not in testo:
+        if ok or not any(w in testo for w in ("password", "sconosciuto", "utente")):
             return ok, testo
     return False, testo
 
