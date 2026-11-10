@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.25.0 (10/11/2026) - gli ODM di guasto totale su kit che rispondono divisi fra «registra tutto il giorno» (da chiudere) e
+<!-- version: 2.26.0 (10/11/2026) - nella tabella principale la colonna «Stato» (attivo, ODM parziale, ODM totale, non risponde senza
+     ODM), da ordinare e filtrare; ci sono anche i kit che non rispondono, con una riga sola, così ordinando per comune ogni kit
+     sta col suo comune (Dario).
+     2.25.0 - gli ODM di guasto totale su kit che rispondono divisi fra «registra tutto il giorno» (da chiudere) e
      «registra solo una parte del giorno» (da aggiornare), con le ore delle ultime 24.
      2.24.0 - «Meno telecamere di quelle attese» solo per i kit senza un ODM aperto e non già fra quelli da
      aprire (Dario: «solo quelle effettivamente da aprire»).
@@ -167,11 +170,11 @@ th:focus-within { z-index:5 }
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:19%"><col style="width:6%"><col style="width:24%"><col style="width:26%"><col style="width:7%"><col style="width:8%"><col style="width:10%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th><th data-chiave="odm_n">ODM</th><th data-chiave="odm_ap_ord" data-verso="giu">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
   </div>
-  <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
+  <h2>Kit e telecamere <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
-    <colgroup><col style="width:13%"><col style="width:15%"><col style="width:8%"><col style="width:12%"><col style="width:42%"><col style="width:10%"></colgroup>
+    <colgroup><col style="width:12%"><col style="width:13%"><col style="width:9%"><col style="width:7%"><col style="width:11%"><col style="width:39%"><col style="width:9%"></colgroup>
     <thead><tr>
-      <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="canale">Canale</th>
+      <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="stato" title="Attivo, ODM parziale o totale aperto, o non risponde senza un ODM (dalla scheda ODM e dal giro di stasera)">Stato</th><th data-chiave="canale">Canale</th>
       <th data-chiave="adessoOrd" title="Dall'ultimo controllo del giro: registra adesso, ferma da un'ora, o niente oggi">Adesso</th>
       <th data-ordina="no" title="Le 24 ore di ogni giorno: una colonna per giorno, oggi a destra, mezzanotte in alto. Verde l'ora registrata, giallo registrata a pezzi, rosso niente, grigio non letto; i colori chiari sono i giorni di cui si conosce solo il totale. Passa sopra una colonna per vedere le ore vuote: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero, grigi non letti. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
@@ -391,7 +394,9 @@ function costruisci(d) {
   if (ana.size) kitFermi = kitFermi.filter((k) => (ana.get(parseInt(k.kit, 10)) || {}).stato === "INSTALLATO");
   for (const x of nonTorna) { const c = odmCol(Number(x.kit)); x.odm_n = c.n; x.odm_ap = c.aperto; x.odm_ap_ord = aaaammgg(c.aperto); x.odm_tipo = c.tipo; x.odm_note = c.note; }
   for (const k of kitFermi) { const c = odmCol(parseInt(k.kit, 10)); k.odm_n = c.n; k.odm_ap = c.aperto; k.odm_tipo = c.tipo; k.odm_note = c.note; }
-  preparaFiltri("tab", righe); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi.filter((k) => k.odm_n)); preparaFiltri("senzaOdm", senzaOdm());
+  for (const x of righe) { const n = parseInt(String(x.nome).match(/^\s*(\d+)/)?.[1], 10); x.stato = statoKit(n, false); x.note = odmCol(n).note; }
+  for (const k of kitFermi) k.kitN = parseInt(k.kit, 10);
+  preparaFiltri("tab", [...righe, ...righeFermi()]); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi.filter((k) => k.odm_n)); preparaFiltri("senzaOdm", senzaOdm());
 }
 /** 2.19.0: gli ODM aperti di un kit come elenco di campi; legge anche il testo dei ponti prima del 0.9.0. */
 function odmLista(n) {
@@ -411,11 +416,20 @@ const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a senso
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
 const VALORE = {
-  tab: { gruppo: (r) => r.gruppo || "-", nome: (r) => r.nome || "-", canale: canaleIt, adessoOrd: (r) => tipoAdesso(r.adesso) },
+  tab: { gruppo: (r) => r.gruppo || "-", nome: (r) => r.nome || "-", stato: (r) => r.stato || "-", canale: (r) => (r.canale < 0 ? "-" : canaleIt(r)), adessoOrd: (r) => (r.canale < 0 ? "non risponde" : tipoAdesso(r.adesso)) },
   nonTorna: { tipo: (x) => x.tipo, kit: (x) => String(x.kit || "-"), dove: (x) => x.dove || "-", odm_n: (x) => x.odm_n || "-", odm_tipo: (x) => x.odm_tipo || "-" },
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
 };
+/** 2.26.0 (Dario: «ordinare per comune o stato: attivo, odm parziale, odm totale»): lo stato di un kit dalla scheda ODM. */
+function statoKit(kit, fermo) {
+  const c = odmCol(parseInt(kit, 10));
+  if (c.n) return /TOTALE/i.test(c.tipo || "") ? "ODM totale" : "ODM parziale";
+  return fermo ? "non risponde, senza ODM" : "attivo";
+}
+/** 2.26.0: i kit che non rispondono entrano nella tabella con una riga sola, così stanno nel loro comune. */
+const righeFermi = () => kitFermi.map((k) => ({ uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: -1, adesso: k.perche,
+  adessoOrd: -1, perc: [], ore: {}, fermo: true, finito_il: k.finito_il, stato: statoKit(k.kit, true), note: odmCol(parseInt(k.kit, 10)).note }));
 /** 2.20.0: le telecamere che l'ANAGRAFICA KIT dice per il kit («-» se non lo dice). */
 const attesaDi = (k) => String((ANA.get(parseInt(k.kit, 10)) || {}).telecamere || "-");
 const senzaOdm = () => kitFermi.filter((k) => !k.odm_n);
@@ -517,10 +531,10 @@ function disegna() {
   const problema = (r) => r.adessoOrd < 2 || (r.media != null && r.media < 90) || r.perc.slice(1, 8).some(([, p]) => p < 90);
   // i canali di un kit stanno insieme: si ordina per kit (per una colonna dei canali vale il canale peggiore del kit)
   const gruppi = new Map();
-  for (const r of righe) if (ok(r) && passaFiltri("tab", r) && (filtro === "tutti" || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
+  for (const r of [...righe, ...righeFermi()]) if (ok(r) && passaFiltri("tab", r) && (filtro === "tutti" || r.fermo || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
   const chiaveKit = (rs) => {
     const c = ordine.chiave;
-    if (c === "gruppo" || c === "nome") return rs[0][c];
+    if (c === "gruppo" || c === "nome" || c === "stato") return rs[0][c];
     const v = rs.map((r) => r[c]).filter((x) => x != null && x !== "");
     if (!v.length) return null;
     return ordine.verso > 0 ? v.reduce((a, b) => (b < a ? b : a)) : v.reduce((a, b) => (b > a ? b : a));
@@ -539,12 +553,12 @@ function disegna() {
     ["Kit che non rispondono o senza registrazioni", kitFermi.length], ["Registratori in coda al PC", dati.coda || 0],
   ].map(([t, n]) => `<div class="conto">${t}<br><b>${n}</b></div>`).join("");
   $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
-    ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
-    <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
-    <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
+    ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td><td rowspan="${rs.length}" class="${r.stato === "attivo" ? "ok" : r.stato === "ODM parziale" ? "mezzo" : "no"}"${r.note ? ` title="${esc(r.note)}"` : ""}>${r.stato}</td>` : ""}
+    ${r.fermo ? `<td class="num">-</td><td class="no" colspan="3">${esc(r.adesso)}<div class="tenue" style="font-size:11px">ultimo controllo ${r.finito_il ? new Date(r.finito_il).toLocaleString("it-IT") : ""}</div></td></tr>` : `<td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>`}
+    ${r.fermo ? "" : `<td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
     <td>${griglia(r)}${notaPrima(r) ? `<div class="prima">${notaPrima(r)}</div>` : ""}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
-  </tr>`).join("")).join("");
+  </tr>`}`).join("")).join("");
   const nt = nonTorna.filter((x) => passaFiltri("nonTorna", x)).filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
     .sort((a, b) => { const x = a[ordNT.chiave] ?? "", y = b[ordNT.chiave] ?? ""; return (x > y ? 1 : x < y ? -1 : 0) * ordNT.verso; });
   const quando = (dati.anagrafica || [])[0] ? new Date(dati.anagrafica[0].aggiornata_il).toLocaleString("it-IT") : "";
