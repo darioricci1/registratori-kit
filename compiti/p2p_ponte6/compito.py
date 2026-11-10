@@ -31,7 +31,8 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.5 (10/11/2026): l'anagrafica porta anche la colonna BATT (come è alimentato il kit: solare, 220 V, batteria).
+version: 0.9.6 (10/11/2026): nella prova dei video lunghi la CH1 non si chiama più come la CH2 (il file della CH2 la copriva).
+0.9.5 (10/11/2026): l'anagrafica porta anche la colonna BATT (come è alimentato il kit: solare, 220 V, batteria).
 0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
   vuota, e l'abbandono di Dario sulla CH1 del KIT581 non c'era.
 0.9.3 (10/11/2026): un canale che oggi non ha registrato manda la foto dell'ultima registrazione dei giorni prima
@@ -58,7 +59,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.5"
+VERSIONE = "p2p_ponte 0.9.6"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -557,7 +558,9 @@ def scarico_lungo(p):
         with open(lista, "w", encoding="utf-8") as fh:
             for f in fs:
                 fh.write("file '" + f.replace("\\", "/").replace("'", "") + "'\n")
-        out = os.path.join(video, fn.nome_per_kit_rifiuti(inizio, c) + ".mp4")
+        # 0.9.6: nome_per_kit_rifiuti conta da 1 (CH1 = 1): col canale da 0 la CH1 e la CH2 prendevano lo stesso nome «...00S»
+        # e la CH2 copriva la CH1 (prova del KIT581, 10/11 sera)
+        out = os.path.join(video, fn.nome_per_kit_rifiuti(inizio, c + 1) + ".mp4")
         r = subprocess.run([ffmpeg(), "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lista, "-c", "copy", out],
                            capture_output=True, text=True, timeout=1800, creationflags=0x08000000)
         if r.returncode == 0 and os.path.exists(out):
