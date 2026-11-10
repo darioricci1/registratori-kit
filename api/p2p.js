@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.6.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.6.1 (10/11/2026)
+// 1.6.1: anche l'account di servizio legge le viste della pagina (per l'Excel delle correzioni).
 // 1.6.0: l'ANAGRAFICA KIT (foglio «Elenco KIT Date Registrazioni») accanto ai registratori, per trovare le cose che non
 //        tornano: nvr_remoto.anagrafica, caricata dall'account di servizio (op=anagrafica, POST), letta con op=stato.
 // 1.5.1: l'archivio di un registratore si rilegge una volta al giorno (le percentuali dei giorni cambiano).
@@ -192,7 +193,7 @@ export default async function handler(req, res) {
     }
     // --- la pagina
     if (op === "chi") return res.json({ email: await chiE(req) });
-    if (!(await chiE(req)) && !(await rmsValido(String(req.headers["x-rms-token"] || "").trim())))
+    if (!(await chiE(req)) && !(await pcValido(req)) && !(await rmsValido(String(req.headers["x-rms-token"] || "").trim())))
       return res.status(401).json({ errore: "Entra con Google (bottone «Entra con Alma») o scrivi un token RMS valido.", entra: true });
     if (op === "chiedi" && req.method === "POST") {
       const b = await corpo(req);
