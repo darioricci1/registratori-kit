@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.16.1 (10/11/2026) - quando il registratore ha tanti tratti (continua e sensore alternati) il testo dei tratti
+<!-- version: 2.17.0 (10/11/2026) - al posto della linea delle percentuali le 24 ore di ogni giorno (Dario: «invece che
+     100% le 24 ore, in verde dove ha funzionato: per capire se non funziona solo in ore precise»): una colonna per giorno, mezzanotte
+     in alto, verde dove ha registrato, giallo un pezzo dell'ora, rosso niente, grigio non letto. Le ore arrivano col ponte 0.7.0
+     (op=ore, letto una volta); per i giorni letti prima c'e' solo il totale e la colonna ne ha il colore, piu' chiaro.
+     2.16.1 - quando il registratore ha tanti tratti (continua e sensore alternati) il testo dei tratti
      arriva tagliato a 200 caratteri: l'ultima registrazione si prende da ultimo_minuto e i minuti di oggi almeno da minuti_24h
      (kit 460: diceva «a sensore, ultima 11:09» e registrava ancora alle 15:42).
      2.16.0 - dalle correzioni di Barbara: un canale senza nome e senza niente registrato non conta
@@ -148,7 +152,7 @@ th:focus-within { z-index:5 }
     <thead><tr>
       <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="canale">Canale</th>
       <th data-chiave="adessoOrd" title="Dall'ultimo controllo del giro: registra adesso, ferma da un'ora, o niente oggi">Adesso</th>
-      <th data-ordina="no" title="La percentuale delle 24 ore registrata giorno per giorno: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero, grigi non letti. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
+      <th data-ordina="no" title="Le 24 ore di ogni giorno: una colonna per giorno, oggi a destra, mezzanotte in alto. Verde l'ora registrata, giallo registrata a pezzi, rosso niente, grigio non letto; i colori chiari sono i giorni di cui si conosce solo il totale. Passa sopra una colonna per vedere le ore vuote: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero, grigi non letti. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
@@ -180,6 +184,49 @@ function notaPrima(r) {
   if (r.arcVuoto) return `Archivio letto il ${quando}: sul disco non c'è niente di questo canale.`;
   if (r.troncato) return `Archivio letto il ${quando}: qui gli ultimi 90 giorni; il disco ha registrazioni dal ${breve(r.primo)}.`;
   return `Archivio letto il ${quando}: prima del ${breve(r.primo)} il disco non ha niente (registrazioni già sovrascritte, o il kit non registrava).`;
+}
+/** 2.17.0: i minuti di ogni ora di oggi dai tratti (le ore dopo il controllo restano vuote: «-»). */
+function oreDaTratti(tr, minOra) {
+  const m = new Array(24).fill(0);
+  for (const [a, b] of tr) for (let o = Math.floor(a / 60); o < 24 && o * 60 < b; o++) m[o] += Math.max(0, Math.min(b, o * 60 + 60) - Math.max(a, o * 60));
+  return m.map((x, o) => (o * 60 >= minOra ? "-" : "0123456789A"[Math.min(10, Math.round(Math.min(60, x) / 6))])).join("");
+}
+/** 2.17.0: le 24 ore di ogni giorno, una colonna per giorno (oggi a destra), mezzanotte in alto. */
+function griglia(r) {
+  if (!r.perc.length) return '<span class="tenue">-</span>';
+  const W = 560, H = 112, M = { su: 4, giu: 16, sx: 30, dx: 4 }, N = GIORNI_SCALA;
+  const oggi = new Date(r.oggiIso + "T12:00:00");
+  const passo = (W - M.sx - M.dx) / N, alto = (H - M.su - M.giu) / 24;
+  const perc = new Map(r.perc.map(([g, p]) => [g, p]));
+  const col = (c) => (c === "-" ? null : c === "0" ? "var(--rosso)" : c === "A" || c === "9" ? "#2e9e5b" : "#e0a800");
+  let celle = "", sopra = "";
+  for (let i = 0; i < N; i++) {
+    const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
+    if (d < DAL) continue;
+    const x = W - M.dx - passo * (i + 1), w = Math.max(1, passo - 1);
+    const s = r.ore[d], p = perc.get(d);
+    let spiega;
+    if (s && s.length === 24) {
+      for (let o = 0; o < 24; o++) { const c = d === r.oggiIso && o * 60 >= r.minOra ? null : col(s[o]); if (c) celle += `<rect x="${x.toFixed(1)}" y="${(M.su + o * alto).toFixed(1)}" width="${w.toFixed(1)}" height="${(alto - 0.4).toFixed(1)}" fill="${c}"/>`; }
+      const buchi = [...s].map((c, o) => (c === "0" ? o : null)).filter((o) => o != null);
+      const parz = [...s].map((c, o) => (c !== "0" && c !== "A" && c !== "9" && c !== "-" ? o : null)).filter((o) => o != null);
+      const ore = (l) => l.map((o) => String(o).padStart(2, "0")).join(", ");
+      spiega = `${giornoIt(d)}: ${p != null ? p + "% · " : ""}` + (buchi.length ? `niente alle ore ${ore(buchi)}` : "nessuna ora vuota") + (parz.length ? `; a pezzi alle ${ore(parz)}` : "");
+    } else if (p != null) {
+      const c = p >= 90 ? "#2e9e5b" : p > 0 ? "#e0a800" : "var(--rosso)";
+      celle += `<rect x="${x.toFixed(1)}" y="${M.su}" width="${w.toFixed(1)}" height="${(24 * alto).toFixed(1)}" fill="${c}" opacity=".35"/>`;
+      spiega = `${giornoIt(d)}: ${p}% (le ore di questo giorno non sono ancora state lette: si vede solo il totale)`;
+    } else {
+      celle += `<rect x="${x.toFixed(1)}" y="${M.su}" width="${w.toFixed(1)}" height="${(24 * alto).toFixed(1)}" fill="var(--bordo)" opacity=".5"/>`;
+      spiega = `${giornoIt(d)}: non letto`;
+    }
+    sopra += `<rect x="${x.toFixed(1)}" y="${M.su}" width="${passo.toFixed(1)}" height="${(24 * alto).toFixed(1)}" fill="transparent" data-spiega="${esc(spiega)}"/>`;
+  }
+  const asse = [0, 6, 12, 18, 24].map((o) => `<text class="asse" x="${M.sx - 4}" y="${(M.su + o * alto + 3).toFixed(1)}" text-anchor="end">${String(o).padStart(2, "0")}</text>`).join("");
+  const date = [];
+  for (let i = 0; i < N; i += 7) { if (N - 1 - i < 3 && i) continue; const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
+    date.push(`<text class="anno" x="${(W - M.dx - passo * (i + 0.5)).toFixed(1)}" y="${H - 3}" text-anchor="${i === 0 ? "end" : "middle"}">${i === 0 ? "oggi" : giornoIt(d)}</text>`); }
+  return `<span class="grafico"><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="ore registrate per giorno">${asse}${celle}${sopra}${date.join("")}</svg></span>`;
 }
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
 const DAL = "2026-10-27";   // il grafico parte sempre da qui (Dario, 10/11: «fammi sempre vedere dal 20/10 in poi»)
@@ -299,6 +346,8 @@ function costruisci(d) {
         nGiorni: x.arc ? Object.keys(giorni).filter((g) => g >= DAL).length : null, perc,
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
         foto: (cm[k.uid] || {})[n],
+        ore: { ...(((ORE || {})[k.uid] || {})[n] || {}), ...(x.giro && x.giro.ore_oggi ? { [oggiIso]: x.giro.ore_oggi } : tr.length ? { [oggiIso]: oreDaTratti(tr, String(x.giro.registrato_oggi).length >= 200 ? Math.max(...tr.map((z) => z[1])) : minOra) } : {}) },
+        oggiIso, minOra,
       });
     }
     if (!funzionanti) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
@@ -409,7 +458,7 @@ function disegna() {
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
     <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
     <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
-    <td>${grafico(r.perc)}<div class="prima">${notaPrima(r)}</div></td>
+    <td>${griglia(r)}<div class="prima">${notaPrima(r)}</div></td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
   </tr>`).join("")).join("");
   const nt = nonTorna.filter((x) => passaFiltri("nonTorna", x)).filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
@@ -426,7 +475,14 @@ function disegna() {
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span>${odmDi(k) ? `<div class="tenue">ODM aperto: ${esc(odmDi(k))}</div>` : ""}</td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td></tr>`).join("");
   $("#fermi thead").hidden = !kitFermi.length;
 }
+let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {
+  if (!ORE) {
+    ORE = {};
+    try {
+      for (const a of await (await fetch("/api/p2p?op=ore")).json()) (ORE[a.uid] = ORE[a.uid] || {})[a.canale] = a.ore || {};
+    } catch { /* senza le ore resta il colore del totale */ }
+  }
   const r = await fetch("/api/p2p?op=stato");
   const d = await r.json().catch(() => ({}));
   if (d.entra || r.status === 401) { $("#entra").hidden = false; $("#chi").textContent = "entra con Alma per vedere i kit"; return; }

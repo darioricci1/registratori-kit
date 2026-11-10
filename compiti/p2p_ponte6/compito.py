@@ -29,7 +29,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.6.2"""
+version: 0.7.0"""
 import base64
 import datetime
 import json
@@ -47,7 +47,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.6.2"
+VERSIONE = "p2p_ponte 0.7.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -161,7 +161,7 @@ def prova_con(r, cr):
             # minuti registrati nelle ultime 24 ore: oggi fino ad adesso, ieri da quest'ora in poi
             m24 = sum(min(b, min_ora) - a for a, b, _ in tr if a < min_ora) + sum(b - max(a, min_ora) for a, b, _ in ieri if b > min_ora)
             canali.append({"numero": num, "titolo": tit, "registrato_oggi": fn.descrivi_tratti(tr)[:600] if tr else "niente oggi",
-                           "minuti_oggi": sum(b - a for a, b, _ in tr),
+                           "minuti_oggi": sum(b - a for a, b, _ in tr), "ore_oggi": ore_del_giorno(tr) if tr else "",
                            "ultimo_minuto": ultimo, "minuti_24h": m24})
         es["ora_pc"] = adesso.strftime("%Y-%m-%d %H:%M")
         if leggera:
@@ -249,6 +249,16 @@ def foto_camere(reg, oggi, canali, rid):
 DAL_ARCHIVIO = datetime.date(2026, 10, 27)   # come la pagina (Dario: «limita al 27/10»)
 
 
+def ore_del_giorno(tr):
+    """0.7.0: i minuti registrati in ognuna delle 24 ore, scritti in 24 lettere: «0» niente, «A» tutta l'ora (un passo ogni
+    6 minuti). Funzione pura: [(0, 90, 1)] -> «A50000000000000000000000»."""
+    m = [0] * 24
+    for a, b, _ in tr:
+        for o in range(max(0, a // 60), min(24, (b - 1) // 60 + 1)):
+            m[o] += max(0, min(b, (o + 1) * 60) - max(a, o * 60))
+    return "".join("0123456789A"[min(10, round(min(60, x) / 6))] for x in m)
+
+
 def archivio(reg):
     """Per ogni canale: la prima e l'ultima registrazione sul disco e, per ogni giorno con registrazioni (dal piu' recente,
     al massimo 90: di piu' il primo giro durerebbe un giorno), i minuti registrati su 1440 (0.3.1, Dario: «una percentuale di completamento per ogni giorno»)."""
@@ -271,7 +281,7 @@ def archivio(reg):
             for g in gg or []:
                 date.append(datetime.date(m.year, m.month, g))
             m = datetime.date(m.year + (m.month == 12), m.month % 12 + 1, 1)
-        giorni = {}
+        giorni, ore = {}, {}
         for mm in mesi_muti:
             d = max(mm, DAL_ARCHIVIO)
             while d.month == mm.month and d <= oggi:
@@ -282,8 +292,10 @@ def archivio(reg):
                 break
             tr = reg.minuti_registrati(h, datetime.datetime(d.year, d.month, d.day))
             giorni[d.isoformat()] = None if tr is None else sum(b - a for a, b, _ in tr)   # None = il registratore non ha risposto
+            if tr is not None:   # 0.7.0 (Dario: «le 24 ore, in verde dove ha funzionato»): i minuti di ogni ora
+                ore[d.isoformat()] = ore_del_giorno(tr)
         out.append({"canale": num, "primo": f"{primo:%Y-%m-%d %H:%M}", "ultimo": f"{ultimo:%Y-%m-%d %H:%M}",
-                    "giorni": giorni, "giorni_totali": len(date)})
+                    "giorni": giorni, "giorni_totali": len(date), "ore": ore})
     return out
 
 

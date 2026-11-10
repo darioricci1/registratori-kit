@@ -1,4 +1,6 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.8.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.9.0 (10/11/2026)
+// 1.9.0: l'archivio tiene anche le ore di ogni giorno (colonna ore, dal ponte 0.7.0), lette a parte con op=ore una volta
+//        all'apertura della pagina (op=stato si rilegge ogni minuto e resta leggero).
 // 1.8.0: l'anagrafica porta anche gli ODM aperti di ogni kit (colonna odm, dal ponte 0.5.0): la pagina li mostra accanto
 //        alle cose che non tornano (Barbara, 10/11: «e' aperto odm n° 1686 per CH3 non funzionante»).
 // 1.7.1: i ponti prima del 0.4.0 non leggono piu' gli archivi (segnavano 0 i giorni senza risposta del registratore).
@@ -59,6 +61,7 @@ async function tabelle(sql) {
     await sql`create table if not exists nvr_remoto.anagrafica (kit int primary key, stato text, indirizzo text, cloud text,
       cliente text, telecamere int, installato_il text, aggiornata_il timestamptz default now())`;
     await sql`alter table nvr_remoto.anagrafica add column if not exists odm text`;
+    await sql`alter table nvr_remoto.archivio add column if not exists ore jsonb`;
     await sql`alter table nvr_remoto.registratori drop constraint if exists registratori_pkey`;
     await sql`create unique index if not exists registratori_uid_nome on nvr_remoto.registratori (uid, nome)`;
     await sql`create table if not exists nvr_remoto.pc (nome text primary key, visto_il timestamptz, versione text)`;
@@ -187,9 +190,10 @@ export default async function handler(req, res) {
           delete c.foto;
         }
         for (const a of (es.archivio || []).slice(0, 16)) {
-          await sql`insert into nvr_remoto.archivio (uid, canale, primo, ultimo, giorni) values (${rq.uid}, ${Number(a.canale)},
-            ${String(a.primo || "")}, ${String(a.ultimo || "")}, ${JSON.stringify(a.giorni || {})}::jsonb)
-            on conflict (uid, canale) do update set primo = excluded.primo, ultimo = excluded.ultimo, giorni = excluded.giorni, letto_il = now()`;
+          await sql`insert into nvr_remoto.archivio (uid, canale, primo, ultimo, giorni, ore) values (${rq.uid}, ${Number(a.canale)},
+            ${String(a.primo || "")}, ${String(a.ultimo || "")}, ${JSON.stringify(a.giorni || {})}::jsonb, ${a.ore ? JSON.stringify(a.ore) : null}::jsonb)
+            on conflict (uid, canale) do update set primo = excluded.primo, ultimo = excluded.ultimo, giorni = excluded.giorni,
+              ore = coalesce(excluded.ore, nvr_remoto.archivio.ore), letto_il = now()`;
         }
         delete es.archivio;
       }
@@ -211,6 +215,9 @@ export default async function handler(req, res) {
       const can = Number(b.canale) >= 1 && Number(b.canale) <= 16 ? Number(b.canale) : null;
       const r = await sql`insert into nvr_remoto.richieste (kit, uid, canale, priorita) values (${String(b.kit || "").slice(0, 80)}, ${uid}, ${can}, ${b.priorita === 0 ? 0 : 1}) returning id`;
       return res.json({ id: r[0].id });
+    }
+    if (op === "ore") {   // 1.9.0: le ore di ogni giorno, una volta per apertura di pagina
+      return res.json(await sql`select uid, canale, ore from nvr_remoto.archivio where ore is not null`);
     }
     if (op === "stato") {
       const righe = await sql`select g.uid, g.gruppo, g.nome, g.kit, g.modello, g.canali as canali_uvms,
