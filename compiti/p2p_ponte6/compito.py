@@ -31,7 +31,8 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
+version: 0.9.5 (10/11/2026): l'anagrafica porta anche la colonna BATT (come è alimentato il kit: solare, 220 V, batteria).
+0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
   vuota, e l'abbandono di Dario sulla CH1 del KIT581 non c'era.
 0.9.3 (10/11/2026): un canale che oggi non ha registrato manda la foto dell'ultima registrazione dei giorni prima
   (kit 580, CH3 ferma dal 2/11), con giorno e ora.
@@ -57,7 +58,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.4"
+VERSIONE = "p2p_ponte 0.9.5"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -420,7 +421,7 @@ def righe_anagrafica(testo):
     import io
     righe = list(csv.reader(io.StringIO(testo)))
     h = [x.strip().upper() for x in righe[0]]
-    i = {n: h.index(n) for n in ("STATO", "KIT", "INDIRIZZO", "CLOUD", "CLIENTE", "N. TELECAMERE", "DATA INSTALLAZIONE") if n in h}
+    i = {n: h.index(n) for n in ("STATO", "KIT", "INDIRIZZO", "CLOUD", "CLIENTE", "N. TELECAMERE", "DATA INSTALLAZIONE", "BATT") if n in h}
     per = {}
     for x in righe[1:]:
         k = x[i["KIT"]].strip() if len(x) > i["KIT"] else ""
@@ -431,6 +432,7 @@ def righe_anagrafica(testo):
         t = x[i["N. TELECAMERE"]].strip() if "N. TELECAMERE" in i else ""
         r["telecamere"] = telecamere_da_testo(t)   # 0.9.2: «2+SAT» sono 3 telecamere (prima valeva vuoto: 228 kit)
         r["telecamere_testo"] = t
+        r["batt"] = x[i["BATT"]].strip() if "BATT" in i and len(x) > i["BATT"] else ""   # 0.9.5: solare, 220 V o batteria
         if r["kit"] not in per or per[r["kit"]]["stato"] != "INSTALLATO":
             per[r["kit"]] = r
     return list(per.values())
