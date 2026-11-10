@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.6.0 (10/11/2026) - «Scarica in Excel» per le cose che non tornano, le telecamere e i kit che non rispondono
+<!-- version: 2.7.1 (10/11/2026) - grafico ad altezza fissa (le date non si ingrandiscono); rosso solo i giorni a zero, giallo
+     sopra zero, verde dal 90% (Dario).
+     2.7.0 - grafico a linee, con la stessa scala per tutte le righe e oggi sempre sul bordo destro (Dario).
+     2.6.0 - «Scarica in Excel» per le cose che non tornano, le telecamere e i kit che non rispondono
      (Dario: «me lo fai estrarre in Excel?»): un file .csv con il punto e virgola, che Excel apre da solo.
      2.5.2 - il grafico largo quanto i suoi giorni (9 px l'uno), al massimo la colonna.
      2.5.1 - nel grafico il giorno piu' vecchio a sinistra e oggi a destra (Dario).
@@ -56,7 +59,10 @@ tr.primaKit td { border-top:2px solid var(--bordo) }
 .giorni { display:flex; gap:2px; max-width:62vw; overflow-x:auto; padding-bottom:2px }
 .grafico { display:block; width:100% }
 .grafico svg { display:block; height:auto }
-.grafico .b100 { fill:var(--verde) } .grafico .b50 { fill:var(--arancio) } .grafico .b0 { fill:var(--rosso) }
+.grafico .linea { fill:none; stroke:var(--blu); stroke-width:1.6; vector-effect:non-scaling-stroke }
+.grafico .area { fill:var(--blu); opacity:.12 } .grafico .riga90 { stroke:var(--bordo); stroke-dasharray:2 2; vector-effect:non-scaling-stroke }
+.grafico .p100 { fill:var(--verde) } .grafico .p50 { fill:#e0a800 } .grafico .p0 { fill:var(--rosso) }
+.grafico .tratto { stroke:var(--blu); stroke-width:1.6 }
 .prima { font-size:11px; color:var(--tenue); white-space:normal; margin-top:2px }
 .grafico text { font-size:9px; fill:var(--tenue) }
 .g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
@@ -95,7 +101,7 @@ h2 { font-size:16px; margin:18px 0 6px }
       <th data-chiave="ultimo" data-verso="giu" title="La registrazione più recente">Al</th>
       <th data-chiave="nGiorni" data-verso="giu" title="Giorni con registrazioni sul disco">Giorni</th>
       <th data-chiave="media" title="Media della percentuale di registrato sui giorni sul disco (24 ore = 100%)">Media</th>
-      <th data-ordina="no" title="Una barra per giorno, la più vecchia a sinistra e oggi a destra, alta quanto la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%. Passa sopra una barra per vedere giorno e percentuale">Giorni, fino a oggi</th>
+      <th data-ordina="no" title="La percentuale delle 24 ore registrata giorno per giorno: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
@@ -120,19 +126,25 @@ function notaPrima(r) {
   return `Archivio letto il ${quando}: prima del ${breve(r.primo)} il disco non ha niente (registrazioni già sovrascritte, o il kit non registrava).`;
 }
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
+let GIORNI_SCALA = 30;   // quanti giorni copre la scala comune (il piu' lungo fra le righe, almeno 30)
+/** La linea dei giorni: altezza fissa, larga quanto la colonna; le x in percentuale, oggi sul bordo destro. */
 function grafico(perc) {
   if (!perc.length) return '<span class="tenue">-</span>';
-  const L = 9, H = 30, larg = perc.length * L + 24;
-  const giorni = [...perc].reverse();   // dal piu' vecchio a sinistra a oggi a destra, oggi sempre sul bordo destro
-  const x0 = 0;
-  const barre = giorni.map(([g, p], i) => {
-    const h = Math.max(1.5, H * p / 100), cl = p >= 90 ? "b100" : p >= 30 ? "b50" : "b0";
-    return `<rect class="${cl}" x="${x0 + i * L + 1}" y="${H - h}" width="${L - 2}" height="${h}" rx="1"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></rect>`;
-  }).join("");
-  // un'etichetta ogni 7 giorni contando da oggi, e sempre il primo giorno
-  const n = giorni.length;
-  const etichette = giorni.map(([g], i) => ((n - 1 - i) % 7 === 0 || i === 0 ? `<text x="${x0 + i * L + 1}" y="${H + 10}"${i === n - 1 ? ' text-anchor="end" dx="8"' : ""}>${giornoIt(g)}</text>` : "")).join("");
-  return `<span class="grafico"><svg viewBox="0 0 ${larg} ${H + 12}" width="${larg}" style="max-width:100%" preserveAspectRatio="xMinYMin meet" role="img" aria-label="registrato per giorno">${barre}${etichette}</svg></span>`;
+  const H = 30, N = GIORNI_SCALA;
+  const oggi = new Date(perc[0][0] + "T12:00:00");
+  const xg = (g) => 98 - 96 * Math.round((oggi - new Date(g + "T12:00:00")) / 864e5) / Math.max(1, N - 1);
+  const yp = (p) => 3 + (H - 6) * (1 - p / 100);
+  const punti = [...perc].reverse().map(([g, p]) => [xg(g), yp(p), g, p]).filter(([x]) => x >= 1);
+  const tratti = punti.slice(1).map(([x, y], i) => `<line class="tratto" x1="${punti[i][0].toFixed(2)}%" y1="${punti[i][1].toFixed(1)}" x2="${x.toFixed(2)}%" y2="${y.toFixed(1)}"/>`).join("");
+  const pallini = punti.map(([x, y, g, p]) => `<circle class="${p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="2.2"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></circle>`).join("");
+  const etichette = [];
+  for (let i = 0; i < N; i += 7) {
+    const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
+    const x = 98 - 96 * i / Math.max(1, N - 1);
+    etichette.push(`<text x="${x.toFixed(2)}%" y="${H + 10}" text-anchor="${i === 0 ? "end" : "middle"}">${i === 0 ? "oggi" : giornoIt(d)}</text>`);
+  }
+  return `<span class="grafico"><svg width="100%" height="${H + 12}" role="img" aria-label="registrato per giorno">` +
+    `<line class="riga90" x1="0" x2="100%" y1="${yp(90)}" y2="${yp(90)}"/>${tratti}${pallini}${etichette.join("")}</svg></span>`;
 }
 // «09:50-10:02 continua, 10:06-13:14 continua» -> [[inizio, fine], ...] in minuti
 const tratti = (t) => [...String(t || "").matchAll(/(\d\d):(\d\d)-(\d\d):(\d\d)/g)].map((x) => [+x[1] * 60 + +x[2], +x[3] * 60 + +x[4]]);
@@ -276,7 +288,9 @@ async function carica() {
   const d = await r.json().catch(() => ({}));
   if (d.entra || r.status === 401) { $("#entra").hidden = false; $("#chi").textContent = "entra con Alma per vedere i kit"; return; }
   if (!d.kit) return;
-  dati = d; costruisci(d); disegna();
+  dati = d; costruisci(d);
+  GIORNI_SCALA = Math.min(90, Math.max(30, ...righe.map((r) => r.perc.length)));
+  disegna();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
