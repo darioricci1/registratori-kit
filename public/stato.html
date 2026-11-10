@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.23.0 (10/11/2026) - le note dell'ODM sotto il kit, a tutta larghezza, invece che in una colonna stretta (Dario).
+<!-- version: 2.24.0 (10/11/2026) - «Meno telecamere di quelle attese» solo per i kit senza un ODM aperto e non già fra quelli da
+     aprire (Dario: «solo quelle effettivamente da aprire»).
+     2.23.0 - le note dell'ODM sotto il kit, a tutta larghezza, invece che in una colonna stretta (Dario).
      2.22.0 - un canale fermo da giorni non conta fra quelli che funzionano (580: l'ODM «CH3-CH4 spente» è
      giusto); la foto di un canale fermo è l'ultima registrata, col giorno («ultima registrazione: 02/11 14:35», ponte 0.9.3).
      2.21.0 - fra le cose che non tornano i kit installati senza «N. TELECAMERE» (il ponte 0.9.2 legge
@@ -465,7 +467,8 @@ function confronta(d) {
       if (!a) nonTorna.push({ tipo: "In UVMS ma non nell'anagrafica", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: "" });
       const e = k.esito || {};
       if (k.stato === "fallito" && /password/i.test(e.collegamento || "")) nonTorna.push({ tipo: "Password del registratore diversa", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, "la password comune non entra: va scritta quella giusta (sui DVR è quella messa in laboratorio quando si monta il kit, Barbara 10/11)") });
-      if (a && a.stato === "INSTALLATO" && k.stato === "fatto" && a.telecamere && k.funzionanti < a.telecamere)
+      // 2.24.0 (Dario: «solo quelle effettivamente da aprire»): con un ODM aperto le telecamere in meno sono già segnalate
+      if (a && a.stato === "INSTALLATO" && !a.odm && !SOSPESI[n] && k.stato === "fatto" && a.telecamere && k.funzionanti < a.telecamere)
         nonTorna.push({ tipo: "Meno telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}`) });
       if (a && a.stato === "INSTALLATO" && k.stato === "fatto" && a.telecamere && k.funzionanti > a.telecamere)
         nonTorna.push({ tipo: "Più telecamere di quelle attese", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: conOdm(n, `l'anagrafica ne dice ${a.telecamere}, oggi ne registrano ${k.funzionanti}`) });
@@ -497,6 +500,9 @@ function confronta(d) {
       nonTorna.push({ tipo: "Non funziona e non c'è un ODM", kit: n, dove, det: perche });
     }
   }
+  // 2.24.0: un kit già fra quelli senza ODM non si ripete fra le telecamere in meno
+  const daAprire = new Set(nonTorna.filter((x) => x.tipo === "Non funziona e non c'è un ODM").map((x) => x.kit));
+  nonTorna = nonTorna.filter((x) => !(x.tipo === "Meno telecamere di quelle attese" && daAprire.has(x.kit)));
 }
 function disegna() {
   const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
