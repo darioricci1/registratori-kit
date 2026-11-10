@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.4.1 (10/11/2026) - i giorni senza registrazioni fra il primo sul disco e oggi compaiono come 0% (prima sparivano).
+<!-- version: 2.6.0 (10/11/2026) - «Scarica in Excel» per le cose che non tornano, le telecamere e i kit che non rispondono
+     (Dario: «me lo fai estrarre in Excel?»): un file .csv con il punto e virgola, che Excel apre da solo.
+     2.5.2 - il grafico largo quanto i suoi giorni (9 px l'uno), al massimo la colonna.
+     2.5.1 - nel grafico il giorno piu' vecchio a sinistra e oggi a destra (Dario).
+     2.5.0 - piu' stretta, senza scorrere di lato (Dario); il grafico si adatta alla colonna; «lo stesso
+     registratore due volte in UVMS».
+     2.4.1 - i giorni senza registrazioni fra il primo sul disco e oggi compaiono come 0% (prima sparivano).
      2.4.0 - accanto al grafico si dice cosa c'e' prima del primo giorno: archivio letto e disco vuoto
      prima di quella data, oppure archivio non ancora letto (Dario: «mi devi dire se hai misurato e non hai trovato nulla
      o se ancora non hai misurato»).
@@ -31,7 +37,7 @@ html, body { height:100%; margin:0 }
 body { font:15px/1.45 system-ui, sans-serif; background:var(--sfondo); color:var(--testo); display:flex; flex-direction:column; overflow:hidden }
 header { flex:none; padding:10px 16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--bordo); background:var(--carta) }
 h1 { font-size:18px; margin:0 10px 0 0 }
-main { flex:1; min-height:0; overflow:auto; padding:0 16px 16px }
+main { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; padding:0 12px 16px }
 button { font:inherit; min-height:40px; padding:6px 14px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); cursor:pointer }
 button.primo { background:var(--blu); color:#fff; border-color:var(--blu) }
 button.scelto { outline:2px solid var(--blu) }
@@ -39,24 +45,25 @@ input { font:inherit; min-height:40px; padding:6px 10px; border-radius:var(--rag
 .conti { display:flex; flex-wrap:wrap; gap:8px; padding:10px 0 }
 .conto { background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:6px 12px }
 .conto b { font-size:18px }
-table { border-collapse:collapse; width:100%; background:var(--carta) }
-th, td { padding:5px 8px; border-bottom:1px solid var(--bordo); text-align:left; vertical-align:middle }
+table { border-collapse:collapse; width:100%; background:var(--carta); table-layout:fixed }
+td, th { overflow-wrap:anywhere }
+th, td { padding:4px 6px; border-bottom:1px solid var(--bordo); text-align:left; vertical-align:middle }
 th { position:sticky; top:0; background:var(--carta); vertical-align:bottom; z-index:1 }
 td.num { text-align:right; white-space:nowrap }
 tr.kitA td { background:var(--carta) } tr.kitB td { background:var(--grigio-chiaro) }
 tr.primaKit td { border-top:2px solid var(--bordo) }
 .tenue { color:var(--tenue) } .no { color:var(--rosso); font-weight:600 } .ok { color:var(--verde); font-weight:600 } .mezzo { color:var(--arancio); font-weight:600 }
 .giorni { display:flex; gap:2px; max-width:62vw; overflow-x:auto; padding-bottom:2px }
-.grafico { display:block; max-width:62vw; overflow-x:auto }
-.grafico svg { display:block }
+.grafico { display:block; width:100% }
+.grafico svg { display:block; height:auto }
 .grafico .b100 { fill:var(--verde) } .grafico .b50 { fill:var(--arancio) } .grafico .b0 { fill:var(--rosso) }
-.prima { font-size:12px; color:var(--tenue); white-space:normal; max-width:62vw; margin-top:2px }
+.prima { font-size:11px; color:var(--tenue); white-space:normal; margin-top:2px }
 .grafico text { font-size:9px; fill:var(--tenue) }
 .g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
 .g b { display:block; font-size:12px }
 .g100 { background:var(--verde-chiaro); color:var(--verde) } .g50 { background:var(--arancio-chiaro); color:var(--arancio) }
 .g0 { background:var(--rosso-chiaro); color:var(--rosso) }
-img.mini { width:96px; border-radius:6px; cursor:zoom-in; display:block }
+img.mini { width:100%; max-width:110px; border-radius:6px; cursor:zoom-in; display:block }
 h2 { font-size:16px; margin:18px 0 6px }
 #grande { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:9 }
 #grande[hidden] { display:none }
@@ -76,10 +83,11 @@ h2 { font-size:16px; margin:18px 0 6px }
 </header>
 <main>
   <div class="conti" id="conti"></div>
-  <h2 id="titolo-nonTorna"></h2>
-  <table id="nonTorna"><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
-  <h2>Telecamere che funzionano</h2>
+  <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file che Excel apre">Scarica in Excel</button></h2>
+  <table id="nonTorna"><colgroup><col style="width:22%"><col style="width:6%"><col style="width:36%"><col style="width:36%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
+  <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
+    <colgroup><col style="width:10%"><col style="width:12%"><col style="width:5%"><col style="width:9%"><col style="width:7%"><col style="width:7%"><col style="width:5%"><col style="width:5%"><col style="width:32%"><col style="width:8%"></colgroup>
     <thead><tr>
       <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="canale">Canale</th>
       <th data-chiave="adessoOrd" title="Dall'ultimo controllo del giro: registra adesso, ferma da un'ora, o niente oggi">Adesso</th>
@@ -87,12 +95,12 @@ h2 { font-size:16px; margin:18px 0 6px }
       <th data-chiave="ultimo" data-verso="giu" title="La registrazione più recente">Al</th>
       <th data-chiave="nGiorni" data-verso="giu" title="Giorni con registrazioni sul disco">Giorni</th>
       <th data-chiave="media" title="Media della percentuale di registrato sui giorni sul disco (24 ore = 100%)">Media</th>
-      <th data-ordina="no" title="Una barra per giorno, la più recente a sinistra, alta quanto la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%. Passa sopra una barra per vedere giorno e percentuale">Giorni, dal più recente</th>
+      <th data-ordina="no" title="Una barra per giorno, la più vecchia a sinistra e oggi a destra, alta quanto la percentuale delle 24 ore registrata. Verde 90% o più, arancio dal 30%, rosso sotto il 30%. Passa sopra una barra per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
   </table>
-  <h2 id="titolo-fermi"></h2>
+  <h2><span id="titolo-fermi"></span> <button data-scarica="fermi" title="Scarica i kit che non rispondono">Scarica in Excel</button></h2>
   <table id="fermi"><tbody></tbody></table>
 </main>
 <div id="grande" hidden></div>
@@ -114,14 +122,17 @@ function notaPrima(r) {
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
 function grafico(perc) {
   if (!perc.length) return '<span class="tenue">-</span>';
-  const L = 9, H = 30, w = perc.length * L;
-  const barre = perc.map(([g, p], i) => {
+  const L = 9, H = 30, larg = perc.length * L + 24;
+  const giorni = [...perc].reverse();   // dal piu' vecchio a sinistra a oggi a destra, oggi sempre sul bordo destro
+  const x0 = 0;
+  const barre = giorni.map(([g, p], i) => {
     const h = Math.max(1.5, H * p / 100), cl = p >= 90 ? "b100" : p >= 30 ? "b50" : "b0";
-    return `<rect class="${cl}" x="${i * L + 1}" y="${H - h}" width="${L - 2}" height="${h}" rx="1"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></rect>`;
+    return `<rect class="${cl}" x="${x0 + i * L + 1}" y="${H - h}" width="${L - 2}" height="${h}" rx="1"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></rect>`;
   }).join("");
-  // un'etichetta ogni 7 giorni, e sempre la prima
-  const etichette = perc.map(([g], i) => (i % 7 === 0 ? `<text x="${i * L + 1}" y="${H + 10}">${giornoIt(g)}</text>` : "")).join("");
-  return `<span class="grafico"><svg width="${w + 24}" height="${H + 12}" role="img" aria-label="registrato per giorno">${barre}${etichette}</svg></span>`;
+  // un'etichetta ogni 7 giorni contando da oggi, e sempre il primo giorno
+  const n = giorni.length;
+  const etichette = giorni.map(([g], i) => ((n - 1 - i) % 7 === 0 || i === 0 ? `<text x="${x0 + i * L + 1}" y="${H + 10}"${i === n - 1 ? ' text-anchor="end" dx="8"' : ""}>${giornoIt(g)}</text>` : "")).join("");
+  return `<span class="grafico"><svg viewBox="0 0 ${larg} ${H + 12}" width="${larg}" style="max-width:100%" preserveAspectRatio="xMinYMin meet" role="img" aria-label="registrato per giorno">${barre}${etichette}</svg></span>`;
 }
 // «09:50-10:02 continua, 10:06-13:14 continua» -> [[inizio, fine], ...] in minuti
 const tratti = (t) => [...String(t || "").matchAll(/(\d\d):(\d\d)-(\d\d):(\d\d)/g)].map((x) => [+x[1] * 60 + +x[2], +x[3] * 60 + +x[4]]);
@@ -187,6 +198,12 @@ function confronta(d) {
   const perKit = new Map();
   for (const k of d.kit) { const n = parseInt(k.kit, 10); if (n) (perKit.get(n) || perKit.set(n, []).get(n)).push(k); }
   const nonInst = (k) => /NON INSTALLATI/i.test(k.gruppo);
+  const perUid = new Map();
+  for (const k of d.kit) (perUid.get(k.uid) || perUid.set(k.uid, []).get(k.uid)).push(k);
+  for (const [, ks] of perUid) if (ks.length > 1) {
+    const n = ks.map((k) => parseInt(k.kit, 10)).find((x) => x) || "";
+    nonTorna.push({ tipo: "Lo stesso registratore due volte in UVMS", kit: n, dove: ks.map((k) => `${k.gruppo} / ${k.nome}`).join(" · "), det: "stesso codice P2P con due nomi: tenerne uno solo" });
+  }
   const DI_PROVA = new Set([998]);   // il kit di prova di Dario (Roma, via Gramsci, 10/11)
   for (const [n, a] of ana) {
     if (a.stato === "INSTALLATO" && !perKit.has(n) && !DI_PROVA.has(n))
@@ -195,7 +212,7 @@ function confronta(d) {
   for (const [n, ks] of perKit) {
     const a = ana.get(n);
     const vivi = ks.filter((k) => !nonInst(k));
-    if (vivi.length > 1) nonTorna.push({ tipo: "Stesso kit su più registratori", kit: n, dove: vivi.map((k) => `${k.gruppo} / ${k.nome}`).join(" · "), det: "di solito è il registratore vecchio rimasto dopo una sostituzione" });
+    if (new Set(vivi.map((k) => k.uid)).size > 1) nonTorna.push({ tipo: "Stesso kit su più registratori", kit: n, dove: vivi.map((k) => `${k.gruppo} / ${k.nome}`).join(" · "), det: "di solito è il registratore vecchio rimasto dopo una sostituzione" });
     for (const k of vivi) {
       if (a && a.stato !== "INSTALLATO") nonTorna.push({ tipo: "In UVMS fra gli installati, l'anagrafica no", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: `anagrafica: ${a.stato || "senza stato"}` });
       if (!a) nonTorna.push({ tipo: "In UVMS ma non nell'anagrafica", kit: n, dove: `${k.gruppo} / ${k.nome}`, det: "" });
@@ -274,6 +291,27 @@ $("#giro").addEventListener("click", async () => {
   const d = await r.json().catch(() => ({}));
   $("#chi").textContent = d.accodati != null ? `${d.accodati} registratori messi in coda` : (d.errore || "non riuscito");
   carica();
+});
+/** Un .csv col punto e virgola e il BOM: Excel in italiano lo apre a colonne, con gli accenti giusti. */
+function scaricaCsv(nome, intest, righe) {
+  const cella = (v) => { const t = String(v ?? ""); return /[;"\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const testo = "\ufeff" + [intest, ...righe].map((r) => r.map(cella).join(";")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([testo], { type: "text/csv;charset=utf-8" }));
+  a.download = `${nome} ${new Date().toLocaleDateString("it-IT").replace(/\//g, "-")}.csv`;
+  document.body.append(a); a.click(); a.remove();
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-scarica]"); if (!b) return;
+  if (b.dataset.scarica === "nonTorna")
+    scaricaCsv("Cose che non tornano", ["Cosa non torna", "Kit", "Dove", "Dettaglio", "Correzione", "Fatto"], nonTorna.map((x) => [x.tipo, x.kit, x.dove, x.det, "", ""]));
+  if (b.dataset.scarica === "telecamere") {
+    const giorni = [...new Set(righe.flatMap((r) => r.perc.map(([g]) => g)))].sort();
+    scaricaCsv("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", "Giorni", "Media %", ...giorni.map(giornoIt)],
+      righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, r.nGiorni ?? "", r.media ?? "", ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }));
+  }
+  if (b.dataset.scarica === "fermi")
+    scaricaCsv("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo"], kitFermi.map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""]));
 });
 $("#grande").addEventListener("click", () => { $("#grande").hidden = true; });
 $("#tab").addEventListener("click", (e) => { const i = e.target.closest("img.mini"); if (i) { $("#grande").innerHTML = `<img src="${i.src}">`; $("#grande").hidden = false; } });

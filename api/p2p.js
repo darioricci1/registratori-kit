@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.6.2 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.7.0 (10/11/2026)
+// 1.7.0: un registratore che UVMS ha due volte (stesso UID, due nomi) resta due righe: la chiave e' (uid, nome).
 // 1.6.2: op=stato da' anche quando e' stato letto l'archivio di ogni telecamera (letto_il).
 // 1.6.1: anche l'account di servizio legge le viste della pagina (per l'Excel delle correzioni).
 // 1.6.0: l'ANAGRAFICA KIT (foglio «Elenco KIT Date Registrazioni») accanto ai registratori, per trovare le cose che non
@@ -54,6 +55,8 @@ async function tabelle(sql) {
       letto_il timestamptz default now(), primary key (uid, canale))`;
     await sql`create table if not exists nvr_remoto.anagrafica (kit int primary key, stato text, indirizzo text, cloud text,
       cliente text, telecamere int, installato_il text, aggiornata_il timestamptz default now())`;
+    await sql`alter table nvr_remoto.registratori drop constraint if exists registratori_pkey`;
+    await sql`create unique index if not exists registratori_uid_nome on nvr_remoto.registratori (uid, nome)`;
     await sql`create table if not exists nvr_remoto.pc (nome text primary key, visto_il timestamptz, versione text)`;
   })().catch((e) => { pronto = null; throw e; });
   return pronto;
@@ -99,7 +102,7 @@ export default async function handler(req, res) {
       for (let i = 0; i < righe.length; i += 100) {
         const pezzo = righe.slice(i, i + 100);
         await sql.query(`insert into nvr_remoto.registratori (uid, gruppo, nome, kit, modello, canali, firmware)
-          select * from unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::text[], $6::int[], $7::text[]) on conflict (uid) do nothing`,
+          select * from unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::text[], $6::int[], $7::text[]) on conflict (uid, nome) do nothing`,
           [pezzo.map((r) => String(r.uid).toUpperCase()), pezzo.map((r) => r.gruppo || ""), pezzo.map((r) => r.nome || ""),
            pezzo.map((r) => r.kit || ""), pezzo.map((r) => r.modello || ""), pezzo.map((r) => Number(r.canali) || null), pezzo.map((r) => r.firmware || "")]);
       }
@@ -109,7 +112,7 @@ export default async function handler(req, res) {
     if (op === "accoda" && req.method === "POST") {
       if (!(await pcValido(req)) && !(await chiE(req))) return res.status(401).json({ errore: "non autorizzato" });
       const r = await sql`insert into nvr_remoto.richieste (kit, uid, priorita)
-        select g.gruppo || ' · ' || g.nome, g.uid, 0 from nvr_remoto.registratori g
+        select distinct on (g.uid) g.gruppo || ' · ' || g.nome, g.uid, 0 from nvr_remoto.registratori g
         where not exists (select 1 from nvr_remoto.richieste q where q.uid = g.uid and q.stato in ('in coda', 'in corso'))
         returning id`;
       return res.json({ accodati: r.length });
@@ -146,7 +149,7 @@ export default async function handler(req, res) {
         const [g] = await sql`select (select count(*) from nvr_remoto.richieste where priorita = 0 and stato in ('in coda', 'in corso'))::int as aperti,
           coalesce(extract(epoch from now() - (select max(chiesto_il) from nvr_remoto.richieste where priorita = 0)), 1e9)::int as secondi`;
         if (g.aperti === 0 && g.secondi > 55 * 60) {
-          await sql`insert into nvr_remoto.richieste (kit, uid, priorita) select gruppo || ' · ' || nome, uid, 0 from nvr_remoto.registratori`;
+          await sql`insert into nvr_remoto.richieste (kit, uid, priorita) select distinct on (uid) gruppo || ' · ' || nome, uid, 0 from nvr_remoto.registratori order by uid, nome`;
           await sql`delete from nvr_remoto.richieste where chiesto_il < now() - interval '7 days'`;
         }
         // una richiesta presa da piu' di 5 minuti e mai finita torna in coda (il PC si e' spento a meta')
