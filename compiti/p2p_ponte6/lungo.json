@@ -1,6 +1,6 @@
 [
- {"nome": "kit581_abbandono", "uid": "HG7F76GY3TTXNYZC111A", "kit": 581, "canali": [1, 2, 3], "inizio": "2026-11-01 12:50:00", "minuti": 20,
+ {"nome": "kit581_abbandono", "uid": "HG7F76GY3TTXNYZC111A", "kit": 581, "canali": [0, 1, 2], "inizio": "2026-11-01 12:50:00", "minuti": 20,
   "atteso": "abbandono segnato da Dario: evento 167419bf4c (targa GY747HN 12:59:49), telecamera 1, 47 s dopo l'inizio della clip"},
- {"nome": "kit581_senza", "uid": "HG7F76GY3TTXNYZC111A", "kit": 581, "canali": [1, 2, 3], "inizio": "2026-11-01 11:30:00", "minuti": 10,
+ {"nome": "kit581_senza", "uid": "HG7F76GY3TTXNYZC111A", "kit": 581, "canali": [0, 1, 2], "inizio": "2026-11-01 11:30:00", "minuti": 10,
   "atteso": "nessun evento segnalato dalle operatrici: da guardare"}
 ]

@@ -31,7 +31,9 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.3 (10/11/2026): un canale che oggi non ha registrato manda la foto dell'ultima registrazione dei giorni prima
+version: 0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
+  vuota, e l'abbandono di Dario sulla CH1 del KIT581 non c'era.
+0.9.3 (10/11/2026): un canale che oggi non ha registrato manda la foto dell'ultima registrazione dei giorni prima
   (kit 580, CH3 ferma dal 2/11), con giorno e ora.
 0.9.2 (10/11/2026): «N. TELECAMERE» scritto «2+SAT», «2+2SAT» si legge come numero (3, 4): prima 228 kit
   installati risultavano senza numero.
@@ -55,7 +57,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.3"
+VERSIONE = "p2p_ponte 0.9.4"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -506,7 +508,8 @@ def collega_con(reg, uid, kit):
 
 
 def scarico_lungo(p):
-    """Una prova di lungo.json: scarico a pezzi di 3 minuti, unione per telecamera, analisi di Kit_Rifiuti in sottofondo."""
+    """Una prova di lungo.json: scarico a pezzi di 3 minuti, unione per telecamera, analisi di Kit_Rifiuti in sottofondo.
+    I canali si contano da 0 come in reg.canali() (CH1 = 0): fino al 0.9.3 lungo.json diceva 1, 2, 3 e la CH1 non si scaricava."""
     import focus_nvr as fn
     nome = p["nome"]
     dove = os.path.join(C, "lungo", nome)
