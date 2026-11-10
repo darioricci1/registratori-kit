@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.12.1 (10/11/2026) - i canali che non hanno mai registrato (niente oggi e niente dal 27/10) non si mostrano (Dario:
+<!-- version: 2.13.0 (10/11/2026) - il grafico copiato dai Target di darioleads (src/components/amici/andamenti.tsx): asse con
+     tacche e griglia leggera, zero marcato, linea #1f4e78 da 2 con gli angoli tondi, punti con l'anello bianco (piu' grandi e
+     colorati fuori norma: giallo sopra zero, rosso a zero), numeri con l'alone messi sopra o sotto dove non toccano la linea.
+     2.12.1 - i canali che non hanno mai registrato (niente oggi e niente dal 27/10) non si mostrano (Dario:
      «se ci sono solo 3 canali su 8 non far vedere gli altri 5»).
      2.12.0 - fumetti con piu' informazioni (Dario: «quando ci vai sopra ti da' piu' info»): su ogni punto
      giorno, percentuale e ore registrate; su «Adesso» l'ultimo controllo, il tipo di registrazione e i tratti di oggi.
@@ -76,10 +79,12 @@ tr.primaKit td { border-top:2px solid var(--bordo) }
 .grafico .linea { fill:none; stroke:var(--blu); stroke-width:1.6; vector-effect:non-scaling-stroke }
 .grafico .area { fill:var(--blu); opacity:.12 } .grafico .riga90 { stroke:var(--bordo); stroke-dasharray:2 2; vector-effect:non-scaling-stroke }
 .grafico .pnull { fill:var(--bordo) } .grafico .p100 { fill:var(--verde) } .grafico .p50 { fill:#e0a800 } .grafico .p0 { fill:var(--rosso) }
-.grafico .tratto { stroke:#1f4e79; stroke-width:2.2; stroke-linecap:round }
+.grafico .linea { fill:none; stroke:#1f4e78; stroke-width:2; stroke-linejoin:round; stroke-linecap:round }
 .grafico .rif { stroke:var(--bordo); stroke-width:1 } .grafico .rif0 { stroke:var(--tenue); stroke-width:1 }
 .grafico .val { font-size:9px; fill:var(--testo) }
-@media (prefers-color-scheme: dark) { .grafico .tratto { stroke:#8fb4e0 } }
+@media (prefers-color-scheme: dark) { .grafico .linea { stroke:#8fb4e0 } }
+.grafico .num { font-size:9.5px; fill:var(--testo); stroke:var(--carta); stroke-width:3; stroke-linejoin:round; paint-order:stroke }
+.grafico .asse { font-size:8.5px; fill:currentColor; opacity:.6 } .grafico .anno { font-size:9.5px; fill:currentColor; opacity:.75 }
 .prima { font-size:11px; color:var(--tenue); white-space:normal; margin-top:2px }
 .grafico text { font-size:9px; fill:var(--tenue) }
 .g { flex:none; width:34px; text-align:center; font-size:11px; line-height:1.15; border-radius:4px; padding:2px 0 }
@@ -152,35 +157,52 @@ function notaPrima(r) {
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
 const DAL = "2026-10-27";   // il grafico parte sempre da qui (Dario, 10/11: «fammi sempre vedere dal 20/10 in poi»)
 let GIORNI_SCALA = 30;   // giorni dal 20/10 a oggi
-/** La linea dei giorni, come i Target di darioleads: altezza fissa, larga quanto la colonna, oggi sul bordo destro. */
+/** La linea dei giorni, come i Target di darioleads (andamenti.tsx): la stessa scala per tutte le righe, oggi a destra. */
 function grafico(perc) {
   if (!perc.length) return '<span class="tenue">-</span>';
-  const H = 54, top = 12, basso = H - 4, N = GIORNI_SCALA, sx = 7;   // sx: margine a sinistra (in %) per le etichette 0/50/100
+  const W = 560, H = 112, M = { su: 14, giu: 18, sx: 34, dx: 10 }, N = GIORNI_SCALA;
   const oggi = new Date(perc[0][0] + "T12:00:00");
-  const xg = (g) => 98 - (98 - sx - 1) * Math.round((oggi - new Date(g + "T12:00:00")) / 864e5) / Math.max(1, N - 1);
-  const yp = (p) => top + (basso - top) * (1 - p / 100);
-  const punti = [...perc].reverse().filter(([g]) => g >= DAL).map(([g, p, m, su]) => [xg(g), p == null ? basso : yp(p), g, p, m, su]);
-  const rif = [0, 50, 100].map((v) => `<line class="${v ? "rif" : "rif0"}" x1="${sx}%" x2="99%" y1="${yp(v)}" y2="${yp(v)}"/><text x="${sx - 0.6}%" y="${yp(v) + 3}" text-anchor="end">${v}%</text>`).join("");
-  const tratti = punti.slice(1).filter((pt, i) => pt[3] != null && punti[i][3] != null)
-    .map((pt) => { const i = punti.indexOf(pt) - 1; return `<line class="tratto" x1="${punti[i][0].toFixed(2)}%" y1="${punti[i][1].toFixed(1)}" x2="${pt[0].toFixed(2)}%" y2="${pt[1].toFixed(1)}"/>`; }).join("");
-  const fumetto = (g, p, m, su) => p == null ? `${giornoIt(g)}: non letto (il registratore non ha risposto)`
-    : `${giornoIt(g)}${su < 1440 ? " (fino alle " + hm(su) + ")" : ""}: ${p}%, ${oreMin(m)} registrati su ${su < 1440 ? oreMin(su) : "24 h"}`;
-  const pallini = punti.map(([x, y, g, p, m, su]) => `<circle class="${p == null ? "pnull" : p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="3"/>` +
-    `<circle cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="9" fill="transparent" data-spiega="${esc(fumetto(g, p, m, su))}"></circle>`).join("");
-  // il valore accanto al punto: sopra, o sotto se il punto e' in alto; i 100% di fila non si ripetono
-  const valori = punti.map(([x, y, , p], i) => {
-    if (p == null || (i > 0 && punti[i - 1][3] === p && i < punti.length - 1)) return "";
-    return `<text class="val" x="${x.toFixed(2)}%" y="${(p > 80 ? y - 5 : y - 5).toFixed(1)}" text-anchor="middle">${p}%</text>`;
+  const passo = (W - M.sx - M.dx) / Math.max(1, N - 1);
+  const xg = (g) => W - M.dx - passo * Math.round((oggi - new Date(g + "T12:00:00")) / 864e5);
+  const y = (p) => M.su + (H - M.su - M.giu) * (1 - p / 100);
+  const pt = [...perc].reverse().filter(([g]) => g >= DAL).map(([g, p, m, su]) => ({ g, p, m, su, x: xg(g) }));
+  const veri = pt.filter((q) => q.p != null);
+  // l'asse: tacche 0, 50, 100 con la griglia leggera e lo zero marcato
+  const asse = `<line x1="${M.sx - 2}" x2="${M.sx - 2}" y1="${M.su - 4}" y2="${H - M.giu}" stroke="currentColor" stroke-opacity=".35"/>` +
+    [0, 50, 100].map((v) => `<line x1="${M.sx - 2}" x2="${W - M.dx}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" stroke-opacity="${v === 0 ? 0.55 : 0.1}" stroke-width="${v === 0 ? 1.2 : 1}"/>` +
+      `<text class="asse" x="${M.sx - 5}" y="${y(v) + 3}" text-anchor="end">${v}%</text>`).join("");
+  // la linea: si interrompe dove un giorno non e' stato letto
+  const pezzi = []; let cor = [];
+  for (const q of pt) { if (q.p == null) { if (cor.length) pezzi.push(cor); cor = []; } else cor.push(q); }
+  if (cor.length) pezzi.push(cor);
+  const linee = pezzi.filter((c) => c.length > 1).map((c) => `<polyline class="linea" points="${c.map((q) => `${q.x.toFixed(1)},${y(q.p).toFixed(1)}`).join(" ")}"/>`).join("");
+  const fumetto = (q) => q.p == null ? `${giornoIt(q.g)}: non letto (il registratore non ha risposto)`
+    : `${giornoIt(q.g)}${q.su < 1440 ? " (fino alle " + hm(q.su) + ")" : ""}: ${q.p}%, ${oreMin(q.m)} registrati su ${q.su < 1440 ? oreMin(q.su) : "24 h"}`;
+  const colore = (p) => (p == null ? "var(--bordo)" : p >= 90 ? "#1f4e78" : p > 0 ? "#e0a800" : "var(--rosso)");
+  const pallini = pt.map((q) => {
+    const fuori = q.p == null || q.p < 90;
+    const cy = q.p == null ? y(0) : y(q.p);
+    return `<circle cx="${q.x.toFixed(1)}" cy="${cy.toFixed(1)}" r="${fuori ? 3.5 : 2.5}" fill="${colore(q.p)}" stroke="var(--carta)" stroke-width="1"/>` +
+      `<circle cx="${q.x.toFixed(1)}" cy="${cy.toFixed(1)}" r="8" fill="transparent" data-spiega="${esc(fumetto(q))}"/>`;
   }).join("");
-  const etichette = [];
+  // i numeri: sopra o sotto il punto, dove non toccano la linea; uguali di fila si scrivono una volta
+  const valA = (X) => { for (let i = 0; i < veri.length - 1; i++) if (X >= veri[i].x && X <= veri[i + 1].x) return y(veri[i].p) + (y(veri[i + 1].p) - y(veri[i].p)) * (X - veri[i].x) / ((veri[i + 1].x - veri[i].x) || 1); return null; };
+  const numeri = veri.map((q, i) => {
+    if (i > 0 && veri[i - 1].p === q.p && i < veri.length - 1) return "";
+    const cy = y(q.p), mezza = String(q.p).length * 3 + 6;
+    const pena = (base) => { if (base - 8 < 1 || base + 2 > H - M.giu + 5) return 99; let n = 0;
+      for (const dx of [-mezza, 0, mezza]) { const ly = valA(q.x + dx); if (ly != null && ly >= base - 9.5 && ly <= base + 3.5) n++; } return n; };
+    const base = pena(cy + 13) < pena(cy - 6) ? cy + 13 : cy - 6;
+    return `<text class="num" x="${q.x.toFixed(1)}" y="${base.toFixed(1)}" text-anchor="middle">${q.p}%</text>`;
+  }).join("");
+  const anni = [];
   for (let i = 0; i < N; i += 7) {
     if (N - 1 - i < 3 && i) continue;
     const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
-    const x = 98 - (98 - sx - 1) * i / Math.max(1, N - 1);
-    etichette.push(`<text x="${x.toFixed(2)}%" y="${H + 10}" text-anchor="${i === 0 ? "end" : "middle"}">${i === 0 ? "oggi" : giornoIt(d)}</text>`);
+    anni.push(`<text class="anno" x="${(W - M.dx - passo * i).toFixed(1)}" y="${H - 4}" text-anchor="${i === 0 ? "end" : "middle"}">${i === 0 ? "oggi" : giornoIt(d)}</text>`);
   }
-  etichette.push(`<text x="${sx + 1}%" y="${H + 10}" text-anchor="start">${giornoIt(DAL)}</text>`);
-  return `<span class="grafico"><svg width="100%" height="${H + 12}" role="img" aria-label="registrato per giorno">${rif}${tratti}${pallini}${valori}${etichette.join("")}</svg></span>`;
+  anni.push(`<text class="anno" x="${M.sx}" y="${H - 4}" text-anchor="start">${giornoIt(DAL)}</text>`);
+  return `<span class="grafico"><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="registrato per giorno">${asse}${linee}${pallini}${numeri}${anni.join("")}</svg></span>`;
 }
 // «09:50-10:02 continua, 10:06-13:14 continua» -> [[inizio, fine], ...] in minuti
 const tratti = (t) => [...String(t || "").matchAll(/(\d\d):(\d\d)-(\d\d):(\d\d)/g)].map((x) => [+x[1] * 60 + +x[2], +x[3] * 60 + +x[4]]);
