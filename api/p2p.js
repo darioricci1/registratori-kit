@@ -1,4 +1,6 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.7.1 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.8.0 (10/11/2026)
+// 1.8.0: l'anagrafica porta anche gli ODM aperti di ogni kit (colonna odm, dal ponte 0.5.0): la pagina li mostra accanto
+//        alle cose che non tornano (Barbara, 10/11: «e' aperto odm n° 1686 per CH3 non funzionante»).
 // 1.7.1: i ponti prima del 0.4.0 non leggono piu' gli archivi (segnavano 0 i giorni senza risposta del registratore).
 // 1.7.0: un registratore che UVMS ha due volte (stesso UID, due nomi) resta due righe: la chiave e' (uid, nome).
 // 1.6.2: op=stato da' anche quando e' stato letto l'archivio di ogni telecamera (letto_il).
@@ -56,6 +58,7 @@ async function tabelle(sql) {
       letto_il timestamptz default now(), primary key (uid, canale))`;
     await sql`create table if not exists nvr_remoto.anagrafica (kit int primary key, stato text, indirizzo text, cloud text,
       cliente text, telecamere int, installato_il text, aggiornata_il timestamptz default now())`;
+    await sql`alter table nvr_remoto.anagrafica add column if not exists odm text`;
     await sql`alter table nvr_remoto.registratori drop constraint if exists registratori_pkey`;
     await sql`create unique index if not exists registratori_uid_nome on nvr_remoto.registratori (uid, nome)`;
     await sql`create table if not exists nvr_remoto.pc (nome text primary key, visto_il timestamptz, versione text)`;
@@ -125,10 +128,11 @@ export default async function handler(req, res) {
       await sql`delete from nvr_remoto.anagrafica`;
       for (let i = 0; i < righe.length; i += 200) {
         const p = righe.slice(i, i + 200);
-        await sql.query(`insert into nvr_remoto.anagrafica (kit, stato, indirizzo, cloud, cliente, telecamere, installato_il)
-          select * from unnest($1::int[], $2::text[], $3::text[], $4::text[], $5::text[], $6::int[], $7::text[]) on conflict (kit) do nothing`,
+        await sql.query(`insert into nvr_remoto.anagrafica (kit, stato, indirizzo, cloud, cliente, telecamere, installato_il, odm)
+          select * from unnest($1::int[], $2::text[], $3::text[], $4::text[], $5::text[], $6::int[], $7::text[], $8::text[]) on conflict (kit) do nothing`,
           [p.map((r) => Number(r.kit)), p.map((r) => r.stato || ""), p.map((r) => r.indirizzo || ""), p.map((r) => r.cloud || ""),
-           p.map((r) => r.cliente || ""), p.map((r) => Number(r.telecamere) || null), p.map((r) => r.installato_il || "")]);
+           p.map((r) => r.cliente || ""), p.map((r) => Number(r.telecamere) || null), p.map((r) => r.installato_il || ""),
+           p.map((r) => String(r.odm || "").slice(0, 600))]);
       }
       return res.json({ ok: true, salvati: righe.length });
     }
@@ -224,7 +228,7 @@ export default async function handler(req, res) {
           (select count(*) from nvr_remoto.camera_storia s where s.uid = c.uid and s.canale = c.canale and s.il > now() - interval '24 hours' and s.vista = 'si vede')::int as viste_24h
         from nvr_remoto.camera c`;
       const arc = await sql`select uid, canale, primo, ultimo, giorni, letto_il from nvr_remoto.archivio`;
-      const ana = await sql`select kit, stato, indirizzo, cloud, cliente, telecamere, installato_il, aggiornata_il from nvr_remoto.anagrafica`;
+      const ana = await sql`select kit, stato, indirizzo, cloud, cliente, telecamere, installato_il, odm, aggiornata_il from nvr_remoto.anagrafica`;
       return res.json({ ora: new Date().toISOString(), coda: coda[0].n, kit: righe, camere: cam, archivio: arc, anagrafica: ana });
     }
     if (op === "registratori") {

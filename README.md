@@ -37,6 +37,11 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Correzioni di Barbara del 10/11 (mail «Controllo UVMS»): doppioni tolti da UVMS (spariscono dalla pagina alla prossima
+  lettura del database UVMS); i «più telecamere» erano canali vuoti contati per sbaglio (corretto nella pagina 2.16.0);
+  i «meno telecamere» hanno quasi tutti un ODM aperto, che ora la pagina mostra (ponte 0.5.0); 128, 136 e 155 sono DVR con
+  la password messa in laboratorio: va chiesta e scritta in focus_accesso.txt; 507 e 338 hanno il contratto sospeso.
+- Domani: controllare che il ponte 0.5.0 abbia mandato gli ODM e che i doppioni siano spariti.
 - Repository nuovo (lo crea Dario), poi collegare il progetto Vercel a quel repository.
 - Riga nel registro del software del gestionale (già c'è «prova-nvr-remoto», da aggiornare: anagrafica e UVMS dal NAS).
 - Domani: guardare le prime foto e gli archivi, e le «Cose che non tornano» col giro completo.
