@@ -31,7 +31,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.8.1"""
+version: 0.9.0"""
 import base64
 import datetime
 import json
@@ -49,7 +49,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.8.1"
+VERSIONE = "p2p_ponte 0.9.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -397,14 +397,10 @@ def odm_aperti(righe):
         if not k.isdigit() or v(r, i_chiusa):
             continue
         n = v(r, 0)
-        testo = (f"n° {n} " if n.isdigit() else "") + (f"del {v(r, i_ap)}" if v(r, i_ap) else "")
-        tipo = " ".join(x for x in (v(r, i_tipo), v(r, i_stato)) if x)
-        if tipo:
-            testo += f", {tipo}"
-        if v(r, i_note):
-            testo += f": {v(r, i_note)[:120]}"
-        per.setdefault(int(k), []).append(testo.strip())
-    return {k: " · ".join(x) for k, x in per.items()}
+        # 0.9.0 (Dario: «le info che sono in colonna nella scheda ODM devono restare in colonna»): i campi separati
+        per.setdefault(int(k), []).append({"n": n if n.isdigit() else "", "aperto": v(r, i_ap), "tipo": v(r, i_tipo),
+                                           "stato": v(r, i_stato), "note": v(r, i_note)[:400]})
+    return {k: json.dumps(x, ensure_ascii=False) for k, x in per.items()}
 
 
 def aggiorna_anagrafica():

@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.10.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.10.1 (10/11/2026)
+// 1.10.1: l'ODM arriva coi campi separati (JSON, ponte 0.9.0): si tiene fino a 4000 caratteri.
 // 1.10.0: un giro riparte appena finito il precedente (Dario: «appena hai finito il primo giro riparti»), non piu' ogni
 //         ora; e l'archivio di un registratore si rilegge subito se non ha ancora le ore dei giorni (ponte 0.7.0).
 // 1.9.0: l'archivio tiene anche le ore di ogni giorno (colonna ore, dal ponte 0.7.0), lette a parte con op=ore una volta
@@ -137,7 +138,7 @@ export default async function handler(req, res) {
           select * from unnest($1::int[], $2::text[], $3::text[], $4::text[], $5::text[], $6::int[], $7::text[], $8::text[]) on conflict (kit) do nothing`,
           [p.map((r) => Number(r.kit)), p.map((r) => r.stato || ""), p.map((r) => r.indirizzo || ""), p.map((r) => r.cloud || ""),
            p.map((r) => r.cliente || ""), p.map((r) => Number(r.telecamere) || null), p.map((r) => r.installato_il || ""),
-           p.map((r) => String(r.odm || "").slice(0, 600))]);
+           p.map((r) => String(r.odm || "").slice(0, 4000))]);
       }
       return res.json({ ok: true, salvati: righe.length });
     }
