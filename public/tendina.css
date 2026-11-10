@@ -1,0 +1,38 @@
+/* attrezzi/tendina-ricerca/tendina.css
+   VERSION: 1.2.0 (estratta da bbs-squadre 2.185.0)
+   1.2.0: la parte trovata in giallo (mark.tr-trovato), anche col tema scuro.
+   1.1.0: la voce scelta nella combobox a scelta singola (senza caselle) è evidenziata.
+   I colori si prendono dalle variabili del progetto se ci sono
+   (--accento, --accento-chiaro, --bordo, --carta, --grigio, --ambra...),
+   altrimenti valgono quelli di bbs-squadre. */
+.tr-scatola{position:relative;
+  --tr-accento:var(--accento,#1f5eff);--tr-accento-chiaro:var(--accento-chiaro,#e8efff);
+  --tr-bordo:var(--bordo,#e3e6ea);--tr-carta:var(--carta,#fff);--tr-grigio:var(--grigio,#667079)}
+.tr-campo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1px solid var(--tr-bordo);border-radius:10px;padding:6px;background:var(--tr-carta)}
+.tr-scatola.aperta .tr-campo{border-color:var(--tr-accento)}
+.tr-chip{display:contents}
+.tr-scrivi{flex:1;min-width:160px;display:flex;align-items:center;gap:6px;padding-left:6px;color:var(--tr-grigio)}
+.tr-scrivi input{border:0;padding:6px 2px;font:inherit;font-size:15px;min-width:0;flex:1;background:transparent;color:inherit}
+.tr-scrivi input:focus{outline:none}
+.tr-freccia{border:0;background:var(--tr-accento-chiaro);color:var(--tr-accento);cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:none;margin-left:auto}
+.tr-freccia svg{transition:transform .15s}
+.tr-scatola.aperta .tr-freccia svg{transform:rotate(180deg)}
+.tr-pastiglia{display:inline-flex;align-items:center;gap:4px;background:var(--tr-accento-chiaro);color:var(--tr-accento);border-radius:99px;padding:3px 4px 3px 10px;font-size:13.5px}
+.tr-pastiglia button{border:0;background:none;color:inherit;cursor:pointer;font-size:16px;line-height:1;padding:0 4px}
+.tr-elenco{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:6;background:#fff;border:1px solid #c9d3e6;border-radius:10px;box-shadow:0 10px 30px rgba(15,30,60,.18);max-height:300px;overflow-y:auto;color:#17202a}
+.tr-voce{display:flex;align-items:flex-start;gap:10px;padding:7px 12px;cursor:pointer;border-bottom:1px solid var(--tr-bordo);font-weight:400;margin:0}
+.tr-voce:last-child{border-bottom:0}
+.tr-voce.attiva,.tr-voce:hover{background:#f2f4f8;box-shadow:inset 3px 0 0 var(--tr-accento)}
+.tr-voce.scelta{background:var(--tr-accento-chiaro)}
+.tr-voce.scelta b{color:var(--tr-accento)}
+.tr-voce.evidenza{background:var(--tr-accento-chiaro);cursor:default}
+.tr-voce.tr-nota{cursor:default;color:var(--tr-grigio);font-size:13px;box-shadow:none;background:none}
+.tr-voce input{margin-top:3px;flex:none}
+.tr-dettaglio{font-size:13px;color:var(--tr-grigio)}
+.tr-etichetta{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--tr-accento-chiaro);color:var(--tr-accento);margin:0 4px 0 2px}
+.tr-etichetta.ambra{background:var(--ambra-chiaro,#fff4e0);color:var(--ambra,#a86400)}
+.tr-etichetta.verde{background:var(--verde-chiaro,#e5f5ec);color:var(--verde,#1d8a4e)}
+.tr-fatto{position:sticky;bottom:0;display:block;width:100%;border:0;border-top:1px solid var(--tr-bordo);background:#fff;color:var(--tr-accento);font:inherit;font-weight:600;padding:11px;cursor:pointer}
+@media (max-width:760px){.tr-elenco{max-height:45vh}body.tr-aperta{padding-bottom:100vh}}
+.tr-trovato,mark.tr-trovato{background:var(--giallo,#fde68a);color:inherit;border-radius:2px;padding:0 1px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tr-trovato{background:var(--giallo,#7a6200)}}

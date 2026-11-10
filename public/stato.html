@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.14.0 (10/11/2026) - «Cose che non tornano» e' un bottone dopo «Prove singole»: apre e chiude la sua tabella (Dario).
+<!-- version: 2.15.0 (10/11/2026) - ogni intestazione e' anche una tendina con ricerca che filtra la colonna (Dario: «permetti di usare
+     come combobox ogni intestazione»); via le colonne Giorni e Media; fra i kit che non rispondono solo quelli INSTALLATI
+     nell'ANAGRAFICA KIT.
+     2.14.0 - «Cose che non tornano» e' un bottone dopo «Prove singole»: apre e chiude la sua tabella (Dario).
      2.13.1 - i riquadri dei conti restano fermi in alto mentre si scorre (Dario).
      2.13.0 - il grafico copiato dai Target di darioleads (src/components/amici/andamenti.tsx): asse con
      tacche e griglia leggera, zero marcato, linea #1f4e78 da 2 con gli angoli tondi, punti con l'anello bianco (piu' grandi e
@@ -51,6 +54,8 @@
 <script src="ordinabile.js"></script>
 <script src="xlsx.js"></script>
 <link rel="stylesheet" href="ordinabile.css">
+<script src="tendina.js"></script>
+<link rel="stylesheet" href="tendina.css">
 <style>
 :root { --sfondo:#f5f6f8; --carta:#fff; --testo:#1d2330; --tenue:#667085; --bordo:#d9dde5; --blu:#2457c5; --verde:#1d7a46; --verde-chiaro:#dcf3e5; --rosso:#b42318; --rosso-chiaro:#fde4e1; --arancio:#9a5b00; --arancio-chiaro:#fff0d1; --grigio-chiaro:#eceff3; --raggio:10px; }
 @media (prefers-color-scheme: dark) { :root { --sfondo:#14171d; --carta:#1d212a; --testo:#e7e9ee; --tenue:#9aa3b2; --bordo:#323846; --blu:#6f9bff; --verde:#4cc283; --verde-chiaro:#173a27; --rosso:#ff7a6e; --rosso-chiaro:#46201c; --arancio:#f2b34c; --arancio-chiaro:#3d2e12; --grigio-chiaro:#2a2f3a; } }
@@ -99,6 +104,17 @@ img.mini { width:100%; max-width:110px; border-radius:6px; cursor:zoom-in; displ
 h2 { font-size:16px; margin:18px 0 6px }
 #grande { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:9 }
 #grande[hidden] { display:none }
+.filtroCol { margin-top:4px; font-weight:400; cursor:default }
+.filtroCol .tr-campo { padding:2px 4px; gap:3px; border-radius:8px }
+.filtroCol .tr-scrivi { min-width:0; padding-left:2px } .filtroCol .tr-scrivi input { font-size:13px; padding:3px 0; width:100% }
+.filtroCol .tr-lente { display:none } .filtroCol .tr-freccia { width:24px; height:24px }
+.filtroCol .tr-pastiglia { font-size:12px; max-width:100%; overflow-wrap:anywhere }
+.filtroCol .tr-elenco { min-width:260px; right:auto; font-size:14px }
+.filtroCol input { min-height:0; border:0; border-radius:0; width:auto; background:transparent }
+.filtroCol .tr-voce input { width:auto; min-height:0; flex:none }
+.filtroCol button { min-height:0; padding:0; border:0 }
+.filtroCol .tr-pastiglia button { padding:0 4px }
+th:focus-within { z-index:5 }
 #grande img { max-width:95vw; max-height:90vh; cursor:zoom-out }
 </style>
 </head>
@@ -122,24 +138,22 @@ h2 { font-size:16px; margin:18px 0 6px }
   </div>
   <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
-    <colgroup><col style="width:11%"><col style="width:13%"><col style="width:5%"><col style="width:10%"><col style="width:5%"><col style="width:5%"><col style="width:41%"><col style="width:10%"></colgroup>
+    <colgroup><col style="width:13%"><col style="width:15%"><col style="width:8%"><col style="width:12%"><col style="width:42%"><col style="width:10%"></colgroup>
     <thead><tr>
       <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="canale">Canale</th>
       <th data-chiave="adessoOrd" title="Dall'ultimo controllo del giro: registra adesso, ferma da un'ora, o niente oggi">Adesso</th>
-      <th data-chiave="nGiorni" data-verso="giu" title="Giorni dal 27/10 di cui il registratore ha detto quanto ha registrato">Giorni</th>
-      <th data-chiave="media" title="Media della percentuale di registrato dal 27/10 a ieri (24 ore = 100%)">Media</th>
       <th data-ordina="no" title="La percentuale delle 24 ore registrata giorno per giorno: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero, grigi non letti. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
   </table>
   <h2><span id="titolo-fermi"></span> <button data-scarica="fermi" title="Scarica i kit che non rispondono">Scarica in Excel</button></h2>
-  <table id="fermi"><tbody></tbody></table>
+  <table id="fermi"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th></tr></thead><tbody></tbody></table>
 </main>
 <div id="grande" hidden></div>
 <script>
 const $ = (s) => document.querySelector(s);
-let righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordine = { chiave: "gruppo", verso: 1 }, ordNT = { chiave: "tipo", verso: 1 };
+let righe = [], kitFermi = [], nonTorna = [], dati = {}, filtro = "tutti", ordine = { chiave: "gruppo", verso: 1 }, ordNT = { chiave: "tipo", verso: 1 }, ordFe = { chiave: "gruppo", verso: 1 };
 const norm = (t) => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const hm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
 const giornoIt = (iso) => { const [, m, g] = iso.split("-"); return `${g}/${m}`; };
@@ -278,6 +292,39 @@ function costruisci(d) {
     k.funzionanti = funzionanti;
   }
   confronta(d);
+  // fra i kit che non rispondono contano solo quelli INSTALLATI nell'ANAGRAFICA KIT (Dario, 10/11)
+  const ana = new Map((d.anagrafica || []).map((a) => [a.kit, a]));
+  if (ana.size) kitFermi = kitFermi.filter((k) => (ana.get(parseInt(k.kit, 10)) || {}).stato === "INSTALLATO");
+  preparaFiltri("tab", righe); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi);
+}
+/** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {} };
+const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
+const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
+const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
+const VALORE = {
+  tab: { gruppo: (r) => r.gruppo || "-", nome: (r) => r.nome || "-", canale: canaleIt, adessoOrd: (r) => tipoAdesso(r.adesso) },
+  nonTorna: { tipo: (x) => x.tipo, kit: (x) => String(x.kit || "-"), dove: (x) => x.dove || "-" },
+  fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo },
+};
+const passaFiltri = (t, x) => Object.entries(FILTRI[t]).every(([c, s]) => !s.size || s.has(VALORE[t][c](x)));
+const firme = {};
+/** Mette (o aggiorna) la tendina sotto ogni intestazione con i valori che ci sono nella colonna. */
+function preparaFiltri(t, elenco) {
+  for (const th of document.querySelectorAll(`#${t} thead th[data-chiave]`)) {
+    const c = th.dataset.chiave, val = VALORE[t][c]; if (!val) continue;
+    let box = th.querySelector(".filtroCol");
+    if (!box) {
+      box = document.createElement("div"); box.className = "filtroCol"; th.appendChild(box);
+      for (const ev of ["click", "keydown"]) box.addEventListener(ev, (e) => e.stopPropagation());   // la tendina non ordina
+    }
+    const scelti = FILTRI[t][c] || (FILTRI[t][c] = new Set());
+    const valori = [...new Set(elenco.map(val))].sort((a, b) => a.localeCompare(b, "it", { numeric: true }));
+    const firma = valori.join("\u0001");
+    if (firme[t + c] === firma || box.querySelector(".tr-scatola.aperta")) continue;
+    firme[t + c] = firma;
+    tendinaRicerca(box, { voci: valori.map((v) => ({ id: v, nome: v })), scelti, segnaposto: "Filtra", testoNessuno: "Nessun valore così.", alCambio: disegna });
+  }
 }
 /** Le cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT. */
 function confronta(d) {
@@ -319,7 +366,7 @@ function disegna() {
   const problema = (r) => r.adessoOrd < 2 || (r.media != null && r.media < 90) || r.perc.slice(1, 8).some(([, p]) => p < 90);
   // i canali di un kit stanno insieme: si ordina per kit (per una colonna dei canali vale il canale peggiore del kit)
   const gruppi = new Map();
-  for (const r of righe) if (ok(r) && (filtro === "tutti" || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
+  for (const r of righe) if (ok(r) && passaFiltri("tab", r) && (filtro === "tutti" || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
   const chiaveKit = (rs) => {
     const c = ordine.chiave;
     if (c === "gruppo" || c === "nome") return rs[0][c];
@@ -344,20 +391,22 @@ function disegna() {
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td>` : ""}
     <td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>
     <td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
-    <td class="num">${r.nGiorni ?? "-"}</td>
-    <td class="num ${r.media == null ? "tenue" : r.media >= 90 ? "ok" : r.media >= 30 ? "mezzo" : "no"}">${r.media == null ? "-" : r.media + "%"}</td>
     <td>${grafico(r.perc)}<div class="prima">${notaPrima(r)}</div></td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
   </tr>`).join("")).join("");
-  const nt = nonTorna.filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
+  const nt = nonTorna.filter((x) => passaFiltri("nonTorna", x)).filter((x) => !parole.length || parole.every((p) => norm(x.kit + " " + x.dove + " " + x.tipo).includes(p)))
     .sort((a, b) => { const x = a[ordNT.chiave] ?? "", y = b[ordNT.chiave] ?? ""; return (x > y ? 1 : x < y ? -1 : 0) * ordNT.verso; });
   const quando = (dati.anagrafica || [])[0] ? new Date(dati.anagrafica[0].aggiornata_il).toLocaleString("it-IT") : "";
   $("#vediNonTorna").textContent = `Cose che non tornano (${nt.length})`;
   $("#titolo-nonTorna").textContent = `Cose che non tornano (${nt.length})` + (quando ? ` · anagrafica letta il ${quando}` : " · anagrafica non ancora caricata");
   $("#nonTorna tbody").innerHTML = nt.map((x) => `<tr><td class="no">${x.tipo}</td><td class="num">${x.kit}</td><td>${x.dove}</td><td class="tenue">${x.det}</td></tr>`).join("");
-  const f = kitFermi.filter(ok);
+  const f = kitFermi.filter((k) => ok(k) && passaFiltri("fermi", k)).sort((a, b) => {
+    const v = (k) => (ordFe.chiave === "controllo" ? k.finito_il || "" : VALORE.fermi[ordFe.chiave](k));
+    const x = v(a), y = v(b); return (x > y ? 1 : x < y ? -1 : 0) * ordFe.verso;
+  });
   $("#titolo-fermi").textContent = f.length ? `Kit che non rispondono o senza registrazioni oggi (${f.length})` : "";
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td class="no">${k.perche}</td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td></tr>`).join("");
+  $("#fermi thead").hidden = !kitFermi.length;
 }
 async function carica() {
   const r = await fetch("/api/p2p?op=stato");
@@ -369,6 +418,7 @@ async function carica() {
   disegna();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
 $("#cerca").addEventListener("input", disegna);
 for (const b of document.querySelectorAll("button[data-filtro]")) b.addEventListener("click", () => {
@@ -397,8 +447,8 @@ document.addEventListener("click", (e) => {
     scaricaXlsx("Cose che non tornano", ["Cosa non torna", "Kit", "Dove", "Dettaglio", "Correzione (Barbara)", "Fatto"], nonTorna.map((x) => [x.tipo, Number(x.kit) || x.kit, x.dove, x.det, "", ""]), [38, 7, 60, 60, 40, 8]);
   if (b.dataset.scarica === "telecamere") {
     const giorni = [...new Set(righe.flatMap((r) => r.perc.map(([g]) => g)))].sort();
-    scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", "Giorni", "Media %", ...giorni.map(giornoIt)],
-      righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, r.nGiorni ?? "", r.media ?? "", ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, 7, 8, ...giorni.map(() => 6)]);
+    scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", ...giorni.map(giornoIt)],
+      righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, ...giorni.map(() => 6)]);
   }
   if (b.dataset.scarica === "fermi")
     scaricaXlsx("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "Nota (Barbara)", "Fatto"], kitFermi.map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", "", ""]), [26, 36, 50, 20, 40, 8]);
