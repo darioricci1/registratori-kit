@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.7.1 (10/11/2026) - grafico ad altezza fissa (le date non si ingrandiscono); rosso solo i giorni a zero, giallo
+<!-- version: 2.9.0 (10/11/2026) - un giorno che il registratore non ha detto e' «non letto» (grigio), mai 0%; gli archivi letti dai
+     ponti prima del 0.4.0 sono «da rileggere» quando danno 0 in tutti i giorni e la telecamera oggi registra.
+     2.8.1 - il grafico va sempre dal 20/10 a oggi (Dario).
+     2.8.0 - «Scarica in Excel» fa un vero .xlsx (xlsx.js, senza librerie esterne).
+     2.7.1 - grafico ad altezza fissa (le date non si ingrandiscono); rosso solo i giorni a zero, giallo
      sopra zero, verde dal 90% (Dario).
      2.7.0 - grafico a linee, con la stessa scala per tutte le righe e oggi sempre sul bordo destro (Dario).
      2.6.0 - «Scarica in Excel» per le cose che non tornano, le telecamere e i kit che non rispondono
@@ -31,6 +35,7 @@
      giorno sulle 24 ore, dall'ultimo giorno indietro. I kit che non rispondono stanno in fondo. -->
 <script src="fumetti-neri.js"></script>
 <script src="ordinabile.js"></script>
+<script src="xlsx.js"></script>
 <link rel="stylesheet" href="ordinabile.css">
 <style>
 :root { --sfondo:#f5f6f8; --carta:#fff; --testo:#1d2330; --tenue:#667085; --bordo:#d9dde5; --blu:#2457c5; --verde:#1d7a46; --verde-chiaro:#dcf3e5; --rosso:#b42318; --rosso-chiaro:#fde4e1; --arancio:#9a5b00; --arancio-chiaro:#fff0d1; --grigio-chiaro:#eceff3; --raggio:10px; }
@@ -61,7 +66,7 @@ tr.primaKit td { border-top:2px solid var(--bordo) }
 .grafico svg { display:block; height:auto }
 .grafico .linea { fill:none; stroke:var(--blu); stroke-width:1.6; vector-effect:non-scaling-stroke }
 .grafico .area { fill:var(--blu); opacity:.12 } .grafico .riga90 { stroke:var(--bordo); stroke-dasharray:2 2; vector-effect:non-scaling-stroke }
-.grafico .p100 { fill:var(--verde) } .grafico .p50 { fill:#e0a800 } .grafico .p0 { fill:var(--rosso) }
+.grafico .pnull { fill:var(--bordo) } .grafico .p100 { fill:var(--verde) } .grafico .p50 { fill:#e0a800 } .grafico .p0 { fill:var(--rosso) }
 .grafico .tratto { stroke:var(--blu); stroke-width:1.6 }
 .prima { font-size:11px; color:var(--tenue); white-space:normal; margin-top:2px }
 .grafico text { font-size:9px; fill:var(--tenue) }
@@ -89,7 +94,7 @@ h2 { font-size:16px; margin:18px 0 6px }
 </header>
 <main>
   <div class="conti" id="conti"></div>
-  <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file che Excel apre">Scarica in Excel</button></h2>
+  <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:22%"><col style="width:6%"><col style="width:36%"><col style="width:36%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
   <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
@@ -101,7 +106,7 @@ h2 { font-size:16px; margin:18px 0 6px }
       <th data-chiave="ultimo" data-verso="giu" title="La registrazione più recente">Al</th>
       <th data-chiave="nGiorni" data-verso="giu" title="Giorni con registrazioni sul disco">Giorni</th>
       <th data-chiave="media" title="Media della percentuale di registrato sui giorni sul disco (24 ore = 100%)">Media</th>
-      <th data-ordina="no" title="La percentuale delle 24 ore registrata giorno per giorno: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
+      <th data-ordina="no" title="La percentuale delle 24 ore registrata giorno per giorno: oggi sul bordo destro, la stessa scala per tutte le righe. La linea tratteggiata è il 90%. Punti verdi dal 90%, gialli sopra zero, rossi a zero, grigi non letti. Passa sopra un punto per vedere giorno e percentuale">Giorni, fino a oggi</th>
       <th data-ordina="no">Foto</th>
     </tr></thead>
     <tbody></tbody>
@@ -121,12 +126,14 @@ const breve = (t) => { const m = String(t || "").match(/^\d{4}-(\d\d)-(\d\d) (\d
 function notaPrima(r) {
   const quando = r.letto ? new Date(r.letto).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "";
   if (!r.arcLetto) return "Prima di oggi: archivio non ancora letto (lo legge il giro del PC).";
+  if (r.daRileggere) return `Archivio da rileggere: il ${quando} il collegamento è caduto durante la lettura (i giorni grigi non sono stati letti, non sono vuoti).`;
   if (r.arcVuoto) return `Archivio letto il ${quando}: sul disco non c'è niente di questo canale.`;
   if (r.troncato) return `Archivio letto il ${quando}: qui gli ultimi 90 giorni; il disco ha registrazioni dal ${breve(r.primo)}.`;
   return `Archivio letto il ${quando}: prima del ${breve(r.primo)} il disco non ha niente (registrazioni già sovrascritte, o il kit non registrava).`;
 }
 /** Il grafico dei giorni: una barra per giorno (la piu' recente a sinistra), alta quanto la percentuale delle 24 ore. */
-let GIORNI_SCALA = 30;   // quanti giorni copre la scala comune (il piu' lungo fra le righe, almeno 30)
+const DAL = "2026-10-20";   // il grafico parte sempre da qui (Dario, 10/11: «fammi sempre vedere dal 20/10 in poi»)
+let GIORNI_SCALA = 30;   // giorni dal 20/10 a oggi
 /** La linea dei giorni: altezza fissa, larga quanto la colonna; le x in percentuale, oggi sul bordo destro. */
 function grafico(perc) {
   if (!perc.length) return '<span class="tenue">-</span>';
@@ -134,15 +141,17 @@ function grafico(perc) {
   const oggi = new Date(perc[0][0] + "T12:00:00");
   const xg = (g) => 98 - 96 * Math.round((oggi - new Date(g + "T12:00:00")) / 864e5) / Math.max(1, N - 1);
   const yp = (p) => 3 + (H - 6) * (1 - p / 100);
-  const punti = [...perc].reverse().map(([g, p]) => [xg(g), yp(p), g, p]).filter(([x]) => x >= 1);
-  const tratti = punti.slice(1).map(([x, y], i) => `<line class="tratto" x1="${punti[i][0].toFixed(2)}%" y1="${punti[i][1].toFixed(1)}" x2="${x.toFixed(2)}%" y2="${y.toFixed(1)}"/>`).join("");
-  const pallini = punti.map(([x, y, g, p]) => `<circle class="${p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="2.2"><title>${giornoIt(g)}: ${p}% delle 24 ore</title></circle>`).join("");
+  const punti = [...perc].reverse().filter(([g]) => g >= DAL).map(([g, p]) => [xg(g), p == null ? H - 3 : yp(p), g, p]);
+  const tratti = punti.slice(1).filter((pt, i) => pt[3] != null && punti[i][3] != null).map(([x, y], i) => `<line class="tratto" x1="${punti[i][0].toFixed(2)}%" y1="${punti[i][1].toFixed(1)}" x2="${x.toFixed(2)}%" y2="${y.toFixed(1)}"/>`).join("");
+  const pallini = punti.map(([x, y, g, p]) => `<circle class="${p == null ? "pnull" : p >= 90 ? "p100" : p > 0 ? "p50" : "p0"}" cx="${x.toFixed(2)}%" cy="${y.toFixed(1)}" r="2.2"><title>${giornoIt(g)}: ${p == null ? "non letto" : p + "% delle 24 ore"}</title></circle>`).join("");
   const etichette = [];
   for (let i = 0; i < N; i += 7) {
+    if (N - 1 - i < 3 && i) continue;   // niente etichetta schiacciata contro il 20/10
     const d = new Date(oggi - i * 864e5).toISOString().slice(0, 10);
     const x = 98 - 96 * i / Math.max(1, N - 1);
     etichette.push(`<text x="${x.toFixed(2)}%" y="${H + 10}" text-anchor="${i === 0 ? "end" : "middle"}">${i === 0 ? "oggi" : giornoIt(d)}</text>`);
   }
+  etichette.push(`<text x="2%" y="${H + 10}" text-anchor="start">${giornoIt(DAL)}</text>`);
   return `<span class="grafico"><svg width="100%" height="${H + 12}" role="img" aria-label="registrato per giorno">` +
     `<line class="riga90" x1="0" x2="100%" y1="${yp(90)}" y2="${yp(90)}"/>${tratti}${pallini}${etichette.join("")}</svg></span>`;
 }
@@ -178,6 +187,10 @@ function costruisci(d) {
           if (!(g in giorni)) giorni[g] = 0;
         }
       }
+      // un archivio dei ponti vecchi con 0 in tutti i giorni passati mentre oggi registra: il collegamento era caduto
+      const passatiArc = Object.entries(giorni).filter(([g]) => g !== oggiIso);
+      const daRileggere = tr.length && passatiArc.length > 0 && passatiArc.every(([, m]) => !m);
+      if (daRileggere) for (const [g] of passatiArc) giorni[g] = null;
       const elenco = Object.entries(giorni).sort((a, b) => (a[0] < b[0] ? 1 : -1));
       const haRegistrato = tr.length || (x.arc && x.arc.primo) || (x.giro && x.giro.minuti_24h > 0);
       if (!haRegistrato) continue;
@@ -186,13 +199,13 @@ function costruisci(d) {
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
       const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
-      const perc = elenco.map(([g, m]) => [g, Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440)))]);
-      const passati = perc.filter(([g]) => g !== oggiIso);
+      const perc = elenco.map(([g, m]) => [g, m == null ? null : Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440)))]);
+      const passati = perc.filter(([g, p]) => g !== oggiIso && p != null);
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
         adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
         primo: (x.arc && x.arc.primo) || "", ultimo: (x.arc && x.arc.ultimo) || "", letto: (x.arc && x.arc.letto_il) || "",
-        arcLetto: !!x.arc, arcVuoto: !!(x.arc && !x.arc.primo), troncato: !!(x.arc && x.arc.giorni && Object.keys(x.arc.giorni).length >= 90),
+        arcLetto: !!x.arc, daRileggere, arcVuoto: !!(x.arc && !x.arc.primo), troncato: !!(x.arc && x.arc.giorni && Object.keys(x.arc.giorni).length >= 90),
         nGiorni: x.arc ? Object.keys(giorni).length : null, perc,
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
         foto: (cm[k.uid] || {})[n],
@@ -289,7 +302,7 @@ async function carica() {
   if (d.entra || r.status === 401) { $("#entra").hidden = false; $("#chi").textContent = "entra con Alma per vedere i kit"; return; }
   if (!d.kit) return;
   dati = d; costruisci(d);
-  GIORNI_SCALA = Math.min(90, Math.max(30, ...righe.map((r) => r.perc.length)));
+  GIORNI_SCALA = Math.max(2, Math.round((new Date() - new Date(DAL + "T00:00:00")) / 864e5) + 1);
   disegna();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
@@ -306,26 +319,21 @@ $("#giro").addEventListener("click", async () => {
   $("#chi").textContent = d.accodati != null ? `${d.accodati} registratori messi in coda` : (d.errore || "non riuscito");
   carica();
 });
-/** Un .csv col punto e virgola e il BOM: Excel in italiano lo apre a colonne, con gli accenti giusti. */
-function scaricaCsv(nome, intest, righe) {
-  const cella = (v) => { const t = String(v ?? ""); return /[;"\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
-  const testo = "\ufeff" + [intest, ...righe].map((r) => r.map(cella).join(";")).join("\r\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([testo], { type: "text/csv;charset=utf-8" }));
-  a.download = `${nome} ${new Date().toLocaleDateString("it-IT").replace(/\//g, "-")}.csv`;
-  document.body.append(a); a.click(); a.remove();
+/** Un vero .xlsx col nome di oggi (xlsx.js). */
+function scaricaXlsx(nome, intest, righe, larghezze) {
+  XLSX.scarica(`${nome} ${new Date().toLocaleDateString("it-IT").replace(/\//g, "-")}.xlsx`, [{ nome, intestazione: intest, righe, larghezze }]);
 }
 document.addEventListener("click", (e) => {
   const b = e.target.closest("button[data-scarica]"); if (!b) return;
   if (b.dataset.scarica === "nonTorna")
-    scaricaCsv("Cose che non tornano", ["Cosa non torna", "Kit", "Dove", "Dettaglio", "Correzione", "Fatto"], nonTorna.map((x) => [x.tipo, x.kit, x.dove, x.det, "", ""]));
+    scaricaXlsx("Cose che non tornano", ["Cosa non torna", "Kit", "Dove", "Dettaglio", "Correzione (Barbara)", "Fatto"], nonTorna.map((x) => [x.tipo, Number(x.kit) || x.kit, x.dove, x.det, "", ""]), [38, 7, 60, 60, 40, 8]);
   if (b.dataset.scarica === "telecamere") {
     const giorni = [...new Set(righe.flatMap((r) => r.perc.map(([g]) => g)))].sort();
-    scaricaCsv("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", "Giorni", "Media %", ...giorni.map(giornoIt)],
-      righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, r.nGiorni ?? "", r.media ?? "", ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }));
+    scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", "Giorni", "Media %", ...giorni.map(giornoIt)],
+      righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, r.nGiorni ?? "", r.media ?? "", ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, 7, 8, ...giorni.map(() => 6)]);
   }
   if (b.dataset.scarica === "fermi")
-    scaricaCsv("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo"], kitFermi.map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""]));
+    scaricaXlsx("Kit che non rispondono", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "Nota (Barbara)", "Fatto"], kitFermi.map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", "", ""]), [26, 36, 50, 20, 40, 8]);
 });
 $("#grande").addEventListener("click", () => { $("#grande").hidden = true; });
 $("#tab").addEventListener("click", (e) => { const i = e.target.closest("img.mini"); if (i) { $("#grande").innerHTML = `<img src="${i.src}">`; $("#grande").hidden = false; } });

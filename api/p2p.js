@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.7.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.7.1 (10/11/2026)
+// 1.7.1: i ponti prima del 0.4.0 non leggono piu' gli archivi (segnavano 0 i giorni senza risposta del registratore).
 // 1.7.0: un registratore che UVMS ha due volte (stesso UID, due nomi) resta due righe: la chiave e' (uid, nome).
 // 1.6.2: op=stato da' anche quando e' stato letto l'archivio di ogni telecamera (letto_il).
 // 1.6.1: anche l'account di servizio legge le viste della pagina (per l'Excel delle correzioni).
@@ -163,7 +164,7 @@ export default async function handler(req, res) {
         if (r[0]) {
           const a = await sql`select count(*)::int as n, coalesce(min(letto_il) < now() - interval '24 hours', true) as vecchio
             from nvr_remoto.archivio where uid = ${r[0].uid}`;
-          r[0].serve_archivio = a[0].n === 0 || a[0].vecchio;
+          r[0].serve_archivio = (a[0].n === 0 || a[0].vecchio) && !/ 0\.[0-3]\./.test(String(b.versione || ""));
         }
         return res.json({ richiesta: r[0] || null });
       }
