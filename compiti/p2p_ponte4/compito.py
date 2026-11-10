@@ -1,6 +1,6 @@
 """Compito p2p_ponte4 (10/11/2026): come p2p_ponte3, ma un giorno che il registratore non dice (domanda senza risposta, per
 esempio perche' il collegamento P2P «relay» si chiude dopo 5 minuti) va come «non letto» (null), non come 0; l'archivio
-si legge solo dal 20/10 (Dario: «fammi sempre vedere dal 20/10 in poi») e prima delle foto, quando il collegamento e'
+si legge solo dal 27/10 (Dario: «limita al 27/10») e prima delle foto, quando il collegamento e'
 fresco. Gira 24 ore su qualunque PC libero.
 Prima, p2p_ponte3 (10/11/2026, Dario: «ogni ora una foto di ogni kit e di ogni telecamera, e se si vede o no un'immagine;
 e una volta sola, per ogni telecamera di ogni registratore, da che data ha iniziato a registrare e in quali giorni c'e'
@@ -234,7 +234,7 @@ def foto_camere(reg, oggi, canali, rid):
     return out
 
 
-DAL_ARCHIVIO = datetime.date(2026, 10, 20)
+DAL_ARCHIVIO = datetime.date(2026, 10, 27)   # come la pagina (Dario: «limita al 27/10»)
 
 
 def archivio(reg):
