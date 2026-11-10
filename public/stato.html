@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
-<!-- version: 2.13.0 (10/11/2026) - il grafico copiato dai Target di darioleads (src/components/amici/andamenti.tsx): asse con
+<!-- version: 2.13.1 (10/11/2026) - i riquadri dei conti restano fermi in alto mentre si scorre (Dario).
+     2.13.0 - il grafico copiato dai Target di darioleads (src/components/amici/andamenti.tsx): asse con
      tacche e griglia leggera, zero marcato, linea #1f4e78 da 2 con gli angoli tondi, punti con l'anello bianco (piu' grandi e
      colorati fuori norma: giallo sopra zero, rosso a zero), numeri con l'alone messi sopra o sotto dove non toccano la linea.
      2.12.1 - i canali che non hanno mai registrato (niente oggi e niente dal 27/10) non si mostrano (Dario:
@@ -62,7 +63,8 @@ button { font:inherit; min-height:40px; padding:6px 14px; border-radius:var(--ra
 button.primo { background:var(--blu); color:#fff; border-color:var(--blu) }
 button.scelto { outline:2px solid var(--blu) }
 input { font:inherit; min-height:40px; padding:6px 10px; border-radius:var(--raggio); border:1px solid var(--bordo); background:var(--carta); color:var(--testo); width:min(280px,100%) }
-.conti { display:flex; flex-wrap:wrap; gap:8px; padding:10px 0 }
+.conti { flex:none; display:flex; flex-wrap:wrap; gap:8px; padding:8px 12px; background:var(--sfondo); border-bottom:1px solid var(--bordo) }
+.conto { padding:4px 10px !important }
 .conto { background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:6px 12px }
 .conto b { font-size:18px }
 table { border-collapse:collapse; width:100%; background:var(--carta); table-layout:fixed }
@@ -109,8 +111,8 @@ h2 { font-size:16px; margin:18px 0 6px }
   <button id="giro" title="Mette in coda tutti i registratori: il PC dell'ufficio li controlla uno alla volta">Ricontrolla tutti</button>
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
 </header>
+<div class="conti" id="conti"></div>
 <main>
-  <div class="conti" id="conti"></div>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:22%"><col style="width:6%"><col style="width:36%"><col style="width:36%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th></tr></thead><tbody></tbody></table>
   <h2>Telecamere che funzionano <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
