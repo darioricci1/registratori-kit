@@ -41,7 +41,7 @@ quello che serve per continuare senza la conversazione di prima.
   lettura del database UVMS); i «più telecamere» erano canali vuoti contati per sbaglio (corretto nella pagina 2.16.0);
   i «meno telecamere» hanno quasi tutti un ODM aperto, che ora la pagina mostra (ponte 0.5.0); 128, 136 e 155 sono DVR con
   la password messa in laboratorio: va chiesta e scritta in focus_accesso.txt; 507 e 338 hanno il contratto sospeso.
-- Domani: controllare che il ponte 0.5.0 abbia mandato gli ODM e che i doppioni siano spariti.
+- Su Drive il compito si chiama «p2p_ponte7» (codice in compiti/p2p_ponte6, 0.6.2): il PC «Dario» aveva già preso la 0.6.0 col nome p2p_ponte6, e il nome nuovo lo fa chiudere e ripartire. Domani: controllare che il ponte 0.5.0 abbia mandato gli ODM e che i doppioni siano spariti.
 - Repository nuovo (lo crea Dario), poi collegare il progetto Vercel a quel repository.
 - Riga nel registro del software del gestionale (già c'è «prova-nvr-remoto», da aggiornare: anagrafica e UVMS dal NAS).
 - Domani: guardare le prime foto e gli archivi, e le «Cose che non tornano» col giro completo.
