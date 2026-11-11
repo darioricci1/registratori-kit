@@ -1,0 +1,46 @@
+{
+ "pc": "COMPUTERONE",
+ "owl": {
+  "nome_drive": "owlv2_fp32.onnx",
+  "byte": 360204024,
+  "ritagli": 20,
+  "fili_cpu": 4,
+  "dml_device": [
+   0,
+   1
+  ],
+  "fp16": true,
+  "priorita_normale": true
+ },
+ "video_nas": {
+  "limite_scorri_s": 1800,
+  "eventi": [
+   {
+    "id": "998779f7c3",
+    "nota": "sul sito cam1 2,0 s (50 fotogrammi)"
+   },
+   {
+    "id": "aedb97d080",
+    "nota": "sul sito cam2 44,08 s, cam1 1,84 s, cam3 1,28 s"
+   },
+   {
+    "id": "ebe9f00cef",
+    "nota": "sul sito 1,0 / 1,96 / 1,28 s"
+   },
+   {
+    "id": "2f582c2aa9",
+    "nota": "sul sito 1,8 / 2,0 / 1,6 s; file dall'elenco di ArchiveData del 09/11",
+    "comune": "ALTA VAL TIDONE",
+    "file_rel": [
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091000S.ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091000S(2).ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091001S.ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091001S(2).ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091002S.ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091002S(2).ssf",
+     "ALTA VAL TIDONE\\KIT490 NIBBIANO Cimitero\\2026\\08-2026\\20260828\\targa FF194DN 18091002S(3).ssf"
+    ]
+   }
+  ]
+ }
+}

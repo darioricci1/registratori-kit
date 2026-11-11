@@ -31,7 +31,13 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.9.7 (11/11/2026): i pezzi di ogni canale in una cartella sua (la CH2 copriva ancora la CH1 nei pezzi).
+version: 0.10.0 (11/11/2026): misure.json, una volta sola per compito sul COMPUTERONE (segno misure_fatte.txt in uscita), in un
+  filo suo mentre il ponte risponde: 1) OWLv2 in ONNX (owlv2_fp32.onnx, scaricato da Drive in ~/kr_lavori/owl) con
+  onnxruntime su DirectML e sul processore, e in fp16 se onnx c'e' sul PC: apertura, prima inferenza e tempo per
+  ritaglio su 20 ritagli dalla scorta video (o finti 960x960) -> owl_tempi.json; 2) gli originali sul NAS dei video
+  di 1-2 secondi (998779f7c3, aedb97d080, ebe9f00cef, 2f582c2aa9): byte, pacchetti, durata e decodifica completa
+  con ffmpeg, per telecamera -> video_nas.json.
+0.9.7 (11/11/2026): i pezzi di ogni canale in una cartella sua (la CH2 copriva ancora la CH1 nei pezzi).
 version: 0.9.6 (10/11/2026): nella prova dei video lunghi la CH1 non si chiama più come la CH2 (il file della CH2 la copriva).
 0.9.5 (10/11/2026): l'anagrafica porta anche la colonna BATT (come è alimentato il kit: solare, 220 V, batteria).
 0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
@@ -60,7 +66,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.9.6"
+VERSIONE = "p2p_ponte 0.10.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 
@@ -620,6 +626,624 @@ def compito_nuovo_su_drive():
         return False
 
 
+# ------------------------------------------------------------------ 0.10.0: misure.json (una volta sola per compito)
+# Due misure per decidere, sul COMPUTERONE (Dario, 11/11): 1) quanto costa OWLv2 in ONNX sulla scheda grafica
+# (DirectML) e sul processore, per ritaglio, per il verificatore dei candidati (analisi/owlv2-onnx-2026-11-11.md);
+# 2) se i video di 1-2 secondi di 998779f7c3, aedb97d080, ebe9f00cef, 2f582c2aa9 sono corti gia' sul NAS o li taglia
+# la conversione (analisi/video-rotti-2026-11-11.md, causa 3). Gira in un filo suo: il ponte risponde intanto.
+NOFIN = 0x08000000 if os.name == "nt" else 0   # niente finestra nera (su Windows); altrove creationflags deve essere 0
+ESTENSIONI_VIDEO = (".ssf", ".dav", ".mp4", ".ts", ".avi", ".mkv")
+OWL_LATO = 960
+OWL_MEDIA = [0.48145466, 0.4578275, 0.40821073]
+OWL_DEVIAZIONE = [0.26862954, 0.26130258, 0.27577711]
+ARCHIVI_NAS = [r"Z:\ArchiveData", r"\\192.168.100.253\Alma_Video\ArchiveData", r"\\NAS-VIDEO\Alma_Video\ArchiveData"]
+
+
+def scrivi_json(nome, dati):
+    """In uscita/, scritto prima in un .tmp: un json a meta' non arriva mai su Drive."""
+    p = os.path.join(U, nome)
+    with open(p + ".tmp", "w", encoding="utf-8") as fh:
+        json.dump(dati, fh, ensure_ascii=False, indent=1, default=str)
+    os.replace(p + ".tmp", p)
+
+
+def ffprobe():
+    """ffprobe accanto a ffmpeg (o nel PATH); None se non c'e'."""
+    f = shutil.which("ffprobe")
+    if f:
+        return f
+    for d in (os.path.dirname(ffmpeg()), getattr(sys, "_MEIPASS", ""), os.path.dirname(sys.executable)):
+        p = os.path.join(d, "ffprobe.exe")
+        if d and os.path.exists(p):
+            return p
+    return None
+
+
+def cartelle_lavoro(c, casa):
+    """Le cartelle di lavoro di Kit_Rifiuti da guardare: quella che contiene il compito (<lavoro>\\_compiti\\<nome>) e le
+    archivio_kit* della home. casa: (cartella home, nomi che ci sono dentro). Funzione pura."""
+    out = []
+    su = os.path.dirname(os.path.dirname(os.path.abspath(c)))
+    if os.path.basename(os.path.dirname(os.path.abspath(c))).lower() == "_compiti":
+        out.append(su)
+    for d in sorted(casa[1]):
+        if d.lower().startswith("archivio_kit"):
+            p = os.path.join(casa[0], d)
+            if p not in out:
+                out.append(p)
+    return out
+
+
+def file_da_indice(righe, ids):
+    """Dalle righe di indice_nas.jsonl, {id: file_rel} per gli id chiesti (l'ultima riga di un evento vale, come
+    leggi_indice di archivio_kit). Funzione pura."""
+    out = {}
+    for r in righe:
+        try:
+            x = json.loads(r)
+        except ValueError:
+            continue
+        if isinstance(x, dict) and x.get("id") in ids and x.get("file_rel"):
+            out[x["id"]] = list(x["file_rel"])
+    return out
+
+
+def leggi_ffprobe(testo):
+    """(pacchetti del primo video, durata del contenitore) dal json di ffprobe -count_packets; (0, 0.0) se non dice.
+    Funzione pura."""
+    try:
+        j = json.loads(testo or "{}")
+    except ValueError:
+        return 0, 0.0
+    try:
+        pac = int(((j.get("streams") or [{}])[0] or {}).get("nb_read_packets") or 0)
+    except (ValueError, TypeError, AttributeError):
+        pac = 0
+    try:
+        dur = float((j.get("format") or {}).get("duration") or 0)
+    except (ValueError, TypeError, AttributeError):
+        dur = 0.0
+    return pac, dur
+
+
+def leggi_progress(testo):
+    """I fotogrammi decodificati dall'ultima riga «frame=N» di ffmpeg -progress; None se non c'e'. Funzione pura."""
+    n = None
+    for riga in (testo or "").splitlines():
+        if riga.startswith("frame="):
+            try:
+                n = int(riga.split("=", 1)[1].strip())
+            except ValueError:
+                pass
+    return n
+
+
+def canale_e_parte(nome):
+    """«targa FF194DN 18091002S(3).ssf» -> ("02", 3); («», 1) se il nome non ha il canale. Funzione pura."""
+    import re
+    s = os.path.splitext(os.path.basename(nome.replace("\\", "/")))[0]
+    m = re.match(r"^.*?\d{6}(\d{2})[A-Za-z]?\s*(?:\((\d+)\))?$", s)
+    if not m:
+        return "", 1
+    return m.group(1), int(m.group(2) or 1)
+
+
+def riassunto_evento(misure, fps=25.0, corto_s=3.0):
+    """Per telecamera: parti, byte, pacchetti e fotogrammi decodificati sommati sulle parti, secondi a `fps`, errori;
+    e il giudizio: «corto all'origine» se sul NAS la telecamera ha meno di `corto_s` secondi, «intero sul NAS» se no
+    (allora a tagliare e' la conversione). misure: [{file, byte, pacchetti, decodificati, errori}]. Funzione pura."""
+    per = {}
+    for m in misure:
+        ch, _ = canale_e_parte(m.get("file", ""))
+        t = per.setdefault(ch or "?", {"parti": 0, "byte": 0, "pacchetti": 0, "decodificati": 0, "errori": 0})
+        t["parti"] += 1
+        t["byte"] += int(m.get("byte") or 0)
+        t["pacchetti"] += int(m.get("pacchetti") or 0)
+        t["decodificati"] += int(m.get("decodificati") or 0)
+        t["errori"] += 0 if m.get("decodifica_ok") else 1
+    for t in per.values():
+        fot = max(t["pacchetti"], t["decodificati"])
+        t["secondi_a_%d_fps" % int(fps)] = round(fot / fps, 1)
+        t["giudizio"] = ("non misurato" if not t["byte"] else
+                         "corto all'origine" if fot < corto_s * fps else "intero sul NAS")
+    return per
+
+
+def riassunto_tempi(sec):
+    """Mediana, media, minimo e massimo di una lista di secondi (vuota: {}). Funzione pura."""
+    s = sorted(float(x) for x in sec)
+    if not s:
+        return {}
+    n = len(s)
+    med = s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2
+    return {"n": n, "mediana": round(med, 3), "media": round(sum(s) / n, 3), "min": round(s[0], 3), "max": round(s[-1], 3)}
+
+
+def scegli_video(elenco, n, seme=11):
+    """Fino a `n` video della scorta, a caso ma ripetibile, al massimo 2 per cartella (eventi diversi), sopra 1 MB.
+    elenco: [(percorso, byte)]. Funzione pura."""
+    import random
+    rnd = random.Random(seme)
+    buoni = [(p, b) for p, b in elenco if b >= 1e6 and p.lower().endswith(ESTENSIONI_VIDEO)]
+    rnd.shuffle(buoni)
+    per, out = {}, []
+    for p, _ in buoni:
+        d = os.path.dirname(p)
+        if per.get(d, 0) >= 2:
+            continue
+        per[d] = per.get(d, 0) + 1
+        out.append(p)
+        if len(out) >= n:
+            break
+    return out
+
+
+def ritagli_da_fotogramma(h, w, quanti, rnd):
+    """`quanti` riquadri (x, y, lato_x, lato_y) dentro un fotogramma h x w, lati fra 160 px e il lato corto (i
+    candidati di Kit_Rifiuti vanno da poco a mezzo fotogramma). Funzione pura con il generatore dato."""
+    out = []
+    corto = min(h, w)
+    for _ in range(quanti):
+        lx = rnd.randint(min(160, corto), corto)
+        ly = max(min(160, h), min(h, int(lx * rnd.uniform(0.7, 1.3))))
+        out.append((rnd.randint(0, w - lx), rnd.randint(0, h - ly), lx, ly))
+    return out
+
+
+def owl_prepara(bgr):
+    """Copiata da analisi/esporta_owl_onnx.py 0.1.0 (prepara): ritaglio BGR uint8 -> pixel_values 1x3x960x960 float32,
+    come Owlv2ImageProcessor (0..1, quadrato riempito in basso a destra, sfocatura se si rimpicciolisce, bilineare, CLIP)."""
+    import cv2
+    import numpy as np
+    h, w = bgr.shape[:2]
+    im = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
+    L = max(h, w)
+    if (h, w) != (L, L):
+        im = cv2.copyMakeBorder(im, 0, L - h, 0, L - w, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    f = L / OWL_LATO
+    if f > 1:
+        s = (f - 1) / 2
+        k = 2 * int(np.ceil(3 * s)) + 1
+        im = cv2.GaussianBlur(im, (k, k), sigmaX=s, sigmaY=s, borderType=cv2.BORDER_REFLECT_101)
+    if L != OWL_LATO:
+        im = cv2.resize(im, (OWL_LATO, OWL_LATO), interpolation=cv2.INTER_LINEAR)
+    im = (im - np.array(OWL_MEDIA, np.float32)) / np.array(OWL_DEVIAZIONE, np.float32)
+    return np.ascontiguousarray(im.transpose(2, 0, 1)[None])
+
+
+def fotogramma(video, n):
+    """Il fotogramma numero `n` di un video come immagine BGR (ffmpeg, che legge anche gli .ssf), o None."""
+    import cv2
+    import numpy as np
+    jpg = os.path.join(U, "_fotogramma.jpg")
+    for forza in ([], ["-f", "h264"], ["-f", "hevc"]):
+        try:
+            if os.path.exists(jpg):
+                os.remove(jpg)
+            subprocess.run([ffmpeg(), "-v", "error", "-y", *forza, "-i", video, "-vf", f"select=gte(n\\,{n})",
+                            "-frames:v", "1", "-q:v", "3", jpg], capture_output=True, timeout=180, creationflags=NOFIN)
+            if os.path.exists(jpg):
+                im = cv2.imdecode(np.frombuffer(open(jpg, "rb").read(), np.uint8), cv2.IMREAD_COLOR)
+                os.remove(jpg)
+                if im is not None and im.shape[0] >= 160 and im.shape[1] >= 160:
+                    return im
+        except (OSError, subprocess.SubprocessError):
+            continue
+    return None
+
+
+def ritagli_per_owl(quanti, lavori, seme=11):
+    """`quanti` ritagli BGR: da fotogrammi a caso dei video della scorta (lavoro\\_scorta) o, se non ce ne sono, immagini
+    finte 960x960. Ritorna (ritagli, da_dove)."""
+    import random
+    import numpy as np
+    rnd = random.Random(seme)
+    elenco = []
+    for l in lavori:
+        sc = os.path.join(l, "_scorta")
+        try:
+            for ev in os.listdir(sc)[:400]:
+                d = os.path.join(sc, ev)
+                if os.path.isdir(d):
+                    for f in os.listdir(d):
+                        p = os.path.join(d, f)
+                        elenco.append((p, os.path.getsize(p)))
+        except OSError:
+            continue
+    ritagli, usati = [], []
+    for v in scegli_video(elenco, (quanti + 1) // 2, seme):
+        im = fotogramma(v, rnd.randint(0, 200))
+        if im is None:
+            continue
+        usati.append(os.path.basename(v))
+        for x, y, lx, ly in ritagli_da_fotogramma(im.shape[0], im.shape[1], 2, rnd):
+            ritagli.append(np.ascontiguousarray(im[y:y + ly, x:x + lx]))
+        if len(ritagli) >= quanti:
+            break
+    da_dove = f"{len(ritagli)} ritagli da {len(usati)} video della scorta ({len(elenco)} file nella scorta)"
+    if len(ritagli) < quanti:
+        g = np.random.default_rng(seme)
+        finti = quanti - len(ritagli)
+        ritagli += [g.integers(0, 256, (OWL_LATO, OWL_LATO, 3), dtype=np.uint8) for _ in range(finti)]
+        da_dove += f", piu' {finti} immagini finte 960x960"
+    return ritagli[:quanti], da_dove
+
+
+def owl_modello(nome, byte_atteso, dove):
+    """Il modello in ~/kr_lavori/owl: se manca (o ha un'altra grandezza) si scarica da Drive. Ritorna (percorso, nota)."""
+    import drive_alma
+    os.makedirs(dove, exist_ok=True)
+    p = os.path.join(dove, nome)
+    if os.path.exists(p) and (not byte_atteso or os.path.getsize(p) == int(byte_atteso)):
+        return p, "gia' sul PC"
+    f = drive_alma.trova(nome, (C, os.path.dirname(sys.executable)))
+    if not f:
+        return None, f"su Drive manca {nome}"
+    t0 = time.time()
+    ok, msg = drive_alma.scarica(f["id"], p, (C, os.path.dirname(sys.executable)))
+    if not ok:
+        return None, msg
+    if byte_atteso and os.path.getsize(p) != int(byte_atteso):
+        return None, f"scaricato ma di {os.path.getsize(p)} byte invece di {byte_atteso} (segnaposto non ancora caricato?)"
+    return p, f"scaricato da Drive in {time.time() - t0:.0f} s ({msg})"
+
+
+def owl_misura(percorso, provider, ritagli, fili=4, device=0):
+    """Una sessione onnxruntime: apertura (il primo caricamento), prima inferenza, poi ogni ritaglio (preparazione e
+    modello separati). Ritorna (risultato, massimi per ritaglio delle 4 domande, per il confronto fra provider)."""
+    import numpy as np
+    import onnxruntime as ort
+    o = ort.SessionOptions()
+    o.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+    if provider == "DmlExecutionProvider":
+        o.enable_mem_pattern = False   # DirectML li vuole cosi'
+        o.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+        provs = [("DmlExecutionProvider", {"device_id": int(device)}), "CPUExecutionProvider"]
+    else:
+        o.intra_op_num_threads = int(fili)
+        provs = ["CPUExecutionProvider"]
+    r = {"provider": provider, "fili": fili if provider != "DmlExecutionProvider" else None,
+         "device_id": device if provider == "DmlExecutionProvider" else None}
+    t0 = time.time()
+    s = ort.InferenceSession(percorso, o, providers=provs)
+    r["apertura_s"] = round(time.time() - t0, 2)
+    r["provider_usati"] = s.get_providers()
+    t0 = time.time()
+    s.run(None, {"pixel_values": owl_prepara(ritagli[0])})
+    r["prima_inferenza_s"] = round(time.time() - t0, 2)
+    prep, mod, massimi = [], [], []
+    for im in ritagli:
+        t0 = time.time()
+        x = owl_prepara(im)
+        t1 = time.time()
+        p, _ = s.run(None, {"pixel_values": x})
+        t2 = time.time()
+        prep.append(t1 - t0)
+        mod.append(t2 - t1)
+        massimi.append([round(float(v), 5) for v in np.asarray(p, np.float32).max(0)])
+    r["preparazione_s"] = riassunto_tempi(prep)
+    r["modello_s"] = riassunto_tempi(mod)
+    r["per_ritaglio_s"] = riassunto_tempi([a + b for a, b in zip(prep, mod)])
+    r["ritagli_al_minuto"] = round(60 / max(1e-6, r["per_ritaglio_s"]["mediana"]), 1)
+    del s
+    return r, massimi
+
+
+def differenza_massimi(a, b):
+    """La differenza piu' grande fra i punteggi massimi di due provider sugli stessi ritagli. Funzione pura."""
+    d = [abs(x - y) for ra, rb in zip(a, b) for x, y in zip(ra, rb)]
+    return round(max(d), 5) if d else None
+
+
+def priorita_normale():
+    """Il compito gira a priorita' minima (IDLE): per misurare come girerebbe dentro Kit_Rifiuti la si alza a normale
+    per il tempo della misura. Ritorna la funzione che la rimette com'era (o None)."""
+    try:
+        import psutil
+        p = psutil.Process()
+        prima = p.nice()
+        p.nice(psutil.NORMAL_PRIORITY_CLASS if os.name == "nt" else 0)
+        return lambda: p.nice(prima)
+    except Exception:   # noqa: BLE001
+        return None
+
+
+def schede_grafiche():
+    """I nomi delle schede grafiche di Windows (per sapere quale e' il device 0 di DirectML)."""
+    try:
+        r = subprocess.run(["powershell", "-NoProfile", "-Command",
+                            "Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name"],
+                           capture_output=True, text=True, timeout=60, creationflags=NOFIN)
+        return [x.strip() for x in r.stdout.splitlines() if x.strip()]
+    except Exception as ex:   # noqa: BLE001
+        return [f"non lette: {type(ex).__name__}"]
+
+
+def misura_owl(cfg, lavori):
+    """owl_tempi.json: DirectML (uno o piu' device) e processore, su fp32 e, se si riesce a farlo qui, fp16."""
+    out = {"pc": PC, "versione": VERSIONE, "inizio": time.strftime("%Y-%m-%d %H:%M:%S"), "schede": schede_grafiche(),
+           "processori": os.cpu_count(), "fili_compito": os.environ.get("KR_PROCESSORI_COMPITO"), "prove": []}
+    try:
+        viv = os.path.join(os.path.expanduser("~"), "kr_vlm", "vivo.txt")
+        out["qwen_vivo"] = time.time() - float(open(viv).read().strip()) < 15 * 60   # Qwen sulla stessa scheda?
+    except (OSError, ValueError):
+        out["qwen_vivo"] = False
+    try:
+        import onnxruntime as ort
+        out["onnxruntime"] = ort.__version__
+        out["provider_disponibili"] = ort.get_available_providers()
+    except Exception as ex:   # noqa: BLE001
+        out["errore"] = f"onnxruntime: {type(ex).__name__}: {ex}"
+        scrivi_json("owl_tempi.json", out)
+        return
+    dove = os.path.join(os.path.expanduser("~"), "kr_lavori", "owl")
+    os.makedirs(dove, exist_ok=True)
+    p32, out["modello"] = owl_modello(cfg.get("nome_drive", "owlv2_fp32.onnx"), cfg.get("byte"), dove)
+    scrivi_json("owl_tempi.json", out)
+    if not p32:
+        return
+    ritagli, out["ritagli"] = ritagli_per_owl(int(cfg.get("ritagli", 20)), lavori)
+    out["lati_ritagli"] = [list(r.shape[:2]) for r in ritagli]
+    rimetti = priorita_normale() if cfg.get("priorita_normale", True) else None
+    out["priorita_normale"] = bool(rimetti)
+    modelli = [("fp32", p32)]
+    if cfg.get("fp16", True):
+        try:
+            import onnx
+            from onnxruntime.transformers.float16 import convert_float_to_float16
+            p16 = os.path.join(dove, "owlv2_fp16.onnx")
+            if not os.path.exists(p16):
+                t0 = time.time()
+                onnx.save(convert_float_to_float16(onnx.load(p32), keep_io_types=True), p16)
+                out["fp16_creato_s"] = round(time.time() - t0, 1)
+            modelli.append(("fp16", p16))
+        except Exception as ex:   # noqa: BLE001
+            out["fp16"] = f"saltato: {type(ex).__name__}: {str(ex)[:200]}"
+    try:
+        massimi_cpu = None   # i punteggi di fp32 sul processore: il riferimento per DirectML e per fp16
+        for tipo, p in modelli:
+            # fp16 solo sulla scheda grafica: sul processore e' piu' lento di fp32 (in prova qui: oltre 10 minuti a ritaglio)
+            prove = ([("CPUExecutionProvider", 0)] if tipo == "fp32" else []) + \
+                [("DmlExecutionProvider", d) for d in cfg.get("dml_device", [0])]
+            for prov, dev in prove:
+                if prov not in out["provider_disponibili"]:
+                    out["prove"].append({"modello": tipo, "provider": prov, "errore": "provider non disponibile"})
+                    continue
+                try:
+                    r, mx = owl_misura(p, prov, ritagli, int(cfg.get("fili_cpu", 4)), dev)
+                    if prov == "CPUExecutionProvider":
+                        massimi_cpu = mx
+                    else:
+                        r["diff_max_punteggi_con_fp32_cpu"] = differenza_massimi(mx, massimi_cpu or [])
+                    r["modello"] = tipo
+                    r["mb_modello"] = round(os.path.getsize(p) / 2**20, 1)
+                    out["prove"].append(r)
+                except Exception as ex:   # noqa: BLE001
+                    out["prove"].append({"modello": tipo, "provider": prov, "device_id": dev,
+                                         "errore": f"{type(ex).__name__}: {str(ex)[:300]}"})
+                av(f"owl: {tipo} {prov} {dev}: {(out['prove'][-1].get('per_ritaglio_s') or {}).get('mediana', out['prove'][-1].get('errore'))}")
+                scrivi_json("owl_tempi.json", out)
+    finally:
+        if rimetti:
+            rimetti()
+    out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
+    scrivi_json("owl_tempi.json", out)
+
+
+def misura_file(f):
+    """Un originale del NAS: byte, pacchetti e durata (ffprobe -count_packets), e se ffmpeg lo decodifica tutto senza
+    errori (ffmpeg -v error -i file -f null -), coi fotogrammi decodificati. Se il formato non si riconosce da solo
+    (gli .ssf sono H.264 grezzo dietro un'intestazione) si riprova con -f h264 e -f hevc."""
+    m = {"file": f, "byte": os.path.getsize(f)}
+    fp, scelta = ffprobe(), []
+    for forza in (([], ["-f", "h264"], ["-f", "hevc"]) if fp else ()):
+        t0 = time.time()
+        r = subprocess.run([fp, "-v", "error", *forza, "-select_streams", "v:0", "-count_packets", "-show_entries",
+                            "stream=nb_read_packets,codec_name,width,height,r_frame_rate:format=duration,format_name",
+                            "-of", "json", f], capture_output=True, text=True, timeout=900, creationflags=NOFIN)
+        pac, dur = leggi_ffprobe(r.stdout)
+        if forza and not pac:
+            continue
+        try:
+            j = json.loads(r.stdout or "{}")
+            st = (j.get("streams") or [{}])[0]
+            m.update(codec=st.get("codec_name"), dimensioni=f"{st.get('width')}x{st.get('height')}",
+                     fps_dichiarati=st.get("r_frame_rate"), formato=(j.get("format") or {}).get("format_name"))
+        except (ValueError, IndexError, AttributeError):
+            pass
+        m.update(pacchetti=pac, durata=dur, ffprobe_s=round(time.time() - t0, 1),
+                 ffprobe_errori=(r.stderr or "")[-400:], ffprobe_forzato=" ".join(forza))
+        if pac:
+            scelta = forza
+            break
+    for forza in ([scelta] + ([["-f", "h264"]] if not scelta else [])):
+        t0 = time.time()
+        r = subprocess.run([ffmpeg(), "-v", "error", "-nostats", "-progress", "pipe:1", *forza, "-i", f, "-f", "null", "-"],
+                           capture_output=True, text=True, timeout=1800, creationflags=NOFIN)
+        err = [x for x in (r.stderr or "").splitlines() if x.strip()]
+        n = leggi_progress(r.stdout)
+        if forza and m.get("decodificati") and (n or 0) <= m["decodificati"]:
+            break   # il formato forzato non decodifica di piu': resta la prima lettura
+        m.update(decodificati=n, codice_ffmpeg=r.returncode, righe_di_errore=len(err), primi_errori=err[:8],
+                 decodifica_s=round(time.time() - t0, 1), decodifica_ok=r.returncode == 0 and not err and bool(n),
+                 decodifica_forzato=" ".join(forza))
+        if n:
+            break
+    return m
+
+
+def percorso_nas(radice, rel):
+    """radice + percorso relativo dell'elenco (scritto con «\\»), col separatore di questo sistema."""
+    return os.path.join(radice, *rel.replace("\\", "/").split("/"))
+
+
+def radice_con(file_rel, radici):
+    """La prima radice del NAS in cui c'e' il primo file dell'evento, o None."""
+    for r in radici:
+        try:
+            if os.path.exists(percorso_nas(r, file_rel[0])):
+                return r
+        except OSError:
+            continue
+    return None
+
+
+def eventi_da_elenco_drive(ids, dove):
+    """Dall'elenco di ArchiveData su Drive (elenco_archivedata.tsv.gz), con le regole di archivio_kit
+    (indice_da_elenco): {id: file_rel}."""
+    import gzip
+    import drive_alma
+    import archivio_kit as ak
+    f = drive_alma.trova(ak.ELENCO_DRIVE, (C, os.path.dirname(sys.executable)))
+    if not f:
+        return {}
+    z = os.path.join(dove, ak.ELENCO_DRIVE)
+    ok, _ = drive_alma.scarica(f["id"], z, (C, os.path.dirname(sys.executable)))
+    if not ok:
+        return {}
+    righe = []
+    try:
+        with gzip.open(z, "rt", encoding="utf-8", errors="replace") as fh:
+            for r in fh:
+                righe.append(r.rstrip("\n").split("\t"))
+    except EOFError:
+        righe = righe[:-1]
+    return {e["id"]: e["file_rel"] for e in ak.indice_da_elenco(righe) if e["id"] in ids}
+
+
+def eventi_dal_nas(ids, radice, comuni=(), limite_s=1800):
+    """Ultima strada: si scorrono le cartelle del NAS (solo i comuni dati, se ce ne sono) e gli eventi si fanno con le
+    regole di archivio_kit. Al massimo `limite_s` secondi. {id: file_rel}."""
+    import archivio_kit as ak
+    t0, righe = time.time(), []
+    for c in (comuni or os.listdir(radice)):
+        for cart, sotto, files in os.walk(os.path.join(radice, c)):
+            if time.time() - t0 > limite_s:
+                break
+            rel = os.path.relpath(cart, radice)
+            for x in files:
+                if x.lower().endswith(ESTENSIONI_VIDEO + (".jpg", ".jpeg", ".png")):
+                    try:
+                        mb = os.path.getsize(os.path.join(cart, x)) / 1e6
+                    except OSError:
+                        mb = 0.0
+                    righe.append([rel.replace("/", "\\"), x, f"{mb:.2f}", ""])
+        trovati = {e["id"]: e["file_rel"] for e in ak.indice_da_elenco(righe) if e["id"] in ids}
+        if len(trovati) == len(ids) or time.time() - t0 > limite_s:
+            return trovati
+    return {e["id"]: e["file_rel"] for e in ak.indice_da_elenco(righe) if e["id"] in ids}
+
+
+def misura_video_nas(cfg, lavori):
+    """video_nas.json: per ogni evento i file originali sul NAS e le loro misure, per telecamera."""
+    eventi = cfg.get("eventi") or []
+    ids = {e["id"] for e in eventi}
+    out = {"pc": PC, "versione": VERSIONE, "inizio": time.strftime("%Y-%m-%d %H:%M:%S"), "ffprobe": ffprobe(),
+           "ffmpeg": ffmpeg(), "eventi": {}}
+    radici = [r for r in (cfg.get("radici") or []) + ARCHIVI_NAS if os.path.isdir(r)]
+    out["radici"] = radici
+    trovati = {e["id"]: (e["file_rel"], "misure.json") for e in eventi if e.get("file_rel")}
+    for l in lavori:   # l'elenco del NAS che Kit_Rifiuti tiene sul PC
+        try:
+            with open(os.path.join(l, "indice_nas.jsonl"), encoding="utf-8", errors="replace") as fh:
+                for k, v in file_da_indice(fh, ids - set(trovati)).items():
+                    trovati[k] = (v, os.path.join(l, "indice_nas.jsonl"))
+        except OSError:
+            continue
+    if ids - set(trovati):
+        try:
+            d = os.path.join(os.path.expanduser("~"), "kr_lavori", "misure")
+            os.makedirs(d, exist_ok=True)
+            for k, v in eventi_da_elenco_drive(ids - set(trovati), d).items():
+                trovati[k] = (v, "elenco di ArchiveData su Drive")
+        except Exception as ex:   # noqa: BLE001
+            out["elenco_drive"] = f"{type(ex).__name__}: {str(ex)[:200]}"
+    if ids - set(trovati) and radici:
+        try:
+            comuni = sorted({e["comune"] for e in eventi if e["id"] in ids - set(trovati) and e.get("comune")})
+            for k, v in eventi_dal_nas(ids - set(trovati), radici[0], comuni, int(cfg.get("limite_scorri_s", 1800))).items():
+                trovati[k] = (v, "cartelle del NAS")
+        except Exception as ex:   # noqa: BLE001
+            out["scorri_nas"] = f"{type(ex).__name__}: {str(ex)[:200]}"
+    scrivi_json("video_nas.json", out)
+    for e in eventi:
+        x = {"nota": e.get("nota", "")}
+        out["eventi"][e["id"]] = x
+        if e["id"] not in trovati:
+            x["errore"] = "evento non trovato (indice sul PC, elenco su Drive, cartelle del NAS)"
+            continue
+        file_rel, x["trovato_in"] = trovati[e["id"]]
+        x["file_rel"] = file_rel
+        r = radice_con(file_rel, radici)
+        if not r:
+            x["errore"] = f"i file non ci sono in nessuna radice del NAS ({', '.join(radici) or 'nessuna raggiungibile'})"
+            continue
+        x["radice"] = r
+        cart = os.path.dirname(percorso_nas(r, file_rel[0]))
+        try:   # i video della cartella del giorno: le parti «(2)» e i nomi vicini che l'indice non ha unito
+            x["cartella"] = sorted([f, os.path.getsize(os.path.join(cart, f))] for f in os.listdir(cart)
+                                   if f.lower().endswith(ESTENSIONI_VIDEO))[:150]
+        except OSError as ex:
+            x["cartella"] = f"non letta: {ex}"
+        x["file"] = []
+        for fr in file_rel:
+            p = percorso_nas(r, fr)
+            try:
+                m = misura_file(p)
+                m["file"] = fr
+            except Exception as ex:   # noqa: BLE001
+                m = {"file": fr, "errore": f"{type(ex).__name__}: {str(ex)[:300]}"}
+            x["file"].append(m)
+            scrivi_json("video_nas.json", out)
+        x["telecamere"] = riassunto_evento(x["file"])
+        av(f"video nas {e['id']}: " + ", ".join(f"ch{k} {v['secondi_a_25_fps']} s {v['giudizio']}" for k, v in x["telecamere"].items()))
+    out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
+    scrivi_json("video_nas.json", out)
+
+
+MISURE_VIVE = []   # il filo delle misure, finche' gira
+
+
+def parti_misure():
+    """Se c'e' misure.json e il segno misure_fatte.txt non c'e', le due misure in un filo (prima i video, che non
+    chiedono la scheda grafica, poi OWL); il segno si scrive alla fine, anche con un errore."""
+    import threading
+    f = os.path.join(C, "misure.json")
+    segno = os.path.join(U, "misure_fatte.txt")
+    if not os.path.exists(f) or os.path.exists(segno):
+        return
+    cfg = json.load(open(f, encoding="utf-8"))
+    if cfg.get("pc", "COMPUTERONE").upper() not in (PC.upper(), "*"):
+        return
+    casa = os.path.expanduser("~")
+    try:
+        nomi = os.listdir(casa)
+    except OSError:
+        nomi = []
+    lavori = cartelle_lavoro(C, (casa, nomi))
+
+    def gira():
+        for nome, fun, parte in (("video_nas", misura_video_nas, cfg.get("video_nas")), ("owl", misura_owl, cfg.get("owl"))):
+            if not parte:
+                continue
+            av(f"misure: parte {nome}")
+            try:
+                fun(parte, lavori)
+            except Exception as ex:   # noqa: BLE001
+                av(f"misure {nome}: {type(ex).__name__}: {str(ex)[:300]}")
+                av(traceback.format_exc()[-1500:])
+        open(segno, "w").write(time.strftime("%Y-%m-%d %H:%M"))
+        av("misure: fatte")
+
+    t = threading.Thread(target=gira, daemon=True)
+    t.start()
+    MISURE_VIVE.append(t)
+
+
+def misure_in_corso():
+    return any(t.is_alive() for t in MISURE_VIVE)
+
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
@@ -652,6 +1276,10 @@ if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "vlm.py")):
         parti_qwen()
     except Exception as ex:   # noqa: BLE001
         av(f"qwen: {type(ex).__name__}: {str(ex)[:300]}")
+try:
+    parti_misure()   # 0.10.0
+except Exception as ex:   # noqa: BLE001
+    av(f"misure: {type(ex).__name__}: {str(ex)[:300]}")
 errori = 0
 analisi_lunghe = []    # (processo, risultati, uscita, partenza) in corso
 da_scaricare = []
@@ -679,7 +1307,7 @@ while time.time() < t_fine:
             av(f"lungo: analisi finita ({a[0].returncode}) in {round(time.time() - a[3])} s")
     if time.time() - ultimo_guardato > 600:
         ultimo_guardato = time.time()
-        if not analisi_lunghe and compito_nuovo_su_drive():
+        if not analisi_lunghe and not misure_in_corso() and compito_nuovo_su_drive():
             av("su Drive c'e' un compito nuovo: chiudo questo")
             break
     if time.time() - ultimo_uvms > 24 * 3600:
@@ -718,4 +1346,6 @@ while time.time() < t_fine:
         if errori in (1, 10, 100):
             av(f"pagina non raggiunta ({errori}): {type(ex).__name__}: {str(ex)[:200]}")
         time.sleep(min(300, 15 * errori))
+for t in MISURE_VIVE:   # 0.10.0: le misure finiscono prima di chiudere (al massimo un'ora in piu')
+    t.join(3600)
 av("fatto")
