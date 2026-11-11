@@ -37,6 +37,17 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Ponte 0.13.0 (compito p2p30, pronto e NON mandato): `allunga.json` (allunga.py, processo per evento allunga_lavoro.py,
+  prove in prova_allunga.py; l'elenco lo rifà `python3 prepara_allunga.py <chiave.json>`, sola lettura dai due siti).
+  Per 34 eventi con la clip tagliata o sospetta, 60 s prima e 120 s dopo la clip (e i buchi delle telecamere più corte)
+  canale per canale; mp4 continui con l'ora vera sul COMPUTERONE (`~/kr_lavori/allunga/p2p_ponte30/<evento>/video`), in
+  uscita fogli dei fotogrammi e `allunga.json` (esito, MB, secondi, chiamate, buchi, sincronia). Il disco dei
+  registratori gira (2-4 settimane, qualcuno 2 mesi): l'11/11 solo 9 eventi su 34 erano ancora sul registratore, non i due
+  di Dario (7b56bc2ce8 e cc577ca6e7: KIT560 dal 23/10, KIT324 dal 28/10); il 0b936b6d4f (KIT341) sparisce verso il 12/11.
+  Il compito 28 si è chiuso l'11/11 alle 18:11 con 3221225477 (0xC0000005) fra due prove P2P, col filo principale in
+  Python: IPOTESI una funzione di ritorno chiamata dalla libreria su un Registratore già liberato; dalla 0.13.0 i
+  Registratori non si liberano (CIMITERO) e faulthandler scrive le pile in `uscita/guasto_memoria.txt`. Per mandarlo
+  serve anche il segnaposto `risultato_p2p_ponte30.zip` su Drive (Kit_Rifiuti 0.90: un posto per compito).
 - Ponte 0.12.0 (compito p2p28, pronto e NON mandato: fase di audit, decide Dario): `movimento.json` (movimento.py,
   prove in prova_movimento.py). La libreria Focus non ha ricerca di file né registro degli allarmi: l'unico indice
   storico del movimento è il tipo di ognuno dei 1440 minuti di GetRecordDaily (continua / movimento / sensore), che

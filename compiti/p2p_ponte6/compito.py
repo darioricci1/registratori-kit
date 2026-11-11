@@ -31,7 +31,18 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.12.0 (11/11/2026): movimento.json, una volta sola sul COMPUTERONE (segno movimento_fatto.txt in uscita), in
+version: 0.13.0 (11/11/2026, sera): allunga.json, una volta sola sul COMPUTERONE (segno allunga_fatto.txt in uscita), in un
+  filo suo (Dario in Guarda: «video tagliato troppo presto»; decisione-p2p-2026-11-11.md: il P2P arricchisce le clip):
+  per ogni evento con la clip tagliata o sospetta, i secondi prima e dopo la clip (60 e 120 di difetto) e i buchi delle
+  telecamere piu' corte, canale per canale, dal registratore in P2P (allunga.py 0.1.0, prove in prova_allunga.py).
+  Ogni evento in un processo suo (allunga_lavoro.py, come owl_misura.py) con un tempo massimo, ogni chiamata alla
+  libreria con il suo: stasera il ponte (compito 28) e' morto con 3221225477, un errore di memoria della libreria, fra
+  due prove P2P. mp4 continui con l'ora vera di inizio e fine in ~/kr_lavori/allunga/<compito>/<evento>/video (non in
+  uscita: sono GB e uscita va su Drive), fogli dei fotogrammi e uscita/allunga.json con esito, MB, secondi, chiamate e
+  buchi per evento, per kit e in tutto. Mentre la libreria e' presa da un altro lavoro il ponte non prende prove nuove.
+  Contro lo stesso errore di memoria nel ponte: i Registratori chiusi non si liberano piu' (CIMITERO) e faulthandler
+  scrive le pile di Python in uscita/guasto_memoria.txt se la libreria fa cadere il processo.
+0.12.0 (11/11/2026): movimento.json, una volta sola sul COMPUTERONE (segno movimento_fatto.txt in uscita), in
   un filo suo (revisione dell'11/11, «filtro economico»: il registratore sa dire dove c'e' stato movimento?): per i 5
   casi di dimezza.json, per ogni canale i 1440 tipi di registrazione del giorno (GetRecordDaily: continua / movimento /
   sensore) e il modo impostato (OnRecordModeStatus), e sul canale dell'abbandono una miniatura al minuto per 30 minuti
@@ -86,10 +97,25 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.12.0"
+VERSIONE = "p2p_ponte 0.13.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
+# 0.13.0: i Registratori chiusi restano qui fino alla fine del processo. Il compito 28 e' morto con 0xC0000005 fra due
+# prove, col filo principale in Python: IPOTESI, la libreria chiama da un suo filo una funzione di ritorno di un
+# Registratore che Python aveva gia' liberato. Tenerli costa pochi kB l'uno.
+CIMITERO = []
+try:   # 0.13.0: se la libreria fa cadere il processo, le pile di tutti i fili di Python restano scritte
+    import faulthandler
+    faulthandler.enable(open(os.path.join(U, "guasto_memoria.txt"), "a", encoding="utf-8"), all_threads=True)
+except Exception:   # noqa: BLE001
+    pass
+
+
+def tieni(reg):
+    """0.13.0: il Registratore non si libera mai (CIMITERO); ritorna lo stesso oggetto."""
+    CIMITERO.append(reg)
+    return reg
 
 
 def av(t):
@@ -179,7 +205,7 @@ def prova_con(r, cr):
     uid = r["uid"]
     es = {"pc": PC}
     foto = None
-    with fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None) as reg:
+    with tieni(fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)) as reg:   # 0.13.0: tieni
         t0 = time.time()
         leggera = r.get("priorita") == 0
         ok, testo = reg.collega(uid, cr[0], cr[1], 9010, True, attesa=12 if leggera else 40)
@@ -556,7 +582,7 @@ def scarico_lungo(p):
     while t < fine:
         sec = int(min(PEZZO, (fine - t).total_seconds()))
         cart = os.path.join(pezzi_dir, t.strftime("%H%M%S"))
-        with SDK, fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None) as reg:   # 0.11.0: SDK
+        with SDK, tieni(fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)) as reg:   # 0.11.0: SDK
             ok, testo = collega_con(reg, p["uid"], p.get("kit"))
             voce = {"da": t.strftime("%H:%M:%S"), "secondi": sec, "collegamento": testo}
             if ok:
@@ -1369,7 +1395,7 @@ class ScaricatoreP2P:
             return True
         self.chiudi()
         t0 = time.time()
-        self.reg = fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)
+        self.reg = tieni(fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None))
         ok, testo = collega_con(self.reg, self.uid, self.kit)
         self.collegamenti.append({"ok": ok, "testo": testo, "secondi": round(time.time() - t0, 1)})
         if not ok:
@@ -1646,6 +1672,108 @@ def lavoro_dimezza(cfg):
     scrivi_json("dimezza.json", out)
 
 
+# ------------------------------------------------------------------ 0.13.0: allunga.json (una volta sola)
+def registratori_dal_sito():
+    """L'elenco dei registratori della pagina (op=registratori, GET col biglietto): [{uid, kit, ...}]."""
+    req = urllib.request.Request(f"{API}?op=registratori", headers={"Authorization": "Bearer " + biglietto()})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read().decode())
+
+
+def lavoro_allunga(cfg):
+    """allunga.json (0.13.0): allunga.lavoro con un processo a parte per ogni evento (allunga_lavoro.py, lanciato come
+    compito: exe --compito <cartella>), aspettato al massimo minuti_per_caso e poi ucciso. Mentre il processo lavora la
+    libreria e' sua: il ponte tiene il lucchetto SDK e non prende prove. Se il processo dice che la libreria non si
+    carica (due processi con la libreria Focus insieme: mai provato), gli eventi dopo si fanno nel filo del ponte
+    (cfg «processo_a_parte»: false lo chiede da subito). Gli mp4 restano sul PC; in uscita/allunga/<evento>/ i fogli dei
+    fotogrammi, il json dell'evento e i registri del processo."""
+    import allunga as al
+    casa = os.path.expanduser("~")
+    base = os.path.join(casa, "kr_lavori", "allunga", os.path.basename(os.path.normpath(C)))
+    nel_filo = {"si": cfg.get("processo_a_parte") is False}
+    elenco = {}
+    for ev in cfg.get("eventi") or []:   # un evento senza UID: lo cerca nell'elenco della pagina (dal database UVMS)
+        if not ev.get("uid") and ev.get("kit"):
+            try:
+                if not elenco:
+                    elenco.update({str(r.get("kit") or "").lstrip("0"): r["uid"] for r in registratori_dal_sito() if r.get("uid")})
+                ev["uid"] = elenco.get(str(ev["kit"]))
+            except Exception as ex:   # noqa: BLE001
+                av(f"allunga: elenco dei registratori non letto: {type(ex).__name__}: {str(ex)[:200]}")
+
+    def copia_indietro(d, evento):
+        u = os.path.join(U, "allunga", evento)
+        os.makedirs(u, exist_ok=True)
+        for nome in ("allunga_evento.json", "avanzamento.txt", "registro_python.txt", "guasto_memoria.txt"):
+            f = os.path.join(d, "uscita", nome)
+            if os.path.exists(f) and os.path.getsize(f) and os.path.getsize(f) < 5e6:
+                shutil.copy2(f, os.path.join(u, nome))
+        fogli = os.path.join(d, "uscita", "fogli")
+        if os.path.isdir(fogli):
+            os.makedirs(os.path.join(u, "fogli"), exist_ok=True)
+            for f in os.listdir(fogli):
+                if f.lower().endswith(".jpg"):
+                    shutil.copy2(os.path.join(fogli, f), os.path.join(u, "fogli", f))
+
+    def in_filo(ev, d):
+        with SDK:
+            x = al.lavora_evento(ev, cfg, al.mezzi_veri(os.path.join(C, "FocusNetSDK"), collega_con, ffmpeg(), ev, d,
+                                                        CIMITERO, NOFIN),
+                                 lambda r: scrivi_json(f"allunga_{ev['evento']}.json", r), av)
+        os.makedirs(os.path.join(d, "uscita"), exist_ok=True)
+        with open(os.path.join(d, "uscita", "allunga_evento.json"), "w", encoding="utf-8") as fh:
+            json.dump(x, fh, ensure_ascii=False, indent=1, default=str)
+        try:
+            os.remove(os.path.join(U, f"allunga_{ev['evento']}.json"))
+        except OSError:
+            pass
+        return x
+
+    def lancia(ev, secondi_max):
+        d = os.path.join(base, ev["evento"])
+        os.makedirs(os.path.join(d, "uscita"), exist_ok=True)
+        shutil.rmtree(os.path.join(d, "video", "tmp"), ignore_errors=True)
+        if nel_filo["si"]:
+            x = in_filo(ev, d)
+            copia_indietro(d, ev["evento"])
+            return 0, x
+        shutil.copy2(os.path.join(C, "compito.py"), os.path.join(d, "ponte.py"))
+        shutil.copy2(os.path.join(C, "allunga_lavoro.py"), os.path.join(d, "compito.py"))
+        with open(os.path.join(d, "evento.json"), "w", encoding="utf-8") as fh:
+            json.dump({"evento": ev, "cfg": {k: v for k, v in cfg.items() if k != "eventi"}, "compito": C}, fh,
+                      ensure_ascii=False)
+        risultato = os.path.join(d, "uscita", "allunga_evento.json")
+        if os.path.exists(risultato):
+            os.replace(risultato, risultato + ".prima")
+        with SDK:   # la libreria e' del processo dell'evento: il ponte intanto non la usa
+            p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=ambiente_figlio(), stdin=subprocess.DEVNULL,
+                                 stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
+                                 creationflags=0x00004000 | NOFIN)
+            av(f"allunga {ev['evento']}: processo a parte (pid {p.pid})")
+            try:
+                codice = p.wait(timeout=secondi_max)
+            except subprocess.TimeoutExpired:
+                p.kill()
+                try:
+                    p.wait(60)
+                except subprocess.TimeoutExpired:
+                    pass
+                codice = f"fermato dopo {round(secondi_max / 60)} minuti"
+        x = None
+        try:
+            x = json.load(open(risultato, encoding="utf-8"))
+        except (OSError, ValueError):
+            pass
+        copia_indietro(d, ev["evento"])
+        av(f"allunga {ev['evento']}: processo finito ({codice})")
+        if x and str(x.get("esito", "")).startswith("libreria non caricata"):
+            av("allunga: la libreria non si carica nel processo a parte, gli eventi dopo nel filo del ponte")
+            nel_filo["si"] = True
+        return codice, x
+
+    al.lavoro(cfg, lancia, lambda o: scrivi_json("allunga.json", dict(o, pc=PC, versione=VERSIONE)), av)
+
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
@@ -1686,7 +1814,7 @@ def lavoro_movimento(cfg):
     blocca."""
     import movimento as mv
     classe = mv.classe_registratore()
-    mezzi = {"nuovo": lambda: classe(os.path.join(C, "FocusNetSDK"), log=lambda *_: None),
+    mezzi = {"nuovo": lambda: tieni(classe(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)),
              "collega": collega_con, "lucchetto": SDK, "decodifica": decodifica_miniatura}
     out = mv.lavoro(cfg, mezzi, lambda o: scrivi_json("movimento.json", dict(o, pc=PC, versione=VERSIONE)), av)
     av(f"movimento: fatto, {out.get('conti')}" + (f", fermato: {out['fermato']}" if out.get("fermato") else ""))
@@ -1726,7 +1854,8 @@ except Exception as ex:   # noqa: BLE001
     av(f"misure: {type(ex).__name__}: {str(ex)[:300]}")
 for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
                                ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza),   # 0.11.0
-                               ("movimento.json", "movimento_fatto.txt", lavoro_movimento)):   # 0.12.0
+                               ("movimento.json", "movimento_fatto.txt", lavoro_movimento),   # 0.12.0
+                               ("allunga.json", "allunga_fatto.txt", lavoro_allunga)):   # 0.13.0
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001
@@ -1777,6 +1906,9 @@ while time.time() < t_fine:
             aggiorna_elenco_kit()
         except Exception as ex:   # noqa: BLE001
             av(f"Elenco KIT: {type(ex).__name__}: {str(ex)[:200]}")
+    if SDK.locked():   # 0.13.0: la libreria e' presa (un evento di allunga.json): una prova presa ora aspetterebbe
+        time.sleep(5)
+        continue
     try:
         d = chiama("prendi", {"pc": PC, "versione": VERSIONE})
         errori = 0

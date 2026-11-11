@@ -1,0 +1,1038 @@
+{
+ "pc": "COMPUTERONE",
+ "come": "allunga.py: per ogni evento i secondi prima e dopo la clip (e i buchi delle telecamere piu' corte) dal registratore in P2P, canale per canale, in un processo a parte per evento; mp4 con l'ora vera di inizio e fine, buchi segnati, canali sfasati mai uniti (Dario, 11/11/2026)",
+ "preparato_il": "2026-11-11 19:56",
+ "prima_s": 60,
+ "dopo_s": 120,
+ "eventi": [
+  {
+   "evento": "bea3237e4e",
+   "kit": 524,
+   "giorno": "2026-08-29",
+   "ora_inizio_clip": "18:44:51",
+   "durata_clip": 350.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 350.08
+   },
+   "uid": "6JFBENRPH5JJY9AS111A",
+   "registratore": "TOANO · 524 - Via Mutilati di guerra",
+   "motivi": [
+    "nota di Dario: Ma sei sicuro che sia così con una sola telecamera? O forse ce ne dovrebbero essere?. Tre non abbiamo, non le abbiamo me"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-08-27 06:30",
+    "letto_il": "2026-11-11T05:06"
+   }
+  },
+  {
+   "evento": "0b936b6d4f",
+   "kit": 341,
+   "giorno": "2026-10-20",
+   "ora_inizio_clip": "15:36:49",
+   "durata_clip": 81.11,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 57.92,
+    "1": 81.08,
+    "2": 58.4
+   },
+   "uid": "U81C57YS16T8M7V5111A",
+   "registratore": "REGGIO EMILIA · 341 - Via Due Canali",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 153650» comincia 1 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "1920x1080",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-18 08:03",
+    "letto_il": "2026-11-10T18:49"
+   }
+  },
+  {
+   "evento": "21357b9a65",
+   "kit": 450,
+   "giorno": "2026-10-23",
+   "ora_inizio_clip": "10:23:58",
+   "durata_clip": 32.16,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 32.16,
+    "1": 32.16,
+    "2": 32.08
+   },
+   "uid": "YVC1BHWBERYKLJK5111A",
+   "registratore": "NON INSTALLATI · 450",
+   "motivi": [
+    "nota di Dario: RARISSIMAMEWNTE C'è UNA SOLA TELECAMERA, QUANDO VEDI COSì DEVI VERIFICARE E CAPIRE SE GIUSTO O C'è QUALCOSA CHE NON TORN"
+   ],
+   "misura": "2688x1520",
+   "kit_spostato": "nel nome della cartella «EX KIT»: il kit e' stato spostato, si chiede al suo registratore",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-08 21:00",
+    "letto_il": "2026-11-10T18:55"
+   }
+  },
+  {
+   "evento": "e19326c429",
+   "kit": 434,
+   "giorno": "2026-10-24",
+   "ora_inizio_clip": "16:34:28",
+   "durata_clip": 90.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 90.08,
+    "1": 90.12,
+    "2": 90.08
+   },
+   "uid": "5N35V6K2E38TFMAL111A",
+   "registratore": "GEOVEST-Sant Agata Bolognese · 434 - Via Suor Teresa Veronesi",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 163439» comincia 11 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-21 00:59",
+    "letto_il": "2026-11-10T18:23"
+   }
+  },
+  {
+   "evento": "e6f76725fd",
+   "kit": 225,
+   "giorno": "2026-10-28",
+   "ora_inizio_clip": "07:02:03",
+   "durata_clip": 138.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 138.08,
+    "1": 131.68,
+    "2": 2.84
+   },
+   "uid": "AJBLK1K1A94WHV9A111A",
+   "registratore": "SASSUOLO · 225 - Piazza Amendola",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: telecamera 3: dura 2.8 s, un'altra 138 s",
+    "telecamere sotto 5 s: 3"
+   ],
+   "misura": "1920x1080",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-15 19:30",
+    "letto_il": "2026-11-10T20:10"
+   }
+  },
+  {
+   "evento": "450ad2d7a6",
+   "kit": 615,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "11:09:00",
+   "durata_clip": 60.4,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 60.08,
+    "1": 60.4,
+    "2": 60.08
+   },
+   "uid": "JSKC5FFS8PGF1GRZ111A",
+   "registratore": "GEOVEST-Argelato · 615 - Via Galliera 1",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: telecamera 2: il video dura 60.4 s, il file 52.3 s"
+   ],
+   "misura": "2688x1520",
+   "kit_spostato": "nel nome della cartella «EX KIT»: il kit e' stato spostato, si chiede al suo registratore",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-27 07:30",
+    "letto_il": "2026-11-10T21:34"
+   }
+  },
+  {
+   "evento": "ec83c96893",
+   "kit": 399,
+   "giorno": "2026-11-01",
+   "ora_inizio_clip": "17:54:49",
+   "durata_clip": 37.56,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 37.08,
+    "1": 37.56,
+    "2": 36.68
+   },
+   "uid": "VFA3LMBHC8JEDAV1111A",
+   "registratore": "SAN BONIFACIO · 399 - Via Enrico Toti",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: telecamera 2: video per il sito non fatto; telecamera 3: video per il sito non fatto"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-25 15:01",
+    "letto_il": "2026-11-11T00:33"
+   }
+  },
+  {
+   "evento": "c4792c763f",
+   "kit": 399,
+   "giorno": "2026-11-01",
+   "ora_inizio_clip": "18:55:39",
+   "durata_clip": 55.68,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 55.08,
+    "1": 55.56,
+    "2": 55.68
+   },
+   "uid": "VFA3LMBHC8JEDAV1111A",
+   "registratore": "SAN BONIFACIO · 399 - Via Enrico Toti",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: telecamera 2: video per il sito non fatto; telecamera 3: video per il sito non fatto"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-25 15:01",
+    "letto_il": "2026-11-11T00:33"
+   }
+  },
+  {
+   "evento": "195f12a3a8",
+   "kit": 615,
+   "giorno": "2026-11-02",
+   "ora_inizio_clip": "21:18:00",
+   "durata_clip": 35.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 35.08,
+    "1": 34.6,
+    "2": 34.96
+   },
+   "uid": "JSKC5FFS8PGF1GRZ111A",
+   "registratore": "GEOVEST-Argelato · 615 - Via Galliera 1",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 211950» comincia 110 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "si",
+    "primo": "2026-10-27 07:30",
+    "letto_il": "2026-11-10T21:34"
+   }
+  },
+  {
+   "evento": "566d21048c",
+   "kit": 245,
+   "giorno": "2026-09-11",
+   "ora_inizio_clip": "10:00:01",
+   "durata_clip": 60.24,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 12.04,
+    "1": 59.6,
+    "2": 60.24
+   },
+   "uid": "J41J4SL6BLBPPHRT111A",
+   "registratore": "MONGHIDORO · 245 - Via del Mercato 3",
+   "motivi": [
+    "nota di Dario: UGUALE, STRANO UNA SOLA TELECAMERA, IN PIù SEMBRA MOLTO CORTO"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "non so"
+   }
+  },
+  {
+   "evento": "a3f21edf18",
+   "kit": 472,
+   "giorno": "2026-10-02",
+   "ora_inizio_clip": "17:52:51",
+   "durata_clip": 32.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 32.08,
+    "1": 32.08
+   },
+   "uid": "5XVC21UDB7B7HZFN111A",
+   "registratore": "COMO · 472 - Via dei Mulini",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 175201» comincia 50 s prima: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "non so"
+   }
+  },
+  {
+   "evento": "959e9d6fd3",
+   "kit": 554,
+   "giorno": "2026-10-25",
+   "ora_inizio_clip": "19:55:23",
+   "durata_clip": 105.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 105.08,
+    "1": 105.08
+   },
+   "uid": "U5WVTNKFPUV3YRWE111A",
+   "registratore": "UBR-Lugo · 554 - Via Lato di Mezzo 41",
+   "motivi": [
+    "nota di Dario: l'abbandono è nel file nero?"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "non so"
+   }
+  },
+  {
+   "evento": "7b56bc2ce8",
+   "kit": 560,
+   "giorno": "2026-10-21",
+   "ora_inizio_clip": "16:04:58",
+   "durata_clip": 218.64,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 218.16,
+    "1": 218.12,
+    "2": 218.64
+   },
+   "uid": "FLPCABR8BVA3FM43111A",
+   "registratore": "CASTELLARANO · 560 - Zona Novabell-Roteglia",
+   "motivi": [
+    "Dario in Guarda, 11/11: «video tagliato troppo presto»"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-23 09:30",
+    "letto_il": "2026-11-10T20:30"
+   }
+  },
+  {
+   "evento": "cc577ca6e7",
+   "kit": 324,
+   "giorno": "2026-10-24",
+   "ora_inizio_clip": "09:56:10",
+   "durata_clip": 115.6,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 115.08,
+    "1": 115.08,
+    "2": 23.12
+   },
+   "uid": "EZAG3277UXKFM4W7111A",
+   "registratore": "BOLZANO · 324 - Via Cologna",
+   "motivi": [
+    "Dario in Guarda, 11/11: «sembra che il video non finisca»"
+   ],
+   "misura": "704x576",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-28 22:00",
+    "letto_il": "2026-11-10T20:24"
+   }
+  },
+  {
+   "evento": "c201fada60",
+   "kit": 400,
+   "giorno": "2026-07-23",
+   "ora_inizio_clip": "07:13:50",
+   "durata_clip": 80.17,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 57.0,
+    "1": 57.72,
+    "2": 80.08
+   },
+   "uid": "YE4HZ8SM52F97HY5111A",
+   "registratore": "TRANI · 400 - Via Annibale Maria di F",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «targa [targa] 071433» comincia 43 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-17 05:00",
+    "letto_il": "2026-11-11T01:15"
+   }
+  },
+  {
+   "evento": "84f57e1495",
+   "kit": 372,
+   "giorno": "2026-08-04",
+   "ora_inizio_clip": "07:54:38",
+   "durata_clip": 58.28,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 58.08,
+    "1": 58.28,
+    "2": 58.0
+   },
+   "uid": "2R47N7LXSMFF7BZG111A",
+   "registratore": "MERANO · 372 - Via Piave Poli",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 075451» comincia 13 s dopo: forse la scena continua in un altro file; nella stessa cartell"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-24 15:30",
+    "letto_il": "2026-11-11T01:29"
+   }
+  },
+  {
+   "evento": "484e8947f4",
+   "kit": 360,
+   "giorno": "2026-09-01",
+   "ora_inizio_clip": "18:23:38",
+   "durata_clip": 60.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 60.08,
+    "1": 59.88,
+    "2": 60.08
+   },
+   "uid": "EMU9EM25WM7KH123111A",
+   "registratore": "SAN VITO AL TAGLIAMENTO · 360 - Località Dogna 3",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 182221» comincia 77 s prima: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-24 09:30",
+    "letto_il": "2026-11-10T20:22"
+   }
+  },
+  {
+   "evento": "e2ea4410ce",
+   "kit": 625,
+   "giorno": "2026-09-05",
+   "ora_inizio_clip": "19:34:47",
+   "durata_clip": 56.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 56.08,
+    "1": 1.96
+   },
+   "uid": "3M7GFGNJNSR5LC6C111A",
+   "registratore": "SAN MAURO PASCOLI · 625 - Via Villagrappa-Pastore",
+   "motivi": [
+    "telecamere sotto 5 s: 2"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-03 12:30",
+    "letto_il": "2026-11-10T18:21"
+   }
+  },
+  {
+   "evento": "ff2a1f60b5",
+   "kit": 341,
+   "giorno": "2026-09-08",
+   "ora_inizio_clip": "16:14:02",
+   "durata_clip": 88.11,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 63.32,
+    "1": 88.08,
+    "2": 63.44
+   },
+   "uid": "U81C57YS16T8M7V5111A",
+   "registratore": "REGGIO EMILIA · 341 - Via Due Canali",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «targa [targa] 161548» comincia 106 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "1920x1080",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-18 08:03",
+    "letto_il": "2026-11-10T18:49"
+   }
+  },
+  {
+   "evento": "a01863b293",
+   "kit": 354,
+   "giorno": "2026-09-11",
+   "ora_inizio_clip": "10:52:25",
+   "durata_clip": 0.64,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 0.64,
+    "1": 0.2
+   },
+   "uid": "XHHP3RSD9WX99937111A",
+   "registratore": "GRANAROLO · 354 - via Bandiera",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 105227» comincia 2 s dopo: forse la scena continua in un altro file; fonte incompleta: tel",
+    "telecamere sotto 5 s: 1, 2"
+   ],
+   "misura": "2560x1440",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-23 03:00",
+    "letto_il": "2026-11-10T18:53"
+   }
+  },
+  {
+   "evento": "e39f012c9d",
+   "kit": 666,
+   "giorno": "2026-09-13",
+   "ora_inizio_clip": "10:41:45",
+   "durata_clip": 54.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 54.08,
+    "1": 54.08,
+    "2": 54.08
+   },
+   "uid": "WHZZJCNKEJJSTVMM111A",
+   "registratore": "LECCO · 666 - Via Oslavia 12",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 104159» comincia 14 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "kit_spostato": "nel nome della cartella «EX KIT»: il kit e' stato spostato, si chiede al suo registratore",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-24 14:00",
+    "letto_il": "2026-11-10T18:52"
+   }
+  },
+  {
+   "evento": "2680b958da",
+   "kit": 206,
+   "giorno": "2026-09-20",
+   "ora_inizio_clip": "15:16:38",
+   "durata_clip": 45.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 28.32,
+    "1": 3.6,
+    "2": 45.08
+   },
+   "uid": "NWSLEMXYPWDS9CM4111A",
+   "registratore": "GORIZIA · 206 - Via P. Giustiniani 25",
+   "motivi": [
+    "telecamere sotto 5 s: 2"
+   ],
+   "misura": "2688x1520",
+   "kit_spostato": "nel nome della cartella «EX KIT»: il kit e' stato spostato, si chiede al suo registratore",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-20 07:00",
+    "letto_il": "2026-11-10T23:59"
+   }
+  },
+  {
+   "evento": "4f55278187",
+   "kit": 452,
+   "giorno": "2026-09-24",
+   "ora_inizio_clip": "08:33:35",
+   "durata_clip": 90.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 90.08,
+    "1": 90.08,
+    "2": 90.0
+   },
+   "uid": "GJLNWB6GE4NERNUJ111A",
+   "registratore": "CRISPIANO · 452 - Via  Foggia",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «targa [targa] 083338» comincia 3 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-15 01:00",
+    "letto_il": "2026-11-10T20:51"
+   }
+  },
+  {
+   "evento": "49e2a12f57",
+   "kit": 452,
+   "giorno": "2026-09-24",
+   "ora_inizio_clip": "08:33:38",
+   "durata_clip": 87.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 87.08,
+    "1": 87.08,
+    "2": 87.0
+   },
+   "uid": "GJLNWB6GE4NERNUJ111A",
+   "registratore": "CRISPIANO · 452 - Via  Foggia",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «targa [targa] 083335» comincia 3 s prima: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-15 01:00",
+    "letto_il": "2026-11-10T20:51"
+   }
+  },
+  {
+   "evento": "776eb78a95",
+   "kit": 355,
+   "giorno": "2026-09-27",
+   "ora_inizio_clip": "12:19:10",
+   "durata_clip": 49.76,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 49.6,
+    "1": 49.76,
+    "2": 49.52
+   },
+   "uid": "7PZKV5FTZH75DX6T111A",
+   "registratore": "FOGGIA · 355 - Via Parini (Parcheggio)",
+   "motivi": [
+    "nota di Dario: sembra tagliato male il video, ricontrolla"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-24 21:00",
+    "letto_il": "2026-11-11T05:12"
+   }
+  },
+  {
+   "evento": "e745a18c3f",
+   "kit": 378,
+   "giorno": "2026-09-28",
+   "ora_inizio_clip": "13:35:34",
+   "durata_clip": 101.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 37.22,
+    "1": 101.08
+   },
+   "uid": "LUNUFNCU8ST4Y221111A",
+   "registratore": "REA-Rosignano Marittimo · 378 - Via del Porto 203",
+   "motivi": [
+    "non intero: telecamera 1: il video dura 100.7 s, il file 37.2 s; telecamera 1: il video dura 37.2 s, l'originale sul NAS 72.6 s"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-12 22:00",
+    "letto_il": "2026-11-10T22:26"
+   }
+  },
+  {
+   "evento": "0c167f258a",
+   "kit": 266,
+   "giorno": "2026-10-10",
+   "ora_inizio_clip": "10:31:07",
+   "durata_clip": 48.52,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 48.08,
+    "1": 48.52,
+    "2": 47.92
+   },
+   "uid": "DDH6YUVZDXRJGVNG111A",
+   "registratore": "FOGGIA · 266 - Via Tiro a Segno",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 103054» comincia 13 s prima: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-27 09:30",
+    "letto_il": "2026-11-10T20:19"
+   }
+  },
+  {
+   "evento": "5fc3303a73",
+   "kit": 445,
+   "giorno": "2026-10-10",
+   "ora_inizio_clip": "16:37:27",
+   "durata_clip": 44.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 44.08,
+    "1": 44.08,
+    "2": 43.44
+   },
+   "uid": "J8GJEC67MTDV7SU9111A",
+   "registratore": "PIANORO · 445 - SS65 della Futa-Rastign.",
+   "motivi": [
+    "nota di Dario: UGUALE PROBLEMA DI UNA SOLA TELECAMERA"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-25 23:02",
+    "letto_il": "2026-11-10T21:32"
+   }
+  },
+  {
+   "evento": "906d38133e",
+   "kit": 457,
+   "giorno": "2026-10-21",
+   "ora_inizio_clip": "10:17:00",
+   "durata_clip": 869.44,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 869.12,
+    "1": 624.96,
+    "2": 626.0
+   },
+   "uid": "WE9VRK7W3XW4952T111A",
+   "registratore": "GEOVEST-Sant Agata Bolognese · 457 - Via Aldo Moro",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: manca una parte di una telecamera"
+   ],
+   "misura": "1920x1080",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-25 00:00",
+    "letto_il": "2026-11-10T19:40"
+   }
+  },
+  {
+   "evento": "605829017b",
+   "kit": 411,
+   "giorno": "2026-10-21",
+   "ora_inizio_clip": "13:50:28",
+   "durata_clip": 47.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 47.12,
+    "1": 47.0,
+    "2": 31.0
+   },
+   "uid": "ULYRRW9GGZPJMCAE111A",
+   "registratore": "REGGIO EMILIA · 411 - Via Don G. Alai",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 135219» comincia 111 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-29 03:30",
+    "letto_il": "2026-11-11T00:29"
+   }
+  },
+  {
+   "evento": "1d3f1819a0",
+   "kit": 631,
+   "giorno": "2026-10-21",
+   "ora_inizio_clip": "14:00:51",
+   "durata_clip": 55.32,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 55.08,
+    "1": 55.0,
+    "2": 55.32,
+    "3": 54.92
+   },
+   "uid": "441TZ8R5GXJT8XMG111A",
+   "registratore": "COMO · 631 - Via Di Vittorio",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: telecamera 1: video per il sito non fatto; telecamera 2: video per il sito non fatto; telecamera 3: video per il sito no"
+   ],
+   "misura": "2560x1440",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-28 20:30",
+    "letto_il": "2026-11-10T19:52"
+   }
+  },
+  {
+   "evento": "f570505366",
+   "kit": 298,
+   "giorno": "2026-10-24",
+   "ora_inizio_clip": "08:17:49",
+   "durata_clip": 88.2,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 88.08,
+    "1": 88.16,
+    "2": 88.2
+   },
+   "uid": "9XK9SL68CU6HTGSD111A",
+   "registratore": "SAN LAZZARO DI SAVENA · 298 - Via Galletta 5",
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 081819» comincia 30 s dopo: forse la scena continua in un altro file"
+   ],
+   "misura": "2688x1520",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-25 07:02",
+    "letto_il": "2026-11-10T20:06"
+   }
+  },
+  {
+   "evento": "728f684a66",
+   "kit": 522,
+   "giorno": "2026-10-28",
+   "ora_inizio_clip": "02:00:46",
+   "durata_clip": 50.12,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 50.08,
+    "1": 50.12,
+    "2": 37.04,
+    "3": 49.39
+   },
+   "uid": "6NJSJHB9Z4M4PFBE111A",
+   "registratore": "COMO · 522 - Parch Atleti Azzurri Ita",
+   "motivi": [
+    "nota di Dario: ANCHE QUESTO SEMBRA UN VIDEO NON COMPLETO"
+   ],
+   "misura": "1920x1080",
+   "sul_registratore": {
+    "stima": "no",
+    "primo": "2026-10-29 23:31",
+    "letto_il": "2026-11-10T19:54"
+   }
+  },
+  {
+   "evento": "c729ebe9a5",
+   "kit": 66,
+   "giorno": "2026-11-01",
+   "ora_inizio_clip": "11:39:39",
+   "durata_clip": 108.44,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 60,
+   "dopo_s": 120,
+   "durate_canali": {
+    "0": 77.84,
+    "1": 78.08
+   },
+   "uid": null,
+   "registratore": null,
+   "motivi": [
+    "una telecamera «non completa»",
+    "non intero: nella stessa cartella «a mano 114105» comincia 86 s dopo: forse la scena continua in un altro file; nella stessa cartell"
+   ],
+   "misura": "1920x1080"
+  }
+ ]
+}
