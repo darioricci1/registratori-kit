@@ -1,0 +1,16 @@
+{
+ "pc": "COMPUTERONE",
+ "come": "la misura OWL di misure.json, in un processo a parte (owl_misura.py)",
+ "owl": {
+  "nome_drive": "owlv2_fp32.onnx",
+  "byte": 360204024,
+  "ritagli": 20,
+  "fili_cpu": 4,
+  "dml_device": [
+   0,
+   1
+  ],
+  "fp16": true,
+  "priorita_normale": true
+ }
+}

@@ -40,6 +40,8 @@ version: 0.11.0 (11/11/2026): dimezza.json, una volta sola sul COMPUTERONE (segn
   stesso filo gli «spezzoni» (KIT355: i 2 minuti prima dello spezzone del 27/09, se il registratore li ha ancora).
   nas_extra.json (segno nas_extra_fatto.txt): la misura degli originali sul NAS di misure.json per altri eventi
   (776eb78a95, KIT355 Foggia) -> video_nas_extra.json. La libreria Focus si usa da un filo alla volta (SDK).
+  owl.json (segno owl_fatto.txt): la misura di OWLv2 di misure.json rifatta in un processo a parte (owl_misura.py, ambiente
+  pulito e senza FocusNetSDK nel PATH): nel compito 25 onnxruntime non si caricava nel processo del ponte.
 0.10.0 (11/11/2026): misure.json, una volta sola per compito sul COMPUTERONE (segno misure_fatte.txt in uscita), in un
   filo suo mentre il ponte risponde: 1) OWLv2 in ONNX (owlv2_fp32.onnx, scaricato da Drive in ~/kr_lavori/owl) con
   onnxruntime su DirectML e sul processore, e in fp16 se onnx c'e' sul PC: apertura, prima inferenza e tempo per
@@ -602,13 +604,22 @@ def scarico_lungo(p):
     return analisi_kit_rifiuti(finali, risultati, os.path.join(u, "analisi.txt")), risultati, u, time.time()
 
 
-def analisi_kit_rifiuti(finali, risultati, registro, kit=None):
-    """Kit_Rifiuti da riga di comando sui video `finali`, in sottofondo (priorita' bassa, niente finestra): il processo.
-    0.11.0: una funzione sola per la prova lunga e per il dimezzamento; `kit` (KIT581) per la zona dei cassonetti."""
+def ambiente_figlio():
+    """L'ambiente per un processo nuovo dell'exe: PyInstaller riparte da capo (niente _MEIPASS2 e compagni) e, 0.11.0,
+    nel PATH non c'e' la cartella FocusNetSDK, che il ponte mette davanti caricando la libreria Focus: le sue msvcp140 e
+    vcruntime140 fanno fallire onnxruntime («Routine di inizializzazione della libreria (DLL) non riuscita», compito 25)."""
     env = dict(os.environ)
     env["PYINSTALLER_RESET_ENVIRONMENT"] = "1"
     for k in ("_MEIPASS2", "_PYI_APPLICATION_HOME_DIR", "_PYI_ARCHIVE_FILE", "_PYI_PARENT_PROCESS_LEVEL", "TCL_LIBRARY", "TK_LIBRARY"):
         env.pop(k, None)
+    env["PATH"] = os.pathsep.join(p for p in env.get("PATH", "").split(os.pathsep) if p and "focusnetsdk" not in p.lower())
+    return env
+
+
+def analisi_kit_rifiuti(finali, risultati, registro, kit=None):
+    """Kit_Rifiuti da riga di comando sui video `finali`, in sottofondo (priorita' bassa, niente finestra): il processo.
+    0.11.0: una funzione sola per la prova lunga e per il dimezzamento; `kit` (KIT581) per la zona dei cassonetti."""
+    env = ambiente_figlio()
     cmd = [sys.executable] + finali + ["--out", risultati, "--riga-di-comando"] + (["--kit", kit] if kit else [])
     log = open(registro, "w", encoding="utf-8")
     return subprocess.Popen(cmd, cwd=os.path.dirname(sys.executable), env=env, stdout=log, stderr=subprocess.STDOUT,
@@ -1289,6 +1300,41 @@ def parti_filo(nome_json, segno_nome, lavoro, solo_computerone=True):
     MISURE_VIVE.append(t)
 
 
+def lavoro_owl(cfg):
+    """owl.json (0.11.0): la misura di OWLv2 in un processo suo (owl_misura.py), non nel filo del ponte: nel compito 25
+    onnxruntime non si caricava accanto alla libreria Focus. Si aspetta al massimo 3 ore; owl_tempi.json, il suo
+    avanzamento e il registro di Python tornano in uscita."""
+    casa = os.path.expanduser("~")
+    try:
+        nomi = os.listdir(casa)
+    except OSError:
+        nomi = []
+    d = os.path.join(casa, "kr_lavori", "owl_misura", os.path.basename(os.path.normpath(C)))
+    shutil.rmtree(d, ignore_errors=True)
+    os.makedirs(d)
+    shutil.copy2(os.path.join(C, "compito.py"), os.path.join(d, "ponte.py"))
+    shutil.copy2(os.path.join(C, "owl_misura.py"), os.path.join(d, "compito.py"))
+    with open(os.path.join(d, "owl.json"), "w", encoding="utf-8") as fh:
+        json.dump({"owl": cfg.get("owl") or {}, "lavori": cartelle_lavoro(C, (casa, nomi))}, fh, ensure_ascii=False)
+    p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=ambiente_figlio(), stdin=subprocess.DEVNULL,
+                         stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
+                         creationflags=0x00004000 | NOFIN)
+    av(f"owl: processo a parte (pid {p.pid}) in {d}")
+    try:
+        codice = p.wait(timeout=3 * 3600)
+    except subprocess.TimeoutExpired:
+        p.kill()
+        codice = "fermato dopo 3 ore"
+    av(f"owl: processo finito ({codice})")
+    for da, a in (("owl_tempi.json", "owl_tempi.json"), ("avanzamento.txt", "owl_avanzamento.txt"),
+                  ("registro_python.txt", "owl_registro_python.txt")):
+        f = os.path.join(d, "uscita", da)
+        if os.path.exists(f):
+            shutil.copy2(f, os.path.join(U, a))
+    if not os.path.exists(os.path.join(U, "owl_tempi.json")):
+        scrivi_json("owl_tempi.json", {"pc": PC, "versione": VERSIONE, "errore": f"il processo a parte non l'ha scritto ({codice})"})
+
+
 def nas_extra(cfg):
     """nas_extra.json: altri eventi per la misura degli originali sul NAS (misura_video_nas) -> video_nas_extra.json."""
     casa = os.path.expanduser("~")
@@ -1628,7 +1674,7 @@ try:
     parti_misure()   # 0.10.0
 except Exception as ex:   # noqa: BLE001
     av(f"misure: {type(ex).__name__}: {str(ex)[:300]}")
-for _nome, _segno, _lavoro in (("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
+for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
                                ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza)):   # 0.11.0
     try:
         parti_filo(_nome, _segno, _lavoro)

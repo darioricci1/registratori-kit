@@ -40,7 +40,8 @@ quello che serve per continuare senza la conversazione di prima.
 - Ponte 0.11.0 (compito p2p26, pronto e non mandato): `dimezza.json` (dimezza.py, prove in prova_dimezza.py) cerca un
   abbandono in un'ora scaricando 3 s all'inizio, alla fine e a metà finché l'intervallo è sotto 60 s, poi dà l'ultimo
   tratto a Kit_Rifiuti; `nas_extra.json` misura l'originale sul NAS del 776eb78a95 (KIT355). Risultati in
-  uscita/dimezza.json e video_nas_extra.json.
+  uscita/dimezza.json e video_nas_extra.json. `owl.json` rifà la misura di OWLv2 in un processo a parte
+  (owl_misura.py): nel compito 25 onnxruntime non si caricava accanto alla libreria Focus.
 - Correzioni di Barbara del 10/11 (mail «Controllo UVMS»): doppioni tolti da UVMS (spariscono dalla pagina alla prossima
   lettura del database UVMS); i «più telecamere» erano canali vuoti contati per sbaglio (corretto nella pagina 2.16.0);
   i «meno telecamere» hanno quasi tutti un ODM aperto, che ora la pagina mostra (ponte 0.5.0); 128, 136 e 155 sono DVR con
