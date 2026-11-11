@@ -1,0 +1,120 @@
+{
+ "pc": "COMPUTERONE",
+ "come": "movimento.py 0.1.0: per ogni canale i 1440 tipi di registrazione del giorno (continua/movimento/sensore) e il modo impostato; sul canale dell'abbandono una miniatura al minuto da 30 min prima a 30 min dopo, col cambio nella zona dei cassonetti (revisione 11/11, filtro economico). Fase di audit: non mandato.",
+ "limiti": {
+  "mb_totali": 100.0,
+  "mb_per_caso": 25.0,
+  "minuti_totali": 60.0,
+  "minuti_per_caso": 15.0,
+  "chiamate_totali": 600,
+  "chiamate_per_caso": 120,
+  "collegamenti_totali": 30,
+  "miniature_per_caso": 61
+ },
+ "tempi": {
+  "nuovo": 30,
+  "collega": 75,
+  "canali": 20,
+  "giorno": 30,
+  "intervallo": 20,
+  "miniatura": 20,
+  "chiudi": 20
+ },
+ "miniature": {
+  "minuti_prima": 30,
+  "minuti_dopo": 30,
+  "passo_s": 60
+ },
+ "casi": [
+  {
+   "nome": "kit581_sacchetto",
+   "uid": "HG7F76GY3TTXNYZC111A",
+   "kit": 581,
+   "canale": 0,
+   "atteso": "2026-11-01 13:00:36",
+   "zona": {
+    "riquadri": [
+     [
+      0.695,
+      0.077,
+      0.3,
+      0.577
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit548",
+   "uid": "UD9M65XRERFATJHJ111A",
+   "kit": 548,
+   "canale": 0,
+   "atteso": "2026-11-03 13:40:48",
+   "zona": {
+    "riquadri": [
+     [
+      0.022,
+      0.0,
+      0.546,
+      0.526
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit458",
+   "uid": "B6ECG39PEUDEL4W8111A",
+   "kit": 458,
+   "canale": 0,
+   "atteso": "2026-11-01 12:54:41",
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.59,
+      0.08,
+      0.21
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit651",
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "kit": 651,
+   "canale": 1,
+   "atteso": "2026-11-03 12:11:35",
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit349",
+   "uid": "5FH5WKWSB41599Y1111A",
+   "kit": 349,
+   "canale": 2,
+   "atteso": "2026-11-01 11:19:00",
+   "zona": {
+    "riquadri": [
+     [
+      0.14,
+      0.0,
+      0.86,
+      0.95
+     ]
+    ],
+    "escludi": []
+   }
+  }
+ ]
+}

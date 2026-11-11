@@ -31,7 +31,15 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.11.0 (11/11/2026): dimezza.json, una volta sola sul COMPUTERONE (segno dimezza_fatto.txt in uscita), in un filo
+version: 0.12.0 (11/11/2026): movimento.json, una volta sola sul COMPUTERONE (segno movimento_fatto.txt in uscita), in
+  un filo suo (revisione dell'11/11, «filtro economico»: il registratore sa dire dove c'e' stato movimento?): per i 5
+  casi di dimezza.json, per ogni canale i 1440 tipi di registrazione del giorno (GetRecordDaily: continua / movimento /
+  sensore) e il modo impostato (OnRecordModeStatus), e sul canale dell'abbandono una miniatura al minuto per 30 minuti
+  prima e dopo (GetThumbImage) col cambio nella zona dei cassonetti (movimento.py 0.1.0, prove in prova_movimento.py)
+  -> uscita/movimento.json e uscita/movimento_miniature/. Ogni chiamata alla libreria ha un tempo massimo, e ci sono
+  limiti su MB, minuti, chiamate e collegamenti (LIMITI in movimento.py): quando uno scatta ci si ferma e il json dice
+  quale. Dopo 2 chiamate senza risposta i casi dopo non si fanno.
+0.11.0 (11/11/2026): dimezza.json, una volta sola sul COMPUTERONE (segno dimezza_fatto.txt in uscita), in un filo
   suo (Dario: «trova un video lungo e vedi se li' dentro trovi il video rilevato dalla videoanalisi; anche con la tecnica
   del dimezzamento, cosi' risparmiamo banda»): per ogni caso 3 s all'inizio e 3 s alla fine di un'ora, la zona dei
   cassonetti (pezzi_zona) dice se e' cambiato qualcosa; se si', 3 s a meta' e presente_pezzo dice da che parte, finche'
@@ -78,7 +86,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.11.0"
+VERSIONE = "p2p_ponte 0.12.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
@@ -1642,6 +1650,48 @@ t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
 av(f"parto: {VERSIONE} sul PC {PC}, ascolto fino alle {time.strftime('%H:%M', time.localtime(t_fine))}")
+# ------------------------------------------------------------------ 0.12.0: movimento.json (una volta sola)
+def decodifica_miniatura(dati, formato, nome):
+    """Una miniatura del registratore (un fotogramma H.264/H.265 codificato) -> JPEG da 320 pixel in
+    uscita/movimento_miniature/<nome>.jpg e i grigi 96x54 (bytes) per il confronto, o None. Il file grezzo si butta."""
+    import movimento as mv
+    cart = os.path.join(U, "movimento_miniature")
+    os.makedirs(cart, exist_ok=True)
+    w, h = mv.LATO_GRIGIO
+    grezzo = os.path.join(cart, nome + (".hevc" if formato == "H.265" else ".h264"))
+    jpg = os.path.join(cart, nome + ".jpg")
+    with open(grezzo, "wb") as fh:
+        if dati[:3] != b"\x00\x00\x01" and dati[:4] != b"\x00\x00\x00\x01":
+            fh.write(b"\x00\x00\x00\x01")
+        fh.write(dati)
+    try:
+        fmt = "hevc" if formato == "H.265" else "h264"
+        subprocess.run([ffmpeg(), "-v", "error", "-y", "-f", fmt, "-i", grezzo, "-frames:v", "1", "-vf", "scale=320:-2",
+                        "-q:v", "5", jpg], capture_output=True, timeout=60, creationflags=NOFIN)
+        if not os.path.exists(jpg):
+            return None
+        r = subprocess.run([ffmpeg(), "-v", "error", "-i", jpg, "-vf", f"scale={w}:{h},format=gray", "-f", "rawvideo",
+                            "-"], capture_output=True, timeout=60, creationflags=NOFIN)
+        return r.stdout if len(r.stdout) == w * h else None
+    finally:
+        try:
+            os.remove(grezzo)
+        except OSError:
+            pass
+
+
+def lavoro_movimento(cfg):
+    """movimento.json (0.12.0): movimento.lavoro con la libreria vera; la libreria la tiene il lucchetto SDK, preso da
+    movimento.Sessione solo per il tempo di un collegamento (al massimo 200 s) e lasciato anche se una chiamata si
+    blocca."""
+    import movimento as mv
+    classe = mv.classe_registratore()
+    mezzi = {"nuovo": lambda: classe(os.path.join(C, "FocusNetSDK"), log=lambda *_: None),
+             "collega": collega_con, "lucchetto": SDK, "decodifica": decodifica_miniatura}
+    out = mv.lavoro(cfg, mezzi, lambda o: scrivi_json("movimento.json", dict(o, pc=PC, versione=VERSIONE)), av)
+    av(f"movimento: fatto, {out.get('conti')}" + (f", fermato: {out['fermato']}" if out.get("fermato") else ""))
+
+
 def parti_qwen():
     """0.8.0: Qwen3-VL in un processo staccato (come il compito vlm1), se non gira gia'."""
     casa = os.path.expanduser("~")
@@ -1675,7 +1725,8 @@ try:
 except Exception as ex:   # noqa: BLE001
     av(f"misure: {type(ex).__name__}: {str(ex)[:300]}")
 for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
-                               ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza)):   # 0.11.0
+                               ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza),   # 0.11.0
+                               ("movimento.json", "movimento_fatto.txt", lavoro_movimento)):   # 0.12.0
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001

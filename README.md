@@ -37,6 +37,13 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Ponte 0.12.0 (compito p2p28, pronto e NON mandato: fase di audit, decide Dario): `movimento.json` (movimento.py,
+  prove in prova_movimento.py). La libreria Focus non ha ricerca di file né registro degli allarmi: l'unico indice
+  storico del movimento è il tipo di ognuno dei 1440 minuti di GetRecordDaily (continua / movimento / sensore), che
+  esiste solo se il registratore è impostato a registrare il movimento; il compito lo legge per i 5 casi di
+  dimezza.json con il modo impostato (OnRecordModeStatus), e prova GetThumbImage (una miniatura al minuto per ±30 min,
+  cambio nella zona dei cassonetti). Limiti in LIMITI di movimento.py: 100 MB, 60 minuti, 600 chiamate, 30
+  collegamenti in tutto; 25 MB, 15 minuti, 120 chiamate, 61 miniature per caso; tempo massimo per ogni chiamata.
 - Ponte 0.11.0 (compito p2p26, pronto e non mandato): `dimezza.json` (dimezza.py, prove in prova_dimezza.py) cerca un
   abbandono in un'ora scaricando 3 s all'inizio, alla fine e a metà finché l'intervallo è sotto 60 s, poi dà l'ultimo
   tratto a Kit_Rifiuti; `nas_extra.json` misura l'originale sul NAS del 776eb78a95 (KIT355). Risultati in
