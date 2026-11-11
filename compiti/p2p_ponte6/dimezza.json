@@ -1,0 +1,160 @@
+{
+ "pc": "COMPUTERONE",
+ "come": "dimezza.py: 3 s inizio e fine, zona dei cassonetti, dimezzare sotto 60 s, ultimo tratto a Kit_Rifiuti (Dario, 11/11/2026)",
+ "casi": [
+  {
+   "nome": "kit581_sacchetto",
+   "uid": "HG7F76GY3TTXNYZC111A",
+   "kit": 581,
+   "canale": 0,
+   "canali_analisi": [
+    0,
+    1,
+    2
+   ],
+   "inizio": "2026-11-01 12:37:36",
+   "minuti": 60,
+   "atteso": "2026-11-01 13:00:36",
+   "evento": "167419bf4c",
+   "come_atteso": "clip delle 12:59:49 + 46.75 s (riquadro d'abbandono di Dario, telecamera 1); l'ora e' quando l'ha disegnato, puo' essere qualche secondo dopo; targa GY747HN; Dario ha disegnato il sacco a 46,75 s dalla clip delle 12:59:49 (la targa e' delle 12:59:49, il sacco compare verso le 13:00:36: analisi/kit581-perso-2026-11-11.md)",
+   "dimezza_altri": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.695,
+      0.077,
+      0.3,
+      0.577
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit548",
+   "uid": "UD9M65XRERFATJHJ111A",
+   "kit": 548,
+   "canale": 0,
+   "canali_analisi": [
+    0,
+    1,
+    2
+   ],
+   "inizio": "2026-11-03 13:17:48",
+   "minuti": 60,
+   "atteso": "2026-11-03 13:40:48",
+   "evento": "1ff221627d",
+   "come_atteso": "clip delle 13:40:01 + 46.87 s (riquadro d'abbandono di Dario, telecamera 1); l'ora e' quando l'ha disegnato, puo' essere qualche secondo dopo",
+   "dimezza_altri": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.022,
+      0.0,
+      0.546,
+      0.526
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit458",
+   "uid": "B6ECG39PEUDEL4W8111A",
+   "kit": 458,
+   "canale": 0,
+   "canali_analisi": [
+    0,
+    1
+   ],
+   "inizio": "2026-11-01 12:31:41",
+   "minuti": 60,
+   "atteso": "2026-11-01 12:54:41",
+   "evento": "deb51f0a6c",
+   "come_atteso": "clip delle 12:53:35 + 66.28 s (riquadro d'abbandono di Dario, telecamera 1); l'ora e' quando l'ha disegnato, puo' essere qualche secondo dopo",
+   "dimezza_altri": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.59,
+      0.08,
+      0.21
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit651",
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "kit": 651,
+   "canale": 1,
+   "canali_analisi": [
+    0,
+    1,
+    2
+   ],
+   "inizio": "2026-11-03 11:48:35",
+   "minuti": 60,
+   "atteso": "2026-11-03 12:11:35",
+   "evento": "b854c69cad",
+   "come_atteso": "clip delle 12:11:01 + 33.74 s (riquadro d'abbandono di Dario, telecamera 2); l'ora e' quando l'ha disegnato, puo' essere qualche secondo dopo; zona grande (quasi tutta l'immagine)",
+   "dimezza_altri": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   }
+  },
+  {
+   "nome": "kit349",
+   "uid": "5FH5WKWSB41599Y1111A",
+   "kit": 349,
+   "canale": 2,
+   "canali_analisi": [
+    0,
+    1,
+    2
+   ],
+   "inizio": "2026-11-01 10:56:00",
+   "minuti": 60,
+   "atteso": "2026-11-01 11:19:00",
+   "evento": "c4f4dab553",
+   "come_atteso": "clip delle 11:18:35 + 24.84 s (riquadro d'abbandono di Dario, telecamera 3); l'ora e' quando l'ha disegnato, puo' essere qualche secondo dopo; zona grande (quasi tutta l'immagine)",
+   "dimezza_altri": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.14,
+      0.0,
+      0.86,
+      0.95
+     ]
+    ],
+    "escludi": []
+   }
+  }
+ ],
+ "spezzoni": [
+  {
+   "nome": "kit355_prima",
+   "uid": "7PZKV5FTZH75DX6T111A",
+   "kit": 355,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "inizio": "2026-09-27 12:17:10",
+   "secondi": 130,
+   "nota": "evento 776eb78a95 (spezzone delle 12:19:10, 49,5 s sul sito, al secondo 0 il mucchio e' gia' a terra): i 2 minuti prima, piu' 10 s di sovrapposizione, per vedere lo scarico dalla Clio grigia. L'11/11 il registratore diceva di registrare dal 24/10: probabile che non ci sia piu'"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "pc": "COMPUTERONE",
+ "video_nas": {
+  "limite_scorri_s": 1800,
+  "eventi": [
+   {
+    "id": "776eb78a95",
+    "comune": "FOGGIA",
+    "nota": "KIT355 Foggia, 27/09/2026, spezzone delle 12:19:10: sul sito 49,5 s (cam1 49,6, cam2 49,76, cam3 49,52) e al secondo 0 il mucchio e' gia' a terra; tagliato gia' sul NAS?"
+   }
+  ]
+ }
+}

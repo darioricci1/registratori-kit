@@ -31,7 +31,16 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.10.0 (11/11/2026): misure.json, una volta sola per compito sul COMPUTERONE (segno misure_fatte.txt in uscita), in un
+version: 0.11.0 (11/11/2026): dimezza.json, una volta sola sul COMPUTERONE (segno dimezza_fatto.txt in uscita), in un filo
+  suo (Dario: «trova un video lungo e vedi se li' dentro trovi il video rilevato dalla videoanalisi; anche con la tecnica
+  del dimezzamento, cosi' risparmiamo banda»): per ogni caso 3 s all'inizio e 3 s alla fine di un'ora, la zona dei
+  cassonetti (pezzi_zona) dice se e' cambiato qualcosa; se si', 3 s a meta' e presente_pezzo dice da che parte, finche'
+  l'intervallo e' sotto 60 s (dimezza.py 0.1.0, provato in prova_dimezza.py); poi l'ultimo tratto intero di tutte le
+  telecamere va a Kit_Rifiuti. Conta MB, richieste, secondi, e confronta con l'ora attesa -> uscita/dimezza.json. Nello
+  stesso filo gli «spezzoni» (KIT355: i 2 minuti prima dello spezzone del 27/09, se il registratore li ha ancora).
+  nas_extra.json (segno nas_extra_fatto.txt): la misura degli originali sul NAS di misure.json per altri eventi
+  (776eb78a95, KIT355 Foggia) -> video_nas_extra.json. La libreria Focus si usa da un filo alla volta (SDK).
+0.10.0 (11/11/2026): misure.json, una volta sola per compito sul COMPUTERONE (segno misure_fatte.txt in uscita), in un
   filo suo mentre il ponte risponde: 1) OWLv2 in ONNX (owlv2_fp32.onnx, scaricato da Drive in ~/kr_lavori/owl) con
   onnxruntime su DirectML e sul processore, e in fp16 se onnx c'e' sul PC: apertura, prima inferenza e tempo per
   ritaglio su 20 ritagli dalla scorta video (o finti 960x960) -> owl_tempi.json; 2) gli originali sul NAS dei video
@@ -56,6 +65,7 @@ import os
 import shutil
 import subprocess
 import sys
+import threading
 import time
 import traceback
 import urllib.request
@@ -66,9 +76,10 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.10.0"
+VERSIONE = "p2p_ponte 0.11.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
+SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
 
 
 def av(t):
@@ -535,7 +546,7 @@ def scarico_lungo(p):
     while t < fine:
         sec = int(min(PEZZO, (fine - t).total_seconds()))
         cart = os.path.join(pezzi_dir, t.strftime("%H%M%S"))
-        with fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None) as reg:
+        with SDK, fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None) as reg:   # 0.11.0: SDK
             ok, testo = collega_con(reg, p["uid"], p.get("kit"))
             voce = {"da": t.strftime("%H:%M:%S"), "secondi": sec, "collegamento": testo}
             if ok:
@@ -587,15 +598,21 @@ def scarico_lungo(p):
     if not finali:
         return None
     risultati = os.path.join(dove, "risultati")
+    av(f"lungo {nome}: scaricati {len(finali)} video in {rap['secondi_scarico']} s, parte l'analisi")
+    return analisi_kit_rifiuti(finali, risultati, os.path.join(u, "analisi.txt")), risultati, u, time.time()
+
+
+def analisi_kit_rifiuti(finali, risultati, registro, kit=None):
+    """Kit_Rifiuti da riga di comando sui video `finali`, in sottofondo (priorita' bassa, niente finestra): il processo.
+    0.11.0: una funzione sola per la prova lunga e per il dimezzamento; `kit` (KIT581) per la zona dei cassonetti."""
     env = dict(os.environ)
     env["PYINSTALLER_RESET_ENVIRONMENT"] = "1"
     for k in ("_MEIPASS2", "_PYI_APPLICATION_HOME_DIR", "_PYI_ARCHIVE_FILE", "_PYI_PARENT_PROCESS_LEVEL", "TCL_LIBRARY", "TK_LIBRARY"):
         env.pop(k, None)
-    cmd = [sys.executable] + finali + ["--out", risultati, "--riga-di-comando"]
-    log = open(os.path.join(u, "analisi.txt"), "w", encoding="utf-8")
-    av(f"lungo {nome}: scaricati {len(finali)} video in {rap['secondi_scarico']} s, parte l'analisi")
+    cmd = [sys.executable] + finali + ["--out", risultati, "--riga-di-comando"] + (["--kit", kit] if kit else [])
+    log = open(registro, "w", encoding="utf-8")
     return subprocess.Popen(cmd, cwd=os.path.dirname(sys.executable), env=env, stdout=log, stderr=subprocess.STDOUT,
-                            creationflags=0x00004000 | 0x08000000), risultati, u, time.time()
+                            creationflags=0x00004000 | NOFIN)
 
 
 def copia_risultati(risultati, u, t0, codice):
@@ -1134,8 +1151,8 @@ def eventi_dal_nas(ids, radice, comuni=(), limite_s=1800):
     return {e["id"]: e["file_rel"] for e in ak.indice_da_elenco(righe) if e["id"] in ids}
 
 
-def misura_video_nas(cfg, lavori):
-    """video_nas.json: per ogni evento i file originali sul NAS e le loro misure, per telecamera."""
+def misura_video_nas(cfg, lavori, uscita="video_nas.json"):
+    """video_nas.json (0.11.0: o `uscita`): per ogni evento i file originali sul NAS e le loro misure, per telecamera."""
     eventi = cfg.get("eventi") or []
     ids = {e["id"] for e in eventi}
     out = {"pc": PC, "versione": VERSIONE, "inizio": time.strftime("%Y-%m-%d %H:%M:%S"), "ffprobe": ffprobe(),
@@ -1165,7 +1182,7 @@ def misura_video_nas(cfg, lavori):
                 trovati[k] = (v, "cartelle del NAS")
         except Exception as ex:   # noqa: BLE001
             out["scorri_nas"] = f"{type(ex).__name__}: {str(ex)[:200]}"
-    scrivi_json("video_nas.json", out)
+    scrivi_json(uscita, out)
     for e in eventi:
         x = {"nota": e.get("nota", "")}
         out["eventi"][e["id"]] = x
@@ -1194,11 +1211,11 @@ def misura_video_nas(cfg, lavori):
             except Exception as ex:   # noqa: BLE001
                 m = {"file": fr, "errore": f"{type(ex).__name__}: {str(ex)[:300]}"}
             x["file"].append(m)
-            scrivi_json("video_nas.json", out)
+            scrivi_json(uscita, out)
         x["telecamere"] = riassunto_evento(x["file"])
         av(f"video nas {e['id']}: " + ", ".join(f"ch{k} {v['secondi_a_25_fps']} s {v['giudizio']}" for k, v in x["telecamere"].items()))
     out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
-    scrivi_json("video_nas.json", out)
+    scrivi_json(uscita, out)
 
 
 MISURE_VIVE = []   # il filo delle misure, finche' gira
@@ -1207,7 +1224,6 @@ MISURE_VIVE = []   # il filo delle misure, finche' gira
 def parti_misure():
     """Se c'e' misure.json e il segno misure_fatte.txt non c'e', le due misure in un filo (prima i video, che non
     chiedono la scheda grafica, poi OWL); il segno si scrive alla fine, anche con un errore."""
-    import threading
     f = os.path.join(C, "misure.json")
     segno = os.path.join(U, "misure_fatte.txt")
     if not os.path.exists(f) or os.path.exists(segno):
@@ -1242,6 +1258,338 @@ def parti_misure():
 
 def misure_in_corso():
     return any(t.is_alive() for t in MISURE_VIVE)
+
+
+# ------------------------------------------------------------------ 0.11.0: dimezza.json e nas_extra.json (una volta sola)
+def parti_filo(nome_json, segno_nome, lavoro, solo_computerone=True):
+    """Se c'e' `nome_json` nella cartella del compito e il segno in uscita non c'e', lavoro(cfg) in un filo suo (il
+    ponte risponde intanto); il segno si scrive alla fine, anche con un errore. Il filo va in MISURE_VIVE: il compito
+    non si chiude e non lascia il posto a uno nuovo finche' gira."""
+    f = os.path.join(C, nome_json)
+    segno = os.path.join(U, segno_nome)
+    if not os.path.exists(f) or os.path.exists(segno):
+        return
+    cfg = json.load(open(f, encoding="utf-8"))
+    pc = (cfg.get("pc") if isinstance(cfg, dict) else None) or ("COMPUTERONE" if solo_computerone else "*")
+    if pc.upper() not in (PC.upper(), "*"):
+        return
+
+    def gira():
+        av(f"{nome_json}: parte")
+        try:
+            lavoro(cfg)
+        except Exception as ex:   # noqa: BLE001
+            av(f"{nome_json}: {type(ex).__name__}: {str(ex)[:300]}")
+            av(traceback.format_exc()[-1500:])
+        open(segno, "w").write(time.strftime("%Y-%m-%d %H:%M"))
+        av(f"{nome_json}: fatto")
+
+    t = threading.Thread(target=gira, daemon=True)
+    t.start()
+    MISURE_VIVE.append(t)
+
+
+def nas_extra(cfg):
+    """nas_extra.json: altri eventi per la misura degli originali sul NAS (misura_video_nas) -> video_nas_extra.json."""
+    casa = os.path.expanduser("~")
+    try:
+        nomi = os.listdir(casa)
+    except OSError:
+        nomi = []
+    misura_video_nas(cfg.get("video_nas") or {}, cartelle_lavoro(C, (casa, nomi)), "video_nas_extra.json")
+
+
+class ScaricatoreP2P:
+    """Un registratore in P2P per il dimezzamento: un collegamento solo finche' e' fresco (il relay si chiude dopo 5
+    minuti: dopo 4 si ricollega), un nuovo tentativo su un collegamento nuovo se un pezzo non arriva. Va usato dentro
+    `with SDK`."""
+    FRESCO = 240
+
+    def __init__(self, uid, kit):
+        self.uid, self.kit = uid, kit
+        self.reg, self.t, self.per, self.collegamenti = None, 0.0, {}, []
+
+    def collegato(self):
+        import focus_nvr as fn
+        if self.reg is not None and time.time() - self.t < self.FRESCO:
+            return True
+        self.chiudi()
+        t0 = time.time()
+        self.reg = fn.Registratore(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)
+        ok, testo = collega_con(self.reg, self.uid, self.kit)
+        self.collegamenti.append({"ok": ok, "testo": testo, "secondi": round(time.time() - t0, 1)})
+        if not ok:
+            self.chiudi()
+            return False
+        self.per = {num: h for num, h, _ in self.reg.canali()}
+        self.t = time.time()
+        return True
+
+    def chiudi(self):
+        if self.reg is not None:
+            try:
+                self.reg.chiudi()
+            except Exception:   # noqa: BLE001
+                pass
+        self.reg = None
+
+    def intervallo(self, canale):
+        """(prima, ultima registrazione) del canale, o None se non si sa."""
+        if not self.collegato() or canale not in self.per:
+            return None
+        try:
+            return self.reg.intervallo(self.per[canale])
+        except Exception:   # noqa: BLE001
+            return None
+
+    def scarica(self, canale, da, secondi, cartella):
+        res = {"errore": "non provato"}
+        for _ in range(2):
+            if not self.collegato():
+                res = {"errore": "collegamento: " + (self.collegamenti[-1]["testo"] if self.collegamenti else "?")}
+                continue
+            if canale not in self.per:
+                return {"errore": "canale assente"}
+            t0 = time.time()
+            try:
+                res = self.reg.scarica(canale, self.per[canale], da, secondi, cartella, ffmpeg=ffmpeg())
+            except Exception as ex:   # noqa: BLE001
+                res = {"errore": f"{type(ex).__name__}: {str(ex)[:200]}"}
+            res["secondi_attesa"] = round(time.time() - t0, 1)
+            if str(res.get("file", "")).endswith(".mp4"):
+                return res
+            self.chiudi()   # il prossimo tentativo su un collegamento nuovo
+        return res
+
+
+def secondi_video(res):
+    """I secondi di video di un pezzo scaricato (dal primo all'ultimo fotogramma), o 0."""
+    try:
+        return (datetime.datetime.fromisoformat(res["ultimo"]) - datetime.datetime.fromisoformat(res["primo"])).total_seconds()
+    except (KeyError, TypeError, ValueError):
+        return 0.0
+
+
+def leggi_campione(sc, canale, inizio, dove, u, kr, dz):
+    """leggi(t) per dimezza.Campioni: 3 s del canale da inizio + t, i fotogrammi a 1280 pixel, il file si butta; in
+    uscita una foto piccola del campione (per guardarlo). Ritorna (fotogrammi o None, info)."""
+    import cv2
+    cart = os.path.join(dove, "campioni")
+    os.makedirs(cart, exist_ok=True)
+
+    def leggi(t):
+        da = inizio + datetime.timedelta(seconds=t)
+        res = sc.scarica(canale, da, dz.CAMPIONE_S, cart)
+        info = {"mb": res.get("mb") or 0.0, "secondi": res.get("secondi_attesa"), "secondi_video": secondi_video(res),
+                "errore": res.get("errore")}
+        f = str(res.get("file", ""))
+        fot = None
+        if f.endswith(".mp4"):
+            fot = kr.fotogrammi_ai_tempi(f, dz.TEMPI_FOTOGRAMMI) or None
+            if fot:
+                m = dz.mediana(fot)
+                cv2.imwrite(os.path.join(u, f"campione_{int(t):04d}s_{da:%H%M%S}.jpg"),
+                            cv2.resize(m, (480, int(m.shape[0] * 480 / m.shape[1]))), [cv2.IMWRITE_JPEG_QUALITY, 70])
+        if f and os.path.exists(f):
+            os.remove(f)
+        return fot, info
+    return leggi
+
+
+def scarica_tratto(sc, canali, da_dt, secondi, dove, kit):
+    """Tutto il tratto [da_dt, +secondi) di ogni canale, ognuno nella sua cartella (scarica conta il canale da 0 e CH1 e
+    CH2 avrebbero lo stesso nome), poi col nome che Kit_Rifiuti divide per telecamera in dove/KITnnn/. Ritorna
+    (file, misure per canale)."""
+    import focus_nvr as fn
+    video = os.path.join(dove, kit)
+    os.makedirs(video, exist_ok=True)
+    finali, misure = [], {}
+    for c in canali:
+        cart = os.path.join(dove, f"ch{c}")
+        res = sc.scarica(c, da_dt, secondi, cart)
+        misure[f"ch{c}"] = {k: res.get(k) for k in ("mb", "fotogrammi", "fps", "errore", "primo", "ultimo", "secondi_attesa")}
+        f = str(res.get("file", ""))
+        if f.endswith(".mp4"):
+            dest = os.path.join(video, fn.nome_per_kit_rifiuti(da_dt, c + 1) + ".mp4")
+            shutil.move(f, dest)
+            finali.append(dest)
+        shutil.rmtree(cart, ignore_errors=True)
+    return finali, misure
+
+
+def tratti_da_analizzare(r, durata, dz):
+    """Gli ultimi intervalli del dimezzamento da scaricare interi: quello scelto e quelli degli altri pezzi dimezzati.
+    [(etichetta, da_s, secondi)]."""
+    out = []
+    if r.get("esito") != "cambio":
+        return out
+    out.append(("scelto",) + dz.finestra_finale(r["lo"], r["hi"], durata))
+    for i, a in enumerate(r.get("altri") or []):
+        if a.get("lo") is not None:
+            out.append((f"altro{i + 1}",) + dz.finestra_finale(a["lo"], a["hi"], durata))
+    return out
+
+
+def un_caso(caso, kr, dz, out_tutto):
+    """Un caso di dimezza.json: ricerca, tratti scaricati; ritorna le analisi da far partire [(etichetta, file,
+    inizio del tratto, cartella in uscita)]."""
+    nome = caso["nome"]
+    inizio = datetime.datetime.strptime(caso["inizio"], "%Y-%m-%d %H:%M:%S")
+    durata = float(caso.get("minuti", 60)) * 60
+    canale = int(caso["canale"])
+    kit = kr.kit_id(f"KIT{int(caso['kit'])}")
+    u = os.path.join(U, "dimezza_" + nome)
+    dove = os.path.join(os.path.expanduser("~"), "kr_lavori", "dimezza", nome)
+    os.makedirs(u, exist_ok=True)
+    x = {"caso": caso, "inizio_lavoro": time.strftime("%Y-%m-%d %H:%M:%S")}
+    out_tutto["casi"].append(x)
+    zz = kr.zone_di(kit, canale + 1)
+    x["zona_da"] = "zone_cassonetti.json di Kit_Rifiuti"
+    if not zz and caso.get("zona"):
+        zz, x["zona_da"] = (caso["zona"]["riquadri"], caso["zona"].get("escludi") or []), "dimezza.json"
+    if not zz:
+        x["esito"] = f"la telecamera {canale + 1} del {kit} non ha una zona dei cassonetti"
+        return []
+    x["zona"] = {"riquadri": zz[0], "escludi": zz[1]}
+    sc = ScaricatoreP2P(caso["uid"], int(caso["kit"]))
+    analisi = []
+    try:
+        with SDK:
+            t0 = time.time()
+            iv = sc.intervallo(canale)
+            x["registra"] = [str(v) for v in iv] if iv else None
+            ok, perche = dz.coperto(iv, inizio, inizio + datetime.timedelta(seconds=durata))
+            if not sc.collegamenti or not sc.collegamenti[-1]["ok"]:
+                x["esito"] = "registratore non raggiunto: " + (sc.collegamenti[-1]["testo"] if sc.collegamenti else "?")
+                return []
+            if not ok:
+                x["esito"] = perche
+                return []
+            cam = dz.Campioni(leggi_campione(sc, canale, inizio, dove, u, kr, dz))
+            r = dz.cerca(kr, cam, durata, zz[0], zz[1], dimezza_altri=int(caso.get("dimezza_altri", 1)))
+            x["ricerca"] = r
+            x["esito"] = r["esito"]
+            x["campioni"] = cam.registro
+            x["conti_ricerca"] = dict(cam.conti, secondi_lavoro=round(time.time() - t0, 1))
+            x["stima_ora_intera_mb"] = dz.stima_ora(cam.conti["mb"], cam.conti["secondi_video"], durata)
+            atteso_s = dz.secondi_da(inizio, caso.get("atteso"))
+            if r["esito"] == "cambio":
+                x["trovato"] = (inizio + datetime.timedelta(seconds=r["momento"])).strftime("%H:%M:%S")
+                x["confronto"] = dz.confronta(atteso_s, r["lo"], r["hi"])
+                for a in r.get("altri") or []:
+                    if a.get("lo") is not None:
+                        a["trovato"] = (inizio + datetime.timedelta(seconds=a["momento"])).strftime("%H:%M:%S")
+                        a["confronto"] = dz.confronta(atteso_s, a["lo"], a["hi"])
+            scrivi_json("dimezza.json", out_tutto)
+            av(f"dimezza {nome}: {r['esito']}, {cam.conti['richieste']} richieste, {cam.conti['mb']} MB"
+               + (f", trovato {x.get('trovato')} (atteso {caso.get('atteso')})" if r["esito"] == "cambio" else ""))
+            x["tratti"] = {}
+            canali = [int(c) for c in caso.get("canali_analisi", [canale])]
+            for etichetta, da_s, sec in tratti_da_analizzare(r, durata, dz):
+                t1 = time.time()
+                da_dt = inizio + datetime.timedelta(seconds=da_s)
+                finali, misure = scarica_tratto(sc, canali, da_dt, sec, os.path.join(dove, etichetta), kit)
+                mb = round(sum((m.get("mb") or 0) for m in misure.values()), 2)
+                x["tratti"][etichetta] = {"da": da_dt.strftime("%H:%M:%S"), "secondi": sec, "canali": misure, "mb": mb,
+                                          "richieste": len(canali), "secondi_scarico": round(time.time() - t1, 1),
+                                          "atteso": caso.get("atteso")}
+                if finali:
+                    analisi.append((nome + " " + etichetta, finali, da_dt, os.path.join(u, etichetta), kit, x["tratti"][etichetta]))
+            x["totale"] = {"mb": round(cam.conti["mb"] + sum(t["mb"] for t in x["tratti"].values()), 2),
+                           "richieste": cam.conti["richieste"] + sum(t["richieste"] for t in x["tratti"].values()),
+                           "collegamenti": len(sc.collegamenti), "secondi": round(time.time() - t0, 1)}
+    finally:
+        sc.chiudi()
+        x["collegamenti"] = sc.collegamenti
+        shutil.rmtree(os.path.join(dove, "campioni"), ignore_errors=True)
+    return analisi
+
+
+def uno_spezzone(sp, kr, out_tutto):
+    """Uno «spezzone» di dimezza.json: un tratto di tutte le telecamere scaricato intero (se il registratore l'ha
+    ancora) e dato a Kit_Rifiuti. Per il KIT355 del 27/09: i 2 minuti prima dello spezzone, per vedere lo scarico."""
+    import dimezza as dz
+    nome = sp["nome"]
+    da_dt = datetime.datetime.strptime(sp["inizio"], "%Y-%m-%d %H:%M:%S")
+    sec = int(sp.get("secondi", 120))
+    kit = kr.kit_id(f"KIT{int(sp['kit'])}")
+    u = os.path.join(U, "spezzone_" + nome)
+    dove = os.path.join(os.path.expanduser("~"), "kr_lavori", "dimezza", "spezzone_" + nome)
+    os.makedirs(u, exist_ok=True)
+    x = {"spezzone": sp}
+    out_tutto["spezzoni"].append(x)
+    sc = ScaricatoreP2P(sp["uid"], int(sp["kit"]))
+    try:
+        with SDK:
+            canali = [int(c) for c in sp.get("canali", [0])]
+            iv = sc.intervallo(canali[0])
+            if not sc.collegamenti or not sc.collegamenti[-1]["ok"]:
+                x["esito"] = "registratore non raggiunto: " + (sc.collegamenti[-1]["testo"] if sc.collegamenti else "?")
+                return []
+            x["registra"] = [str(v) for v in iv] if iv else None
+            ok, perche = dz.coperto(iv, da_dt, da_dt + datetime.timedelta(seconds=sec))
+            if not ok:
+                x["esito"] = perche
+                return []
+            t1 = time.time()
+            finali, misure = scarica_tratto(sc, canali, da_dt, sec, dove, kit)
+            x["tratto"] = {"da": da_dt.strftime("%H:%M:%S"), "secondi": sec, "canali": misure,
+                           "mb": round(sum((m.get("mb") or 0) for m in misure.values()), 2),
+                           "secondi_scarico": round(time.time() - t1, 1)}
+            x["esito"] = f"scaricati {len(finali)} video" if finali else "niente scaricato"
+            return [(nome, finali, da_dt, u, kit, x["tratto"])] if finali else []
+    finally:
+        sc.chiudi()
+        x["collegamenti"] = sc.collegamenti
+
+
+def lavoro_dimezza(cfg):
+    """dimezza.json: prima tutti gli scarichi (la libreria Focus a pezzi, il ponte intanto risponde), poi le analisi di
+    Kit_Rifiuti una alla volta, ognuna con le sue risposte attaccate al suo tratto. Scrive uscita/dimezza.json a ogni
+    passo."""
+    import kit_rifiuti as kr
+    import dimezza as dz
+    out = {"pc": PC, "versione": VERSIONE, "dimezza": dz.VERSIONE, "kit_rifiuti": getattr(kr, "VERSION", None) or "?",
+           "inizio": time.strftime("%Y-%m-%d %H:%M:%S"), "casi": [], "spezzoni": []}
+    da_fare = []
+    for caso in cfg.get("casi") or []:
+        try:
+            da_fare += un_caso(caso, kr, dz, out)
+        except Exception as ex:   # noqa: BLE001
+            av(f"dimezza {caso.get('nome')}: {type(ex).__name__}: {str(ex)[:300]}")
+            av(traceback.format_exc()[-1500:])
+        scrivi_json("dimezza.json", out)
+    for sp in cfg.get("spezzoni") or []:
+        try:
+            da_fare += uno_spezzone(sp, kr, out)
+        except Exception as ex:   # noqa: BLE001
+            av(f"spezzone {sp.get('nome')}: {type(ex).__name__}: {str(ex)[:300]}")
+            av(traceback.format_exc()[-1500:])
+        scrivi_json("dimezza.json", out)
+    for etichetta, finali, da_dt, u, kit, dove_scrivo in da_fare:
+        os.makedirs(u, exist_ok=True)
+        risultati = os.path.join(os.path.dirname(finali[0]), "..", "risultati")
+        t0 = time.time()
+        av(f"dimezza {etichetta}: parte Kit_Rifiuti su {len(finali)} video")
+        try:
+            p = analisi_kit_rifiuti(finali, risultati, os.path.join(u, "analisi.txt"), kit)
+            codice = p.wait(timeout=3 * 3600)
+        except Exception as ex:   # noqa: BLE001
+            dove_scrivo["kit_rifiuti"] = {"errore": f"{type(ex).__name__}: {str(ex)[:300]}"}
+            scrivi_json("dimezza.json", out)
+            continue
+        copia_risultati(risultati, u, t0, codice)
+        k = {"codice": codice, "secondi": round(time.time() - t0)}
+        try:
+            k["abbandoni"] = dz.abbandoni_csv(open(os.path.join(risultati, "eventi.csv"), encoding="utf-8").read(), da_dt)
+        except OSError as ex:
+            k["abbandoni"], k["nota"] = [], f"eventi.csv non letto: {ex}"
+        k["piu_vicino_all_atteso"] = dz.piu_vicino(k["abbandoni"], da_dt.date(), dove_scrivo.get("atteso"))
+        dove_scrivo["kit_rifiuti"] = k
+        av(f"dimezza {etichetta}: Kit_Rifiuti finito ({codice}) in {k['secondi']} s, {len(k['abbandoni'])} abbandoni")
+        scrivi_json("dimezza.json", out)
+    out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
+    scrivi_json("dimezza.json", out)
 
 
 t_fine = time.time() + DURATA
@@ -1280,6 +1628,12 @@ try:
     parti_misure()   # 0.10.0
 except Exception as ex:   # noqa: BLE001
     av(f"misure: {type(ex).__name__}: {str(ex)[:300]}")
+for _nome, _segno, _lavoro in (("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
+                               ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza)):   # 0.11.0
+    try:
+        parti_filo(_nome, _segno, _lavoro)
+    except Exception as ex:   # noqa: BLE001
+        av(f"{_nome}: {type(ex).__name__}: {str(ex)[:300]}")
 errori = 0
 analisi_lunghe = []    # (processo, risultati, uscita, partenza) in corso
 da_scaricare = []
@@ -1335,7 +1689,8 @@ while time.time() < t_fine:
             continue
         av(f"prova {r['id']} ({r.get('kit') or '-'})")
         try:
-            ok, es, foto = prova(r)
+            with SDK:   # 0.11.0: il dimezzamento usa la libreria nel suo filo
+                ok, es, foto = prova(r)
         except Exception as ex:   # noqa: BLE001
             ok, es, foto = False, {"errore": f"{type(ex).__name__}: {str(ex)[:300]}"}, None
             av(traceback.format_exc()[-1500:])
@@ -1346,6 +1701,6 @@ while time.time() < t_fine:
         if errori in (1, 10, 100):
             av(f"pagina non raggiunta ({errori}): {type(ex).__name__}: {str(ex)[:200]}")
         time.sleep(min(300, 15 * errori))
-for t in MISURE_VIVE:   # 0.10.0: le misure finiscono prima di chiudere (al massimo un'ora in piu')
-    t.join(3600)
+for t in MISURE_VIVE:   # 0.10.0: le misure (0.11.0: e il dimezzamento) finiscono prima di chiudere (al massimo 3 ore in piu')
+    t.join(3 * 3600)
 av("fatto")
