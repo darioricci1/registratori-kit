@@ -2,7 +2,11 @@
 sacchi di gpu2 non scrive piu' ~\\kr_gpu\\vivo.txt da 20 minuti), prepara un Python suo (~\\kr_vlm, uv), scarica
 Qwen3-VL (Apache 2.0) e fa giudicare le carte di Scorri (carte/): prima 8B in 4 bit, poi 4B in 4 bit, poi 2B.
 Risultati su Drive in vlm_pcN.zip ogni 30 minuti e alla fine.
-version: 0.2.1 (10/11/2026, sera) - torch 2.6 (transformers 5 non parte con la 2.5: «PyTorch >= 2.6 is required»).
+version: 0.3.0 (11/11/2026) - solo il 4B in 4 bit, con la domanda nuova (v2, v2d col primo piano del riquadro) e con
+quella del 10/11 (v1) sulle stesse 173 carte: giudizi_Qwen3-VL-4B-Instruct_<v>.json. Niente 2B (risponde fuori elenco)
+e niente 8B (sul si'/no come il 4B, a tre volte il tempo). Prima le domande nuove, cosi' se si ferma a meta' il
+confronto con la v1 del 10/11 c'e' gia'.
+0.2.1 (10/11/2026, sera) - torch 2.6 (transformers 5 non parte con la 2.5: «PyTorch >= 2.6 is required»).
 0.2.0 (10/11/2026, sera) - non aspetta piu' la scheda libera: la RTX 3070 da 8 GB la divide con Kit_Rifiuti
 (RF-DETR in DirectML usa poco); parte dal 4B in 4 bit (circa 3 GB), poi l'8B; se manca uv lo scarica da GitHub.
 Stamattina la 0.1.0 aspettava una scheda che non si liberava mai (Dario: «perche' non partiamo da qwen3-vl?»)."""
@@ -27,7 +31,8 @@ PY = os.path.join(G, "venv", "Scripts", "python.exe")
 UV = os.path.join(CASA, "kr_gpu", "uv.exe")
 FINE = [False]
 NASCOSTO = 0x08000000 if os.name == "nt" else 0
-MODELLI = [("Qwen/Qwen3-VL-4B-Instruct", "nf4"), ("Qwen/Qwen3-VL-8B-Instruct", "nf4"), ("Qwen/Qwen3-VL-2B-Instruct", "bf16")]
+PROVE = [("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v2"), ("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v2d"),
+         ("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v1")]
 
 
 def scrivi(t):
@@ -112,10 +117,10 @@ try:
     if not os.path.isdir(carte):
         with zipfile.ZipFile(os.path.join(C, "carte.zip")) as zz:
             zz.extractall(carte)
-    for nome, modo in MODELLI:
-        corto = nome.split("/")[-1]
-        esegui([PY, os.path.join(C, "vlm_giudica.py"), carte, os.path.join(U, f"giudizi_{corto}.json"), nome, modo],
-               f"giudica_{corto}.txt", env)
+    for nome, modo, domanda in PROVE:
+        corto = nome.split("/")[-1] + "_" + domanda
+        esegui([PY, os.path.join(C, "vlm_giudica.py"), carte, os.path.join(U, f"giudizi_{corto}.json"), nome, modo,
+                "--prompt", domanda], f"giudica_{corto}.txt", env)
         manda()
     scrivi("fatto")
 except BaseException:   # noqa: BLE001
