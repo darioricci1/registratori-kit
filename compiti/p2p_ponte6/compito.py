@@ -31,6 +31,7 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.9.7 (11/11/2026): i pezzi di ogni canale in una cartella sua (la CH2 copriva ancora la CH1 nei pezzi).
 version: 0.9.6 (10/11/2026): nella prova dei video lunghi la CH1 non si chiama più come la CH2 (il file della CH2 la copriva).
 0.9.5 (10/11/2026): l'anagrafica porta anche la colonna BATT (come è alimentato il kit: solare, 220 V, batteria).
 0.9.4 (10/11/2026): la prova dei video lunghi scarica CH1, CH2, CH3 (canali 0, 1, 2): prima prendeva CH2, CH3 e la CH4
@@ -538,7 +539,11 @@ def scarico_lungo(p):
                         voce[f"ch{c}"] = "canale assente"
                         continue
                     t1 = time.time()
-                    res = reg.scarica(c, per[c], t, sec, cart, ffmpeg=ffmpeg())
+                    # 0.9.7: una cartella per canale: scarica chiama il pezzo nome_per_kit_rifiuti(inizio, c) col canale da 0,
+                    # quindi CH1 e CH2 avevano lo stesso nome e la CH2 copriva la CH1 gia' nei pezzi (prova del KIT581, 11/11)
+                    cart_c = os.path.join(cart, f"ch{c}")
+                    os.makedirs(cart_c, exist_ok=True)
+                    res = reg.scarica(c, per[c], t, sec, cart_c, ffmpeg=ffmpeg())
                     voce[f"ch{c}"] = {k: res.get(k) for k in ("mb", "velocita", "fotogrammi", "fps", "errore", "primo", "ultimo")}
                     voce[f"ch{c}"]["secondi_scarico"] = round(time.time() - t1, 1)
                     if res.get("file", "").endswith(".mp4"):
