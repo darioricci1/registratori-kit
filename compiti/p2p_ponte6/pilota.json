@@ -1,0 +1,1295 @@
+{
+ "pc": "COMPUTERONE",
+ "preparato_il": "2026-11-12 09:16",
+ "prepara": "0.1.0",
+ "seme": "pilota-2026-11-12",
+ "come": "pilota.py: per ogni ora (a) dimezza.py sui campioni da 3 s e (b) una miniatura al minuto con il confronto della zona a piena risoluzione col riferimento dei minuti prima, candidato se il cambio resta 5 minuti; per ogni candidato prima, dopo, ritaglio, serie dei minuti e miniature ogni 2 s da 3 minuti prima a 1 dopo. Un processo a parte per ora. Positive e negative non si sommano.",
+ "negative_quante": 20,
+ "ore": [
+  {
+   "evento": "d642962e50",
+   "kit": 576,
+   "notte": false,
+   "uid": "E88YYPMXMKTKK52K111A",
+   "canale": 0,
+   "inizio": "2026-11-03 08:32:00",
+   "atteso": "2026-11-03 09:18:28",
+   "atteso_s": 2788,
+   "box_dario": [
+    0.4615,
+    0.1388,
+    0.0259,
+    0.0349
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.86,
+      0.125,
+      0.14,
+      0.175
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "misura": "2688x1520",
+   "clip": "09:17:21",
+   "come_atteso": "clip delle 09:17:21 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos01_kit576",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "ae0d537572",
+   "kit": 445,
+   "notte": false,
+   "uid": "J8GJEC67MTDV7SU9111A",
+   "canale": 2,
+   "inizio": "2026-11-04 07:21:02",
+   "atteso": "2026-11-04 07:39:12",
+   "atteso_s": 1090,
+   "box_dario": [
+    0.1938,
+    0.488,
+    0.0373,
+    0.0808
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.33,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "misura": "2688x1520",
+   "clip": "07:38:24",
+   "come_atteso": "clip delle 07:38:24 + riquadro d'abbandono di Dario sulla telecamera 3",
+   "nome": "pos02_kit445",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "1d90860197",
+   "kit": 589,
+   "notte": false,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-11-08 06:40:05",
+   "atteso": "2026-11-08 07:24:19",
+   "atteso_s": 2654,
+   "box_dario": [
+    0.3693,
+    0.172,
+    0.0239,
+    0.0451
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "misura": "2688x1520",
+   "clip": "07:23:43",
+   "come_atteso": "clip delle 07:23:43 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos03_kit589",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "600c23e854",
+   "kit": 657,
+   "notte": false,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-10-30 15:35:56",
+   "atteso": "2026-10-30 15:43:30",
+   "atteso_s": 454,
+   "box_dario": [
+    0.5253,
+    0.2357,
+    0.0264,
+    0.0749
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "misura": "2688x1520",
+   "clip": "15:43:09",
+   "come_atteso": "clip delle 15:43:09 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos04_kit657",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "0b3f4c6f0c",
+   "kit": 548,
+   "notte": false,
+   "uid": "UD9M65XRERFATJHJ111A",
+   "canale": 0,
+   "inizio": "2026-10-31 12:28:25",
+   "atteso": "2026-10-31 13:11:07",
+   "atteso_s": 2562,
+   "box_dario": [
+    0.1911,
+    0.2237,
+    0.0471,
+    0.1583
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.022,
+      0.0,
+      0.546,
+      0.526
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "misura": "2688x1520",
+   "clip": "13:10:27",
+   "come_atteso": "clip delle 13:10:27 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos05_kit548",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "acf6e07182",
+   "kit": 511,
+   "notte": false,
+   "uid": "8443NPKW5BYJB4K4111A",
+   "canale": 1,
+   "inizio": "2026-10-24 16:04:47",
+   "atteso": "2026-10-24 16:49:47",
+   "atteso_s": 2700,
+   "box_dario": [
+    0.747,
+    0.2185,
+    0.0195,
+    0.0522
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.141,
+      0.0,
+      0.818,
+      0.476
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "misura": "2688x1520",
+   "clip": "16:47:31",
+   "come_atteso": "clip delle 16:47:31 + riquadro d'abbandono di Dario sulla telecamera 2",
+   "nome": "pos06_kit511",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "fa425cbbda",
+   "kit": 561,
+   "notte": true,
+   "uid": "A4BJY9PUN5E9X3SV111A",
+   "canale": 0,
+   "inizio": "2026-11-02 20:05:29",
+   "atteso": "2026-11-02 20:34:00",
+   "atteso_s": 1711,
+   "box_dario": [
+    0.7124,
+    0.163,
+    0.0432,
+    0.1176
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.006,
+      0.053,
+      0.994,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "misura": "2688x1520",
+   "clip": "20:33:28",
+   "come_atteso": "clip delle 20:33:28 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos07_kit561",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "52c1beef84",
+   "kit": 461,
+   "notte": false,
+   "uid": "RC8WNZZ2HAXVGBSR111A",
+   "canale": 0,
+   "inizio": "2026-11-02 08:10:34",
+   "atteso": "2026-11-02 08:26:38",
+   "atteso_s": 964,
+   "box_dario": [
+    0.4432,
+    0.7812,
+    0.0833,
+    0.134
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.38,
+      0.1,
+      0.18,
+      0.22
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "misura": "1920x1080",
+   "clip": "08:25:29",
+   "come_atteso": "clip delle 08:25:29 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos08_kit461",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "8756f17538",
+   "kit": 423,
+   "notte": false,
+   "uid": "NM1HACFCGHXHMB4L111A",
+   "canale": 0,
+   "inizio": "2026-11-01 06:50:18",
+   "atteso": "2026-11-01 07:03:45",
+   "atteso_s": 807,
+   "box_dario": [
+    0.5569,
+    0.2254,
+    0.0387,
+    0.111
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.065,
+      0.0,
+      0.935,
+      0.473
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "misura": "2688x1520",
+   "clip": "07:02:58",
+   "come_atteso": "clip delle 07:02:58 + riquadro d'abbandono di Dario sulla telecamera 1",
+   "nome": "pos09_kit423",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "f02952f647",
+   "kit": 360,
+   "notte": true,
+   "uid": "EMU9EM25WM7KH123111A",
+   "canale": 2,
+   "inizio": "2026-11-04 22:55:56",
+   "atteso": "2026-11-04 23:12:28",
+   "atteso_s": 992,
+   "box_dario": [
+    0.688,
+    0.2466,
+    0.0886,
+    0.1532
+   ],
+   "zona": {
+    "riquadri": [
+     [
+      0.13,
+      0.25,
+      0.18,
+      0.33
+     ],
+     [
+      0.64,
+      0.24,
+      0.14,
+      0.15
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "misura": "2688x1520",
+   "clip": "23:12:11",
+   "come_atteso": "clip delle 23:12:11 + riquadro d'abbandono di Dario sulla telecamera 3",
+   "nome": "pos10_kit360",
+   "tipo": "positiva"
+  },
+  {
+   "kit": 374,
+   "uid": "YWFTBDYJV9DAV127111A",
+   "canale": 3,
+   "inizio": "2026-11-05 04:38:00",
+   "n": 0,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.427,
+      0.488,
+      0.235,
+      0.367
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg01_kit374",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 215,
+   "uid": "XDVM4USNFGU412D6111A",
+   "canale": 1,
+   "inizio": "2026-11-06 16:05:00",
+   "n": 1,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.58,
+      0.2,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg02_kit215",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 589,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-11-10 22:49:00",
+   "n": 2,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg03_kit589",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 323,
+   "uid": "6YZ67FHKPA5MYSJL111A",
+   "canale": 0,
+   "inizio": "2026-11-10 09:45:00",
+   "n": 3,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.342,
+      0.12,
+      0.586,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg04_kit323",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 324,
+   "uid": "EZAG3277UXKFM4W7111A",
+   "canale": 0,
+   "inizio": "2026-11-05 12:08:00",
+   "n": 5,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.5,
+      0.0,
+      0.42,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg05_kit324",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 369,
+   "uid": "66G43XTTBMNAVS7L111A",
+   "canale": 0,
+   "inizio": "2026-11-09 20:51:00",
+   "n": 6,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.03,
+      0.38,
+      0.8
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg06_kit369",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 619,
+   "uid": "ZLCJCWMPZHBDZKBG111A",
+   "canale": 2,
+   "inizio": "2026-11-09 05:57:00",
+   "n": 8,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.003,
+      0.032,
+      0.714,
+      0.434
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg07_kit619",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 581,
+   "uid": "HG7F76GY3TTXNYZC111A",
+   "canale": 1,
+   "inizio": "2026-11-07 21:10:00",
+   "n": 10,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.07,
+      0.17,
+      0.15
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg08_kit581",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 423,
+   "uid": "NM1HACFCGHXHMB4L111A",
+   "canale": 2,
+   "inizio": "2026-11-07 03:53:00",
+   "n": 12,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.224,
+      0.084,
+      0.423,
+      0.299
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg09_kit423",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 313,
+   "uid": "71AYBC1XRXB49ZKP111A",
+   "canale": 2,
+   "inizio": "2026-11-06 18:37:00",
+   "n": 13,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.045,
+      0.0,
+      0.53,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg10_kit313",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 666,
+   "uid": "WHZZJCNKEJJSTVMM111A",
+   "canale": 0,
+   "inizio": "2026-11-09 23:42:00",
+   "n": 14,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.17,
+      0.0,
+      0.36,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg11_kit666",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 296,
+   "uid": "PL2C38934T922T1A111A",
+   "canale": 3,
+   "inizio": "2026-11-06 06:11:00",
+   "n": 15,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.28,
+      0.3,
+      0.7,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg12_kit296",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 372,
+   "uid": "2R47N7LXSMFF7BZG111A",
+   "canale": 0,
+   "inizio": "2026-11-07 01:53:00",
+   "n": 16,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.85,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg13_kit372",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 383,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 0,
+   "inizio": "2026-11-05 07:28:00",
+   "n": 17,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.098,
+      0.465,
+      0.708
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg14_kit383",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 583,
+   "uid": "4GFUGHHA1WE3A94H111A",
+   "canale": 1,
+   "inizio": "2026-11-06 00:37:00",
+   "n": 18,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.48,
+      0.22,
+      0.36,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg15_kit583",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 331,
+   "uid": "F9PAE17A3EBM8GLG111A",
+   "canale": 0,
+   "inizio": "2026-11-09 13:32:00",
+   "n": 19,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.0,
+      0.88,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg16_kit331",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 556,
+   "uid": "WZMHADP3H2D1PDVB111A",
+   "canale": 0,
+   "inizio": "2026-11-05 18:19:00",
+   "n": 21,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.45,
+      0.03,
+      0.22,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg17_kit556",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 242,
+   "uid": "RU4HDF8JE7V5NVYW111A",
+   "canale": 2,
+   "inizio": "2026-11-05 21:36:00",
+   "n": 22,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.0,
+      0.4,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg18_kit242",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 279,
+   "uid": "9U84G5EWJUACNLBV111A",
+   "canale": 2,
+   "inizio": "2026-11-06 10:30:00",
+   "n": 23,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.065,
+      0.0,
+      0.37,
+      0.412
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg19_kit279",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 547,
+   "uid": "FR98EMMJJRKA45PC111A",
+   "canale": 0,
+   "inizio": "2026-11-07 00:59:00",
+   "n": 24,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.065,
+      0.48,
+      0.585
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg20_kit547",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 321,
+   "uid": "U6NHL2FYZJTEVA5L111A",
+   "canale": 0,
+   "inizio": "2026-11-09 12:24:00",
+   "n": 25,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.95,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg21_kit321",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 371,
+   "uid": "TU28FTLAAFZCRBUE111A",
+   "canale": 1,
+   "inizio": "2026-11-07 01:11:00",
+   "n": 26,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.095,
+      0.35,
+      0.7,
+      0.65
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg22_kit371",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 526,
+   "uid": "Y7DFLU2TR6J7EK1U111A",
+   "canale": 0,
+   "inizio": "2026-11-07 23:15:00",
+   "n": 28,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.059,
+      0.044,
+      0.671,
+      0.389
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg23_kit526",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 400,
+   "uid": "YE4HZ8SM52F97HY5111A",
+   "canale": 1,
+   "inizio": "2026-11-07 03:06:00",
+   "n": 30,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.43,
+      0.02,
+      0.27,
+      0.08
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg24_kit400",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 376,
+   "uid": "KHX9EYKLVUU85WKV111A",
+   "canale": 2,
+   "inizio": "2026-11-11 15:31:00",
+   "n": 31,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.45,
+      0.05,
+      0.25,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg25_kit376",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 566,
+   "uid": "BSSAJLD1WHWT3FGX111A",
+   "canale": 3,
+   "inizio": "2026-11-07 22:04:00",
+   "n": 32,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.42,
+      0.68
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg26_kit566",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 636,
+   "uid": "24P9JR3PNNCYN472111A",
+   "canale": 1,
+   "inizio": "2026-11-07 11:48:00",
+   "n": 33,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.0,
+      0.62,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg27_kit636",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 418,
+   "uid": "H6K3H5CJKZD7KNM9111A",
+   "canale": 0,
+   "inizio": "2026-11-10 04:53:00",
+   "n": 34,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.28,
+      0.22,
+      0.25,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg28_kit418",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 632,
+   "uid": "3KPRNMDNFBP2HNLT111A",
+   "canale": 2,
+   "inizio": "2026-11-05 13:01:00",
+   "n": 35,
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.0,
+      0.4,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg29_kit632",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 657,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-11-11 00:45:00",
+   "n": 36,
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg30_kit657",
+   "tipo": "negativa",
+   "riserva": true
+  }
+ ],
+ "scelta": {
+  "positive_possibili": 16,
+  "positive_notte_possibili": 2,
+  "positive_scartate": {
+   "0023046aa9": "troppo vecchia: il registratore registra dal 2026-10-25 18:02",
+   "0182a0f9d3": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "06e33ea031": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "08794d323b": "troppo vecchia: il registratore registra dal 2026-10-25 16:02",
+   "0a7692d576": "kit nella parte cieca",
+   "0b24f89f86": "kit nella parte cieca",
+   "0c185836f3": "troppo vecchia: il registratore registra dal 2026-10-23 18:00",
+   "0ed6ec2017": "kit nella parte cieca",
+   "11aa364679": "troppo vecchia: il registratore registra dal 2026-10-24 12:04",
+   "1246d924c6": "kit nella parte cieca",
+   "17e8173641": "nessun riquadro d'abbandono di Dario",
+   "181e59c5b4": "kit nella parte cieca",
+   "195f12a3a8": "kit nella parte cieca",
+   "1ca106f5a9": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "1d3f1819a0": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "20c368b4d2": "kit nella parte cieca",
+   "21e2dfd1eb": "troppo vecchia: il registratore registra dal 2026-10-25 09:31",
+   "225d947f2e": "kit nella parte cieca",
+   "22bac6258d": "kit nella parte cieca",
+   "2425fb07e3": "troppo vecchia: il registratore registra dal 2026-10-14 00:00",
+   "27bbcd4170": "kit nella parte cieca",
+   "28d18dfcd7": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "2aab7a5d9e": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "2cbd2bee59": "kit nella parte cieca",
+   "32284f3de6": "kit nella parte cieca",
+   "3430e82947": "kit nella parte cieca",
+   "356b4fcd1f": "kit nella parte cieca",
+   "3829fbf6a4": "troppo vecchia: il registratore registra dal 2026-10-22 21:00",
+   "3b052477bf": "nessun riquadro d'abbandono di Dario",
+   "3d64a9e493": "kit nella parte cieca",
+   "3f44595c32": "troppo vecchia: il registratore registra dal 2026-10-27 09:30",
+   "41053f20fe": "troppo vecchia: il registratore registra dal 2026-10-28 15:30",
+   "450ad2d7a6": "kit nella parte cieca",
+   "4b8172596a": "kit nella parte cieca",
+   "4c93944bd2": "il registratore non ha risposto al giro di oggi",
+   "4ee65f9d37": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "50cc4f10b3": "kit nella parte cieca",
+   "51190eca44": "il registratore non ha risposto al giro di oggi",
+   "512c706d43": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "51404f077f": "troppo vecchia: il registratore registra dal 2026-10-27 00:30",
+   "51bc5356d6": "nessun riquadro d'abbandono di Dario",
+   "51c72bd623": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "551e478dbf": "troppo vecchia: il registratore registra dal 2026-10-24 21:00",
+   "590d976b6e": "kit nella parte cieca",
+   "59bad49ecc": "troppo vecchia: il registratore registra dal 2026-10-25 04:00",
+   "5bcc4dc44b": "troppo vecchia: il registratore registra dal 2026-10-25 17:32",
+   "60994fad1f": "kit nella parte cieca",
+   "60f5182bf8": "kit nella parte cieca",
+   "6248727ba0": "kit nella parte cieca",
+   "62c95b2b1f": "il registratore non ha risposto al giro di oggi",
+   "658e7fac20": "kit nella parte cieca",
+   "6888ce9ee6": "il registratore non ha risposto al giro di oggi",
+   "69636c9dc8": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "69b4a183d3": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "69fa055124": "troppo vecchia: il registratore registra dal 2026-10-25 01:30",
+   "6a1756d260": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "6ba5dc9f5e": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "6bf47bf042": "kit nella parte cieca",
+   "6ce697c39d": "kit nella parte cieca",
+   "6f42163ca4": "troppo vecchia: il registratore registra dal 2026-10-25 13:00",
+   "6f4ff1877b": "kit nella parte cieca",
+   "70640b2a6e": "kit nella parte cieca",
+   "71ff115c05": "troppo vecchia: il registratore registra dal 2026-10-25 14:02",
+   "7270cabf68": "kit nella parte cieca",
+   "7383e580c2": "il registratore non ha risposto al giro di oggi",
+   "73f73f9096": "troppo vecchia: il registratore registra dal 2026-10-25 12:33",
+   "7496c3c899": "kit nella parte cieca",
+   "765629f987": "kit nella parte cieca",
+   "7688df3e30": "troppo vecchia: il registratore registra dal 2026-10-28 15:30",
+   "77fff6a345": "nessun riquadro d'abbandono di Dario",
+   "78bcffcdea": "nessun riquadro d'abbandono di Dario",
+   "78bea7ab34": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "7b56bc2ce8": "troppo vecchia: il registratore registra dal 2026-10-24 09:00",
+   "7bd327ea19": "kit nella parte cieca",
+   "7c053ea696": "nessun riquadro d'abbandono di Dario",
+   "7d0e86743e": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "7f9dfaa688": "troppo vecchia: il registratore registra dal 2026-10-25 09:31",
+   "806aea96c1": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "8086941d3a": "kit nella parte cieca",
+   "8343da8019": "kit nella parte cieca",
+   "837aef1fb5": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "83d4802503": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "841f914445": "kit nella parte cieca",
+   "842de92bbc": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "870c71a74b": "il registratore non ha risposto al giro di oggi",
+   "87bfa29f8b": "kit nella parte cieca",
+   "88ece4aa5d": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "8968639015": "kit nella parte cieca",
+   "8a0b8c5547": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "8a13ba77f2": "kit nella parte cieca",
+   "8e6d1df48b": "kit nella parte cieca",
+   "8f98cdbd49": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "92cdfc44f0": "troppo vecchia: il registratore registra dal 2026-10-30 11:02",
+   "963c356a79": "nessun riquadro d'abbandono di Dario",
+   "9711e7ff33": "kit nella parte cieca",
+   "9af619220d": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "9c7babecac": "il registratore non ha risposto al giro di oggi",
+   "9f01f9adae": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "9f230c9aa3": "kit nella parte cieca",
+   "9fa45b03aa": "troppo vecchia: il registratore registra dal 2026-10-14 00:00",
+   "a0c37196d3": "troppo vecchia: il registratore registra dal 2026-10-24 17:36",
+   "a4ef297b97": "kit nella parte cieca",
+   "a8ae225391": "kit nella parte cieca",
+   "aa9eba5953": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "aaa9f30fcb": "troppo vecchia: il registratore registra dal 2026-10-30 03:00",
+   "aab315cb6a": "kit nella parte cieca",
+   "adee35f829": "troppo vecchia: il registratore registra dal 2026-10-29 13:00",
+   "aecd510b5c": "kit nella parte cieca",
+   "b05b87bee9": "troppo vecchia: il registratore registra dal 2026-10-25 09:31",
+   "b2b9c09cd1": "kit nella parte cieca",
+   "b493e424ec": "kit nella parte cieca",
+   "b58e170ad3": "troppo vecchia: il registratore registra dal 2026-10-17 13:00",
+   "b59386b640": "kit nella parte cieca",
+   "b5949381ba": "nessun riquadro d'abbandono di Dario",
+   "b5d770d763": "kit nella parte cieca",
+   "b6dd7a7fb8": "il registratore non ha risposto al giro di oggi",
+   "b81cc1fda0": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "bbc216ade0": "kit nella parte cieca",
+   "bd10833610": "kit nella parte cieca",
+   "bdf79cbab8": "troppo vecchia: il registratore registra dal 2026-10-25 08:32",
+   "bef154d167": "troppo vecchia: il registratore registra dal 2026-10-25 13:00",
+   "bfe97acc56": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "c0291fe124": "troppo vecchia: il registratore registra dal 2026-10-17 18:00",
+   "c26d6c2d9d": "troppo vecchia: il registratore registra dal 2026-10-30 03:00",
+   "c382ac878b": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "c4f4dab553": "kit nella parte cieca",
+   "c75c1b979b": "kit nella parte cieca",
+   "c7b54dcb79": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "c89e58c051": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "caf69566b6": "kit nella parte cieca",
+   "cb2c5c439c": "troppo vecchia: il registratore registra dal 2026-10-24 11:00",
+   "cb5dde70a5": "kit nella parte cieca",
+   "ccba241d79": "nessun riquadro d'abbandono di Dario",
+   "cd84525fdc": "kit nella parte cieca",
+   "cdbdd7e3f3": "troppo vecchia: il registratore registra dal 2026-10-25 07:03",
+   "d1a582b8ed": "troppo vecchia: il registratore registra dal 2026-10-24 12:30",
+   "d2373bb6f1": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "d4ac7d6e9f": "troppo vecchia: il registratore registra dal 2026-10-22 21:00",
+   "d4cd3e5b77": "troppo vecchia: il registratore registra dal 2026-10-25 04:00",
+   "d664628026": "kit nella parte cieca",
+   "d850ca8814": "kit nella parte cieca",
+   "d8915e3cbd": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "d8d11aa0c8": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "dcd05d21fb": "troppo vecchia: il registratore registra dal 2026-10-25 13:00",
+   "dd125d880a": "kit nella parte cieca",
+   "dd42bb2408": "kit nella parte cieca",
+   "dd893c78e0": "nessun riquadro d'abbandono di Dario",
+   "def4285362": "kit nella parte cieca",
+   "e19326c429": "troppo vecchia: il registratore registra dal 2026-10-22 05:00",
+   "e2ea4410ce": "troppo vecchia: il registratore registra dal 2026-10-06 10:00",
+   "e74a5e3628": "kit nella parte cieca",
+   "e86969d46f": "il registratore non ha risposto al giro di oggi",
+   "ea9ffdc645": "il registratore non ha risposto al giro di oggi",
+   "eb523af511": "il registratore non ha risposto al giro di oggi",
+   "eb5e8b0926": "troppo vecchia: il registratore registra dal 2026-10-25 13:00",
+   "ec83c96893": "kit nella parte cieca",
+   "ecb418e466": "il registratore non ha risposto al giro di oggi",
+   "ecfed601a7": "kit nella parte cieca",
+   "ed474d2a77": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "ed8e678f02": "kit nella parte cieca",
+   "edd5435247": "troppo vecchia: il registratore registra dal 2026-10-28 15:30",
+   "eee5f08827": "troppo vecchia: il registratore registra dal 2026-10-27 01:30",
+   "effb3971b8": "troppo vecchia: il registratore registra dal 2026-10-29 06:02",
+   "f3cf208be6": "kit nella parte cieca",
+   "f765e803de": "nessun riquadro d'abbandono di Dario",
+   "f844ca47da": "troppo vecchia: il registratore registra dal 2026-10-23 18:00",
+   "f9c58a086d": "kit nella parte cieca",
+   "fccc2a2f98": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "fe1c97c726": "kit nella parte cieca",
+   "fff2013ed9": "troppo vecchia: il registratore registra dal 2026-10-24 22:00"
+  },
+  "negative_estratte": 60,
+  "negative_scartate_per_evento": [
+   {
+    "kit": 397,
+    "uid": "HJ12NFEVGGRM6E1F111A",
+    "canale": 2,
+    "inizio": "2026-11-05 20:58:00",
+    "n": 72,
+    "notte": true,
+    "perche": "evento segnalato alle 2026-11-05 21:05:01"
+   }
+  ],
+  "negative_non_disponibili": [
+   {
+    "kit": 233,
+    "uid": "VEH5GRDEBCHVWWA7111A",
+    "canale": 1,
+    "inizio": "2026-11-11 11:33:00",
+    "n": 9,
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1359 minuti registrati"
+   },
+   {
+    "kit": 506,
+    "uid": "GBRA7YH46G7XW5RL111A",
+    "canale": 2,
+    "inizio": "2026-11-07 16:48:00",
+    "n": 11,
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 843 minuti registrati"
+   },
+   {
+    "kit": 440,
+    "uid": "C733PS1EZ1CAP96Z111A",
+    "canale": 0,
+    "inizio": "2026-11-10 02:05:00",
+    "n": 20,
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 1000 minuti registrati"
+   },
+   {
+    "kit": 653,
+    "uid": "92MNY3KY1DU5MN7W111A",
+    "canale": 0,
+    "inizio": "2026-11-05 10:18:00",
+    "n": 43,
+    "notte": false,
+    "perche": "il 2026-11-05 il canale ha 122 minuti registrati"
+   },
+   {
+    "kit": 440,
+    "uid": "C733PS1EZ1CAP96Z111A",
+    "canale": 0,
+    "inizio": "2026-11-10 09:04:00",
+    "n": 73,
+    "notte": false,
+    "perche": "il 2026-11-10 il canale ha 1000 minuti registrati"
+   },
+   {
+    "kit": 560,
+    "uid": "FLPCABR8BVA3FM43111A",
+    "canale": 2,
+    "inizio": "2026-11-11 02:00:00",
+    "n": 74,
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1296 minuti registrati"
+   }
+  ],
+  "kit_nel_pool_negative": 139,
+  "regola_scarto": "evento del sito o del NAS dello stesso kit fra 15 min prima e 5 min dopo l'ora (Dario 12/11)",
+  "elenco_nas_letto": 27717
+ }
+}

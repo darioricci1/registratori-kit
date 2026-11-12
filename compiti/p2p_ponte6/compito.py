@@ -31,7 +31,18 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.13.0 (11/11/2026, sera): allunga.json, una volta sola sul COMPUTERONE (segno allunga_fatto.txt in uscita), in un
+version: 0.14.0 (12/11/2026): pilota.json, una volta sola sul COMPUTERONE (segno pilota_fatto.txt in uscita), in un filo
+  suo: la prova pilota del registratore (backlog-ridotto-2026-11-11.md di kit-rifiuti-programma, intervento 5; Dario,
+  12/11: «l'obiettivo e' il programma che lavora da solo»). 10 ore positive (un abbandono noto in un punto sorteggiato
+  dell'ora) e 20 ore-camera negative sorteggiate senza guardare gli eventi (piu' 10 riserve), preparate da
+  prepara_pilota.py. Per ogni ora, in un processo suo (pilota_lavoro.py, come allunga_lavoro.py) con un tempo massimo
+  e ogni chiamata col suo: (a) dimezza.py sui campioni da 3 s, (b) una miniatura al minuto con il confronto della
+  zona dei cassonetti a piena risoluzione col riferimento dei minuti prima, candidato se il cambio resta 5 minuti; per
+  ogni candidato il momento a 2 s, le miniature ogni 2 s da 3 minuti prima a 1 dopo, prima/dopo/ritaglio/serie
+  (pilota.py 0.1.0, prove in prova_pilota.py) -> uscita/pilota.json (MB, chiamate, secondi per metodo, per ora, per
+  kit, in tutto) e uscita/pilota/<ora>/. Le miniature grezze restano in ~/kr_lavori/pilota. Un compito ripreso non
+  rifa' le ore gia' finite.
+0.13.0 (11/11/2026, sera): allunga.json, una volta sola sul COMPUTERONE (segno allunga_fatto.txt in uscita), in un
   filo suo (Dario in Guarda: «video tagliato troppo presto»; decisione-p2p-2026-11-11.md: il P2P arricchisce le clip):
   per ogni evento con la clip tagliata o sospetta, i secondi prima e dopo la clip (60 e 120 di difetto) e i buchi delle
   telecamere piu' corte, canale per canale, dal registratore in P2P (allunga.py 0.1.0, prove in prova_allunga.py).
@@ -97,7 +108,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.13.0"
+VERSIONE = "p2p_ponte 0.14.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
@@ -1774,6 +1785,77 @@ def lavoro_allunga(cfg):
     al.lavoro(cfg, lancia, lambda o: scrivi_json("allunga.json", dict(o, pc=PC, versione=VERSIONE)), av)
 
 
+
+# ------------------------------------------------------------------ 0.14.0: pilota.json (una volta sola)
+def lavoro_pilota(cfg):
+    """pilota.json (0.14.0): pilota.lavoro con un processo a parte per ogni ora (pilota_lavoro.py, lanciato come compito:
+    exe --compito <cartella>), aspettato al massimo minuti_per_ora e poi ucciso; intanto il ponte tiene il lucchetto SDK
+    e non prende prove. Se il processo dice che la libreria non si carica, quell'ora e le dopo si fanno nel filo del
+    ponte. Le ore gia' finite (uscita/pilota/<ora>/ora.json) non si rifanno."""
+    import pilota as pl
+    casa = os.path.expanduser("~")
+    base = os.path.join(casa, "kr_lavori", "pilota", os.path.basename(os.path.normpath(C)))
+    nel_filo = {"si": cfg.get("processo_a_parte") is False}
+    gia = {}
+    for o in cfg.get("ore") or []:
+        try:
+            x = json.load(open(os.path.join(U, "pilota", o["nome"], "ora.json"), encoding="utf-8"))
+            if not x.get("in_corso") and x.get("esito"):
+                gia[o["nome"]] = x
+        except (OSError, ValueError):
+            pass
+
+    def lancia(ora, secondi_max):
+        d = os.path.join(base, ora["nome"])
+        u = os.path.join(U, "pilota", ora["nome"])
+        os.makedirs(os.path.join(d, "uscita"), exist_ok=True)
+        os.makedirs(u, exist_ok=True)
+        risultato = os.path.join(u, "ora.json")
+        if os.path.exists(risultato):
+            os.replace(risultato, risultato + ".prima")
+        if nel_filo["si"]:
+            with SDK:
+                x = pl.lavora_ora(ora, cfg, pl.mezzi_veri(os.path.join(C, "FocusNetSDK"), collega_con, ffmpeg(), ora, u,
+                                                          os.path.join(d, "grezzi"), CIMITERO, NOFIN),
+                                  lambda r: scrivi_json(os.path.join("pilota", ora["nome"], "ora.json"), r), av)
+            return (3 if x.get("bloccato") else 0), x
+        shutil.copy2(os.path.join(C, "compito.py"), os.path.join(d, "ponte.py"))
+        shutil.copy2(os.path.join(C, "pilota_lavoro.py"), os.path.join(d, "compito.py"))
+        with open(os.path.join(d, "ora.json"), "w", encoding="utf-8") as fh:
+            json.dump({"ora": ora, "cfg": {k: v for k, v in cfg.items() if k not in ("ore", "scelta")}, "compito": C,
+                       "uscita": u}, fh, ensure_ascii=False)
+        with SDK:   # la libreria e' del processo dell'ora: il ponte intanto non la usa
+            p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=ambiente_figlio(), stdin=subprocess.DEVNULL,
+                                 stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
+                                 creationflags=0x00004000 | NOFIN)
+            av(f"pilota {ora['nome']}: processo a parte (pid {p.pid})")
+            try:
+                codice = p.wait(timeout=secondi_max)
+            except subprocess.TimeoutExpired:
+                p.kill()
+                try:
+                    p.wait(60)
+                except subprocess.TimeoutExpired:
+                    pass
+                codice = f"fermato dopo {round(secondi_max / 60)} minuti"
+        x = None
+        try:
+            x = json.load(open(risultato, encoding="utf-8"))
+        except (OSError, ValueError):
+            pass
+        for nome in ("avanzamento.txt", "guasto_memoria.txt"):
+            f = os.path.join(d, "uscita", nome)
+            if os.path.exists(f) and 0 < os.path.getsize(f) < 2e6:
+                shutil.copy2(f, os.path.join(u, "processo_" + nome))
+        av(f"pilota {ora['nome']}: processo finito ({codice})")
+        if x and str(x.get("esito", "")).startswith("libreria non caricata"):
+            av("pilota: la libreria non si carica nel processo a parte, le ore da qui nel filo del ponte")
+            nel_filo["si"] = True
+            return lancia(ora, secondi_max)
+        return codice, x
+
+    pl.lavoro(cfg, lancia, lambda o: scrivi_json("pilota.json", dict(o, pc=PC, versione=VERSIONE)), av, gia=gia)
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
@@ -1855,7 +1937,8 @@ except Exception as ex:   # noqa: BLE001
 for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_extra.json", "nas_extra_fatto.txt", nas_extra),
                                ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza),   # 0.11.0
                                ("movimento.json", "movimento_fatto.txt", lavoro_movimento),   # 0.12.0
-                               ("allunga.json", "allunga_fatto.txt", lavoro_allunga)):   # 0.13.0
+                               ("allunga.json", "allunga_fatto.txt", lavoro_allunga),   # 0.13.0
+                               ("pilota.json", "pilota_fatto.txt", lavoro_pilota)):   # 0.14.0
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001
