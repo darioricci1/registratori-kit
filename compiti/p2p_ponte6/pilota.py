@@ -26,7 +26,11 @@ Le miniature grezze restano sul PC (cartella di lavoro). Si scrivono sempre MB, 
 per kit e in tutto (Dario: niente tetti di banda, ma i MB sempre scritti); ogni chiamata ha un tempo massimo e ogni ora
 un processo suo che si uccide (pilota_lavoro.py, come allunga_lavoro.py).
 Tutto il lavoro vero (registratore, decodifica, kit_rifiuti) arriva da fuori: prove a tavolino in prova_pilota.py.
-version: 0.1.0 (12/11/2026): prima versione, per il compito p2p_ponte 0.14.0.
+version: 0.2.0 (12/11/2026): cfg["solo_minuti"] per la prova grande (prepara_grande.py, compito p2p_ponte 0.15.0): per
+  ogni ora solo le miniature dei minuti (minuti/ e ora.json, come la pilota), niente candidati, niente metodo (a),
+  niente fitte; la misura del metodo «insieme» si fa a tavolino (b_tavolino.py, misura_b_tavolino.py). In ora.json
+  delle positive anche dentro_zona, altri_noti, fonte, ora_del_kit e resta_giorni.
+0.1.0 (12/11/2026): prima versione, per il compito p2p_ponte 0.14.0.
 """
 import datetime
 import os
@@ -34,7 +38,7 @@ import time
 
 import numpy as np
 
-VERSIONE = "0.1.0"
+VERSIONE = "0.2.0"
 PASSO_S = 60              # una miniatura al minuto
 PRIMA_MIN, DOPO_MIN = 6, 5  # la scansione comincia 6 minuti prima dell'ora (riferimento) e finisce 5 dopo (persistenza)
 RIF_N = 5                 # il riferimento di scena: la mediana dei 5 minuti prima (un'auto di 2 minuti non lo sporca)
@@ -449,6 +453,12 @@ def lavora_ora(ora, cfg, mezzi, scrivi=lambda x: None, av=lambda t: None):
          "inizio_lavoro": time.strftime("%Y-%m-%d %H:%M:%S"), "zona": ora["zona"]}
     if ora["tipo"] == "positiva":
         x.update(atteso=ora.get("atteso"), box_dario=ora.get("box_dario"), evento=ora.get("evento"))
+        for k in ("box_da", "fonte", "dentro_zona", "altri_noti", "ora_del_kit", "resta_giorni"):   # 0.2.0
+            if k in ora:
+                x[k] = ora[k]
+    solo_minuti = bool((cfg or {}).get("solo_minuti"))   # 0.2.0: la prova grande
+    if solo_minuti:
+        x["solo_minuti"] = True
     lav = Lavoro(mezzi, canale, mezzi["grezzi"])
 
     def salva_x():
@@ -484,6 +494,9 @@ def lavora_ora(ora, cfg, mezzi, scrivi=lambda x: None, av=lambda t: None):
         salva_x()
         if arrivate < len(ts) * 0.8:
             x.update(esito=f"miniature arrivate {arrivate} su {len(ts)}: ora non valutabile", valutabile=False)
+            raise _Fine
+        if solo_minuti:   # 0.2.0: il resto si fa a tavolino
+            x.update(esito="fatto", valutabile=True)
             raise _Fine
         t2 = time.time()
         ril = rilevazioni(kr, fot, riq, esc)

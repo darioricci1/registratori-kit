@@ -145,3 +145,20 @@ Con 8 su 10 l'intervallo vero (Wilson, 95%) va da 49% a 94%: non distingue «qua
    degli abbandoni, non solo sui cassonetti.
 3. I falsi che restano sono auto in sosta e foglie: il primo candidato si può passare al rivelatore di veicoli che
    kit_rifiuti ha già (YOLO in ONNX) sulla miniatura, che costa zero chiamate al registratore.
+
+## 6. La prova grande, preparata (12/11/2026 sera, compito 32: pronto, non mandato)
+
+- `compiti/p2p_ponte6/prepara_grande.py` 0.1.0 (prove in `prova_grande.py`, 25 prove) fa `grande.json`, che nel compito
+  diventa `pilota.json` con `"solo_minuti": true`: `pilota.py` 0.2.0 scarica per ogni ora solo le 72 miniature dei
+  minuti, come la pilota (`pilota/<ora>/minuti/`, `ora.json`). Ponte `compito.py` 0.15.0.
+- **Positive: 71 da 40 kit**, non 80 da 40+. Dai 468 eventi con un giudizio sicuro di Claude con riquadro
+  (etichette_claude, etichette_prova, giri di Guarda) ne restano 82 possibili, tutti in 40 kit: 197 sono gia' spariti
+  dal disco dei registratori, 82 sono di kit del cieco, 67 di telecamere senza zona, 40 di kit «EX», 14 di registratori
+  che non rispondono, 4 casi limite. Al massimo 4 ore per kit (23 kit con una, 8 con due, 4 con tre, 5 con quattro):
+  `ora_del_kit = 1` sono le 40 indipendenti. Di notte solo 7 (i giudizi di Claude sono quasi tutti di giorno), fuori
+  zona 2. Nessuna dai giri di Guarda (eventi vecchi o del cieco): 52 da etichette_claude, 19 da etichette_prova.
+- **Negative: 150 + 30 riserve**, una per kit (180 kit), meta' di notte, lontane almeno 2 ore da ogni abbandono o
+  evento noto dello stesso kit (5 scartate).
+- Il disco gira: 24 positive spariscono entro due giorni (`resta_giorni`). Prima si manda, piu' positive restano.
+- Stima: 221 ore, ~700 MB dal registratore, ~1 minuto per ora, 3,5-4,5 ore di COMPUTERONE.
+- `misura_b_tavolino.py` 0.2.0: un candidato che tocca un altro abbandono noto dell'ora non conta come falso.

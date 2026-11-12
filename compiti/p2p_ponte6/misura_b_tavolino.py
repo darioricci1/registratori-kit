@@ -3,7 +3,9 @@ dal compito), a tavolino: per ogni variante gli abbandoni trovati (al 1o posto, 
 e i falsi allarmi per ora fra i primi 3 e fra i primi 8.
 Uso: python3 misura_b_tavolino.py CARTELLA_PILOTA [variante ...] [--json uscita.json]
      (CARTELLA_PILOTA contiene pilota.json e pilota/<ora>/minuti/; kit_rifiuti.py da KR_SCRIPTS o dal repo accanto)
-version: 0.1.0 (12/11/2026): prima versione.
+version: 0.2.0 (12/11/2026): per la prova grande, nelle positive un candidato che tocca un altro abbandono noto
+  dell'ora («altri_noti» di prepara_grande.py) non e' un falso.
+0.1.0 (12/11/2026): prima versione.
 """
 import datetime
 import json
@@ -17,7 +19,7 @@ sys.path.insert(0, QUI)
 sys.path.insert(0, SCRIPTS)
 import b_tavolino as bt   # noqa: E402
 
-VERSIONE = "0.1.0"
+VERSIONE = "0.2.0"
 D = datetime.datetime
 
 # Le varianti misurate, una alla volta rispetto a quella di partenza, poi insieme (analisi-abbandono-in-un-ora.md).
@@ -86,7 +88,8 @@ def conti(ore, risultati, nome):
             t1 += posto == 1
             t3 += bool(posto and posto <= 3)
             t8 += bool(posto and posto <= 8)
-            falso = [bt.iou(c["box"], bd) < 0.1 for c in cand]
+            altri = [n["box"] for n in o.get("altri_noti") or []]   # 0.2.0
+            falso = [bt.iou(c["box"], bd) < 0.1 and all(bt.iou(c["box"], b) < 0.1 for b in altri) for c in cand]
         else:
             falso = [True] * len(cand)
         f3 += sum(falso[:3])

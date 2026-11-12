@@ -1,0 +1,8211 @@
+{
+ "pc": "COMPUTERONE",
+ "preparato_il": "2026-11-12 17:26",
+ "prepara": "0.1.0",
+ "seme": "grande-2026-11-12",
+ "solo_minuti": true,
+ "come": "pilota.py con solo_minuti: per ogni ora solo le miniature di ogni minuto (da 6 minuti prima a 5 dopo, 72 per ora) in uscita/pilota/<ora>/minuti/ e ora.json; niente metodo (a), niente candidati, niente fitte. La misura del metodo «insieme» a soglie ferme si fa a tavolino (misura_b_tavolino.py oggi insieme insieme_fuori). Positive e negative non si sommano.",
+ "negative_quante": 150,
+ "limiti": {
+  "minuti_per_ora": 8.0
+ },
+ "ore": [
+  {
+   "evento": "1b919557b9",
+   "kit": 657,
+   "notte": false,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-10-23 18:09:16",
+   "atteso": "2026-10-23 18:33:21",
+   "atteso_s": 1445,
+   "box_dario": [
+    0.505,
+    0.255,
+    0.032,
+    0.08
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 0,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "18:33:00",
+   "come_atteso": "clip delle 18:33:00 + 21 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos001_kit657",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "51bc5356d6",
+   "kit": 581,
+   "notte": false,
+   "uid": "HG7F76GY3TTXNYZC111A",
+   "canale": 0,
+   "inizio": "2026-10-26 10:15:30",
+   "atteso": "2026-10-26 10:30:09",
+   "atteso_s": 879,
+   "box_dario": [
+    0.744,
+    0.421,
+    0.026,
+    0.03
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 0,
+   "zona": {
+    "riquadri": [
+     [
+      0.695,
+      0.077,
+      0.3,
+      0.577
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "10:29:24",
+   "come_atteso": "clip delle 10:29:24 + 45 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos002_kit581",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "627f19768f",
+   "kit": 577,
+   "notte": false,
+   "uid": "4LWLT8S3G6AE94ZM111A",
+   "canale": 2,
+   "inizio": "2026-11-03 16:30:03",
+   "atteso": "2026-11-03 16:59:28",
+   "atteso_s": 1765,
+   "box_dario": [
+    0.325,
+    0.455,
+    0.04,
+    0.055
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 0,
+   "zona": {
+    "riquadri": [
+     [
+      0.33,
+      0.0,
+      0.25,
+      0.88
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:58:45",
+   "come_atteso": "clip delle 16:58:45 + 43.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos003_kit577",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "ba56aced30",
+   "kit": 445,
+   "notte": false,
+   "uid": "J8GJEC67MTDV7SU9111A",
+   "canale": 2,
+   "inizio": "2026-10-28 10:44:43",
+   "atteso": "2026-10-28 11:06:45",
+   "atteso_s": 1322,
+   "box_dario": [
+    0.32,
+    0.645,
+    0.03,
+    0.04
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 0,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.33,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "11:05:31",
+   "come_atteso": "clip delle 11:05:31 + 74 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos004_kit445",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "0b936b6d4f",
+   "kit": 341,
+   "notte": false,
+   "uid": "U81C57YS16T8M7V5111A",
+   "canale": 2,
+   "inizio": "2026-10-20 15:17:02",
+   "atteso": "2026-10-20 15:37:44",
+   "atteso_s": 1242,
+   "box_dario": [
+    0.735,
+    0.285,
+    0.05,
+    0.075
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 0,
+   "zona": {
+    "riquadri": [
+     [
+      0.14,
+      0.03,
+      0.84,
+      0.6
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "15:36:49",
+   "come_atteso": "clip delle 15:36:49 + 55 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos005_kit341",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "a3a9d59c46",
+   "kit": 638,
+   "notte": false,
+   "uid": "D8DN3RK5KRW63X79111A",
+   "canale": 0,
+   "inizio": "2026-10-27 08:30:24",
+   "atteso": "2026-10-27 09:08:11",
+   "atteso_s": 2267,
+   "box_dario": [
+    0.105,
+    0.03,
+    0.08,
+    0.26
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.03,
+      0.88,
+      0.47
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "09:07:25",
+   "come_atteso": "clip delle 09:07:25 + 46 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos006_kit638",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "a9939ab49c",
+   "kit": 657,
+   "notte": false,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-10-24 16:25:56",
+   "atteso": "2026-10-24 16:45:36",
+   "atteso_s": 1180,
+   "box_dario": [
+    0.552,
+    0.224,
+    0.048,
+    0.066
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:44:59",
+   "come_atteso": "clip delle 16:44:59 + 37 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos007_kit657",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "6716dd2fdf",
+   "kit": 384,
+   "notte": false,
+   "uid": "9LSS75MFLX8R8YWM111A",
+   "canale": 3,
+   "inizio": "2026-11-01 06:48:42",
+   "atteso": "2026-11-01 07:12:21",
+   "atteso_s": 1419,
+   "box_dario": [
+    0.775,
+    0.41,
+    0.03,
+    0.07
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.59,
+      0.048,
+      0.39,
+      0.805
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "07:12:00",
+   "come_atteso": "clip delle 07:12:00 + 21 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 4",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos008_kit384",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "25e64b3952",
+   "kit": 629,
+   "notte": false,
+   "uid": "7P1DCUE6RNPTS98Y111A",
+   "canale": 0,
+   "inizio": "2026-10-25 16:55:04",
+   "atteso": "2026-10-25 17:47:48",
+   "atteso_s": 3164,
+   "box_dario": [
+    0.398,
+    0.221,
+    0.039,
+    0.071
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.18,
+      0.14,
+      0.15
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "17:46:24",
+   "come_atteso": "clip delle 17:46:24 + 84 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos009_kit629",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "c9bb6e03d1",
+   "kit": 384,
+   "notte": false,
+   "uid": "9LSS75MFLX8R8YWM111A",
+   "canale": 0,
+   "inizio": "2026-11-01 13:13:59",
+   "atteso": "2026-11-01 13:33:32",
+   "atteso_s": 1173,
+   "box_dario": [
+    0.655,
+    0.33,
+    0.04,
+    0.085
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.125,
+      0.885,
+      0.484
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "13:33:00",
+   "come_atteso": "clip delle 13:33:00 + 32.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos010_kit384",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "68c92fda69",
+   "kit": 350,
+   "notte": false,
+   "uid": "7D3YC3EW3ESSM35N111A",
+   "canale": 0,
+   "inizio": "2026-10-27 12:13:41",
+   "atteso": "2026-10-27 12:32:49",
+   "atteso_s": 1148,
+   "box_dario": [
+    0.82,
+    0.12,
+    0.05,
+    0.11
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.03,
+      0.93,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "12:32:03",
+   "come_atteso": "clip delle 12:32:03 + 46 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos011_kit350",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "42ea1438fd",
+   "kit": 281,
+   "notte": false,
+   "uid": "NWUGBRJD9B41DG2H111A",
+   "canale": 2,
+   "inizio": "2026-10-29 14:17:06",
+   "atteso": "2026-10-29 15:01:45",
+   "atteso_s": 2679,
+   "box_dario": [
+    0.41,
+    0.28,
+    0.07,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.5,
+      0.2,
+      0.36
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": false,
+   "clip": "15:00:55",
+   "come_atteso": "clip delle 15:00:55 + 50 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos012_kit281",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "3542d0c3c1",
+   "kit": 421,
+   "notte": false,
+   "uid": "FMZMEVPNDK24S9V2111A",
+   "canale": 1,
+   "inizio": "2026-10-31 09:30:28",
+   "atteso": "2026-10-31 10:07:19",
+   "atteso_s": 2211,
+   "box_dario": [
+    0.81,
+    0.79,
+    0.06,
+    0.08
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.18,
+      0.32,
+      0.6
+     ],
+     [
+      0.7,
+      0.55,
+      0.3,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "10:06:47",
+   "come_atteso": "clip delle 10:06:47 + 32 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos013_kit421",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "48387ee05b",
+   "kit": 383,
+   "notte": false,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 2,
+   "inizio": "2026-10-28 10:39:49",
+   "atteso": "2026-10-28 10:46:18",
+   "atteso_s": 389,
+   "box_dario": [
+    0.443,
+    0.46,
+    0.02,
+    0.032
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 1,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.18,
+      0.515,
+      0.82
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "10:45:20",
+   "come_atteso": "clip delle 10:45:20 + 58 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 4,
+   "altri_noti": [],
+   "nome": "pos014_kit383",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "4d101bd250",
+   "kit": 575,
+   "notte": false,
+   "uid": "HFC4PVMK3PBGGTV2111A",
+   "canale": 2,
+   "inizio": "2026-10-28 15:41:16",
+   "atteso": "2026-10-28 15:49:58",
+   "atteso_s": 522,
+   "box_dario": [
+    0.53,
+    0.49,
+    0.07,
+    0.14
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.05,
+      0.48,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "15:48:56",
+   "come_atteso": "clip delle 15:48:56 + 62 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos015_kit575",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "80dd41b4ed",
+   "kit": 632,
+   "notte": false,
+   "uid": "3KPRNMDNFBP2HNLT111A",
+   "canale": 0,
+   "inizio": "2026-10-27 07:26:00",
+   "atteso": "2026-10-27 07:53:51",
+   "atteso_s": 1671,
+   "box_dario": [
+    0.085,
+    0.315,
+    0.06,
+    0.08
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.15,
+      0.33,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "07:52:45",
+   "come_atteso": "clip delle 07:52:45 + 66 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos016_kit632",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "1a232c68b3",
+   "kit": 354,
+   "notte": false,
+   "uid": "XHHP3RSD9WX99937111A",
+   "canale": 2,
+   "inizio": "2026-10-27 13:53:30",
+   "atteso": "2026-10-27 14:37:57",
+   "atteso_s": 2667,
+   "box_dario": [
+    0.235,
+    0.26,
+    0.04,
+    0.065
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.064,
+      0.0,
+      0.572,
+      0.479
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "14:37:19",
+   "come_atteso": "clip delle 14:37:19 + 38 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos017_kit354",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "b15d4e5eae",
+   "kit": 341,
+   "notte": false,
+   "uid": "U81C57YS16T8M7V5111A",
+   "canale": 2,
+   "inizio": "2026-10-23 07:05:27",
+   "atteso": "2026-10-23 07:34:53",
+   "atteso_s": 1766,
+   "box_dario": [
+    0.72,
+    0.29,
+    0.05,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.14,
+      0.03,
+      0.84,
+      0.6
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "07:34:29",
+   "come_atteso": "clip delle 07:34:29 + 24.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos018_kit341",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "fde5349336",
+   "kit": 663,
+   "notte": true,
+   "uid": "ZPGZW3PAYF5HFH66111A",
+   "canale": 0,
+   "inizio": "2026-10-31 21:44:02",
+   "atteso": "2026-10-31 22:29:32",
+   "atteso_s": 2730,
+   "box_dario": [
+    0.55,
+    0.31,
+    0.045,
+    0.095
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.0,
+      0.85,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "22:28:29",
+   "come_atteso": "clip delle 22:28:29 + 63 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos019_kit663",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "4ef35a425f",
+   "kit": 212,
+   "notte": false,
+   "uid": "RXR28J553KZ51UE3111A",
+   "canale": 2,
+   "inizio": "2026-10-27 11:14:20",
+   "atteso": "2026-10-27 12:01:24",
+   "atteso_s": 2824,
+   "box_dario": [
+    0.582,
+    0.19,
+    0.034,
+    0.042
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.552,
+      0.006,
+      0.448,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "12:00:23",
+   "come_atteso": "clip delle 12:00:23 + 61 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos020_kit212",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "d64353db7e",
+   "kit": 443,
+   "notte": false,
+   "uid": "55R623L3HMTV2USD111A",
+   "canale": 0,
+   "inizio": "2026-10-31 16:06:16",
+   "atteso": "2026-10-31 16:14:47",
+   "atteso_s": 511,
+   "box_dario": [
+    0.4,
+    0.33,
+    0.07,
+    0.17
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.4,
+      0.0,
+      0.5,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:13:39",
+   "come_atteso": "clip delle 16:13:39 + 68 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos021_kit443",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "596b02d28c",
+   "kit": 421,
+   "notte": false,
+   "uid": "FMZMEVPNDK24S9V2111A",
+   "canale": 1,
+   "inizio": "2026-11-01 07:30:50",
+   "atteso": "2026-11-01 07:54:18",
+   "atteso_s": 1408,
+   "box_dario": [
+    0.905,
+    0.855,
+    0.07,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.18,
+      0.32,
+      0.6
+     ],
+     [
+      0.7,
+      0.55,
+      0.3,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "07:53:52",
+   "come_atteso": "clip delle 07:53:52 + 26 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos022_kit421",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "549ff52fa0",
+   "kit": 589,
+   "notte": false,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-10-27 18:46:06",
+   "atteso": "2026-10-27 19:20:03",
+   "atteso_s": 2037,
+   "box_dario": [
+    0.775,
+    0.245,
+    0.04,
+    0.035
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "19:18:54",
+   "come_atteso": "clip delle 19:18:54 + 69 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos023_kit589",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "48db29a7a7",
+   "kit": 233,
+   "notte": true,
+   "uid": "VEH5GRDEBCHVWWA7111A",
+   "canale": 0,
+   "inizio": "2026-10-31 21:16:15",
+   "atteso": "2026-10-31 21:46:50",
+   "atteso_s": 1835,
+   "box_dario": [
+    0.193,
+    0.172,
+    0.02,
+    0.032
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 2,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.0,
+      0.97,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "21:46:00",
+   "come_atteso": "clip delle 21:46:00 + 50 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos024_kit233",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "5096ff1b0c",
+   "kit": 384,
+   "notte": false,
+   "uid": "9LSS75MFLX8R8YWM111A",
+   "canale": 3,
+   "inizio": "2026-11-03 08:27:08",
+   "atteso": "2026-11-03 09:03:55",
+   "atteso_s": 2207,
+   "box_dario": [
+    0.81,
+    0.33,
+    0.04,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.59,
+      0.048,
+      0.39,
+      0.805
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "09:03:25",
+   "come_atteso": "clip delle 09:03:25 + 30 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 4",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos025_kit384",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "6a59bfac53",
+   "kit": 261,
+   "notte": false,
+   "uid": "ZKD7KEWUUMP7L12Y111A",
+   "canale": 0,
+   "inizio": "2026-10-28 08:53:14",
+   "atteso": "2026-10-28 09:18:09",
+   "atteso_s": 1495,
+   "box_dario": [
+    0.675,
+    0.15,
+    0.025,
+    0.05
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.0,
+      0.27,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "09:17:47",
+   "come_atteso": "clip delle 09:17:47 + 22 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos026_kit261",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "0b38f51e1e",
+   "kit": 556,
+   "notte": false,
+   "uid": "WZMHADP3H2D1PDVB111A",
+   "canale": 1,
+   "inizio": "2026-10-28 15:32:47",
+   "atteso": "2026-10-28 16:09:30",
+   "atteso_s": 2203,
+   "box_dario": [
+    0.775,
+    0.085,
+    0.03,
+    0.045
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.6,
+      0.0,
+      0.24,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:08:51",
+   "come_atteso": "clip delle 16:08:51 + 39 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos027_kit556",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "05645a0b7f",
+   "kit": 409,
+   "notte": false,
+   "uid": "4VWE7SJA32F96CF8111A",
+   "canale": 0,
+   "inizio": "2026-10-31 12:26:40",
+   "atteso": "2026-10-31 13:03:28",
+   "atteso_s": 2208,
+   "box_dario": [
+    0.185,
+    0.148,
+    0.013,
+    0.045
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.13,
+      0.0,
+      0.85,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "13:02:49",
+   "come_atteso": "clip delle 13:02:49 + 39 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos028_kit409",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "055588541e",
+   "kit": 575,
+   "notte": false,
+   "uid": "HFC4PVMK3PBGGTV2111A",
+   "canale": 2,
+   "inizio": "2026-10-29 15:26:36",
+   "atteso": "2026-10-29 15:55:30",
+   "atteso_s": 1734,
+   "box_dario": [
+    0.48,
+    0.71,
+    0.07,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.05,
+      0.48,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "15:54:39",
+   "come_atteso": "clip delle 15:54:39 + 51 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos029_kit575",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "e97f23056e",
+   "kit": 279,
+   "notte": false,
+   "uid": "9U84G5EWJUACNLBV111A",
+   "canale": 0,
+   "inizio": "2026-11-02 07:32:40",
+   "atteso": "2026-11-02 08:22:51",
+   "atteso_s": 3011,
+   "box_dario": [
+    0.628,
+    0.09,
+    0.032,
+    0.036
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.161,
+      0.043,
+      0.757,
+      0.332
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "08:22:18",
+   "come_atteso": "clip delle 08:22:18 + 33 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos030_kit279",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "133c1c94b6",
+   "kit": 485,
+   "notte": false,
+   "uid": "XHST12ZJCWZSRWTY111A",
+   "canale": 0,
+   "inizio": "2026-10-29 12:05:56",
+   "atteso": "2026-10-29 12:48:37",
+   "atteso_s": 2561,
+   "box_dario": [
+    0.42,
+    0.31,
+    0.055,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.82,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "12:47:59",
+   "come_atteso": "clip delle 12:47:59 + 38 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos031_kit485",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "195780b4e3",
+   "kit": 383,
+   "notte": false,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 2,
+   "inizio": "2026-10-30 16:07:34",
+   "atteso": "2026-10-30 16:15:41",
+   "atteso_s": 487,
+   "box_dario": [
+    0.43,
+    0.56,
+    0.08,
+    0.08
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.18,
+      0.515,
+      0.82
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "16:14:43",
+   "come_atteso": "clip delle 16:14:43 + 58 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos032_kit383",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "36aab24528",
+   "kit": 233,
+   "notte": false,
+   "uid": "VEH5GRDEBCHVWWA7111A",
+   "canale": 0,
+   "inizio": "2026-11-02 05:49:33",
+   "atteso": "2026-11-02 06:28:05",
+   "atteso_s": 2312,
+   "box_dario": [
+    0.245,
+    0.16,
+    0.045,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.0,
+      0.97,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "06:27:10",
+   "come_atteso": "clip delle 06:27:10 + 55 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos033_kit233",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "f55aca8e6f",
+   "kit": 516,
+   "notte": false,
+   "uid": "VML1EDXXDFC5AE8W111A",
+   "canale": 2,
+   "inizio": "2026-10-28 17:51:36",
+   "atteso": "2026-10-28 18:29:27",
+   "atteso_s": 2271,
+   "box_dario": [
+    0.612,
+    0.295,
+    0.025,
+    0.045
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 3,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.06,
+      0.66,
+      0.66
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "18:28:45",
+   "come_atteso": "clip delle 18:28:45 + 42 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos034_kit516",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "84cba3691c",
+   "kit": 615,
+   "notte": false,
+   "uid": "JSKC5FFS8PGF1GRZ111A",
+   "canale": 2,
+   "inizio": "2026-11-02 14:06:23",
+   "atteso": "2026-11-02 14:59:30",
+   "atteso_s": 3187,
+   "box_dario": [
+    0.49,
+    0.48,
+    0.055,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 4,
+   "zona": {
+    "riquadri": [
+     [
+      0.545,
+      0.217,
+      0.14,
+      0.228
+     ],
+     [
+      0.48,
+      0.2,
+      0.25,
+      0.42
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "14:59:03",
+   "come_atteso": "clip delle 14:59:03 + 27 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos035_kit615",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "63bcec7beb",
+   "kit": 375,
+   "notte": false,
+   "uid": "4JWHPZFCBWRWTAX3111A",
+   "canale": 0,
+   "inizio": "2026-10-30 17:08:04",
+   "atteso": "2026-10-30 17:50:39",
+   "atteso_s": 2555,
+   "box_dario": [
+    0.69,
+    0.39,
+    0.035,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 4,
+   "zona": {
+    "riquadri": [
+     [
+      0.617,
+      0.0,
+      0.327,
+      0.707
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "17:50:20",
+   "come_atteso": "clip delle 17:50:20 + 19 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos036_kit375",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "24b0812248",
+   "kit": 409,
+   "notte": false,
+   "uid": "4VWE7SJA32F96CF8111A",
+   "canale": 0,
+   "inizio": "2026-11-01 11:44:55",
+   "atteso": "2026-11-01 12:13:57",
+   "atteso_s": 1742,
+   "box_dario": [
+    0.565,
+    0.15,
+    0.035,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 4,
+   "zona": {
+    "riquadri": [
+     [
+      0.13,
+      0.0,
+      0.85,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "12:13:22",
+   "come_atteso": "clip delle 12:13:22 + 35 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos037_kit409",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "dd2664446b",
+   "kit": 233,
+   "notte": false,
+   "uid": "VEH5GRDEBCHVWWA7111A",
+   "canale": 0,
+   "inizio": "2026-11-03 19:18:07",
+   "atteso": "2026-11-03 19:43:10",
+   "atteso_s": 1503,
+   "box_dario": [
+    0.365,
+    0.183,
+    0.022,
+    0.03
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.0,
+      0.97,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "19:42:20",
+   "come_atteso": "clip delle 19:42:20 + 50 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos038_kit233",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "4eb26ae6ab",
+   "kit": 651,
+   "notte": false,
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "canale": 1,
+   "inizio": "2026-10-31 07:20:55",
+   "atteso": "2026-10-31 07:32:17",
+   "atteso_s": 682,
+   "box_dario": [
+    0.12,
+    0.58,
+    0.08,
+    0.18
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "07:24:05",
+   "come_atteso": "clip delle 07:24:05 + 492.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos039_kit651",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "a775600670",
+   "kit": 657,
+   "notte": false,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-10-28 16:54:26",
+   "atteso": "2026-10-28 17:38:52",
+   "atteso_s": 2666,
+   "box_dario": [
+    0.484,
+    0.232,
+    0.028,
+    0.065
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": false,
+   "clip": "17:38:12",
+   "come_atteso": "clip delle 17:38:12 + 40 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos040_kit657",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "f3a9ed861e",
+   "kit": 397,
+   "notte": false,
+   "uid": "HJ12NFEVGGRM6E1F111A",
+   "canale": 2,
+   "inizio": "2026-11-01 16:46:56",
+   "atteso": "2026-11-01 17:27:11",
+   "atteso_s": 2415,
+   "box_dario": [
+    0.6,
+    0.53,
+    0.075,
+    0.13
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.033,
+      1.0,
+      0.921
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "17:26:21",
+   "come_atteso": "clip delle 17:26:21 + 50 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos041_kit397",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "017a03fa31",
+   "kit": 397,
+   "notte": false,
+   "uid": "HJ12NFEVGGRM6E1F111A",
+   "canale": 2,
+   "inizio": "2026-11-01 08:43:42",
+   "atteso": "2026-11-01 09:02:39",
+   "atteso_s": 1137,
+   "box_dario": [
+    0.57,
+    0.52,
+    0.05,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.033,
+      1.0,
+      0.921
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "09:02:04",
+   "come_atteso": "clip delle 09:02:04 + 35.4 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 4,
+   "altri_noti": [
+    {
+     "evento": "faf20d1ee0",
+     "atteso": "2026-11-01 09:17:01",
+     "box": [
+      0.6,
+      0.5,
+      0.12,
+      0.22
+     ]
+    },
+    {
+     "evento": "faf20d1ee0",
+     "atteso": "2026-11-01 09:17:01",
+     "box": [
+      0.6,
+      0.5,
+      0.12,
+      0.22
+     ]
+    }
+   ],
+   "nome": "pos042_kit397",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "ba13bb0241",
+   "kit": 629,
+   "notte": true,
+   "uid": "7P1DCUE6RNPTS98Y111A",
+   "canale": 0,
+   "inizio": "2026-10-29 20:52:21",
+   "atteso": "2026-10-29 21:34:03",
+   "atteso_s": 2502,
+   "box_dario": [
+    0.42,
+    0.26,
+    0.07,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.18,
+      0.14,
+      0.15
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "21:32:06",
+   "come_atteso": "clip delle 21:32:06 + 117 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos043_kit629",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "b44a7ae42e",
+   "kit": 350,
+   "notte": false,
+   "uid": "7D3YC3EW3ESSM35N111A",
+   "canale": 0,
+   "inizio": "2026-10-31 13:05:06",
+   "atteso": "2026-10-31 13:52:39",
+   "atteso_s": 2853,
+   "box_dario": [
+    0.85,
+    0.17,
+    0.045,
+    0.18
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 5,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.03,
+      0.93,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "13:51:09",
+   "come_atteso": "clip delle 13:51:09 + 90 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos044_kit350",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "1c59de257e",
+   "kit": 372,
+   "notte": false,
+   "uid": "2R47N7LXSMFF7BZG111A",
+   "canale": 0,
+   "inizio": "2026-10-31 16:31:56",
+   "atteso": "2026-10-31 17:21:34",
+   "atteso_s": 2978,
+   "box_dario": [
+    0.38,
+    0.265,
+    0.025,
+    0.04
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.85,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "17:20:40",
+   "come_atteso": "clip delle 17:20:40 + 54 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos045_kit372",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "a03f17060b",
+   "kit": 487,
+   "notte": false,
+   "uid": "V2NWBPP3Z8RPHCJ8111A",
+   "canale": 2,
+   "inizio": "2026-10-31 18:00:17",
+   "atteso": "2026-10-31 18:08:19",
+   "atteso_s": 482,
+   "box_dario": [
+    0.235,
+    0.355,
+    0.025,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.03,
+      0.63,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "18:07:30",
+   "come_atteso": "clip delle 18:07:30 + 49 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos046_kit487",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "00225a34c0",
+   "kit": 589,
+   "notte": false,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-10-31 13:19:16",
+   "atteso": "2026-10-31 14:04:16",
+   "atteso_s": 2700,
+   "box_dario": [
+    0.39,
+    0.28,
+    0.03,
+    0.08
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "14:02:30",
+   "come_atteso": "clip delle 14:02:30 + 106 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos047_kit589",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "ea5bad5e70",
+   "kit": 591,
+   "notte": false,
+   "uid": "65JK8PFSSLXZUW3V111A",
+   "canale": 1,
+   "inizio": "2026-11-01 08:29:25",
+   "atteso": "2026-11-01 09:05:06",
+   "atteso_s": 2141,
+   "box_dario": [
+    0.72,
+    0.04,
+    0.08,
+    0.13
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.55,
+      0.12,
+      0.35,
+      0.6
+     ]
+    ],
+    "escludi": [
+     [
+      0.0,
+      0.0,
+      0.56,
+      1.0
+     ],
+     [
+      0.885,
+      0.0,
+      0.115,
+      0.25
+     ]
+    ]
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "09:03:46",
+   "come_atteso": "clip delle 09:03:46 + 80 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos048_kit591",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "5c0b0291d4",
+   "kit": 561,
+   "notte": false,
+   "uid": "A4BJY9PUN5E9X3SV111A",
+   "canale": 0,
+   "inizio": "2026-11-01 16:52:19",
+   "atteso": "2026-11-01 17:22:26",
+   "atteso_s": 1807,
+   "box_dario": [
+    0.72,
+    0.19,
+    0.04,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.006,
+      0.053,
+      0.994,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "17:21:26",
+   "come_atteso": "clip delle 17:21:26 + 60 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos049_kit561",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "52a08c1e60",
+   "kit": 375,
+   "notte": false,
+   "uid": "4JWHPZFCBWRWTAX3111A",
+   "canale": 2,
+   "inizio": "2026-11-01 17:40:22",
+   "atteso": "2026-11-01 18:09:32",
+   "atteso_s": 1750,
+   "box_dario": [
+    0.08,
+    0.47,
+    0.04,
+    0.09
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.028,
+      0.058,
+      0.343,
+      0.667
+     ],
+     [
+      0.64,
+      0.09,
+      0.1,
+      0.11
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "18:08:32",
+   "come_atteso": "clip delle 18:08:32 + 60 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos050_kit375",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "239eddd7fc",
+   "kit": 651,
+   "notte": false,
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "canale": 1,
+   "inizio": "2026-11-01 15:56:08",
+   "atteso": "2026-11-01 16:39:38",
+   "atteso_s": 2610,
+   "box_dario": [
+    0.14,
+    0.74,
+    0.14,
+    0.14
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:38:08",
+   "come_atteso": "clip delle 16:38:08 + 90 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos051_kit651",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "94f5d4a029",
+   "kit": 673,
+   "notte": false,
+   "uid": "34N233JW8ESCWSUV111A",
+   "canale": 1,
+   "inizio": "2026-11-03 15:57:09",
+   "atteso": "2026-11-03 16:39:38",
+   "atteso_s": 2549,
+   "box_dario": [
+    0.52,
+    0.28,
+    0.058,
+    0.04
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.3,
+      0.88,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "16:38:31",
+   "come_atteso": "clip delle 16:38:31 + 67 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos052_kit673",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "5af44ca0d1",
+   "kit": 589,
+   "notte": false,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-10-31 08:55:55",
+   "atteso": "2026-10-31 09:09:44",
+   "atteso_s": 829,
+   "box_dario": [
+    0.378,
+    0.343,
+    0.018,
+    0.032
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "09:08:24",
+   "come_atteso": "clip delle 09:08:24 + 80 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 4,
+   "altri_noti": [],
+   "nome": "pos053_kit589",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "0e3c02a525",
+   "kit": 485,
+   "notte": true,
+   "uid": "XHST12ZJCWZSRWTY111A",
+   "canale": 0,
+   "inizio": "2026-11-01 21:33:43",
+   "atteso": "2026-11-01 22:21:25",
+   "atteso_s": 2862,
+   "box_dario": [
+    0.2,
+    0.42,
+    0.27,
+    0.55
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 6,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.82,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "22:20:24",
+   "come_atteso": "clip delle 22:20:24 + 61 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos054_kit485",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "3b19cb9172",
+   "kit": 575,
+   "notte": false,
+   "uid": "HFC4PVMK3PBGGTV2111A",
+   "canale": 2,
+   "inizio": "2026-11-02 13:58:32",
+   "atteso": "2026-11-02 14:10:15",
+   "atteso_s": 703,
+   "box_dario": [
+    0.38,
+    0.67,
+    0.045,
+    0.07
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 7,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.05,
+      0.48,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "14:09:28",
+   "come_atteso": "clip delle 14:09:28 + 47 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos055_kit575",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "c2ee907bfe",
+   "kit": 651,
+   "notte": true,
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "canale": 0,
+   "inizio": "2026-11-02 04:18:38",
+   "atteso": "2026-11-02 05:00:43",
+   "atteso_s": 2525,
+   "box_dario": [
+    0.31,
+    0.93,
+    0.18,
+    0.07
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 7,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.0,
+      0.48,
+      1.0
+     ],
+     [
+      0.58,
+      0.8,
+      0.14,
+      0.14
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "04:44:18",
+   "come_atteso": "clip delle 04:44:18 + 985 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos056_kit651",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "8fe2f33521",
+   "kit": 405,
+   "notte": false,
+   "uid": "RRJGC1W7958W1TNW111A",
+   "canale": 1,
+   "inizio": "2026-10-31 15:28:01",
+   "atteso": "2026-10-31 16:20:53",
+   "atteso_s": 3172,
+   "box_dario": [
+    0.325,
+    0.475,
+    0.04,
+    0.065
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 7,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.06,
+      0.88,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "16:20:15",
+   "come_atteso": "clip delle 16:20:15 + 38 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 2",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos057_kit405",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "7c31cb3f77",
+   "kit": 651,
+   "notte": false,
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "canale": 1,
+   "inizio": "2026-11-02 17:21:01",
+   "atteso": "2026-11-02 17:32:57",
+   "atteso_s": 716,
+   "box_dario": [
+    0.0,
+    0.685,
+    0.05,
+    0.18
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 7,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "17:32:14",
+   "come_atteso": "clip delle 17:32:14 + 43.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 2",
+   "ora_del_kit": 4,
+   "altri_noti": [],
+   "nome": "pos058_kit651",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "8fa38c2b1b",
+   "kit": 383,
+   "notte": false,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 2,
+   "inizio": "2026-11-03 10:54:00",
+   "atteso": "2026-11-03 11:44:40",
+   "atteso_s": 3040,
+   "box_dario": [
+    0.355,
+    0.4,
+    0.04,
+    0.035
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 7,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.18,
+      0.515,
+      0.82
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "11:43:40",
+   "come_atteso": "clip delle 11:43:40 + 60 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 3,
+   "altri_noti": [],
+   "nome": "pos059_kit383",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "f273737ffd",
+   "kit": 350,
+   "notte": false,
+   "uid": "7D3YC3EW3ESSM35N111A",
+   "canale": 0,
+   "inizio": "2026-11-03 17:14:59",
+   "atteso": "2026-11-03 17:50:07",
+   "atteso_s": 2108,
+   "box_dario": [
+    0.185,
+    0.26,
+    0.04,
+    0.05
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.03,
+      0.93,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "17:49:36",
+   "come_atteso": "clip delle 17:49:36 + 31 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos060_kit350",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "3add5c6f01",
+   "kit": 397,
+   "notte": false,
+   "uid": "HJ12NFEVGGRM6E1F111A",
+   "canale": 2,
+   "inizio": "2026-11-04 15:11:46",
+   "atteso": "2026-11-04 16:02:05",
+   "atteso_s": 3019,
+   "box_dario": [
+    0.72,
+    0.52,
+    0.06,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.033,
+      1.0,
+      0.921
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "16:01:31",
+   "come_atteso": "clip delle 16:01:31 + 34.5 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos061_kit397",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "c163d1a515",
+   "kit": 561,
+   "notte": true,
+   "uid": "A4BJY9PUN5E9X3SV111A",
+   "canale": 0,
+   "inizio": "2026-11-03 20:56:53",
+   "atteso": "2026-11-03 21:14:09",
+   "atteso_s": 1036,
+   "box_dario": [
+    0.743,
+    0.225,
+    0.025,
+    0.055
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.006,
+      0.053,
+      0.994,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "21:12:28",
+   "come_atteso": "clip delle 21:12:28 + 101 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos062_kit561",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "3329947a0e",
+   "kit": 566,
+   "notte": false,
+   "uid": "BSSAJLD1WHWT3FGX111A",
+   "canale": 3,
+   "inizio": "2026-11-07 16:44:31",
+   "atteso": "2026-11-07 16:52:43",
+   "atteso_s": 492,
+   "box_dario": [
+    0.51,
+    0.47,
+    0.05,
+    0.14
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.42,
+      0.68
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "16:52:31",
+   "come_atteso": "clip delle 16:52:31 + 12.5 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 4",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos063_kit566",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "4bda877a15",
+   "kit": 383,
+   "notte": false,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 2,
+   "inizio": "2026-11-04 17:51:09",
+   "atteso": "2026-11-04 18:44:35",
+   "atteso_s": 3206,
+   "box_dario": [
+    0.472,
+    0.36,
+    0.036,
+    0.075
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.18,
+      0.515,
+      0.82
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "18:43:38",
+   "come_atteso": "clip delle 18:43:38 + 57 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos064_kit383",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "05ad7cc221",
+   "kit": 484,
+   "notte": false,
+   "uid": "RSG7D9NAPWNEPPF9111A",
+   "canale": 0,
+   "inizio": "2026-11-01 17:13:54",
+   "atteso": "2026-11-01 18:06:57",
+   "atteso_s": 3183,
+   "box_dario": [
+    0.425,
+    0.24,
+    0.04,
+    0.075
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 8,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      1.0,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "18:05:59",
+   "come_atteso": "clip delle 18:05:59 + 58 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos065_kit484",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "6be129cc7e",
+   "kit": 397,
+   "notte": false,
+   "uid": "HJ12NFEVGGRM6E1F111A",
+   "canale": 2,
+   "inizio": "2026-11-05 18:06:02",
+   "atteso": "2026-11-05 18:15:48",
+   "atteso_s": 586,
+   "box_dario": [
+    0.62,
+    0.5,
+    0.15,
+    0.13
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 9,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.033,
+      1.0,
+      0.921
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "18:14:51",
+   "come_atteso": "clip delle 18:14:51 + 57 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 3",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos066_kit397",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "963c356a79",
+   "kit": 657,
+   "notte": true,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-11-01 20:25:36",
+   "atteso": "2026-11-01 21:08:42",
+   "atteso_s": 2586,
+   "box_dario": [
+    0.565,
+    0.218,
+    0.048,
+    0.072
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 9,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "21:08:23",
+   "come_atteso": "clip delle 21:08:23 + 19 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 4,
+   "altri_noti": [],
+   "nome": "pos067_kit657",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "a06e6bf570",
+   "kit": 487,
+   "notte": false,
+   "uid": "V2NWBPP3Z8RPHCJ8111A",
+   "canale": 2,
+   "inizio": "2026-11-03 12:17:51",
+   "atteso": "2026-11-03 13:12:11",
+   "atteso_s": 3260,
+   "box_dario": [
+    0.26,
+    0.35,
+    0.07,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 9,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.03,
+      0.63,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "13:11:34",
+   "come_atteso": "clip delle 13:11:34 + 37.5 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos068_kit487",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "e6f76725fd",
+   "kit": 225,
+   "notte": false,
+   "uid": "AJBLK1K1A94WHV9A111A",
+   "canale": 0,
+   "inizio": "2026-10-28 06:36:52",
+   "atteso": "2026-10-28 07:03:19",
+   "atteso_s": 1587,
+   "box_dario": [
+    0.425,
+    0.255,
+    0.03,
+    0.058
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_prova",
+   "giro": null,
+   "resta_giorni": 10,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.02,
+      0.42,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "dentro_zona": true,
+   "clip": "07:02:03",
+   "come_atteso": "clip delle 07:02:03 + 76 s (giudizio sicuro di Claude, etichette_prova) sulla telecamera 1",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos069_kit225",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "b3c9d4a7c7",
+   "kit": 589,
+   "notte": false,
+   "uid": "65CA2H5UP8G7FU1A111A",
+   "canale": 0,
+   "inizio": "2026-11-07 16:07:21",
+   "atteso": "2026-11-07 16:56:45",
+   "atteso_s": 2964,
+   "box_dario": [
+    0.385,
+    0.28,
+    0.035,
+    0.06
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 13,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.18,
+      0.33
+     ],
+     [
+      0.76,
+      0.12,
+      0.18,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:56:01",
+   "come_atteso": "clip delle 16:56:01 + 44 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 1",
+   "ora_del_kit": 2,
+   "altri_noti": [],
+   "nome": "pos070_kit589",
+   "tipo": "positiva"
+  },
+  {
+   "evento": "00ffd5c196",
+   "kit": 313,
+   "notte": false,
+   "uid": "71AYBC1XRXB49ZKP111A",
+   "canale": 2,
+   "inizio": "2026-10-28 15:28:24",
+   "atteso": "2026-10-28 16:18:37",
+   "atteso_s": 3013,
+   "box_dario": [
+    0.34,
+    0.73,
+    0.06,
+    0.1
+   ],
+   "box_da": "claude",
+   "fonte": "etichette_claude",
+   "giro": null,
+   "resta_giorni": 32,
+   "zona": {
+    "riquadri": [
+     [
+      0.045,
+      0.0,
+      0.53,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "dentro_zona": true,
+   "clip": "16:18:10",
+   "come_atteso": "clip delle 16:18:10 + 27.4 s (giudizio sicuro di Claude, etichette_claude) sulla telecamera 3",
+   "ora_del_kit": 1,
+   "altri_noti": [],
+   "nome": "pos071_kit313",
+   "tipo": "positiva"
+  },
+  {
+   "kit": 600,
+   "uid": "MZCRT8P9M84JRP13111A",
+   "canale": 0,
+   "inizio": "2026-11-06 00:04:00",
+   "n": "1.0",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.52,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg001_kit600",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 673,
+   "uid": "34N233JW8ESCWSUV111A",
+   "canale": 0,
+   "inizio": "2026-11-10 10:56:00",
+   "n": "1.1",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.45,
+      0.65,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg002_kit673",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 588,
+   "uid": "A2W1DH2TLRAX6PEL111A",
+   "canale": 0,
+   "inizio": "2026-11-08 21:23:00",
+   "n": "1.2",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.0,
+      0.45,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg003_kit588",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 660,
+   "uid": "4V7GC54RSDGRHYWB111A",
+   "canale": 0,
+   "inizio": "2026-11-06 10:27:00",
+   "n": "1.3",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.241,
+      0.0,
+      0.728,
+      0.589
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg004_kit660",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 575,
+   "uid": "HFC4PVMK3PBGGTV2111A",
+   "canale": 2,
+   "inizio": "2026-11-05 03:46:00",
+   "n": "1.4",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.05,
+      0.48,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg005_kit575",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 488,
+   "uid": "WK1BAL6V76BMGAL6111A",
+   "canale": 0,
+   "inizio": "2026-11-08 06:28:00",
+   "n": "1.5",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.001,
+      0.858,
+      0.498
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg006_kit488",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 590,
+   "uid": "6PBKEEPLUARL3KBB111A",
+   "canale": 1,
+   "inizio": "2026-11-08 02:44:00",
+   "n": "1.6",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.4,
+      0.12,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg007_kit590",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 568,
+   "uid": "74DMHLTTXAYV7AMT111A",
+   "canale": 0,
+   "inizio": "2026-11-07 15:58:00",
+   "n": "1.9",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.92,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg008_kit568",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 517,
+   "uid": "H7NZMBRR6K447PBT111A",
+   "canale": 1,
+   "inizio": "2026-11-06 21:57:00",
+   "n": "1.10",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.85,
+      0.125,
+      0.15,
+      0.315
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg009_kit517",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 654,
+   "uid": "B574BA5AH3XLW249111A",
+   "canale": 2,
+   "inizio": "2026-11-07 14:51:00",
+   "n": "1.11",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.81,
+      0.31,
+      0.08,
+      0.14
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg010_kit654",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 244,
+   "uid": "A7THFGV27NCW2CCM111A",
+   "canale": 1,
+   "inizio": "2026-11-08 05:54:00",
+   "n": "1.12",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.833,
+      0.075,
+      0.165,
+      0.315
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg011_kit244",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 313,
+   "uid": "71AYBC1XRXB49ZKP111A",
+   "canale": 0,
+   "inizio": "2026-11-07 06:16:00",
+   "n": "1.13",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.013,
+      0.031,
+      0.395,
+      0.908
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg012_kit313",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 336,
+   "uid": "W7SFSNJPNTC6FNZ3111A",
+   "canale": 0,
+   "inizio": "2026-11-05 20:24:00",
+   "n": "1.14",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.4,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg013_kit336",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 340,
+   "uid": "PYNSVP1AMGHYAZE8111A",
+   "canale": 0,
+   "inizio": "2026-11-11 03:39:00",
+   "n": "1.16",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.03,
+      0.38,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg014_kit340",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 359,
+   "uid": "XA98UY74UT8E2CS4111A",
+   "canale": 0,
+   "inizio": "2026-11-06 14:33:00",
+   "n": "1.17",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.22,
+      0.68,
+      0.6
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg015_kit359",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 272,
+   "uid": "VMU4ZRLXRWFVZSL4111A",
+   "canale": 2,
+   "inizio": "2026-11-11 18:25:00",
+   "n": "1.19",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.88,
+      0.12,
+      0.12,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg016_kit272",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 328,
+   "uid": "Z2YW3NFY62CEEYMN111A",
+   "canale": 0,
+   "inizio": "2026-11-08 20:44:00",
+   "n": "1.20",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg017_kit328",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 266,
+   "uid": "DDH6YUVZDXRJGVNG111A",
+   "canale": 1,
+   "inizio": "2026-11-05 08:28:00",
+   "n": "1.21",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.3,
+      0.42
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg018_kit266",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 354,
+   "uid": "XHHP3RSD9WX99937111A",
+   "canale": 2,
+   "inizio": "2026-11-05 07:32:00",
+   "n": "1.25",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.064,
+      0.0,
+      0.572,
+      0.479
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg019_kit354",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 368,
+   "uid": "V2VX45CYLJD1ZWUX111A",
+   "canale": 0,
+   "inizio": "2026-11-07 05:03:00",
+   "n": "1.26",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.0,
+      0.9,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg020_kit368",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 548,
+   "uid": "UD9M65XRERFATJHJ111A",
+   "canale": 0,
+   "inizio": "2026-11-11 14:09:00",
+   "n": "1.27",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.022,
+      0.0,
+      0.546,
+      0.526
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg021_kit548",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 361,
+   "uid": "LEJNLW6UDVV5WW7R111A",
+   "canale": 2,
+   "inizio": "2026-11-09 20:43:00",
+   "n": "1.28",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.79,
+      0.28,
+      0.21,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg022_kit361",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 355,
+   "uid": "7PZKV5FTZH75DX6T111A",
+   "canale": 1,
+   "inizio": "2026-11-09 14:58:00",
+   "n": "1.29",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.4,
+      0.1,
+      0.6,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg023_kit355",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 608,
+   "uid": "SXFHYWSUJC1LLP42111A",
+   "canale": 0,
+   "inizio": "2026-11-09 20:36:00",
+   "n": "1.30",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.432,
+      0.003,
+      0.227,
+      0.41
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg024_kit608",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 285,
+   "uid": "FYT1GBXFKJ72T2A3111A",
+   "canale": 0,
+   "inizio": "2026-11-05 12:00:00",
+   "n": "1.31",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.0,
+      0.85,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg025_kit285",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 476,
+   "uid": "T17DMT2A81PM6T1D111A",
+   "canale": 1,
+   "inizio": "2026-11-11 01:29:00",
+   "n": "1.32",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.33,
+      0.08,
+      0.52,
+      0.88
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg026_kit476",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 155,
+   "uid": "SP2B1ACAPDP1R73U111A",
+   "canale": 1,
+   "inizio": "2026-11-10 12:28:00",
+   "n": "1.33",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.65,
+      0.0,
+      0.35,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg027_kit155",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 527,
+   "uid": "8VMJYJB3JZR795SM111A",
+   "canale": 2,
+   "inizio": "2026-11-10 13:25:00",
+   "n": "1.35",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.0,
+      0.88,
+      0.78
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg028_kit527",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 604,
+   "uid": "M9CLDBATTRFY6YLA111A",
+   "canale": 0,
+   "inizio": "2026-11-05 23:55:00",
+   "n": "1.36",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.051,
+      0.0,
+      0.928,
+      0.424
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg029_kit604",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 562,
+   "uid": "KB6FJR8SMMESZCC9111A",
+   "canale": 0,
+   "inizio": "2026-11-10 13:47:00",
+   "n": "1.37",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.3,
+      0.24,
+      0.42
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg030_kit562",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 341,
+   "uid": "U81C57YS16T8M7V5111A",
+   "canale": 1,
+   "inizio": "2026-11-05 00:46:00",
+   "n": "1.38",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.72,
+      0.0,
+      0.28,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg031_kit341",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 615,
+   "uid": "JSKC5FFS8PGF1GRZ111A",
+   "canale": 2,
+   "inizio": "2026-11-06 13:52:00",
+   "n": "1.39",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.545,
+      0.217,
+      0.14,
+      0.228
+     ],
+     [
+      0.48,
+      0.2,
+      0.25,
+      0.42
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg032_kit615",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 463,
+   "uid": "KUXJG7BXNYT2M6TR111A",
+   "canale": 1,
+   "inizio": "2026-11-09 04:49:00",
+   "n": "1.40",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.15,
+      0.88,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg033_kit463",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 350,
+   "uid": "7D3YC3EW3ESSM35N111A",
+   "canale": 2,
+   "inizio": "2026-11-09 18:13:00",
+   "n": "1.41",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.36,
+      0.0,
+      0.27,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg034_kit350",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 279,
+   "uid": "9U84G5EWJUACNLBV111A",
+   "canale": 2,
+   "inizio": "2026-11-07 22:48:00",
+   "n": "1.44",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.065,
+      0.0,
+      0.37,
+      0.412
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg035_kit279",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 248,
+   "uid": "AKC6TD1PZ3A3GNPF111A",
+   "canale": 0,
+   "inizio": "2026-11-08 14:06:00",
+   "n": "1.45",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.08,
+      0.75,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg036_kit248",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 384,
+   "uid": "9LSS75MFLX8R8YWM111A",
+   "canale": 2,
+   "inizio": "2026-11-05 04:14:00",
+   "n": "1.46",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.583,
+      0.167,
+      0.417,
+      0.518
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg037_kit384",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 434,
+   "uid": "5N35V6K2E38TFMAL111A",
+   "canale": 2,
+   "inizio": "2026-11-06 12:59:00",
+   "n": "1.47",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.189,
+      0.1,
+      0.811,
+      0.449
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg038_kit434",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 222,
+   "uid": "9APFRCUFD8MFPJBF111A",
+   "canale": 0,
+   "inizio": "2026-11-09 12:54:00",
+   "n": "1.49",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.92,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg039_kit222",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 314,
+   "uid": "37NL3MVW992VXVBH111A",
+   "canale": 0,
+   "inizio": "2026-11-11 09:34:00",
+   "n": "1.51",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.1,
+      1.0,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg040_kit314",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 369,
+   "uid": "66G43XTTBMNAVS7L111A",
+   "canale": 0,
+   "inizio": "2026-11-09 18:44:00",
+   "n": "1.55",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.03,
+      0.38,
+      0.8
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg041_kit369",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 597,
+   "uid": "NEBYRCVBMXK1HA8F111A",
+   "canale": 0,
+   "inizio": "2026-11-11 05:10:00",
+   "n": "1.56",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.07,
+      0.8,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg042_kit597",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 233,
+   "uid": "VEH5GRDEBCHVWWA7111A",
+   "canale": 1,
+   "inizio": "2026-11-08 19:10:00",
+   "n": "1.57",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.82,
+      0.0,
+      0.18,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg043_kit233",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 225,
+   "uid": "AJBLK1K1A94WHV9A111A",
+   "canale": 1,
+   "inizio": "2026-11-05 02:34:00",
+   "n": "1.58",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.02,
+      0.15,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg044_kit225",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 514,
+   "uid": "H4GEZPEHLHM27RS7111A",
+   "canale": 2,
+   "inizio": "2026-11-05 10:44:00",
+   "n": "1.59",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.0,
+      0.25,
+      0.38
+     ],
+     [
+      0.0,
+      0.55,
+      0.22,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg045_kit514",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 639,
+   "uid": "5VKXD58FYBRZWTX3111A",
+   "canale": 3,
+   "inizio": "2026-11-07 02:18:00",
+   "n": "1.60",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.43,
+      0.0,
+      0.22,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg046_kit639",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 270,
+   "uid": "DZ4YDFW7NWY8RGFF111A",
+   "canale": 2,
+   "inizio": "2026-11-10 05:19:00",
+   "n": "1.62",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.075,
+      0.035,
+      0.46,
+      0.525
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg047_kit270",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 296,
+   "uid": "PL2C38934T922T1A111A",
+   "canale": 2,
+   "inizio": "2026-11-10 11:59:00",
+   "n": "1.63",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.2,
+      0.05,
+      0.8,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg048_kit296",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 583,
+   "uid": "4GFUGHHA1WE3A94H111A",
+   "canale": 1,
+   "inizio": "2026-11-10 11:36:00",
+   "n": "1.65",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.48,
+      0.22,
+      0.36,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg049_kit583",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 262,
+   "uid": "P698U74B7936LKG7111A",
+   "canale": 0,
+   "inizio": "2026-11-11 08:01:00",
+   "n": "1.67",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.03,
+      0.95,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg050_kit262",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 382,
+   "uid": "ZPF7PPYNRMBNZ8B2111A",
+   "canale": 0,
+   "inizio": "2026-11-09 03:44:00",
+   "n": "1.68",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.22,
+      0.0,
+      0.78,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg051_kit382",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 410,
+   "uid": "FDEY1RWMUZVX5151111A",
+   "canale": 0,
+   "inizio": "2026-11-07 00:04:00",
+   "n": "1.70",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.585,
+      0.269,
+      0.41,
+      0.673
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg052_kit410",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 528,
+   "uid": "WXNAMV4LF7P1G8VW111A",
+   "canale": 0,
+   "inizio": "2026-11-05 03:06:00",
+   "n": "1.72",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.22,
+      0.0,
+      0.57,
+      0.42
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg053_kit528",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 525,
+   "uid": "ESHWA8Z6L8LDD7SJ111A",
+   "canale": 0,
+   "inizio": "2026-11-09 19:49:00",
+   "n": "1.73",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.0,
+      0.27,
+      0.58
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg054_kit525",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 224,
+   "uid": "VR3K2NUED3CM9R6D111A",
+   "canale": 3,
+   "inizio": "2026-11-08 04:05:00",
+   "n": "1.74",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.0,
+      0.4,
+      0.2
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg055_kit224",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 619,
+   "uid": "ZLCJCWMPZHBDZKBG111A",
+   "canale": 2,
+   "inizio": "2026-11-10 12:38:00",
+   "n": "1.75",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.003,
+      0.032,
+      0.714,
+      0.434
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg056_kit619",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 445,
+   "uid": "J8GJEC67MTDV7SU9111A",
+   "canale": 2,
+   "inizio": "2026-11-07 22:39:00",
+   "n": "1.78",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.33,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg057_kit445",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 567,
+   "uid": "DZR4JJ3EKZDNCEFA111A",
+   "canale": 0,
+   "inizio": "2026-11-08 17:43:00",
+   "n": "1.79",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.1,
+      0.7,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg058_kit567",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 249,
+   "uid": "Z88FMW1GZTJS7ZVR111A",
+   "canale": 1,
+   "inizio": "2026-11-09 00:46:00",
+   "n": "1.80",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.011,
+      0.018,
+      0.908,
+      0.375
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg059_kit249",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 579,
+   "uid": "CRFNZRWGZW2VKKLV111A",
+   "canale": 1,
+   "inizio": "2026-11-06 11:14:00",
+   "n": "1.81",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.153,
+      0.187,
+      0.362
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg060_kit579",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 557,
+   "uid": "HAV8LC42R5TCXK2M111A",
+   "canale": 2,
+   "inizio": "2026-11-11 18:06:00",
+   "n": "1.83",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.55,
+      0.25,
+      0.45,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg061_kit557",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 402,
+   "uid": "YC7AY1N4TLXBLJCR111A",
+   "canale": 0,
+   "inizio": "2026-11-06 11:33:00",
+   "n": "1.85",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.1,
+      0.7,
+      0.6
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg062_kit402",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 298,
+   "uid": "9XK9SL68CU6HTGSD111A",
+   "canale": 2,
+   "inizio": "2026-11-08 20:56:00",
+   "n": "1.86",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.32,
+      0.0,
+      0.4,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg063_kit298",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 317,
+   "uid": "ZSCR32CKT1ADVK98111A",
+   "canale": 2,
+   "inizio": "2026-11-08 16:08:00",
+   "n": "1.87",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.166,
+      0.0,
+      0.834,
+      0.44
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg064_kit317",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 666,
+   "uid": "WHZZJCNKEJJSTVMM111A",
+   "canale": 0,
+   "inizio": "2026-11-05 23:31:00",
+   "n": "1.88",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.17,
+      0.0,
+      0.36,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg065_kit666",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 664,
+   "uid": "CDFABYJ3A1HV72WK111A",
+   "canale": 2,
+   "inizio": "2026-11-07 03:47:00",
+   "n": "1.90",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.27,
+      0.0,
+      0.62,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg066_kit664",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 422,
+   "uid": "5SY3MK8L4RNNHW42111A",
+   "canale": 2,
+   "inizio": "2026-11-08 08:01:00",
+   "n": "1.91",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.8,
+      0.28,
+      0.2,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg067_kit422",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 215,
+   "uid": "XDVM4USNFGU412D6111A",
+   "canale": 1,
+   "inizio": "2026-11-06 01:17:00",
+   "n": "1.96",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.58,
+      0.2,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg068_kit215",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 511,
+   "uid": "8443NPKW5BYJB4K4111A",
+   "canale": 0,
+   "inizio": "2026-11-10 07:47:00",
+   "n": "1.97",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.178,
+      0.0,
+      0.822,
+      0.903
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg069_kit511",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 442,
+   "uid": "KE8JBX6ZAJV9MVP2111A",
+   "canale": 0,
+   "inizio": "2026-11-07 05:21:00",
+   "n": "1.98",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.28,
+      0.0,
+      0.62,
+      0.85
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg070_kit442",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 531,
+   "uid": "UL6BJU4UH6KJERYU111A",
+   "canale": 2,
+   "inizio": "2026-11-05 13:36:00",
+   "n": "1.99",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.19,
+      0.03,
+      0.15,
+      0.17
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg071_kit531",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 236,
+   "uid": "EWMGTGGC1AAN9LGA111A",
+   "canale": 0,
+   "inizio": "2026-11-07 11:07:00",
+   "n": "1.107",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.38,
+      0.0,
+      0.3,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg072_kit236",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 577,
+   "uid": "4LWLT8S3G6AE94ZM111A",
+   "canale": 0,
+   "inizio": "2026-11-07 15:52:00",
+   "n": "1.109",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.482,
+      0.0,
+      0.286,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg073_kit577",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 211,
+   "uid": "6FXN1BZVMG9L257A111A",
+   "canale": 1,
+   "inizio": "2026-11-09 04:19:00",
+   "n": "1.110",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.22,
+      0.0,
+      0.58,
+      0.35
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg074_kit211",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 663,
+   "uid": "ZPGZW3PAYF5HFH66111A",
+   "canale": 2,
+   "inizio": "2026-11-05 23:19:00",
+   "n": "1.112",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.062,
+      0.192,
+      0.427,
+      0.215
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg075_kit663",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 566,
+   "uid": "BSSAJLD1WHWT3FGX111A",
+   "canale": 3,
+   "inizio": "2026-11-10 14:29:00",
+   "n": "1.113",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.24,
+      0.12,
+      0.42,
+      0.68
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg076_kit566",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 405,
+   "uid": "RRJGC1W7958W1TNW111A",
+   "canale": 1,
+   "inizio": "2026-11-11 20:47:00",
+   "n": "1.114",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.06,
+      0.88,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg077_kit405",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 331,
+   "uid": "F9PAE17A3EBM8GLG111A",
+   "canale": 0,
+   "inizio": "2026-11-10 18:05:00",
+   "n": "1.115",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.0,
+      0.88,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg078_kit331",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 565,
+   "uid": "UMR99YGXVGEGAM64111A",
+   "canale": 2,
+   "inizio": "2026-11-10 00:59:00",
+   "n": "1.116",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.03,
+      0.58,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg079_kit565",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 536,
+   "uid": "C26MZKCH8D6226HV111A",
+   "canale": 0,
+   "inizio": "2026-11-07 00:57:00",
+   "n": "1.118",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.03,
+      0.62,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg080_kit536",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 561,
+   "uid": "A4BJY9PUN5E9X3SV111A",
+   "canale": 0,
+   "inizio": "2026-11-11 16:51:00",
+   "n": "1.119",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.006,
+      0.053,
+      0.994,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg081_kit561",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 404,
+   "uid": "T9YMSZNPZW7K45FJ111A",
+   "canale": 1,
+   "inizio": "2026-11-08 20:15:00",
+   "n": "1.124",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.644,
+      0.482
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg082_kit404",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 240,
+   "uid": "H2CS6MM453PF6UV5111A",
+   "canale": 0,
+   "inizio": "2026-11-07 18:06:00",
+   "n": "1.125",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg083_kit240",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 423,
+   "uid": "NM1HACFCGHXHMB4L111A",
+   "canale": 0,
+   "inizio": "2026-11-10 12:02:00",
+   "n": "1.129",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.065,
+      0.0,
+      0.935,
+      0.473
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg084_kit423",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 581,
+   "uid": "HG7F76GY3TTXNYZC111A",
+   "canale": 0,
+   "inizio": "2026-11-08 06:57:00",
+   "n": "1.131",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.695,
+      0.077,
+      0.3,
+      0.577
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg085_kit581",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 516,
+   "uid": "VML1EDXXDFC5AE8W111A",
+   "canale": 2,
+   "inizio": "2026-11-07 20:59:00",
+   "n": "1.132",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.06,
+      0.66,
+      0.66
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg086_kit516",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 483,
+   "uid": "359UWYX652MUHANB111A",
+   "canale": 0,
+   "inizio": "2026-11-07 02:09:00",
+   "n": "1.136",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.118,
+      0.0,
+      0.353,
+      0.822
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg087_kit483",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 487,
+   "uid": "V2NWBPP3Z8RPHCJ8111A",
+   "canale": 2,
+   "inizio": "2026-11-05 23:49:00",
+   "n": "1.138",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.03,
+      0.63,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg088_kit487",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 533,
+   "uid": "64NH6FLW5Z44M8RC111A",
+   "canale": 2,
+   "inizio": "2026-11-09 11:24:00",
+   "n": "1.139",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.05,
+      0.5,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg089_kit533",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 400,
+   "uid": "YE4HZ8SM52F97HY5111A",
+   "canale": 1,
+   "inizio": "2026-11-07 08:04:00",
+   "n": "1.141",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.43,
+      0.02,
+      0.27,
+      0.08
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg090_kit400",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 661,
+   "uid": "P1VB81PVUERTHPTE111A",
+   "canale": 0,
+   "inizio": "2026-11-07 05:01:00",
+   "n": "1.142",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.22,
+      0.1,
+      0.21,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg091_kit661",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 415,
+   "uid": "E55TCHL217B9NFT8111A",
+   "canale": 2,
+   "inizio": "2026-11-08 12:38:00",
+   "n": "1.143",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.25,
+      0.477
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg092_kit415",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 629,
+   "uid": "7P1DCUE6RNPTS98Y111A",
+   "canale": 0,
+   "inizio": "2026-11-06 07:22:00",
+   "n": "1.145",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.18,
+      0.14,
+      0.15
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg093_kit629",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 277,
+   "uid": "TPWDF7CUM4VK3YPF111A",
+   "canale": 0,
+   "inizio": "2026-11-11 02:11:00",
+   "n": "1.146",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.15,
+      0.0,
+      0.8,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg094_kit277",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 409,
+   "uid": "4VWE7SJA32F96CF8111A",
+   "canale": 2,
+   "inizio": "2026-11-07 15:19:00",
+   "n": "1.149",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.06,
+      0.45,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg095_kit409",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 560,
+   "uid": "FLPCABR8BVA3FM43111A",
+   "canale": 2,
+   "inizio": "2026-11-07 02:37:00",
+   "n": "1.150",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.1,
+      0.19,
+      0.22
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg096_kit560",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 353,
+   "uid": "ZKNXTL2P7E8YHYLJ111A",
+   "canale": 0,
+   "inizio": "2026-11-10 08:27:00",
+   "n": "1.151",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.13,
+      0.02,
+      0.5,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg097_kit353",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 596,
+   "uid": "SEFN1CWCK1P9NGXV111A",
+   "canale": 0,
+   "inizio": "2026-11-05 08:09:00",
+   "n": "1.153",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.12,
+      0.1,
+      0.88,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg098_kit596",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 374,
+   "uid": "YWFTBDYJV9DAV127111A",
+   "canale": 3,
+   "inizio": "2026-11-05 20:00:00",
+   "n": "1.154",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.427,
+      0.488,
+      0.235,
+      0.367
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg099_kit374",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 435,
+   "uid": "PF5ZX9ZDD6X3CWJS111A",
+   "canale": 0,
+   "inizio": "2026-11-06 20:01:00",
+   "n": "1.156",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.22,
+      0.12,
+      0.55,
+      0.8
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg100_kit435",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 591,
+   "uid": "65JK8PFSSLXZUW3V111A",
+   "canale": 2,
+   "inizio": "2026-11-06 05:34:00",
+   "n": "1.158",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.93,
+      0.28,
+      0.07,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg101_kit591",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 556,
+   "uid": "WZMHADP3H2D1PDVB111A",
+   "canale": 1,
+   "inizio": "2026-11-10 10:13:00",
+   "n": "1.163",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.6,
+      0.0,
+      0.24,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg102_kit556",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 519,
+   "uid": "P1H1L3P82E3T5RNF111A",
+   "canale": 0,
+   "inizio": "2026-11-09 22:59:00",
+   "n": "1.164",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.6
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg103_kit519",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 605,
+   "uid": "CZVKNEWSHPE3SMCS111A",
+   "canale": 1,
+   "inizio": "2026-11-08 06:39:00",
+   "n": "1.165",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.16,
+      0.17,
+      0.48,
+      0.56
+     ],
+     [
+      0.0,
+      0.48,
+      0.12,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg104_kit605",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 603,
+   "uid": "YJUHAR3PWEKDH91A111A",
+   "canale": 1,
+   "inizio": "2026-11-10 01:30:00",
+   "n": "1.170",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.189,
+      0.942,
+      0.494
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg105_kit603",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 293,
+   "uid": "BDXTBBGY87XT5TAY111A",
+   "canale": 2,
+   "inizio": "2026-11-05 12:33:00",
+   "n": "1.171",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.03,
+      0.25,
+      0.35
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg106_kit293",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 676,
+   "uid": "YUJCS3KBAJGAFNMK111A",
+   "canale": 0,
+   "inizio": "2026-11-08 01:02:00",
+   "n": "1.172",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.68,
+      0.35,
+      0.32,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg107_kit676",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 632,
+   "uid": "3KPRNMDNFBP2HNLT111A",
+   "canale": 2,
+   "inizio": "2026-11-07 01:34:00",
+   "n": "1.174",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.0,
+      0.4,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg108_kit632",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 485,
+   "uid": "XHST12ZJCWZSRWTY111A",
+   "canale": 1,
+   "inizio": "2026-11-07 03:45:00",
+   "n": "1.180",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.51,
+      0.113,
+      0.16,
+      0.193
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg109_kit485",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 364,
+   "uid": "AKG7C8D3GEKTGEJ1111A",
+   "canale": 0,
+   "inizio": "2026-11-08 01:12:00",
+   "n": "1.182",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.05,
+      0.26,
+      0.57
+     ],
+     [
+      0.1,
+      0.0,
+      0.08,
+      0.07
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg110_kit364",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 456,
+   "uid": "MA1YNADBL6357JM5111A",
+   "canale": 0,
+   "inizio": "2026-11-09 11:02:00",
+   "n": "1.185",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.95,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg111_kit456",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 447,
+   "uid": "PZSG9K7XGEY68484111A",
+   "canale": 0,
+   "inizio": "2026-11-10 10:10:00",
+   "n": "1.187",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.407,
+      0.091,
+      0.187,
+      0.138
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg112_kit447",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 281,
+   "uid": "NWUGBRJD9B41DG2H111A",
+   "canale": 2,
+   "inizio": "2026-11-09 16:01:00",
+   "n": "1.189",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.5,
+      0.2,
+      0.36
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg113_kit281",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 362,
+   "uid": "UAK1PMB337M3YUZ4111A",
+   "canale": 3,
+   "inizio": "2026-11-09 14:22:00",
+   "n": "1.195",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.482,
+      0.0,
+      0.377,
+      0.41
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg114_kit362",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 346,
+   "uid": "VVS8FRBJBPMAATT9111A",
+   "canale": 0,
+   "inizio": "2026-11-08 06:55:00",
+   "n": "1.197",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.07,
+      0.0,
+      0.7,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg115_kit346",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 247,
+   "uid": "MNC56Y2VDPC3HXMA111A",
+   "canale": 1,
+   "inizio": "2026-11-10 04:18:00",
+   "n": "1.198",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.18,
+      0.0,
+      0.82,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg116_kit247",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 417,
+   "uid": "C8N7N578256K5PXH111A",
+   "canale": 0,
+   "inizio": "2026-11-07 22:18:00",
+   "n": "1.204",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.645,
+      0.015,
+      0.14,
+      0.125
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg117_kit417",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 372,
+   "uid": "2R47N7LXSMFF7BZG111A",
+   "canale": 0,
+   "inizio": "2026-11-10 08:37:00",
+   "n": "1.207",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.85,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg118_kit372",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 467,
+   "uid": "RX6NUYDZM1HAEXY5111A",
+   "canale": 1,
+   "inizio": "2026-11-05 00:35:00",
+   "n": "1.210",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.2,
+      0.0,
+      0.75,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg119_kit467",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 523,
+   "uid": "7AGSHT5DRRZNKG8J111A",
+   "canale": 1,
+   "inizio": "2026-11-07 09:27:00",
+   "n": "1.211",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.25,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg120_kit523",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 377,
+   "uid": "5B6EAFP8NRAUC51B111A",
+   "canale": 2,
+   "inizio": "2026-11-11 12:39:00",
+   "n": "1.213",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.55,
+      0.0,
+      0.45,
+      0.7
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg121_kit377",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 302,
+   "uid": "CS1NL1A6ADZUFUVV111A",
+   "canale": 1,
+   "inizio": "2026-11-08 15:20:00",
+   "n": "1.215",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.405,
+      0.713,
+      0.4,
+      0.287
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg122_kit302",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 386,
+   "uid": "DN6N9A67HBPP4D7R111A",
+   "canale": 0,
+   "inizio": "2026-11-06 05:23:00",
+   "n": "1.216",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.15,
+      1.0,
+      0.8
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg123_kit386",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 321,
+   "uid": "U6NHL2FYZJTEVA5L111A",
+   "canale": 0,
+   "inizio": "2026-11-09 10:50:00",
+   "n": "1.223",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.95,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg124_kit321",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 212,
+   "uid": "RXR28J553KZ51UE3111A",
+   "canale": 2,
+   "inizio": "2026-11-09 21:26:00",
+   "n": "1.228",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.552,
+      0.006,
+      0.448,
+      0.402
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg125_kit212",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 573,
+   "uid": "F6ZTHAARH1MRA7HJ111A",
+   "canale": 0,
+   "inizio": "2026-11-05 15:09:00",
+   "n": "1.231",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.3,
+      0.02,
+      0.62,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg126_kit573",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 397,
+   "uid": "HJ12NFEVGGRM6E1F111A",
+   "canale": 2,
+   "inizio": "2026-11-11 20:50:00",
+   "n": "1.232",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.033,
+      1.0,
+      0.921
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg127_kit397",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 506,
+   "uid": "GBRA7YH46G7XW5RL111A",
+   "canale": 0,
+   "inizio": "2026-11-08 18:29:00",
+   "n": "1.233",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.177,
+      0.213,
+      0.485,
+      0.552
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg128_kit506",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 324,
+   "uid": "EZAG3277UXKFM4W7111A",
+   "canale": 0,
+   "inizio": "2026-11-09 21:16:00",
+   "n": "1.234",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.5,
+      0.0,
+      0.42,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg129_kit324",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 242,
+   "uid": "RU4HDF8JE7V5NVYW111A",
+   "canale": 2,
+   "inizio": "2026-11-10 03:29:00",
+   "n": "1.236",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.0,
+      0.4,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg130_kit242",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 201,
+   "uid": "1V7P6RFZ2KLNK8XY111A",
+   "canale": 3,
+   "inizio": "2026-11-10 18:48:00",
+   "n": "1.239",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.45
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg131_kit201",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 526,
+   "uid": "Y7DFLU2TR6J7EK1U111A",
+   "canale": 0,
+   "inizio": "2026-11-10 23:32:00",
+   "n": "1.240",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.059,
+      0.044,
+      0.671,
+      0.389
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg132_kit526",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 294,
+   "uid": "5R5DB3DGPD4BVFP1111A",
+   "canale": 1,
+   "inizio": "2026-11-05 05:22:00",
+   "n": "1.244",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.1,
+      0.1,
+      0.9,
+      0.9
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg133_kit294",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 643,
+   "uid": "EWB874PBW9ZZS9MB111A",
+   "canale": 2,
+   "inizio": "2026-11-09 05:59:00",
+   "n": "1.248",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.6,
+      0.0,
+      0.4,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg134_kit643",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 484,
+   "uid": "RSG7D9NAPWNEPPF9111A",
+   "canale": 2,
+   "inizio": "2026-11-10 09:59:00",
+   "n": "1.249",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.4,
+      0.03,
+      0.58,
+      0.35
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg135_kit484",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 301,
+   "uid": "2JN55YJRW3ZGHM46111A",
+   "canale": 2,
+   "inizio": "2026-11-11 04:17:00",
+   "n": "1.252",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.55,
+      0.2,
+      0.35,
+      0.65
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg136_kit301",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 419,
+   "uid": "W9W1JU5R5JU9VM2Y111A",
+   "canale": 0,
+   "inizio": "2026-11-11 00:33:00",
+   "n": "1.254",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.12,
+      0.05,
+      0.62,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg137_kit419",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 651,
+   "uid": "8X9W32MPN8RHKNF1111A",
+   "canale": 1,
+   "inizio": "2026-11-11 07:58:00",
+   "n": "1.257",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.95,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg138_kit651",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 601,
+   "uid": "MYDGZ7KK27PU28YJ111A",
+   "canale": 1,
+   "inizio": "2026-11-10 05:47:00",
+   "n": "1.258",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.345,
+      0.25,
+      0.06,
+      0.14
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg139_kit601",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 594,
+   "uid": "UNNT1YKT1SJHX2ZL111A",
+   "canale": 0,
+   "inizio": "2026-11-07 01:42:00",
+   "n": "1.260",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.32,
+      0.18,
+      0.08,
+      0.06
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg140_kit594",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 657,
+   "uid": "7GXDM2A6XAEYTH1L111A",
+   "canale": 0,
+   "inizio": "2026-11-11 15:31:00",
+   "n": "1.263",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.52,
+      0.13,
+      0.14,
+      0.18
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg141_kit657",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 401,
+   "uid": "HE1M45K21VH45XUT111A",
+   "canale": 2,
+   "inizio": "2026-11-07 13:59:00",
+   "n": "1.269",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.2,
+      0.03,
+      0.8,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg142_kit401",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 461,
+   "uid": "RC8WNZZ2HAXVGBSR111A",
+   "canale": 0,
+   "inizio": "2026-11-10 01:37:00",
+   "n": "1.270",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.38,
+      0.1,
+      0.18,
+      0.22
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg143_kit461",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 235,
+   "uid": "59L841VXGTHZH5EC111A",
+   "canale": 1,
+   "inizio": "2026-11-10 02:41:00",
+   "n": "1.278",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.88,
+      0.3,
+      0.12,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg144_kit235",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 421,
+   "uid": "FMZMEVPNDK24S9V2111A",
+   "canale": 0,
+   "inizio": "2026-11-10 20:43:00",
+   "n": "1.280",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.05,
+      0.38,
+      0.95
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg145_kit421",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 413,
+   "uid": "GZS2PD75XVJGE71V111A",
+   "canale": 0,
+   "inizio": "2026-11-10 14:22:00",
+   "n": "1.281",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.18,
+      0.0,
+      0.36,
+      0.3
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg146_kit413",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 613,
+   "uid": "DD188A2R4G41E7JF111A",
+   "canale": 0,
+   "inizio": "2026-11-05 03:17:00",
+   "n": "1.306",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.5,
+      0.62,
+      0.5,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg147_kit613",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 521,
+   "uid": "7JCMBSP77KA13BCT111A",
+   "canale": 1,
+   "inizio": "2026-11-06 20:18:00",
+   "n": "1.310",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.25,
+      0.85,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg148_kit521",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 299,
+   "uid": "5F16KD33VW7198GG111A",
+   "canale": 1,
+   "inizio": "2026-11-10 13:28:00",
+   "n": "1.313",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.36,
+      0.12,
+      0.28,
+      0.35
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg149_kit299",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 383,
+   "uid": "J9PHD2M4J3RS2VVW111A",
+   "canale": 2,
+   "inizio": "2026-11-10 06:42:00",
+   "n": "1.315",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.217,
+      0.18,
+      0.515,
+      0.82
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg150_kit383",
+   "tipo": "negativa",
+   "riserva": false
+  },
+  {
+   "kit": 571,
+   "uid": "8EYMPATHHM3NMZ8D111A",
+   "canale": 2,
+   "inizio": "2026-11-08 03:29:00",
+   "n": "1.316",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.27,
+      0.05,
+      0.48,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg151_kit571",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 228,
+   "uid": "RFYHMF536FXXGHTF111A",
+   "canale": 2,
+   "inizio": "2026-11-10 15:18:00",
+   "n": "1.331",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.88,
+      0.12,
+      0.12,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg152_kit228",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 549,
+   "uid": "5V8BSPUXC9EERZRL111A",
+   "canale": 1,
+   "inizio": "2026-11-07 15:22:00",
+   "n": "1.337",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.22,
+      1.0,
+      0.75
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg153_kit549",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 291,
+   "uid": "AX331B9CM2A59Y92111A",
+   "canale": 0,
+   "inizio": "2026-11-09 00:28:00",
+   "n": "1.340",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.18,
+      0.4,
+      0.45,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg154_kit291",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 444,
+   "uid": "2HZYGLH6GLGS33J1111A",
+   "canale": 0,
+   "inizio": "2026-11-10 21:17:00",
+   "n": "1.344",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.855,
+      0.125,
+      0.06,
+      0.175
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg155_kit444",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 576,
+   "uid": "E88YYPMXMKTKK52K111A",
+   "canale": 0,
+   "inizio": "2026-11-05 01:31:00",
+   "n": "1.346",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.86,
+      0.125,
+      0.14,
+      0.175
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg156_kit576",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 274,
+   "uid": "XHBGH2S17THTCBAR111A",
+   "canale": 1,
+   "inizio": "2026-11-05 21:26:00",
+   "n": "1.348",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.45,
+      0.1,
+      0.4,
+      0.9
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg157_kit274",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 418,
+   "uid": "H6K3H5CJKZD7KNM9111A",
+   "canale": 0,
+   "inizio": "2026-11-05 19:03:00",
+   "n": "1.361",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.28,
+      0.22,
+      0.25,
+      0.5
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg158_kit418",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 311,
+   "uid": "JKM762PETEFLERDW111A",
+   "canale": 0,
+   "inizio": "2026-11-09 19:54:00",
+   "n": "1.363",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.08,
+      0.0,
+      0.92,
+      0.52
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg159_kit311",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 223,
+   "uid": "54259Z64ZRKKSFC4111A",
+   "canale": 3,
+   "inizio": "2026-11-11 09:09:00",
+   "n": "1.369",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.05,
+      0.65,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg160_kit223",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 638,
+   "uid": "D8DN3RK5KRW63X79111A",
+   "canale": 2,
+   "inizio": "2026-11-07 03:16:00",
+   "n": "1.380",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.8,
+      0.12,
+      0.2,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg161_kit638",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 474,
+   "uid": "PL77DMDACJWZBN55111A",
+   "canale": 3,
+   "inizio": "2026-11-11 11:48:00",
+   "n": "1.389",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.4,
+      0.08,
+      0.52,
+      0.58
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg162_kit474",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 668,
+   "uid": "X1Y7YEERSDR6VPEZ111A",
+   "canale": 0,
+   "inizio": "2026-11-11 22:45:00",
+   "n": "1.396",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.5,
+      0.38,
+      0.38,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg163_kit668",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 220,
+   "uid": "1S8K9D5WHLB5AVC9111A",
+   "canale": 0,
+   "inizio": "2026-11-11 08:03:00",
+   "n": "1.397",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.75,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg164_kit220",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 582,
+   "uid": "FAY7T39CRWM7KY93111A",
+   "canale": 0,
+   "inizio": "2026-11-08 11:21:00",
+   "n": "1.403",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.25,
+      0.0,
+      0.7,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg165_kit582",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 375,
+   "uid": "4JWHPZFCBWRWTAX3111A",
+   "canale": 2,
+   "inizio": "2026-11-11 05:16:00",
+   "n": "1.422",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.028,
+      0.058,
+      0.343,
+      0.667
+     ],
+     [
+      0.64,
+      0.09,
+      0.1,
+      0.11
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "validazione",
+   "nome": "neg166_kit375",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 339,
+   "uid": "1YMHD3K9XUAMGBD5111A",
+   "canale": 0,
+   "inizio": "2026-11-07 07:20:00",
+   "n": "1.429",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.02,
+      0.95,
+      0.65
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg167_kit339",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 649,
+   "uid": "FLAXNRHYVANDSC6K111A",
+   "canale": 2,
+   "inizio": "2026-11-05 03:49:00",
+   "n": "1.456",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.68,
+      0.2,
+      0.32,
+      0.48
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg168_kit649",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 636,
+   "uid": "24P9JR3PNNCYN472111A",
+   "canale": 1,
+   "inizio": "2026-11-08 13:36:00",
+   "n": "1.463",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.35,
+      0.0,
+      0.62,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg169_kit636",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 443,
+   "uid": "55R623L3HMTV2USD111A",
+   "canale": 3,
+   "inizio": "2026-11-05 03:31:00",
+   "n": "1.466",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.006,
+      0.44,
+      0.918,
+      0.269
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg170_kit443",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 585,
+   "uid": "THWLUMFHBBEFNJL8111A",
+   "canale": 0,
+   "inizio": "2026-11-07 03:27:00",
+   "n": "1.498",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.36,
+      0.0,
+      0.44,
+      1.0
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg171_kit585",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 602,
+   "uid": "F3T5XC1JS6F4GYCV111A",
+   "canale": 1,
+   "inizio": "2026-11-07 11:42:00",
+   "n": "1.513",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.03,
+      0.72,
+      0.46,
+      0.28
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg172_kit602",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 304,
+   "uid": "TSW4BHAFZS1WNKEW111A",
+   "canale": 0,
+   "inizio": "2026-11-08 00:18:00",
+   "n": "1.514",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.22,
+      0.27,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg173_kit304",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 671,
+   "uid": "U29EYBV9G5WPHW9M111A",
+   "canale": 2,
+   "inizio": "2026-11-11 06:20:00",
+   "n": "1.527",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.0,
+      0.92,
+      0.32
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg174_kit671",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 265,
+   "uid": "7364KU2XBGLZCAUL111A",
+   "canale": 0,
+   "inizio": "2026-11-07 00:07:00",
+   "n": "1.536",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.1,
+      1.0,
+      0.55
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg175_kit265",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 319,
+   "uid": "R7BN82NK71X11WEF111A",
+   "canale": 0,
+   "inizio": "2026-11-05 14:16:00",
+   "n": "1.543",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.18,
+      1.0,
+      0.62
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg176_kit319",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 261,
+   "uid": "ZKD7KEWUUMP7L12Y111A",
+   "canale": 0,
+   "inizio": "2026-11-05 03:07:00",
+   "n": "1.596",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.58,
+      0.0,
+      0.27,
+      0.25
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg177_kit261",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 403,
+   "uid": "UG1A6DEWGJKDBWSA111A",
+   "canale": 1,
+   "inizio": "2026-11-06 21:18:00",
+   "n": "1.598",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.6,
+      0.0,
+      0.15,
+      0.22
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg178_kit403",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 378,
+   "uid": "LUNUFNCU8ST4Y221111A",
+   "canale": 0,
+   "inizio": "2026-11-09 11:01:00",
+   "n": "1.603",
+   "notte": false,
+   "zona": {
+    "riquadri": [
+     [
+      0.05,
+      0.02,
+      0.92,
+      0.38
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg179_kit378",
+   "tipo": "negativa",
+   "riserva": true
+  },
+  {
+   "kit": 627,
+   "uid": "RJ1S2R7UAVGEJA9F111A",
+   "canale": 0,
+   "inizio": "2026-11-09 02:25:00",
+   "n": "1.612",
+   "notte": true,
+   "zona": {
+    "riquadri": [
+     [
+      0.0,
+      0.0,
+      0.95,
+      0.4
+     ]
+    ],
+    "escludi": []
+   },
+   "parte": "sviluppo",
+   "nome": "neg180_kit627",
+   "tipo": "negativa",
+   "riserva": true
+  }
+ ],
+ "scelta": {
+  "positive_possibili": 82,
+  "positive_notte_possibili": 7,
+  "kit_positive_possibili": 40,
+  "giudizi_sicuri": 821,
+  "eventi_con_giudizio": 468,
+  "positive_scartate": {
+   "0022fa6c91": "troppo vecchia: il registratore registra dal 2026-10-17 01:00",
+   "00987e035d": "troppo vecchia: il registratore registra dal 2026-10-24 12:30",
+   "02bd541d9e": "kit nella parte cieca",
+   "03344209b2": "kit nella parte cieca",
+   "046ae12a80": "troppo vecchia: il registratore registra dal 2026-10-25 16:32",
+   "0470b1865c": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "04f95af791": "kit nella parte cieca",
+   "0581fef60e": "kit nella parte cieca",
+   "0602a066ab": "troppo vecchia: il registratore registra dal 2026-10-29 18:02",
+   "06530146db": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "09945eff04": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "09e897fbc6": "troppo vecchia: il registratore registra dal 2026-10-28 03:30",
+   "0a6c7b62f0": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "0a6df6da64": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "0a82db3720": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "0b06b9f85c": "kit nella parte cieca",
+   "0c1a75eac2": "troppo vecchia: il registratore registra dal 2026-10-17 01:00",
+   "0c832a7c65": "kit nella parte cieca",
+   "0d7e2c204e": "troppo vecchia: il registratore registra dal 2026-10-25 16:02",
+   "0d839a0c68": "kit EX (la zona e' del posto di oggi)",
+   "0f0f727c02": "troppo vecchia: il registratore registra dal 2026-10-25 16:32",
+   "103c68c5ad": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "108ca14fbb": "troppo vecchia: il registratore registra dal 2026-10-17 19:30",
+   "1119f5858f": "troppo vecchia: il registratore registra dal 2026-10-24 21:30",
+   "11f11b3df2": "kit nella parte cieca",
+   "1295492803": "troppo vecchia: il registratore registra dal 2026-10-27 05:30",
+   "131a2c6134": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "136db22cae": "troppo vecchia: il registratore registra dal 2026-10-26 17:00",
+   "1462acaa76": "troppo vecchia: il registratore registra dal 2026-10-26 21:30",
+   "1529054efe": "troppo vecchia: il registratore registra dal 2026-10-29 18:42",
+   "15fe055774": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "17abf344a1": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "1821414132": "troppo vecchia: il registratore registra dal 2026-10-31 12:30",
+   "18861c5ec2": "troppo vecchia: il registratore registra dal 2026-10-28 06:00",
+   "18a156dd12": "troppo vecchia: il registratore registra dal 2026-10-24 10:00",
+   "1a9857100e": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "1b18f203d6": "troppo vecchia: il registratore registra dal 2026-10-26 21:30",
+   "1db8eb98fb": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "1dd196e0fd": "troppo vecchia: il registratore registra dal 2026-10-30 03:00",
+   "1f36770f2e": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "1f54891d4f": "il registratore non ha risposto al giro",
+   "211670f0c5": "troppo vecchia: il registratore registra dal 2026-10-25 04:00",
+   "21ccad72fd": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "22e08bd5ea": "la telecamera 4 del kit non ha la zona dei cassonetti",
+   "240ac0a7b1": "troppo vecchia: il registratore registra dal 2026-10-26 03:30",
+   "24135f548b": "il registratore non ha risposto al giro",
+   "2533c4d92b": "kit EX (la zona e' del posto di oggi)",
+   "261eeaa2dc": "il registratore non ha risposto al giro",
+   "2725df6d7e": "kit nella parte cieca",
+   "2757770ac4": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "27ac8872e1": "kit EX (la zona e' del posto di oggi)",
+   "29b3f4a81a": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "2a7c081d44": "troppo vecchia: il registratore registra dal 2026-10-29 05:30",
+   "2ab3b7646e": "kit EX (la zona e' del posto di oggi)",
+   "2c317a446c": "troppo vecchia: il registratore registra dal 2026-10-28 08:30",
+   "2d5f16d34c": "troppo vecchia: il registratore registra dal 2026-10-31 12:30",
+   "2d719d553b": "kit nella parte cieca",
+   "2ec6de525e": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "2edf894df1": "troppo vecchia: il registratore registra dal 2026-10-23 15:00",
+   "2f34647817": "kit nella parte cieca",
+   "2ff6ae146d": "troppo vecchia: il registratore registra dal 2026-10-26 02:30",
+   "300fd2b482": "kit EX (la zona e' del posto di oggi)",
+   "31acdfa20d": "troppo vecchia: il registratore registra dal 2026-11-05 07:32",
+   "31bf9338c4": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "3223f3a03a": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "324d1f4841": "troppo vecchia: il registratore registra dal 2026-10-28 12:00",
+   "334f7a1b24": "troppo vecchia: il registratore registra dal 2026-10-26 17:00",
+   "367ec96c79": "troppo vecchia: il registratore registra dal 2026-10-28 17:30",
+   "381a07346c": "kit nella parte cieca",
+   "383e1c5502": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "384e5d9412": "troppo vecchia: il registratore registra dal 2026-10-26 02:30",
+   "39565271ea": "kit nella parte cieca",
+   "39b1421193": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "3afcdbd5da": "kit nella parte cieca",
+   "3b005b869b": "troppo vecchia: il registratore registra dal 2026-10-28 06:00",
+   "3b4ce9a54c": "troppo vecchia: il registratore registra dal 2026-10-29 12:30",
+   "3bf4af3dc8": "il registratore non ha risposto al giro",
+   "3c0a568e0b": "kit nella parte cieca",
+   "3c4cc59f08": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "3d6e2aee0f": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "418d1756c9": "troppo vecchia: il registratore registra dal 2026-10-29 19:02",
+   "41e4a6ae74": "il registratore non ha risposto al giro",
+   "421273b673": "troppo vecchia: il registratore registra dal 2026-10-25 16:32",
+   "42edb7358b": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "440a60b29f": "troppo vecchia: il registratore registra dal 2026-10-26 14:30",
+   "442159eee0": "kit nella parte cieca",
+   "442b8f6cd2": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "442bad0375": "kit EX (la zona e' del posto di oggi)",
+   "445e420a11": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "448860368d": "troppo vecchia: il registratore registra dal 2026-10-24 17:00",
+   "44f1bc74b1": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "44fb984f7e": "troppo vecchia: il registratore registra dal 2026-10-27 02:30",
+   "4522a52c56": "kit nella parte cieca",
+   "45ed8963f8": "troppo vecchia: il registratore registra dal 2026-10-22 21:00",
+   "45f5a7e9ab": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "472aab83ea": "kit EX (la zona e' del posto di oggi)",
+   "4745fe6408": "evento non trovato (ne' NAS ne' sito)",
+   "4747b3ff61": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "485a4c61cf": "kit nella parte cieca",
+   "491f515382": "kit EX (la zona e' del posto di oggi)",
+   "4a31b7d81f": "kit nella parte cieca",
+   "4aeb5d3a87": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "4b312dc3a3": "caso limite",
+   "4bc3fa143f": "kit EX (la zona e' del posto di oggi)",
+   "4ca6c8ec80": "troppo vecchia: il registratore registra dal 2026-10-28 01:00",
+   "4ccfbe980c": "kit EX (la zona e' del posto di oggi)",
+   "4dcb54dcb1": "troppo vecchia: il registratore registra dal 2026-10-28 03:30",
+   "4e85e261bf": "kit nella parte cieca",
+   "4e98732f73": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "4ef90f204e": "kit nella parte cieca",
+   "4f5b943a2e": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "4fd85fd9ec": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "523c183982": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "53029c98f6": "troppo vecchia: il registratore registra dal 2026-10-27 02:30",
+   "53170ec252": "kit nella parte cieca",
+   "537cf54cc5": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "53ecf10321": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "55a8a478c5": "il registratore non ha risposto al giro",
+   "55d69094bf": "kit EX (la zona e' del posto di oggi)",
+   "578582e6b4": "caso limite",
+   "58d25a516f": "troppo vecchia: il registratore registra dal 2026-10-27 10:30",
+   "597fd0c329": "kit nella parte cieca",
+   "5a26b3ab7d": "kit nella parte cieca",
+   "5abac6f369": "troppo vecchia: il registratore registra dal 2026-10-26 02:30",
+   "5b3ce5faea": "kit EX (la zona e' del posto di oggi)",
+   "5c9cc2c688": "la telecamera 4 del kit non ha la zona dei cassonetti",
+   "5ce93a95b9": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "5d6ad8d3f2": "kit EX (la zona e' del posto di oggi)",
+   "5dfb5cace6": "troppo vecchia: il registratore registra dal 2026-10-28 06:00",
+   "5e10d452be": "troppo vecchia: il registratore registra dal 2026-10-29 19:04",
+   "5f4e4a5265": "troppo vecchia: il registratore registra dal 2026-10-28 03:30",
+   "5f5ee69605": "kit nella parte cieca",
+   "5fa910e496": "troppo vecchia: il registratore registra dal 2026-10-27 10:30",
+   "5fd99f972b": "kit nella parte cieca",
+   "61c30361a2": "troppo vecchia: il registratore registra dal 2026-10-31 07:00",
+   "63590c3ad1": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "64e5cbf3a0": "kit EX (la zona e' del posto di oggi)",
+   "654aade920": "kit nella parte cieca",
+   "66037eb9a2": "kit nella parte cieca",
+   "6633264852": "troppo vecchia: il registratore registra dal 2026-10-23 15:00",
+   "6652ceeb3f": "troppo vecchia: il registratore registra dal 2026-10-25 06:31",
+   "6717c74322": "troppo vecchia: il registratore registra dal 2026-10-25 20:02",
+   "67231899b5": "kit nella parte cieca",
+   "67aa1f6814": "kit nella parte cieca",
+   "67d1b80e89": "kit EX (la zona e' del posto di oggi)",
+   "67e3b6df7e": "troppo vecchia: il registratore registra dal 2026-10-29 18:02",
+   "683e671036": "troppo vecchia: il registratore registra dal 2026-10-22 21:00",
+   "69233560ff": "troppo vecchia: il registratore registra dal 2026-10-24 19:30",
+   "6948fa84a5": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "699de59f71": "troppo vecchia: il registratore registra dal 2026-10-24 19:30",
+   "6a4bde14ab": "troppo vecchia: il registratore registra dal 2026-10-25 07:32",
+   "6c3fd6b05e": "caso limite",
+   "6c68c33991": "kit nella parte cieca",
+   "6d3c59803d": "kit nella parte cieca",
+   "6d520f94f0": "troppo vecchia: il registratore registra dal 2026-10-31 12:30",
+   "6dd42aa8b7": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "6eb7eaf574": "troppo vecchia: il registratore registra dal 2026-10-31 12:30",
+   "6ec4a64e62": "kit nella parte cieca",
+   "7056c698e6": "kit EX (la zona e' del posto di oggi)",
+   "70ea3e2317": "kit nella parte cieca",
+   "7159f959f5": "troppo vecchia: il registratore registra dal 2026-10-24 04:30",
+   "71c0c52f4c": "troppo vecchia: il registratore registra dal 2026-10-25 20:02",
+   "722feb13ed": "kit nella parte cieca",
+   "726fc714e1": "troppo vecchia: il registratore registra dal 2026-10-29 05:30",
+   "72e386b9be": "kit EX (la zona e' del posto di oggi)",
+   "738dcbeac1": "kit EX (la zona e' del posto di oggi)",
+   "73b1d4e9c5": "troppo vecchia: il registratore registra dal 2026-10-26 03:30",
+   "73ec6e6408": "kit EX (la zona e' del posto di oggi)",
+   "7448331c1f": "troppo vecchia: il registratore registra dal 2026-10-25 01:30",
+   "757e3f2561": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "76168643ef": "troppo vecchia: il registratore registra dal 2026-10-27 08:30",
+   "76a420965e": "troppo vecchia: il registratore registra dal 2026-10-27 01:30",
+   "775102f8ee": "kit nella parte cieca",
+   "77e0de80bf": "troppo vecchia: il registratore registra dal 2026-10-29 18:30",
+   "77fff6a345": "troppo vecchia: il registratore registra dal 2026-10-24 17:36",
+   "784b332c6a": "troppo vecchia: il registratore registra dal 2026-10-28 09:30",
+   "7928649cb2": "troppo vecchia: il registratore registra dal 2026-10-28 17:30",
+   "79486277d4": "kit EX (la zona e' del posto di oggi)",
+   "79e161b616": "caso limite",
+   "7a21d2faa0": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "7a2b892769": "troppo vecchia: il registratore registra dal 2026-10-26 21:30",
+   "7af1cd79d9": "troppo vecchia: il registratore registra dal 2026-10-25 01:30",
+   "7b0e9e4568": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "7b8229f769": "troppo vecchia: il registratore registra dal 2026-10-17 15:00",
+   "7d21207604": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "7e018a1feb": "troppo vecchia: il registratore registra dal 2026-10-29 18:02",
+   "7f75b41dde": "troppo vecchia: il registratore registra dal 2026-10-25 06:31",
+   "7fa207391f": "kit nella parte cieca",
+   "7fca61d358": "kit EX (la zona e' del posto di oggi)",
+   "8012e61ac2": "kit nella parte cieca",
+   "810b5a4d6d": "troppo vecchia: il registratore registra dal 2026-10-28 17:30",
+   "813fb188e8": "troppo vecchia: il registratore registra dal 2026-10-28 12:00",
+   "8196cfcc4d": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "81fb2936f4": "troppo vecchia: il registratore registra dal 2026-10-31 16:00",
+   "8212b79b95": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "83183bd78f": "kit o ora della clip illeggibile",
+   "844d4264ef": "troppo vecchia: il registratore registra dal 2026-10-28 18:30",
+   "847cb8f9dd": "kit nella parte cieca",
+   "84939490cd": "kit nella parte cieca",
+   "84f16bd539": "troppo vecchia: il registratore registra dal 2026-10-24 04:00",
+   "850633cdf9": "kit nella parte cieca",
+   "8591f004cd": "troppo vecchia: il registratore registra dal 2026-10-25 20:02",
+   "8740e917b5": "kit nella parte cieca",
+   "8760e298ff": "troppo vecchia: il registratore registra dal 2026-10-19 13:30",
+   "87aa9edcc2": "kit nella parte cieca",
+   "8859ff80b7": "kit nella parte cieca",
+   "886d7966d3": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "8ab8a7b1b0": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "8b29c4bcf7": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "8ba0817b10": "troppo vecchia: il registratore registra dal 2026-10-26 21:30",
+   "8c47da228c": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "8d18d67885": "kit nella parte cieca",
+   "8d3354f9fb": "kit nella parte cieca",
+   "8e61da5995": "kit nella parte cieca",
+   "8e81488c7a": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "8eb00ead3d": "troppo vecchia: il registratore registra dal 2026-10-24 12:30",
+   "8fa6be05ba": "troppo vecchia: il registratore registra dal 2026-10-25 06:31",
+   "8fb9fa0424": "troppo vecchia: il registratore registra dal 2026-10-26 17:00",
+   "90150c171b": "kit EX (la zona e' del posto di oggi)",
+   "903a2694e2": "kit EX (la zona e' del posto di oggi)",
+   "90ac1504de": "troppo vecchia: il registratore registra dal 2026-10-14 00:00",
+   "921478bb7b": "kit nella parte cieca",
+   "92164bfd84": "troppo vecchia: il registratore registra dal 2026-10-24 22:00",
+   "92831d6b99": "troppo vecchia: il registratore registra dal 2026-10-25 07:32",
+   "93a7bc27f7": "kit nella parte cieca",
+   "9520a14337": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "953e86e851": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "95557a2292": "troppo vecchia: il registratore registra dal 2026-10-27 10:30",
+   "95cbe8d246": "troppo vecchia: il registratore registra dal 2026-10-29 18:02",
+   "95d5b80a5a": "troppo vecchia: il registratore registra dal 2026-10-25 17:32",
+   "966ce45837": "il registratore non ha risposto al giro",
+   "96eac85749": "kit nella parte cieca",
+   "971abba751": "troppo vecchia: il registratore registra dal 2026-10-20 01:00",
+   "9777dc9e5f": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "9795690133": "troppo vecchia: il registratore registra dal 2026-10-26 19:00",
+   "97b986fd0d": "kit nella parte cieca",
+   "99385ad9db": "troppo vecchia: il registratore registra dal 2026-10-28 12:30",
+   "996626f1e0": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "9996c6d7f7": "kit nella parte cieca",
+   "99f5f77e17": "kit nella parte cieca",
+   "9a69dbb9e0": "kit EX (la zona e' del posto di oggi)",
+   "9b6c9aebab": "kit EX (la zona e' del posto di oggi)",
+   "9c831df6b2": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "9c84997d0f": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "9da146f37c": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "9e8aa9251b": "troppo vecchia: il registratore registra dal 2026-10-28 09:30",
+   "9ec2fd32e4": "kit nella parte cieca",
+   "9f981e29e4": "troppo vecchia: il registratore registra dal 2026-10-24 04:30",
+   "9fb8f8166a": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "a00fe00fe3": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "a06caf3bc6": "troppo vecchia: il registratore registra dal 2026-10-28 09:30",
+   "a0a2a44725": "kit EX (la zona e' del posto di oggi)",
+   "a0a46121e0": "kit EX (la zona e' del posto di oggi)",
+   "a144335331": "kit EX (la zona e' del posto di oggi)",
+   "a1651d0154": "la telecamera 4 del kit non ha la zona dei cassonetti",
+   "a252defa43": "troppo vecchia: il registratore registra dal 2026-10-28 11:30",
+   "a2a2dad6ab": "troppo vecchia: il registratore registra dal 2026-10-19 13:30",
+   "a34de2c53b": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "a565278acc": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "a571c02332": "kit nella parte cieca",
+   "a58788e26a": "kit nella parte cieca",
+   "a799ef88a6": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "a7a88255ca": "kit EX (la zona e' del posto di oggi)",
+   "a872b8b203": "troppo vecchia: il registratore registra dal 2026-10-17 15:00",
+   "a8d1b9d82a": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "aa3b8e2da0": "troppo vecchia: il registratore registra dal 2026-10-26 17:00",
+   "ab81ea76f7": "kit nella parte cieca",
+   "abb58ac364": "kit nella parte cieca",
+   "ac70ab78bf": "kit o ora della clip illeggibile",
+   "ac9ad74923": "troppo vecchia: il registratore registra dal 2026-10-26 19:00",
+   "ad5507cae2": "troppo vecchia: il registratore registra dal 2026-10-30 03:00",
+   "ad74e3d05a": "troppo vecchia: il registratore registra dal 2026-10-26 03:30",
+   "ad942b68d3": "il registratore non ha risposto al giro",
+   "ae7a2964bb": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "aea8679e55": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "af828f7b15": "kit o ora della clip illeggibile",
+   "afb436552d": "kit nella parte cieca",
+   "afbb5ef20a": "kit nella parte cieca",
+   "b112ca990e": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "b195aa1b4d": "kit nella parte cieca",
+   "b20cf62e19": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "b22e7bd07a": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "b31534fdbc": "troppo vecchia: il registratore registra dal 2026-10-28 17:30",
+   "b35cbf34f7": "troppo vecchia: il registratore registra dal 2026-10-27 08:30",
+   "b3b8ab45b4": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "b5634cae86": "troppo vecchia: il registratore registra dal 2026-10-24 19:30",
+   "b5dcf1038e": "troppo vecchia: il registratore registra dal 2026-10-29 18:30",
+   "b5fa6cde09": "troppo vecchia: il registratore registra dal 2026-10-25 16:02",
+   "b66796f4ac": "troppo vecchia: il registratore registra dal 2026-10-31 12:30",
+   "b73827409e": "kit nella parte cieca",
+   "b7f9f32c88": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "b8fb7805b3": "troppo vecchia: il registratore registra dal 2026-10-24 10:00",
+   "b939a0629c": "troppo vecchia: il registratore registra dal 2026-10-24 17:00",
+   "b9b6536d86": "escluso dal banco",
+   "ba16b28726": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "baa93c2efd": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "bb1aaf582e": "troppo vecchia: il registratore registra dal 2026-10-26 15:30",
+   "bb8fe771d1": "il registratore non ha risposto al giro",
+   "bc4f7a1298": "troppo vecchia: il registratore registra dal 2026-10-26 15:30",
+   "beac70dfd2": "troppo vecchia: il registratore registra dal 2026-10-29 13:00",
+   "bedea9f60e": "kit nella parte cieca",
+   "bee1fcdadf": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "beeefd8809": "kit nella parte cieca",
+   "bfdf567862": "troppo vecchia: il registratore registra dal 2026-10-26 19:00",
+   "c0ce008446": "troppo vecchia: il registratore registra dal 2026-10-28 12:00",
+   "c13c37caa6": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "c24b7389ed": "troppo vecchia: il registratore registra dal 2026-10-27 01:30",
+   "c2dbab766d": "troppo vecchia: il registratore registra dal 2026-10-28 12:00",
+   "c373e2dde7": "kit EX (la zona e' del posto di oggi)",
+   "c396dfec94": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "c4640eb57e": "troppo vecchia: il registratore registra dal 2026-10-26 14:30",
+   "c5650eb515": "kit EX (la zona e' del posto di oggi)",
+   "c8df1fdc5a": "kit nella parte cieca",
+   "c976d136b1": "kit EX (la zona e' del posto di oggi)",
+   "ca15cc1c68": "il registratore non ha risposto al giro",
+   "cb5cdecc86": "kit nella parte cieca",
+   "cbd5044535": "kit nella parte cieca",
+   "cc586c2efe": "troppo vecchia: il registratore registra dal 2026-10-25 06:31",
+   "cec072882c": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "cf84569e28": "kit EX (la zona e' del posto di oggi)",
+   "cfb1702417": "kit nella parte cieca",
+   "d08ca20e11": "troppo vecchia: il registratore registra dal 2026-10-25 08:32",
+   "d33d7079f9": "troppo vecchia: il registratore registra dal 2026-10-28 09:30",
+   "d49e8f8e46": "kit nella parte cieca",
+   "d689764151": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "d6ac0feacd": "il registratore non ha risposto al giro",
+   "d6b057ac93": "troppo vecchia: il registratore registra dal 2026-10-28 10:00",
+   "d719c3cb90": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "d7968a7e99": "troppo vecchia: il registratore registra dal 2026-10-28 09:30",
+   "d79e25c596": "kit nella parte cieca",
+   "d8ac938d0c": "kit o ora della clip illeggibile",
+   "d8e4a18b83": "il 2026-10-27 il canale ha 1290 minuti registrati",
+   "dade8f5bc7": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "db2f6cb408": "troppo vecchia: il registratore registra dal 2026-10-24 17:30",
+   "dbb5ac5273": "troppo vecchia: il registratore registra dal 2026-10-29 05:30",
+   "dbf2d36ec8": "kit EX (la zona e' del posto di oggi)",
+   "dc72c7c9c7": "kit nella parte cieca",
+   "de343bc11d": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "deb715879d": "il registratore non ha risposto al giro",
+   "e098e7d796": "kit EX (la zona e' del posto di oggi)",
+   "e0c8dd8b6f": "troppo vecchia: il registratore registra dal 2026-10-25 07:03",
+   "e35462d8f8": "kit EX (la zona e' del posto di oggi)",
+   "e3becad780": "kit nella parte cieca",
+   "e4714557ac": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "e4b0b3dd62": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "e65a2bb430": "kit nella parte cieca",
+   "e664b1af95": "kit nella parte cieca",
+   "e746f8ec2c": "troppo vecchia: il registratore registra dal 2026-10-24 17:00",
+   "e7b6a5354a": "troppo vecchia: il registratore registra dal 2026-10-29 18:02",
+   "e81d9b5c1b": "troppo vecchia: il registratore registra dal 2026-10-26 15:30",
+   "e8acd4f6c8": "kit nella parte cieca",
+   "e9bea18b9b": "troppo vecchia: il registratore registra dal 2026-10-24 04:30",
+   "ea40534ced": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "ea61ce52a0": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "eac0ff3ee0": "kit EX (la zona e' del posto di oggi)",
+   "eacb53aee5": "troppo vecchia: il registratore registra dal 2026-10-31 15:37",
+   "eb523af511": "il registratore non ha risposto al giro",
+   "ec099fed51": "troppo vecchia: il registratore registra dal 2026-10-27 10:30",
+   "ecc63e7461": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "ed6389e6da": "il registratore non ha risposto al giro",
+   "ef71f406e7": "troppo vecchia: il registratore registra dal 2026-10-25 00:30",
+   "f00b2fdedf": "kit EX (la zona e' del posto di oggi)",
+   "f012ad0f21": "troppo vecchia: il registratore registra dal 2026-10-25 04:00",
+   "f03e4f255a": "kit nella parte cieca",
+   "f213e07f58": "kit nella parte cieca",
+   "f3da973a10": "kit nella parte cieca",
+   "f4196b6f53": "kit EX (la zona e' del posto di oggi)",
+   "f4419bd9aa": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "f551e02e6b": "troppo vecchia: il registratore registra dal 2026-11-02 04:55",
+   "f570505366": "troppo vecchia: il registratore registra dal 2026-10-26 10:30",
+   "f625504eae": "la telecamera 3 del kit non ha la zona dei cassonetti",
+   "f6759b4ef4": "troppo vecchia: il registratore registra dal 2026-10-29 19:02",
+   "f6fc5a9185": "la telecamera 2 del kit non ha la zona dei cassonetti",
+   "f76595d8dd": "kit nella parte cieca",
+   "f7854eadd9": "kit nella parte cieca",
+   "f9b68b12d8": "troppo vecchia: il registratore registra dal 2026-10-25 01:30",
+   "f9f0589806": "troppo vecchia: il registratore registra dal 2026-10-25 18:30",
+   "facdb81f02": "kit nella parte cieca",
+   "fae7ec41bc": "troppo vecchia: il registratore registra dal 2026-10-28 17:30",
+   "fbc8b51498": "kit nella parte cieca",
+   "fc8321a865": "kit EX (la zona e' del posto di oggi)",
+   "fcd98cb84a": "kit nella parte cieca",
+   "fd68e26455": "troppo vecchia: il registratore registra dal 2026-10-26 14:30",
+   "fd98578530": "la telecamera 1 del kit non ha la zona dei cassonetti",
+   "fddbab924a": "troppo vecchia: il registratore registra dal 2026-10-25 02:00",
+   "fe24b4f54d": "troppo vecchia: il registratore registra dal 2026-10-29 18:02"
+  },
+  "negative_estratte": 360,
+  "negative_scartate": [
+   {
+    "kit": 589,
+    "uid": "65CA2H5UP8G7FU1A111A",
+    "canale": 0,
+    "inizio": "2026-11-05 20:07:00",
+    "n": "1.94",
+    "notte": true,
+    "perche": "abbandono o evento noto alle 2026-11-05 20:53:31"
+   },
+   {
+    "kit": 522,
+    "uid": "6NJSJHB9Z4M4PFBE111A",
+    "canale": 1,
+    "inizio": "2026-11-05 14:04:00",
+    "n": "1.317",
+    "notte": false,
+    "perche": "abbandono o evento noto alle 2026-11-05 14:48:11"
+   },
+   {
+    "kit": 589,
+    "uid": "65CA2H5UP8G7FU1A111A",
+    "canale": 0,
+    "inizio": "2026-11-07 19:36:00",
+    "n": "2.15",
+    "notte": false,
+    "perche": "abbandono o evento noto alle 2026-11-07 17:48:00"
+   },
+   {
+    "kit": 403,
+    "uid": "UG1A6DEWGJKDBWSA111A",
+    "canale": 1,
+    "inizio": "2026-11-05 23:53:00",
+    "n": "2.146",
+    "notte": true,
+    "perche": "abbandono o evento noto alle 2026-11-05 22:45:00"
+   },
+   {
+    "kit": 242,
+    "uid": "RU4HDF8JE7V5NVYW111A",
+    "canale": 2,
+    "inizio": "2026-11-07 05:27:00",
+    "n": "2.410",
+    "notte": true,
+    "perche": "abbandono o evento noto alle 2026-11-07 03:54:16"
+   }
+  ],
+  "negative_non_disponibili": [
+   {
+    "kit": 404,
+    "uid": "T9YMSZNPZW7K45FJ111A",
+    "canale": 0,
+    "inizio": "2026-11-11 13:35:00",
+    "n": "1.7",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1345 minuti registrati"
+   },
+   {
+    "kit": 405,
+    "uid": "RRJGC1W7958W1TNW111A",
+    "canale": 1,
+    "inizio": "2026-11-11 23:06:00",
+    "n": "1.8",
+    "notte": true,
+    "perche": "il 2026-11-12 il canale ha 93 minuti registrati"
+   },
+   {
+    "kit": 560,
+    "uid": "FLPCABR8BVA3FM43111A",
+    "canale": 0,
+    "inizio": "2026-11-11 19:20:00",
+    "n": "1.15",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1297 minuti registrati"
+   },
+   {
+    "kit": 638,
+    "uid": "D8DN3RK5KRW63X79111A",
+    "canale": 2,
+    "inizio": "2026-11-11 00:43:00",
+    "n": "1.18",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1276 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-05 02:33:00",
+    "n": "1.22",
+    "notte": true,
+    "perche": "il 2026-11-05 il canale ha 322 minuti registrati"
+   },
+   {
+    "kit": 360,
+    "uid": "EMU9EM25WM7KH123111A",
+    "canale": 0,
+    "inizio": "2026-11-11 11:09:00",
+    "n": "1.23",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1284 minuti registrati"
+   },
+   {
+    "kit": 321,
+    "uid": "U6NHL2FYZJTEVA5L111A",
+    "canale": 0,
+    "inizio": "2026-11-06 01:19:00",
+    "n": "1.24",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-05 07:32"
+   },
+   {
+    "kit": 364,
+    "uid": "AKG7C8D3GEKTGEJ1111A",
+    "canale": 2,
+    "inizio": "2026-11-06 04:12:00",
+    "n": "1.42",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 1070 minuti registrati"
+   },
+   {
+    "kit": 415,
+    "uid": "E55TCHL217B9NFT8111A",
+    "canale": 2,
+    "inizio": "2026-11-11 23:26:00",
+    "n": "1.92",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1283 minuti registrati"
+   },
+   {
+    "kit": 676,
+    "uid": "YUJCS3KBAJGAFNMK111A",
+    "canale": 3,
+    "inizio": "2026-11-05 23:28:00",
+    "n": "1.152",
+    "notte": true,
+    "perche": "il 2026-11-05 il canale ha 1221 minuti registrati"
+   },
+   {
+    "kit": 364,
+    "uid": "AKG7C8D3GEKTGEJ1111A",
+    "canale": 2,
+    "inizio": "2026-11-10 11:06:00",
+    "n": "1.179",
+    "notte": false,
+    "perche": "il 2026-11-10 il canale ha 1060 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-06 05:07:00",
+    "n": "1.188",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 311,
+    "uid": "JKM762PETEFLERDW111A",
+    "canale": 0,
+    "inizio": "2026-11-11 14:16:00",
+    "n": "1.339",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1315 minuti registrati"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-09 12:51:00",
+    "n": "1.373",
+    "notte": false,
+    "perche": "il 2026-11-09 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-07 20:01:00",
+    "n": "1.438",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-06 23:17:00",
+    "n": "1.442",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-10 00:45:00",
+    "n": "1.490",
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-10 01:22:00",
+    "n": "1.616",
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-10 22:06:00",
+    "n": "1.806",
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-11 16:58:00",
+    "n": "1.847",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-06 21:02:00",
+    "n": "1.902",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-09 03:34:00",
+    "n": "1.930",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-06 04:36:00",
+    "n": "1.956",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 2,
+    "inizio": "2026-11-06 00:36:00",
+    "n": "1.1010",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-11 23:21:00",
+    "n": "1.1208",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 190 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-05 20:08:00",
+    "n": "1.1262",
+    "notte": true,
+    "perche": "il 2026-11-05 il canale ha 322 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-10 13:20:00",
+    "n": "1.1317",
+    "notte": false,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-08 02:42:00",
+    "n": "1.1428",
+    "notte": true,
+    "perche": "il 2026-11-08 il canale ha 3 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-07 21:17:00",
+    "n": "1.1752",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-08 21:39:00",
+    "n": "1.1926",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-11 06:26:00",
+    "n": "1.1937",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 190 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-09 18:09:00",
+    "n": "1.1951",
+    "notte": false,
+    "perche": "il 2026-11-09 il canale ha 2 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-08 04:07:00",
+    "n": "1.2036",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-05 18:57:00",
+    "n": "1.2155",
+    "notte": false,
+    "perche": "il 2026-11-05 il canale ha 323 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-06 20:13:00",
+    "n": "1.2456",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-09 14:59:00",
+    "n": "1.2485",
+    "notte": false,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 3,
+    "inizio": "2026-11-06 19:53:00",
+    "n": "1.2495",
+    "notte": false,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-06 06:00:00",
+    "n": "1.2549",
+    "notte": false,
+    "perche": "il 2026-11-06 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-09 20:34:00",
+    "n": "1.2642",
+    "notte": true,
+    "perche": "il 2026-11-09 il canale ha 1 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-10 11:05:00",
+    "n": "1.2797",
+    "notte": false,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-06 12:47:00",
+    "n": "1.2897",
+    "notte": false,
+    "perche": "il 2026-11-06 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-07 13:08:00",
+    "n": "1.2921",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-08 23:27:00",
+    "n": "1.3064",
+    "notte": true,
+    "perche": "il 2026-11-08 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-08 20:57:00",
+    "n": "1.3114",
+    "notte": true,
+    "perche": "il 2026-11-08 il canale ha 3 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-11 00:03:00",
+    "n": "1.3466",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 190 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-06 09:01:00",
+    "n": "1.3505",
+    "notte": false,
+    "perche": "il 2026-11-06 il canale ha 5 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-07 10:39:00",
+    "n": "1.3527",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 2 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-07 06:36:00",
+    "n": "1.3837",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-10 03:47:00",
+    "n": "1.3908",
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-09 06:13:00",
+    "n": "1.4259",
+    "notte": false,
+    "perche": "il 2026-11-09 il canale ha 1 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-09 02:05:00",
+    "n": "1.4408",
+    "notte": true,
+    "perche": "il 2026-11-09 il canale ha 1 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-11 05:27:00",
+    "n": "1.4494",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 190 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-06 23:30:00",
+    "n": "1.4646",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-10 01:37:00",
+    "n": "1.4650",
+    "notte": true,
+    "perche": "il 2026-11-10 il canale ha 40 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-05 06:21:00",
+    "n": "1.4723",
+    "notte": false,
+    "perche": "il 2026-11-05 il canale ha 323 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-09 13:24:00",
+    "n": "1.4791",
+    "notte": false,
+    "perche": "il 2026-11-09 il canale ha 1 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-08 18:42:00",
+    "n": "1.5021",
+    "notte": false,
+    "perche": "il 2026-11-08 il canale ha 4 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-07 19:57:00",
+    "n": "1.5825",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-09 14:23:00",
+    "n": "1.7543",
+    "notte": false,
+    "perche": "il 2026-11-09 il canale ha 2 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-07 17:28:00",
+    "n": "1.7561",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 321,
+    "uid": "U6NHL2FYZJTEVA5L111A",
+    "canale": 1,
+    "inizio": "2026-11-11 23:49:00",
+    "n": "2.4",
+    "notte": true,
+    "perche": "il 2026-11-12 il canale ha 108 minuti registrati"
+   },
+   {
+    "kit": 525,
+    "uid": "ESHWA8Z6L8LDD7SJ111A",
+    "canale": 0,
+    "inizio": "2026-11-11 20:55:00",
+    "n": "2.6",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1285 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 2,
+    "inizio": "2026-11-06 03:45:00",
+    "n": "2.26",
+    "notte": true,
+    "perche": "il 2026-11-06 il canale ha 5 minuti registrati"
+   },
+   {
+    "kit": 281,
+    "uid": "NWUGBRJD9B41DG2H111A",
+    "canale": 2,
+    "inizio": "2026-11-11 14:21:00",
+    "n": "2.33",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1331 minuti registrati"
+   },
+   {
+    "kit": 368,
+    "uid": "V2VX45CYLJD1ZWUX111A",
+    "canale": 0,
+    "inizio": "2026-11-06 01:56:00",
+    "n": "2.36",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-03 02:00"
+   },
+   {
+    "kit": 285,
+    "uid": "FYT1GBXFKJ72T2A3111A",
+    "canale": 0,
+    "inizio": "2026-11-10 23:31:00",
+    "n": "2.42",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1301 minuti registrati"
+   },
+   {
+    "kit": 575,
+    "uid": "HFC4PVMK3PBGGTV2111A",
+    "canale": 2,
+    "inizio": "2026-11-11 05:26:00",
+    "n": "2.54",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1308 minuti registrati"
+   },
+   {
+    "kit": 368,
+    "uid": "V2VX45CYLJD1ZWUX111A",
+    "canale": 1,
+    "inizio": "2026-11-06 18:38:00",
+    "n": "2.59",
+    "notte": false,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-03 02:00"
+   },
+   {
+    "kit": 311,
+    "uid": "JKM762PETEFLERDW111A",
+    "canale": 0,
+    "inizio": "2026-11-11 21:23:00",
+    "n": "2.64",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1315 minuti registrati"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-05 10:44:00",
+    "n": "2.75",
+    "notte": false,
+    "perche": "il 2026-11-05 il canale ha 322 minuti registrati"
+   },
+   {
+    "kit": 233,
+    "uid": "VEH5GRDEBCHVWWA7111A",
+    "canale": 0,
+    "inizio": "2026-11-11 22:01:00",
+    "n": "2.94",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1359 minuti registrati"
+   },
+   {
+    "kit": 436,
+    "uid": "N2GSSC2JC5FWECSC111A",
+    "canale": 2,
+    "inizio": "2026-11-11 03:01:00",
+    "n": "2.110",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 371,
+    "uid": "TU28FTLAAFZCRBUE111A",
+    "canale": 1,
+    "inizio": "2026-11-11 02:45:00",
+    "n": "2.112",
+    "notte": true,
+    "perche": "il 2026-11-11 il canale ha 1349 minuti registrati"
+   },
+   {
+    "kit": 364,
+    "uid": "AKG7C8D3GEKTGEJ1111A",
+    "canale": 2,
+    "inizio": "2026-11-09 20:53:00",
+    "n": "2.120",
+    "notte": true,
+    "perche": "il 2026-11-09 il canale ha 1173 minuti registrati"
+   },
+   {
+    "kit": 488,
+    "uid": "WK1BAL6V76BMGAL6111A",
+    "canale": 2,
+    "inizio": "2026-11-11 13:02:00",
+    "n": "2.155",
+    "notte": false,
+    "perche": "il 2026-11-11 il canale ha 1366 minuti registrati"
+   },
+   {
+    "kit": 228,
+    "uid": "RFYHMF536FXXGHTF111A",
+    "canale": 0,
+    "inizio": "2026-11-11 23:07:00",
+    "n": "2.178",
+    "notte": true,
+    "perche": "il 2026-11-12 il canale ha 92 minuti registrati"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 0,
+    "inizio": "2026-11-08 21:23:00",
+    "n": "2.196",
+    "notte": true,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 426,
+    "uid": "9U8T1R33AAHU8922111A",
+    "canale": 0,
+    "inizio": "2026-11-06 08:56:00",
+    "n": "2.201",
+    "notte": false,
+    "perche": "troppo vecchia: il registratore registra dal 2026-11-06 01:00"
+   },
+   {
+    "kit": 593,
+    "uid": "7LXEVXMLWKF8SR4T111A",
+    "canale": 0,
+    "inizio": "2026-11-07 16:42:00",
+    "n": "2.229",
+    "notte": false,
+    "perche": "il 2026-11-07 il canale ha 0 minuti registrati"
+   },
+   {
+    "kit": 619,
+    "uid": "ZLCJCWMPZHBDZKBG111A",
+    "canale": 2,
+    "inizio": "2026-11-05 00:39:00",
+    "n": "2.286",
+    "notte": true,
+    "perche": "il 2026-11-05 il canale ha 796 minuti registrati"
+   }
+  ],
+  "kit_nel_pool_negative": 196,
+  "margine_giorni_positive": 0,
+  "margine_giorni_negative": 3,
+  "regola_scarto": "abbandono noto o evento del sito o del NAS dello stesso kit a meno di 120 min dall'ora",
+  "elenco_nas_letto": 27717
+ }
+}

@@ -3,7 +3,8 @@ miniature di una scena finta: un sacco che compare a un minuto dato, un'auto che
 rete, niente DLL. In fondo un'ora intera in un processo a parte, come sul PC (compito.py del ponte, pilota_lavoro.py,
 un focus_nvr finto che fa miniature H.264 vere con ffmpeg), e un processo che cade con un errore di memoria.
 Uso: python3 prova_pilota.py   (kit_rifiuti.py da KR_SCRIPTS, se no da ../../../kit-rifiuti-programma/scripts)
-version: 0.1.0 (12/11/2026)
+version: 0.2.0 (12/11/2026): le prove di solo_minuti (pilota.py 0.2.0, la prova grande).
+0.1.0 (12/11/2026)
 """
 import datetime
 import json
@@ -248,6 +249,26 @@ x = pl.lavora_ora(dict(ORA, uid=None), {}, mezzi_finti(Finto(), os.path.join(tmp
 ok(x["esito"] == "registratore sconosciuto", "kit senza registratore")
 x = pl.lavora_ora(dict(ORA, canale=3), {}, mezzi_finti(Finto(), os.path.join(tmp, "h")))
 ok(x["esito"] == "canale assente sul registratore" and not x["valutabile"], "canale assente")
+
+# solo_minuti (0.2.0, la prova grande): solo le miniature dei minuti, niente (a), niente candidati, niente fitte
+fin = Finto()
+ORA_G = dict(ORA, nome="pos001_kit581", dentro_zona=True, altri_noti=[], fonte="etichette_claude", ora_del_kit=1,
+             resta_giorni=4, box_da="claude")
+x = pl.lavora_ora(ORA_G, {"solo_minuti": True}, mezzi_finti(fin, os.path.join(tmp, "s")))
+U = os.path.join(tmp, "s", "uscita")
+ok(x["esito"] == "fatto" and x["valutabile"] and x.get("solo_minuti") and not x["in_corso"], f"solo_minuti: fatta ({x.get('esito')})")
+ok(fin.miniature == 72 and fin.scarichi == 0, f"solo_minuti: 72 miniature chieste, nessuno scarico ({fin.miniature}, {fin.scarichi})")
+ok(sorted(os.listdir(U)) == ["minuti"] and len(os.listdir(os.path.join(U, "minuti"))) == 72,
+   "solo_minuti: in uscita solo le 72 miniature dei minuti")
+ok(len(x["minuti"]) == 72 and "a" not in x and "candidati" not in (x.get("b") or {}) and "confronto" not in x,
+   "solo_minuti: ora.json col registro dei minuti, senza (a), candidati e confronto")
+ok(set(x["conti"]["per_metodo"]) == {"b"} and abs(x["conti"]["mb"] - 72 * 0.047) < 0.1, f"solo_minuti: MB solo delle miniature ({x['conti']['mb']})")
+ok(x["atteso"] and x["box_dario"] and x["dentro_zona"] is True and x["altri_noti"] == [] and x["ora_del_kit"] == 1,
+   "solo_minuti: per le positive atteso, riquadro, dentro_zona, altri_noti e ora_del_kit nel json")
+x = pl.lavora_ora(dict(ORA_G, nome="neg001", tipo="negativa"), {"solo_minuti": True}, mezzi_finti(Finto(sacco=None), os.path.join(tmp, "t")))
+ok(x["esito"] == "fatto" and "atteso" not in x and "dentro_zona" not in x, "solo_minuti: negativa senza atteso")
+x = pl.lavora_ora(ORA_G, {"solo_minuti": True}, mezzi_finti(Finto(primo=D(2026, 11, 5)), os.path.join(tmp, "u")))
+ok(not x["valutabile"] and x["esito"].startswith("non piu'"), "solo_minuti: ora non piu' sul registratore, non valutabile")
 
 # ------------------------------------------------------------------ il giro delle ore (il ponte)
 ore = ([{"nome": f"pos{i}", "tipo": "positiva", "kit": i} for i in range(3)]

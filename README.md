@@ -37,6 +37,10 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Ponte 0.15.0 (compito p2p_ponte32, pronto e NON mandato, zip nello scratchpad della sessione del 12/11): la prova
+  grande del metodo «insieme» (analisi-abbandono-in-un-ora.md, sezione 6). `grande.json` (prepara_grande.py, prove in
+  prova_grande.py) va nel compito come `pilota.json` con `solo_minuti`: 71 ore positive da 40 kit e 150 negative (+30
+  riserve), solo le 72 miniature dei minuti per ora (pilota.py 0.2.0). Il disco gira: va mandato presto.
 - Ponte 0.13.0 (compito p2p30, pronto e NON mandato): `allunga.json` (allunga.py, processo per evento allunga_lavoro.py,
   prove in prova_allunga.py; l'elenco lo rifà `python3 prepara_allunga.py <chiave.json>`, sola lettura dai due siti).
   Per 34 eventi con la clip tagliata o sospetta, 60 s prima e 120 s dopo la clip (e i buchi delle telecamere più corte)

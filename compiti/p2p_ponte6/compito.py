@@ -31,7 +31,11 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.14.0 (12/11/2026): pilota.json, una volta sola sul COMPUTERONE (segno pilota_fatto.txt in uscita), in un filo
+version: 0.15.0 (12/11/2026): la prova grande (analisi-abbandono-in-un-ora.md, sezione 5). Nel compito, pilota.json
+  e' l'elenco di prepara_grande.py (grande.json: ~70 ore positive da 40 kit e 150 negative piu' 30 riserve) con
+  «solo_minuti»: pilota.py 0.2.0 scarica per ogni ora solo le 72 miniature dei minuti (uscita/pilota/<ora>/minuti/ e
+  ora.json, come la pilota) e il metodo «insieme» si misura a tavolino. Il giro (lavoro_pilota) e' lo stesso.
+0.14.0 (12/11/2026): pilota.json, una volta sola sul COMPUTERONE (segno pilota_fatto.txt in uscita), in un filo
   suo: la prova pilota del registratore (backlog-ridotto-2026-11-11.md di kit-rifiuti-programma, intervento 5; Dario,
   12/11: «l'obiettivo e' il programma che lavora da solo»). 10 ore positive (un abbandono noto in un punto sorteggiato
   dell'ora) e 20 ore-camera negative sorteggiate senza guardare gli eventi (piu' 10 riserve), preparate da
@@ -108,7 +112,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.14.0"
+VERSIONE = "p2p_ponte 0.15.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
