@@ -162,3 +162,23 @@ Con 8 su 10 l'intervallo vero (Wilson, 95%) va da 49% a 94%: non distingue «qua
 - Il disco gira: 24 positive spariscono entro due giorni (`resta_giorni`). Prima si manda, piu' positive restano.
 - Stima: 221 ore, ~700 MB dal registratore, ~1 minuto per ora, 3,5-4,5 ore di COMPUTERONE.
 - `misura_b_tavolino.py` 0.2.0: un candidato che tocca un altro abbandono noto dell'ora non conta come falso.
+
+## 7. La prova grande (compito 32, 12/11 sera): il metodo «insieme» regge a metà
+
+Il COMPUTERONE ha scaricato le miniature di 221 ore in 4 ore e 40 minuti. Lo zip arrivato su Drive era rovinato a metà
+(6.451 file su 16.363 illeggibili): le 71 ore positive sono arrivate quasi tutte, le negative solo 62 su 150. Misurate
+132 ore (70 con un abbandono chiaro noto da 40 kit, 62 senza), soglie congelate prima di vedere i dati.
+
+| variante | abbandono al 1° posto | nei primi 3 | nei primi 8 | falsi all'ora (primi 3) | falsi all'ora (primi 8) |
+|---|---|---|---|---|---|
+| oggi (metodo B) | 14 / 70 (20%) | 31 (44%) | 43 (61%) | 1,55 | 3,38 |
+| **insieme** | **27 / 70 (39%)** | **36 (51%)** | 39 (56%) | **1,02** | **1,39** |
+
+- «insieme» raddoppia il primo posto e dimezza i falsi allarmi, ma è lontano dall'8 su 10 della pilota: su 10 casi i
+  numeri erano gonfiati dalla scelta delle soglie sugli stessi casi. Il valore vero è intorno al 40% al primo posto.
+- Circa 27 abbandoni su 70 non sono trovati da nessuna variante nemmeno fra i primi 8: oggetto troppo piccolo nella
+  miniatura, fuori dalla zona disegnata, notte. È il tetto delle miniature da sole.
+- Per l'imbuto a due stadi: con i primi 3 candidati dell'ora si prende l'abbandono in metà dei casi, al costo di circa
+  3 micro-clip a piena risoluzione all'ora per telecamera (e 1 falso all'ora da scartare dopo). Lo stadio 2 (micro-clip
+  HD + programma delle clip + modello visivo locale) deve togliere i falsi; il tetto del 56-61% lo alzano solo un
+  rilevatore migliore e la zona degli abbandoni per telecamera.
