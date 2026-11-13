@@ -203,3 +203,23 @@ scelti da «insieme» (dove qualcosa è davvero cambiato) trova sempre un candid
 il filtro dei falsi allarmi allenato anche su pezzi senza abbandono (le ore negative della prova grande sono già i
 negativi), oppure il modello visivo locale (Qwen) sui pochi pezzi rimasti. Prossimo passo: riallenare il filtro coi
 130 pezzi (38 veri, 92 falsi) e misurare quanti falsi toglie a parità di veri.
+
+### 8b. Qwen sui candidati (compito 34, 13/11 sera)
+
+Filtro coi soli numeri del report sui 130 pezzi: debole (AUC 0,69; per tenere 33 veri su 38 passano 59 falsi su 92).
+Poi Qwen3-VL 4B (4 bit, sulla RTX 3070 del COMPUTERONE) con la domanda v3: per ogni candidato «insieme» fra i primi 3,
+un fotogramma prima e uno dopo a piena risoluzione dal pezzo scaricato, ritagliati intorno al riquadro, più la scena
+intera; risposta fra waste, vehicle, person, shadow, bin, already, nothing, unclear. 158 carte (15 pezzi senza video), 8 s
+l'una, 21 minuti in tutto.
+
+| | carte | Qwen dice «waste» |
+|---|---|---|
+| candidato vero (l'abbandono) | 33 | **32** |
+| candidato falso | 125 | **56** (69 tolti: 48 nothing, 8 already, 6 bin, 5 vehicle, 2 person) |
+
+- Tiene 32 abbandoni su 33 e toglie il 55% dei falsi allarmi.
+- Sulle ore positive col vero fra i primi 3 (33), dopo Qwen il vero e' il primo dei candidati rimasti in 28.
+- Falsi all'ora fra i primi 3 sulle 132 ore della prova: da 1,02 a circa 0,46.
+
+Prossimi passi: mettere Qwen dentro la catena dell'ora (miniature -> insieme -> pezzi a piena risoluzione -> Qwen), la
+domanda v3 col fotogramma «dopo» preso quando la scena e' ferma, e riprovare sulle ore nuove della scorta serale.
