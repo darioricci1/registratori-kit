@@ -182,3 +182,24 @@ Il COMPUTERONE ha scaricato le miniature di 221 ore in 4 ore e 40 minuti. Lo zip
   3 micro-clip a piena risoluzione all'ora per telecamera (e 1 falso all'ora da scartare dopo). Lo stadio 2 (micro-clip
   HD + programma delle clip + modello visivo locale) deve togliere i falsi; il tetto del 56-61% lo alzano solo un
   rilevatore migliore e la zona degli abbandoni per telecamera.
+
+## 8. Il secondo passaggio (compito 33, 13/11)
+
+Per ogni ora della prova grande, i primi 3 candidati di «insieme» sono diventati pezzi di 2-3 minuti a piena risoluzione
+(una telecamera), scaricati dal registratore (circa 30 s l'uno) e analizzati da Kit_Rifiuti 0.93 come una clip.
+138 pezzi: 130 analizzati, 8 già sovrascritti (le ore più vecchie, 20-23/10).
+
+- Ore positive con almeno un pezzo analizzato: 58. In 38 uno dei pezzi contiene l'abbandono vero (è il «fra i primi 3» di
+  «insieme»). Su quei 38 pezzi l'analisi trova l'abbandono nel momento giusto (±20 s) in **37**, e in tutti c'è la
+  persona che arriva (visita).
+- Sui 92 pezzi senza l'abbandono vero (candidati sbagliati e ore negative) l'analisi dice «abbandono» in **92 su 92**,
+  quasi sempre col punteggio massimo. Le ore negative con un pezzo: 13, tutte con un abbandono detto.
+- Unica differenza utile: in 13 pezzi falsi non passa nessuno (nessuna visita), in quelli veri passa sempre qualcuno.
+  Tenere solo i pezzi con una visita toglie 13 falsi su 92 senza perdere niente.
+
+Conclusione: il secondo passaggio con l'analisi delle clip così com'è **ritrova il momento e la persona, ma non scarta i
+falsi allarmi**: l'analisi è fatta per clip che le operatrici hanno già scelto perché contengono un abbandono, e nei pezzi
+scelti da «insieme» (dove qualcosa è davvero cambiato) trova sempre un candidato. Per scartare serve un giudice sul pezzo:
+il filtro dei falsi allarmi allenato anche su pezzi senza abbandono (le ore negative della prova grande sono già i
+negativi), oppure il modello visivo locale (Qwen) sui pochi pezzi rimasti. Prossimo passo: riallenare il filtro coi
+130 pezzi (38 veri, 92 falsi) e misurare quanti falsi toglie a parità di veri.
