@@ -2,6 +2,7 @@
 sacchi di gpu2 non scrive piu' ~\\kr_gpu\\vivo.txt da 20 minuti), prepara un Python suo (~\\kr_vlm, uv), scarica
 Qwen3-VL (Apache 2.0) e fa giudicare le carte di Scorri (carte/): prima 8B in 4 bit, poi 4B in 4 bit, poi 2B.
 Risultati su Drive in vlm_pcN.zip ogni 30 minuti e alla fine.
+version: 0.4.0 (13/11/2026) - le prove da prove.json del compito (compito 34: solo il 4B con la domanda v3, prima e dopo).
 version: 0.3.0 (11/11/2026) - solo il 4B in 4 bit, con la domanda nuova (v2, v2d col primo piano del riquadro) e con
 quella del 10/11 (v1) sulle stesse 173 carte: giudizi_Qwen3-VL-4B-Instruct_<v>.json. Niente 2B (risponde fuori elenco)
 e niente 8B (sul si'/no come il 4B, a tre volte il tempo). Prima le domande nuove, cosi' se si ferma a meta' il
@@ -31,8 +32,14 @@ PY = os.path.join(G, "venv", "Scripts", "python.exe")
 UV = os.path.join(CASA, "kr_gpu", "uv.exe")
 FINE = [False]
 NASCOSTO = 0x08000000 if os.name == "nt" else 0
+# 0.4.0: le prove possono arrivare dal compito (prove.json: [[modello, modo, domanda], ...])
 PROVE = [("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v2"), ("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v2d"),
          ("Qwen/Qwen3-VL-4B-Instruct", "nf4", "v1")]
+
+
+if os.path.exists(os.path.join(C, "prove.json")):
+    import json as _json
+    PROVE = [tuple(x) for x in _json.load(open(os.path.join(C, "prove.json"), encoding="utf-8"))]
 
 
 def scrivi(t):

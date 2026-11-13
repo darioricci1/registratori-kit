@@ -31,6 +31,9 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.17.0 (13/11/2026): compito 34, Qwen giudica i candidati del secondo passaggio: carte_dai_pezzi fa le carte
+  prima/dopo dai video del compito 33 rimasti sul PC (pezzi_vlm.json di prepara_vlm33.py), vlm.py le giudica con la
+  domanda v3 (prove.json). Le carte anche in uscita/carte34.
 version: 0.16.0 (13/11/2026): il secondo passaggio della prova grande (prepara_secondo.py): lungo.json con i pezzi di
   2-3 minuti intorno ai primi 3 candidati di ogni ora, una telecamera sola, «leggero»: in uscita solo i dati di
   Kit_Rifiuti (json, md, csv sotto 1,5 MB) e al massimo 3 immagini piccole per pezzo, niente video, cosi' lo zip del
@@ -101,6 +104,7 @@ version: 0.9.6 (10/11/2026): nella prova dei video lunghi la CH1 non si chiama p
 0.9.0"""
 import base64
 import datetime
+import glob
 import json
 import os
 import shutil
@@ -110,6 +114,7 @@ import threading
 import time
 import traceback
 import urllib.request
+import zipfile
 
 C = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
 sys.path.insert(0, C)
@@ -117,7 +122,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.16.0"
+VERSIONE = "p2p_ponte 0.17.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
@@ -1928,8 +1933,11 @@ def parti_qwen():
     d = os.path.join(casa, "kr_lavori", "vlm2")
     os.makedirs(d, exist_ok=True)
     shutil.copy2(os.path.join(C, "vlm.py"), os.path.join(d, "compito.py"))
-    for f in ("vlm_giudica.py", "carte.zip"):
-        shutil.copy2(os.path.join(C, f), os.path.join(d, f))
+    for f in ("vlm_giudica.py", "carte.zip", "prove.json"):
+        if os.path.exists(os.path.join(C, f)):
+            shutil.copy2(os.path.join(C, f), os.path.join(d, f))
+    # 0.17.0: le carte vecchie di vlm2 non devono restare (vlm.py le estrae solo se la cartella carte non c'e')
+    shutil.rmtree(os.path.join(d, "carte"), ignore_errors=True)
     env = dict(os.environ)
     for k in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "KR_PROCESSORI_COMPITO"):
         env.pop(k, None)
@@ -1939,6 +1947,65 @@ def parti_qwen():
     av(f"qwen: partito (pid {p.pid}) in {d}")
 
 
+def carte_dai_pezzi():
+    """0.17.0: compito 34. Per ogni voce di pezzi_vlm.json (prepara_vlm33.py) due fotogrammi del video del compito 33
+    rimasto sul PC (p2p_ponte33/lungo/<pezzo>/video), «prima» e «dopo», ritagliati intorno al riquadro, e la scena
+    intera dopo col riquadro rosso: <id>_prima.jpg, <id>_dopo.jpg, <id>.jpg in carte.zip, per vlm_giudica v3."""
+    import cv2
+    voci = json.load(open(os.path.join(C, "pezzi_vlm.json"), encoding="utf-8"))
+    vecchio = os.path.join(os.path.dirname(C), "p2p_ponte33", "lungo")
+    cart = os.path.join(C, "carte_tmp")
+    os.makedirs(cart, exist_ok=True)
+    fatte, mancano = [], 0
+    for v in voci:
+        vids = sorted(glob.glob(os.path.join(vecchio, v["pezzo"], "video", "*.mp4")))
+        if not vids:
+            mancano += 1
+            continue
+        quadri = []
+        for t in (v["t_prima"], v["t_dopo"]):
+            out = os.path.join(cart, f"q_{v['id']}_{int(t)}.jpg")
+            subprocess.run([ffmpeg(), "-v", "error", "-y", "-ss", f"{t:.1f}", "-i", vids[0], "-frames:v", "1", out],
+                           capture_output=True, timeout=120, creationflags=NOFIN)
+            quadri.append(cv2.imread(out) if os.path.exists(out) else None)
+        if any(q is None for q in quadri):
+            mancano += 1
+            continue
+        h, w = quadri[1].shape[:2]
+        x, y, bw, bh = v["box"]
+        cx, cy = (x + bw / 2) * w, (y + bh / 2) * h
+        lato = max(3 * bw * w, 3 * bh * h, 0.18 * min(w, h))
+        x0, y0 = int(max(0, cx - lato / 2)), int(max(0, cy - lato / 2))
+        x1, y1 = int(min(w, cx + lato / 2)), int(min(h, cy + lato / 2))
+        r = (int(x * w), int(y * h), int((x + bw) * w), int((y + bh) * h))
+        for nome, q in (("prima", quadri[0]), ("dopo", quadri[1])):
+            z = q[y0:y1, x0:x1].copy()
+            cv2.rectangle(z, (r[0] - x0, r[1] - y0), (r[2] - x0, r[3] - y0), (0, 0, 255), max(2, int(lato / 150)))
+            k = 640 / max(z.shape[:2])
+            cv2.imwrite(os.path.join(cart, f"{v['id']}_{nome}.jpg"), cv2.resize(z, None, fx=k, fy=k))
+        tutto = quadri[1].copy()
+        cv2.rectangle(tutto, r[:2], r[2:], (0, 0, 255), max(3, w // 300))
+        k = 1280 / w
+        cv2.imwrite(os.path.join(cart, f"{v['id']}.jpg"), cv2.resize(tutto, None, fx=k, fy=k))
+        fatte.append({"id": v["id"], "file": v["id"] + ".jpg", "vero": v["vero"], "rango": v["rango"]})
+    json.dump(fatte, open(os.path.join(cart, "carte.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    with zipfile.ZipFile(os.path.join(C, "carte.zip"), "w") as zz:
+        for f in os.listdir(cart):
+            if not f.startswith("q_"):
+                zz.write(os.path.join(cart, f), f)
+    os.makedirs(os.path.join(U, "carte34"), exist_ok=True)
+    for f in os.listdir(cart):   # le carte anche in uscita, per confrontarle con Claude
+        if not f.startswith("q_") and len(fatte) < 400:
+            shutil.copy2(os.path.join(cart, f), os.path.join(U, "carte34", f))
+    av(f"carte dai pezzi: {len(fatte)} fatte, {mancano} senza video")
+
+
+if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "pezzi_vlm.json")):
+    try:
+        carte_dai_pezzi()
+    except Exception as ex:   # noqa: BLE001
+        av(f"carte dai pezzi: {type(ex).__name__}: {str(ex)[:300]}")
+        av(traceback.format_exc()[-1500:])
 if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "vlm.py")):
     try:
         parti_qwen()

@@ -1,5 +1,6 @@
 """E6 (10/11/2026): un modello visione-linguaggio aperto (Qwen3-VL, Apache 2.0) giudica le carte di Scorri come le
 giudica Claude: cosa c'e' nel riquadro rosso. Gira nel Python della NVIDIA (~\\kr_vlm\\venv).
+version: 0.3.0 (13/11/2026) - v3: prima e dopo (tre immagini), per i pezzi del secondo passaggio della prova grande.
 version: 0.2.0 (11/11/2026) - la domanda in tre varianti, da confrontare sulle stesse carte:
   v1  la domanda del 10/11 (etichette italiane, una sola immagine);
   v2  la domanda nuova: cosa e' un abbandono (FUORI dai contenitori, anche sul coperchio) e cosa no (il contenitore,
@@ -67,6 +68,24 @@ PROMPT_V2 = (
     '"dove": "ground | on_container | inside_container | none", '
     '"risposta": "one word from the list", "sicuro": true}}\n'
     "sicuro is false when you hesitate between two words.")
+
+
+# 0.3.0: v3, prima e dopo (compito 34, secondo passaggio della prova grande): e' comparso un rifiuto abbandonato?
+PROMPT_V3 = (
+    "You check alerts from a CCTV camera that watches street waste containers in Italy. Image 1 shows an area BEFORE, "
+    "image 2 the SAME area about one or two minutes LATER (AFTER); the red box marks the same place in both. Image 3 "
+    "is the whole camera frame AFTER, with the red box. A program noticed that something changed in the red box and "
+    "stayed. Decide whether someone ABANDONED WASTE there: a new garbage bag, cardboard, box, bag of clothes, "
+    "furniture, appliance, rubble, crate or litter that is in the AFTER image and was NOT in the BEFORE image, lying "
+    "on the ground, leaning against a container or put on a container lid.\n"
+    "It is NOT abandoned waste when the change is: a parked or moving vehicle, a person, a shadow or change of light, "
+    "a reflection, a container moved or opened, waste already there BEFORE, leaves or vegetation, rain.\n\n"
+    "risposta is ONE word: waste (new abandoned waste in the red box), vehicle, person, shadow (shadow, light, "
+    "reflection), bin (a container moved, opened or closed), already (the object was already there before), "
+    "nothing (no visible change), unclear.\n"
+    "First look, then answer. Reply ONLY with JSON: "
+    '{"prima": "what is in the box before, 3 to 8 words", "dopo": "what is in the box after, 3 to 8 words", '
+    '"risposta": "one word", "sicuro": true}')
 
 
 def leggi(testo):
@@ -140,6 +159,10 @@ def domanda(f, variante, cartella):
     """Il contenuto del messaggio per una carta e la variante davvero usata (v2d senza riquadro diventa v2)."""
     if variante == "v1":
         return [{"type": "image", "path": f}, {"type": "text", "text": PROMPT}], "v1"
+    if variante == "v3":
+        b = f[:-4]
+        return [{"type": "image", "path": b + "_prima.jpg"}, {"type": "image", "path": b + "_dopo.jpg"},
+                {"type": "image", "path": f}, {"type": "text", "text": PROMPT_V3}], "v3"
     if variante == "v2d":
         pp = primo_piano(f, cartella)
         if pp:
@@ -153,7 +176,7 @@ def main():
     from transformers import AutoModelForImageTextToText, AutoProcessor
     cart, uscita, nome, modo = sys.argv[1:5]
     variante = sys.argv[sys.argv.index("--prompt") + 1] if "--prompt" in sys.argv else "v1"
-    if variante not in ("v1", "v2", "v2d"):
+    if variante not in ("v1", "v2", "v2d", "v3"):
         sys.exit(f"--prompt {variante}: sono v1, v2, v2d")
     tmp = tempfile.mkdtemp(prefix="vlm_pp_")
     t0 = time.time()
@@ -180,7 +203,7 @@ def main():
             inp = proc.apply_chat_template(msg, tokenize=True, add_generation_prompt=True, return_dict=True,
                                            return_tensors="pt").to(model.device)
             with torch.inference_mode():
-                g = model.generate(**inp, max_new_tokens=80 if variante == "v1" else 120, do_sample=False)
+                g = model.generate(**inp, max_new_tokens=80 if variante == "v1" else 160, do_sample=False)
             testo = proc.batch_decode(g[:, inp["input_ids"].shape[1]:], skip_special_tokens=True)[0]
             r = leggi(testo)
         except Exception as ex:   # noqa: BLE001
