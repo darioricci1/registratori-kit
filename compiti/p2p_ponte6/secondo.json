@@ -1,0 +1,2383 @@
+[
+ {
+  "nome": "pos005_kit341_1",
+  "ora": "pos005_kit341",
+  "uid": "U81C57YS16T8M7V5111A",
+  "kit": 341,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-20 15:36:02",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-20 15:37:44",
+  "leggero": true
+ },
+ {
+  "nome": "pos001_kit657_1",
+  "ora": "pos001_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-23 18:27:16",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-23 18:33:21",
+  "leggero": true
+ },
+ {
+  "nome": "pos001_kit657_2",
+  "ora": "pos001_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-23 18:46:16",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-23 18:33:21",
+  "leggero": true
+ },
+ {
+  "nome": "pos018_kit341_1",
+  "ora": "pos018_kit341",
+  "uid": "U81C57YS16T8M7V5111A",
+  "kit": 341,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-23 07:21:27",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-23 07:34:53",
+  "leggero": true
+ },
+ {
+  "nome": "pos018_kit341_2",
+  "ora": "pos018_kit341",
+  "uid": "U81C57YS16T8M7V5111A",
+  "kit": 341,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-23 07:40:27",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-23 07:34:53",
+  "leggero": true
+ },
+ {
+  "nome": "pos007_kit657_1",
+  "ora": "pos007_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-24 16:43:56",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-24 16:45:36",
+  "leggero": true
+ },
+ {
+  "nome": "pos009_kit629_1",
+  "ora": "pos009_kit629",
+  "uid": "7P1DCUE6RNPTS98Y111A",
+  "kit": 629,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-25 17:45:04",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-25 17:47:48",
+  "leggero": true
+ },
+ {
+  "nome": "pos002_kit581_1",
+  "ora": "pos002_kit581",
+  "uid": "HG7F76GY3TTXNYZC111A",
+  "kit": 581,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-26 10:28:30",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-26 10:30:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos002_kit581_2",
+  "ora": "pos002_kit581",
+  "uid": "HG7F76GY3TTXNYZC111A",
+  "kit": 581,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-26 11:08:30",
+  "minuti": 3.5,
+  "posti": [
+   3,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-26 10:30:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos006_kit638_1",
+  "ora": "pos006_kit638",
+  "uid": "D8DN3RK5KRW63X79111A",
+  "kit": 638,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-27 09:27:24",
+  "minuti": 3.5,
+  "posti": [
+   3,
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 09:08:11",
+  "leggero": true
+ },
+ {
+  "nome": "pos011_kit350_1",
+  "ora": "pos011_kit350",
+  "uid": "7D3YC3EW3ESSM35N111A",
+  "kit": 350,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-27 12:30:41",
+  "minuti": 3.5,
+  "posti": [
+   2,
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 12:32:49",
+  "leggero": true
+ },
+ {
+  "nome": "pos011_kit350_2",
+  "ora": "pos011_kit350",
+  "uid": "7D3YC3EW3ESSM35N111A",
+  "kit": 350,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-27 13:07:41",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 12:32:49",
+  "leggero": true
+ },
+ {
+  "nome": "pos016_kit632_1",
+  "ora": "pos016_kit632",
+  "uid": "3KPRNMDNFBP2HNLT111A",
+  "kit": 632,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-27 07:52:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 07:53:51",
+  "leggero": true
+ },
+ {
+  "nome": "pos017_kit354_1",
+  "ora": "pos017_kit354",
+  "uid": "XHHP3RSD9WX99937111A",
+  "kit": 354,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-27 13:54:30",
+  "minuti": 3.5,
+  "posti": [
+   2,
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 14:37:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos017_kit354_2",
+  "ora": "pos017_kit354",
+  "uid": "XHHP3RSD9WX99937111A",
+  "kit": 354,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-27 13:59:30",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 14:37:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos020_kit212_1",
+  "ora": "pos020_kit212",
+  "uid": "RXR28J553KZ51UE3111A",
+  "kit": 212,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-27 11:46:20",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 12:01:24",
+  "leggero": true
+ },
+ {
+  "nome": "pos020_kit212_2",
+  "ora": "pos020_kit212",
+  "uid": "RXR28J553KZ51UE3111A",
+  "kit": 212,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-27 11:56:20",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 12:01:24",
+  "leggero": true
+ },
+ {
+  "nome": "pos020_kit212_3",
+  "ora": "pos020_kit212",
+  "uid": "RXR28J553KZ51UE3111A",
+  "kit": 212,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-27 12:00:20",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 12:01:24",
+  "leggero": true
+ },
+ {
+  "nome": "pos023_kit589_1",
+  "ora": "pos023_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-27 19:33:06",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-27 19:20:03",
+  "leggero": true
+ },
+ {
+  "nome": "pos004_kit445_1",
+  "ora": "pos004_kit445",
+  "uid": "J8GJEC67MTDV7SU9111A",
+  "kit": 445,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 11:09:43",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 11:06:45",
+  "leggero": true
+ },
+ {
+  "nome": "pos014_kit383_1",
+  "ora": "pos014_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 10:47:49",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 10:46:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos014_kit383_2",
+  "ora": "pos014_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 10:56:49",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 10:46:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos014_kit383_3",
+  "ora": "pos014_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 11:11:49",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 10:46:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos015_kit575_1",
+  "ora": "pos015_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 15:48:16",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 15:49:58",
+  "leggero": true
+ },
+ {
+  "nome": "pos015_kit575_2",
+  "ora": "pos015_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 16:06:16",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 15:49:58",
+  "leggero": true
+ },
+ {
+  "nome": "pos026_kit261_1",
+  "ora": "pos026_kit261",
+  "uid": "ZKD7KEWUUMP7L12Y111A",
+  "kit": 261,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 09:16:14",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 09:18:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos026_kit261_2",
+  "ora": "pos026_kit261",
+  "uid": "ZKD7KEWUUMP7L12Y111A",
+  "kit": 261,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 09:40:14",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 09:18:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos027_kit556_1",
+  "ora": "pos027_kit556",
+  "uid": "WZMHADP3H2D1PDVB111A",
+  "kit": 556,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-28 16:06:47",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 16:09:30",
+  "leggero": true
+ },
+ {
+  "nome": "pos034_kit516_1",
+  "ora": "pos034_kit516",
+  "uid": "VML1EDXXDFC5AE8W111A",
+  "kit": 516,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 18:27:36",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 18:29:27",
+  "leggero": true
+ },
+ {
+  "nome": "pos034_kit516_2",
+  "ora": "pos034_kit516",
+  "uid": "VML1EDXXDFC5AE8W111A",
+  "kit": 516,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 18:49:36",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 18:29:27",
+  "leggero": true
+ },
+ {
+  "nome": "pos040_kit657_1",
+  "ora": "pos040_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 17:21:26",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 17:38:52",
+  "leggero": true
+ },
+ {
+  "nome": "pos040_kit657_2",
+  "ora": "pos040_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 17:30:26",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 17:38:52",
+  "leggero": true
+ },
+ {
+  "nome": "pos040_kit657_3",
+  "ora": "pos040_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 17:37:26",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 17:38:52",
+  "leggero": true
+ },
+ {
+  "nome": "pos069_kit225_1",
+  "ora": "pos069_kit225",
+  "uid": "AJBLK1K1A94WHV9A111A",
+  "kit": 225,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 06:38:52",
+  "minuti": 2.5,
+  "posti": [
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 07:03:19",
+  "leggero": true
+ },
+ {
+  "nome": "pos069_kit225_2",
+  "ora": "pos069_kit225",
+  "uid": "AJBLK1K1A94WHV9A111A",
+  "kit": 225,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-28 07:01:52",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 07:03:19",
+  "leggero": true
+ },
+ {
+  "nome": "pos071_kit313_1",
+  "ora": "pos071_kit313",
+  "uid": "71AYBC1XRXB49ZKP111A",
+  "kit": 313,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-28 16:17:24",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-28 16:18:37",
+  "leggero": true
+ },
+ {
+  "nome": "pos029_kit575_1",
+  "ora": "pos029_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-29 15:53:36",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-29 15:55:30",
+  "leggero": true
+ },
+ {
+  "nome": "pos029_kit575_2",
+  "ora": "pos029_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-29 16:11:36",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-29 15:55:30",
+  "leggero": true
+ },
+ {
+  "nome": "pos031_kit485_1",
+  "ora": "pos031_kit485",
+  "uid": "XHST12ZJCWZSRWTY111A",
+  "kit": 485,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-29 12:27:56",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-29 12:48:37",
+  "leggero": true
+ },
+ {
+  "nome": "pos031_kit485_2",
+  "ora": "pos031_kit485",
+  "uid": "XHST12ZJCWZSRWTY111A",
+  "kit": 485,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-29 12:38:56",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-29 12:48:37",
+  "leggero": true
+ },
+ {
+  "nome": "pos031_kit485_3",
+  "ora": "pos031_kit485",
+  "uid": "XHST12ZJCWZSRWTY111A",
+  "kit": 485,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-29 12:51:56",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-29 12:48:37",
+  "leggero": true
+ },
+ {
+  "nome": "pos032_kit383_1",
+  "ora": "pos032_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-30 16:08:34",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-30 16:15:41",
+  "leggero": true
+ },
+ {
+  "nome": "pos032_kit383_2",
+  "ora": "pos032_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-30 17:00:34",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-30 16:15:41",
+  "leggero": true
+ },
+ {
+  "nome": "pos032_kit383_3",
+  "ora": "pos032_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-10-30 17:03:34",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-30 16:15:41",
+  "leggero": true
+ },
+ {
+  "nome": "pos013_kit421_1",
+  "ora": "pos013_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 09:29:28",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 10:07:19",
+  "leggero": true
+ },
+ {
+  "nome": "pos013_kit421_2",
+  "ora": "pos013_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 09:59:28",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 10:07:19",
+  "leggero": true
+ },
+ {
+  "nome": "pos013_kit421_3",
+  "ora": "pos013_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 10:02:28",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 10:07:19",
+  "leggero": true
+ },
+ {
+  "nome": "pos021_kit443_1",
+  "ora": "pos021_kit443",
+  "uid": "55R623L3HMTV2USD111A",
+  "kit": 443,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 16:56:16",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 16:14:47",
+  "leggero": true
+ },
+ {
+  "nome": "pos028_kit409_1",
+  "ora": "pos028_kit409",
+  "uid": "4VWE7SJA32F96CF8111A",
+  "kit": 409,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 12:24:40",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 13:03:28",
+  "leggero": true
+ },
+ {
+  "nome": "pos028_kit409_2",
+  "ora": "pos028_kit409",
+  "uid": "4VWE7SJA32F96CF8111A",
+  "kit": 409,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 12:29:40",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 13:03:28",
+  "leggero": true
+ },
+ {
+  "nome": "pos028_kit409_3",
+  "ora": "pos028_kit409",
+  "uid": "4VWE7SJA32F96CF8111A",
+  "kit": 409,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 13:05:40",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 13:03:28",
+  "leggero": true
+ },
+ {
+  "nome": "pos039_kit651_1",
+  "ora": "pos039_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 07:22:55",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 07:32:17",
+  "leggero": true
+ },
+ {
+  "nome": "pos039_kit651_2",
+  "ora": "pos039_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 07:32:55",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 07:32:17",
+  "leggero": true
+ },
+ {
+  "nome": "pos039_kit651_3",
+  "ora": "pos039_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 08:18:55",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 07:32:17",
+  "leggero": true
+ },
+ {
+  "nome": "pos044_kit350_1",
+  "ora": "pos044_kit350",
+  "uid": "7D3YC3EW3ESSM35N111A",
+  "kit": 350,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 13:51:06",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 13:52:39",
+  "leggero": true
+ },
+ {
+  "nome": "pos045_kit372_1",
+  "ora": "pos045_kit372",
+  "uid": "2R47N7LXSMFF7BZG111A",
+  "kit": 372,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 16:32:56",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 17:21:34",
+  "leggero": true
+ },
+ {
+  "nome": "pos045_kit372_2",
+  "ora": "pos045_kit372",
+  "uid": "2R47N7LXSMFF7BZG111A",
+  "kit": 372,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 17:07:56",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 17:21:34",
+  "leggero": true
+ },
+ {
+  "nome": "pos045_kit372_3",
+  "ora": "pos045_kit372",
+  "uid": "2R47N7LXSMFF7BZG111A",
+  "kit": 372,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 17:18:56",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 17:21:34",
+  "leggero": true
+ },
+ {
+  "nome": "pos047_kit589_1",
+  "ora": "pos047_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 13:49:16",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 14:04:16",
+  "leggero": true
+ },
+ {
+  "nome": "pos047_kit589_2",
+  "ora": "pos047_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 13:54:16",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 14:04:16",
+  "leggero": true
+ },
+ {
+  "nome": "pos047_kit589_3",
+  "ora": "pos047_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 14:00:16",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 14:04:16",
+  "leggero": true
+ },
+ {
+  "nome": "pos053_kit589_1",
+  "ora": "pos053_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 09:07:55",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 09:09:44",
+  "leggero": true
+ },
+ {
+  "nome": "pos053_kit589_2",
+  "ora": "pos053_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 09:20:55",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 09:09:44",
+  "leggero": true
+ },
+ {
+  "nome": "pos053_kit589_3",
+  "ora": "pos053_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-10-31 09:26:55",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 09:09:44",
+  "leggero": true
+ },
+ {
+  "nome": "pos057_kit405_1",
+  "ora": "pos057_kit405",
+  "uid": "RRJGC1W7958W1TNW111A",
+  "kit": 405,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 15:29:01",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 16:20:53",
+  "leggero": true
+ },
+ {
+  "nome": "pos057_kit405_2",
+  "ora": "pos057_kit405",
+  "uid": "RRJGC1W7958W1TNW111A",
+  "kit": 405,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 15:44:01",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 16:20:53",
+  "leggero": true
+ },
+ {
+  "nome": "pos057_kit405_3",
+  "ora": "pos057_kit405",
+  "uid": "RRJGC1W7958W1TNW111A",
+  "kit": 405,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-10-31 16:19:01",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-10-31 16:20:53",
+  "leggero": true
+ },
+ {
+  "nome": "pos008_kit384_1",
+  "ora": "pos008_kit384",
+  "uid": "9LSS75MFLX8R8YWM111A",
+  "kit": 384,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-01 07:20:42",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:12:21",
+  "leggero": true
+ },
+ {
+  "nome": "pos008_kit384_2",
+  "ora": "pos008_kit384",
+  "uid": "9LSS75MFLX8R8YWM111A",
+  "kit": 384,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-01 07:28:42",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:12:21",
+  "leggero": true
+ },
+ {
+  "nome": "pos008_kit384_3",
+  "ora": "pos008_kit384",
+  "uid": "9LSS75MFLX8R8YWM111A",
+  "kit": 384,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-01 07:35:42",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:12:21",
+  "leggero": true
+ },
+ {
+  "nome": "pos010_kit384_1",
+  "ora": "pos010_kit384",
+  "uid": "9LSS75MFLX8R8YWM111A",
+  "kit": 384,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 13:31:59",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 13:33:32",
+  "leggero": true
+ },
+ {
+  "nome": "pos010_kit384_2",
+  "ora": "pos010_kit384",
+  "uid": "9LSS75MFLX8R8YWM111A",
+  "kit": 384,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 13:50:59",
+  "minuti": 2.5,
+  "posti": [
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 13:33:32",
+  "leggero": true
+ },
+ {
+  "nome": "pos022_kit421_1",
+  "ora": "pos022_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 07:52:50",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:54:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos022_kit421_2",
+  "ora": "pos022_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 07:59:50",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:54:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos022_kit421_3",
+  "ora": "pos022_kit421",
+  "uid": "FMZMEVPNDK24S9V2111A",
+  "kit": 421,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 08:03:50",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 07:54:18",
+  "leggero": true
+ },
+ {
+  "nome": "pos037_kit409_1",
+  "ora": "pos037_kit409",
+  "uid": "4VWE7SJA32F96CF8111A",
+  "kit": 409,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 12:17:55",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 12:13:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos041_kit397_1",
+  "ora": "pos041_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 17:25:56",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 17:27:11",
+  "leggero": true
+ },
+ {
+  "nome": "pos042_kit397_1",
+  "ora": "pos042_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 08:51:42",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 09:02:39",
+  "leggero": true
+ },
+ {
+  "nome": "pos042_kit397_2",
+  "ora": "pos042_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 09:00:42",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 09:02:39",
+  "leggero": true
+ },
+ {
+  "nome": "pos048_kit591_1",
+  "ora": "pos048_kit591",
+  "uid": "65JK8PFSSLXZUW3V111A",
+  "kit": 591,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 09:03:25",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 09:05:06",
+  "leggero": true
+ },
+ {
+  "nome": "pos049_kit561_1",
+  "ora": "pos049_kit561",
+  "uid": "A4BJY9PUN5E9X3SV111A",
+  "kit": 561,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 17:39:19",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 17:22:26",
+  "leggero": true
+ },
+ {
+  "nome": "pos049_kit561_2",
+  "ora": "pos049_kit561",
+  "uid": "A4BJY9PUN5E9X3SV111A",
+  "kit": 561,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 17:45:19",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 17:22:26",
+  "leggero": true
+ },
+ {
+  "nome": "pos050_kit375_1",
+  "ora": "pos050_kit375",
+  "uid": "4JWHPZFCBWRWTAX3111A",
+  "kit": 375,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 17:51:22",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:09:32",
+  "leggero": true
+ },
+ {
+  "nome": "pos050_kit375_2",
+  "ora": "pos050_kit375",
+  "uid": "4JWHPZFCBWRWTAX3111A",
+  "kit": 375,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 18:07:22",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:09:32",
+  "leggero": true
+ },
+ {
+  "nome": "pos050_kit375_3",
+  "ora": "pos050_kit375",
+  "uid": "4JWHPZFCBWRWTAX3111A",
+  "kit": 375,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-01 18:37:22",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:09:32",
+  "leggero": true
+ },
+ {
+  "nome": "pos051_kit651_1",
+  "ora": "pos051_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 16:27:08",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 16:39:38",
+  "leggero": true
+ },
+ {
+  "nome": "pos051_kit651_2",
+  "ora": "pos051_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-01 16:38:08",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 16:39:38",
+  "leggero": true
+ },
+ {
+  "nome": "pos054_kit485_1",
+  "ora": "pos054_kit485",
+  "uid": "XHST12ZJCWZSRWTY111A",
+  "kit": 485,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 22:19:43",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 22:21:25",
+  "leggero": true
+ },
+ {
+  "nome": "pos054_kit485_2",
+  "ora": "pos054_kit485",
+  "uid": "XHST12ZJCWZSRWTY111A",
+  "kit": 485,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 22:23:43",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 22:21:25",
+  "leggero": true
+ },
+ {
+  "nome": "pos065_kit484_1",
+  "ora": "pos065_kit484",
+  "uid": "RSG7D9NAPWNEPPF9111A",
+  "kit": 484,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 17:23:54",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:06:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos065_kit484_2",
+  "ora": "pos065_kit484",
+  "uid": "RSG7D9NAPWNEPPF9111A",
+  "kit": 484,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 17:59:54",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:06:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos065_kit484_3",
+  "ora": "pos065_kit484",
+  "uid": "RSG7D9NAPWNEPPF9111A",
+  "kit": 484,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 18:04:54",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 18:06:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos067_kit657_1",
+  "ora": "pos067_kit657",
+  "uid": "7GXDM2A6XAEYTH1L111A",
+  "kit": 657,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-01 21:07:36",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-01 21:08:42",
+  "leggero": true
+ },
+ {
+  "nome": "pos033_kit233_1",
+  "ora": "pos033_kit233",
+  "uid": "VEH5GRDEBCHVWWA7111A",
+  "kit": 233,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-02 06:35:33",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 06:28:05",
+  "leggero": true
+ },
+ {
+  "nome": "pos035_kit615_1",
+  "ora": "pos035_kit615",
+  "uid": "JSKC5FFS8PGF1GRZ111A",
+  "kit": 615,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-02 14:58:23",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 14:59:30",
+  "leggero": true
+ },
+ {
+  "nome": "pos055_kit575_1",
+  "ora": "pos055_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-02 14:05:32",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 14:10:15",
+  "leggero": true
+ },
+ {
+  "nome": "pos055_kit575_2",
+  "ora": "pos055_kit575",
+  "uid": "HFC4PVMK3PBGGTV2111A",
+  "kit": 575,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-02 14:08:32",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 14:10:15",
+  "leggero": true
+ },
+ {
+  "nome": "pos056_kit651_1",
+  "ora": "pos056_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-02 04:43:38",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 05:00:43",
+  "leggero": true
+ },
+ {
+  "nome": "pos058_kit651_1",
+  "ora": "pos058_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-02 17:31:01",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 17:32:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos058_kit651_2",
+  "ora": "pos058_kit651",
+  "uid": "8X9W32MPN8RHKNF1111A",
+  "kit": 651,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-02 17:44:01",
+  "minuti": 2.5,
+  "posti": [
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-02 17:32:57",
+  "leggero": true
+ },
+ {
+  "nome": "pos003_kit577_1",
+  "ora": "pos003_kit577",
+  "uid": "4LWLT8S3G6AE94ZM111A",
+  "kit": 577,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-03 16:58:03",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 16:59:28",
+  "leggero": true
+ },
+ {
+  "nome": "pos003_kit577_2",
+  "ora": "pos003_kit577",
+  "uid": "4LWLT8S3G6AE94ZM111A",
+  "kit": 577,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-03 17:17:03",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 16:59:28",
+  "leggero": true
+ },
+ {
+  "nome": "pos038_kit233_1",
+  "ora": "pos038_kit233",
+  "uid": "VEH5GRDEBCHVWWA7111A",
+  "kit": 233,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-03 19:42:07",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 19:43:10",
+  "leggero": true
+ },
+ {
+  "nome": "pos052_kit673_1",
+  "ora": "pos052_kit673",
+  "uid": "34N233JW8ESCWSUV111A",
+  "kit": 673,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-03 16:38:09",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 16:39:38",
+  "leggero": true
+ },
+ {
+  "nome": "pos059_kit383_1",
+  "ora": "pos059_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-03 11:43:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 11:44:40",
+  "leggero": true
+ },
+ {
+  "nome": "pos060_kit350_1",
+  "ora": "pos060_kit350",
+  "uid": "7D3YC3EW3ESSM35N111A",
+  "kit": 350,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-03 17:20:59",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 17:50:07",
+  "leggero": true
+ },
+ {
+  "nome": "pos060_kit350_2",
+  "ora": "pos060_kit350",
+  "uid": "7D3YC3EW3ESSM35N111A",
+  "kit": 350,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-03 17:48:59",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 17:50:07",
+  "leggero": true
+ },
+ {
+  "nome": "pos062_kit561_1",
+  "ora": "pos062_kit561",
+  "uid": "A4BJY9PUN5E9X3SV111A",
+  "kit": 561,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-03 21:12:53",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 21:14:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos062_kit561_2",
+  "ora": "pos062_kit561",
+  "uid": "A4BJY9PUN5E9X3SV111A",
+  "kit": 561,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-03 21:17:53",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 21:14:09",
+  "leggero": true
+ },
+ {
+  "nome": "pos068_kit487_1",
+  "ora": "pos068_kit487",
+  "uid": "V2NWBPP3Z8RPHCJ8111A",
+  "kit": 487,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-03 12:19:51",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-03 13:12:11",
+  "leggero": true
+ },
+ {
+  "nome": "pos061_kit397_1",
+  "ora": "pos061_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-04 15:41:46",
+  "minuti": 3.5,
+  "posti": [
+   3,
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-04 16:02:05",
+  "leggero": true
+ },
+ {
+  "nome": "pos061_kit397_2",
+  "ora": "pos061_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-04 16:00:46",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-04 16:02:05",
+  "leggero": true
+ },
+ {
+  "nome": "pos064_kit383_1",
+  "ora": "pos064_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-04 18:43:09",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-04 18:44:35",
+  "leggero": true
+ },
+ {
+  "nome": "neg133_kit294_1",
+  "ora": "neg133_kit294",
+  "uid": "5R5DB3DGPD4BVFP1111A",
+  "kit": 294,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-05 05:22:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "pos066_kit397_1",
+  "ora": "pos066_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-05 18:14:02",
+  "minuti": 2.5,
+  "posti": [
+   2,
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-05 18:15:48",
+  "leggero": true
+ },
+ {
+  "nome": "pos066_kit397_2",
+  "ora": "pos066_kit397",
+  "uid": "HJ12NFEVGGRM6E1F111A",
+  "kit": 397,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-05 19:04:02",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-05 18:15:48",
+  "leggero": true
+ },
+ {
+  "nome": "neg093_kit629_1",
+  "ora": "neg093_kit629",
+  "uid": "7P1DCUE6RNPTS98Y111A",
+  "kit": 629,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-06 08:00:00",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2,
+   3
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg108_kit632_1",
+  "ora": "neg108_kit632",
+  "uid": "3KPRNMDNFBP2HNLT111A",
+  "kit": 632,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-07 02:27:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg142_kit401_1",
+  "ora": "neg142_kit401",
+  "uid": "HE1M45K21VH45XUT111A",
+  "kit": 401,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-07 14:03:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg142_kit401_2",
+  "ora": "neg142_kit401",
+  "uid": "HE1M45K21VH45XUT111A",
+  "kit": 401,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-07 14:50:00",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "pos063_kit566_1",
+  "ora": "pos063_kit566",
+  "uid": "BSSAJLD1WHWT3FGX111A",
+  "kit": 566,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-07 16:52:31",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-07 16:52:43",
+  "leggero": true
+ },
+ {
+  "nome": "pos063_kit566_2",
+  "ora": "pos063_kit566",
+  "uid": "BSSAJLD1WHWT3FGX111A",
+  "kit": 566,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-07 16:56:31",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-07 16:52:43",
+  "leggero": true
+ },
+ {
+  "nome": "pos063_kit566_3",
+  "ora": "pos063_kit566",
+  "uid": "BSSAJLD1WHWT3FGX111A",
+  "kit": 566,
+  "canali": [
+   3
+  ],
+  "inizio": "2026-11-07 17:19:31",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-07 16:52:43",
+  "leggero": true
+ },
+ {
+  "nome": "pos070_kit589_1",
+  "ora": "pos070_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-07 16:07:21",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-07 16:56:45",
+  "leggero": true
+ },
+ {
+  "nome": "pos070_kit589_2",
+  "ora": "pos070_kit589",
+  "uid": "65CA2H5UP8G7FU1A111A",
+  "kit": 589,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-07 16:55:21",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "positiva",
+  "atteso": "2026-11-07 16:56:45",
+  "leggero": true
+ },
+ {
+  "nome": "neg104_kit605_1",
+  "ora": "neg104_kit605",
+  "uid": "CZVKNEWSHPE3SMCS111A",
+  "kit": 605,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-08 06:49:00",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2,
+   3
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg103_kit519_1",
+  "ora": "neg103_kit519",
+  "uid": "P1H1L3P82E3T5RNF111A",
+  "kit": 519,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-09 23:43:00",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg111_kit456_1",
+  "ora": "neg111_kit456",
+  "uid": "MA1YNADBL6357JM5111A",
+  "kit": 456,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-09 11:24:00",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg124_kit321_1",
+  "ora": "neg124_kit321",
+  "uid": "U6NHL2FYZJTEVA5L111A",
+  "kit": 321,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-09 11:02:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg097_kit353_1",
+  "ora": "neg097_kit353",
+  "uid": "ZKNXTL2P7E8YHYLJ111A",
+  "kit": 353,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-10 08:50:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg102_kit556_1",
+  "ora": "neg102_kit556",
+  "uid": "WZMHADP3H2D1PDVB111A",
+  "kit": 556,
+  "canali": [
+   1
+  ],
+  "inizio": "2026-11-10 10:52:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg118_kit372_1",
+  "ora": "neg118_kit372",
+  "uid": "2R47N7LXSMFF7BZG111A",
+  "kit": 372,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-10 09:03:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg132_kit526_1",
+  "ora": "neg132_kit526",
+  "uid": "Y7DFLU2TR6J7EK1U111A",
+  "kit": 526,
+  "canali": [
+   0
+  ],
+  "inizio": "2026-11-10 23:44:00",
+  "minuti": 2.5,
+  "posti": [
+   1,
+   2,
+   3
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg150_kit383_1",
+  "ora": "neg150_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-10 07:19:00",
+  "minuti": 2.5,
+  "posti": [
+   2,
+   3
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg150_kit383_2",
+  "ora": "neg150_kit383",
+  "uid": "J9PHD2M4J3RS2VVW111A",
+  "kit": 383,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-10 07:23:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg121_kit377_1",
+  "ora": "neg121_kit377",
+  "uid": "5B6EAFP8NRAUC51B111A",
+  "kit": 377,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-11 12:53:00",
+  "minuti": 2.5,
+  "posti": [
+   3
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg121_kit377_2",
+  "ora": "neg121_kit377",
+  "uid": "5B6EAFP8NRAUC51B111A",
+  "kit": 377,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-11 13:04:00",
+  "minuti": 2.5,
+  "posti": [
+   1
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ },
+ {
+  "nome": "neg121_kit377_3",
+  "ora": "neg121_kit377",
+  "uid": "5B6EAFP8NRAUC51B111A",
+  "kit": 377,
+  "canali": [
+   2
+  ],
+  "inizio": "2026-11-11 13:09:00",
+  "minuti": 2.5,
+  "posti": [
+   2
+  ],
+  "tipo": "negativa",
+  "atteso": null,
+  "leggero": true
+ }
+]

@@ -37,6 +37,11 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Ponte 0.16.0 (compito p2p_ponte33, mandato al COMPUTERONE il 13/11 alle 12:50): il secondo passaggio della prova
+  grande. `prepara_secondo.py` fa `secondo.json` (138 pezzi da 2-3 minuti intorno ai primi 3 candidati «insieme» di
+  ogni ora, una telecamera, dalle ore piu' vecchie), che va nel compito come `lungo.json` «leggero»: scarico a piena
+  risoluzione, Kit_Rifiuti da riga di comando, in uscita solo dati e 3 immagini per pezzo (risultato piccolo, non piu'
+  lo zip da 923 MB del 32). Al massimo 2 analisi insieme. Risultato in `risultato_p2p_ponte33.zip`.
 - Ponte 0.15.0 (compito p2p_ponte32, pronto e NON mandato, zip nello scratchpad della sessione del 12/11): la prova
   grande del metodo «insieme» (analisi-abbandono-in-un-ora.md, sezione 6). `grande.json` (prepara_grande.py, prove in
   prova_grande.py) va nel compito come `pilota.json` con `solo_minuti`: 71 ore positive da 40 kit e 150 negative (+30

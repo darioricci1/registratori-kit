@@ -31,6 +31,11 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.16.0 (13/11/2026): il secondo passaggio della prova grande (prepara_secondo.py): lungo.json con i pezzi di
+  2-3 minuti intorno ai primi 3 candidati di ogni ora, una telecamera sola, «leggero»: in uscita solo i dati di
+  Kit_Rifiuti (json, md, csv sotto 1,5 MB) e al massimo 3 immagini piccole per pezzo, niente video, cosi' lo zip del
+  risultato resta piccolo (il compito 32 l'aveva fatto da 923 MB, arrivato rovinato). Al massimo 2 analisi insieme:
+  lo scarico aspetta. Ogni pezzo finito scrive uscita/lungo_<nome>/fine.txt, quindi un crash perde solo quello in corso.
 version: 0.15.0 (12/11/2026): la prova grande (analisi-abbandono-in-un-ora.md, sezione 5). Nel compito, pilota.json
   e' l'elenco di prepara_grande.py (grande.json: ~70 ore positive da 40 kit e 150 negative piu' 30 riserve) con
   «solo_minuti»: pilota.py 0.2.0 scarica per ogni ora solo le 72 miniature dei minuti (uscita/pilota/<ora>/minuti/ e
@@ -112,7 +117,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.15.0"
+VERSIONE = "p2p_ponte 0.16.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
@@ -650,7 +655,8 @@ def scarico_lungo(p):
         return None
     risultati = os.path.join(dove, "risultati")
     av(f"lungo {nome}: scaricati {len(finali)} video in {rap['secondi_scarico']} s, parte l'analisi")
-    return analisi_kit_rifiuti(finali, risultati, os.path.join(u, "analisi.txt")), risultati, u, time.time()
+    return (analisi_kit_rifiuti(finali, risultati, os.path.join(u, "analisi.txt")), risultati, u, time.time(),
+            bool(p.get("leggero")))
 
 
 def ambiente_figlio():
@@ -675,16 +681,20 @@ def analisi_kit_rifiuti(finali, risultati, registro, kit=None):
                             creationflags=0x00004000 | NOFIN)
 
 
-def copia_risultati(risultati, u, t0, codice):
-    """Del risultato dell'analisi vanno su Drive il report, i dati, poche immagini e (0.9.1) le clip annotate degli abbandoni."""
+def copia_risultati(risultati, u, t0, codice, leggero=False):
+    """Del risultato dell'analisi vanno su Drive il report, i dati, poche immagini e (0.9.1) le clip annotate degli abbandoni.
+    0.16.0: «leggero» (il secondo passaggio, 138 pezzi): dati sotto 1,5 MB, 3 immagini sotto 250 kB, niente video."""
     n_img, n_clip = 0, [0]
+    if leggero:
+        n_clip = [99]
+    max_dati, max_img, peso_img = (1.5e6, 3, 250e3) if leggero else (3e6, 40, 400e3)
     for radice, _, files in os.walk(risultati):
         for f in files:
             p = os.path.join(radice, f)
             est = f.lower().rsplit(".", 1)[-1]
-            if est in ("md", "json", "csv", "txt") and os.path.getsize(p) < 3e6:
+            if est in ("md", "json", "csv", "txt") and os.path.getsize(p) < max_dati:
                 shutil.copy(p, os.path.join(u, f))
-            elif est in ("jpg", "png") and n_img < 40 and os.path.getsize(p) < 400e3:
+            elif est in ("jpg", "png") and n_img < max_img and os.path.getsize(p) < peso_img:
                 shutil.copy(p, os.path.join(u, f)); n_img += 1
             elif est == "mp4" and "abbandono" in f and f.endswith("_annotata.mp4") and n_clip[0] < 6 and os.path.getsize(p) < 15e6:
                 shutil.copy(p, os.path.join(u, f)); n_clip[0] += 1   # 0.9.1: per vedere l'abbandono trovato (e l'orologio)
@@ -1954,7 +1964,20 @@ f_lungo = os.path.join(C, "lungo.json")
 if PC.upper() == "COMPUTERONE" and os.path.exists(f_lungo) and not os.path.exists(os.path.join(U, "lungo_fatto.txt")):
     da_scaricare = json.load(open(f_lungo, encoding="utf-8"))
 ultimo_guardato = time.time()
+def finisci_lunghe():
+    """0.16.0: le analisi finite si copiano in uscita (prima solo a scarichi finiti: con 138 pezzi si accumulavano)."""
+    for a in list(analisi_lunghe):
+        if a[0].poll() is not None:
+            analisi_lunghe.remove(a)
+            copia_risultati(a[1], a[2], a[3], a[0].returncode, leggero=len(a) > 4 and a[4])
+            av(f"lungo: analisi finita ({a[0].returncode}) in {round(time.time() - a[3])} s")
+
+
 while time.time() < t_fine:
+    finisci_lunghe()
+    if da_scaricare and len(analisi_lunghe) >= 2:   # 0.16.0: al massimo 2 analisi insieme
+        time.sleep(5)
+        continue
     if da_scaricare:
         p = da_scaricare.pop(0)
         try:
@@ -1967,11 +1990,6 @@ while time.time() < t_fine:
         if not da_scaricare:
             open(os.path.join(U, "lungo_fatto.txt"), "w").write(time.strftime("%Y-%m-%d %H:%M"))
         continue
-    for a in list(analisi_lunghe):
-        if a[0].poll() is not None:
-            analisi_lunghe.remove(a)
-            copia_risultati(a[1], a[2], a[3], a[0].returncode)
-            av(f"lungo: analisi finita ({a[0].returncode}) in {round(time.time() - a[3])} s")
     if time.time() - ultimo_guardato > 600:
         ultimo_guardato = time.time()
         if not analisi_lunghe and not misure_in_corso() and compito_nuovo_su_drive():

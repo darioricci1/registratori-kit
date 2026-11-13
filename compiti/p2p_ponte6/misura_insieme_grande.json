@@ -1,0 +1,4425 @@
+{
+ "varianti": {
+  "insieme": {
+   "memoria": 30,
+   "solo_fino": true,
+   "mosso_max": 4.0,
+   "area_max": 0.0075
+  }
+ },
+ "conti": {
+  "insieme": {
+   "trovati1": 27,
+   "trovati3": 36,
+   "trovati8": 39,
+   "falsi3": 1.02,
+   "falsi8": 1.39,
+   "posti": {
+    "pos001_kit657": 4,
+    "pos002_kit581": 1,
+    "pos003_kit577": 1,
+    "pos004_kit445": null,
+    "pos005_kit341": 1,
+    "pos006_kit638": null,
+    "pos007_kit657": 1,
+    "pos008_kit384": null,
+    "pos009_kit629": 1,
+    "pos010_kit384": 1,
+    "pos011_kit350": 1,
+    "pos012_kit281": null,
+    "pos013_kit421": null,
+    "pos014_kit383": null,
+    "pos015_kit575": 1,
+    "pos016_kit632": 1,
+    "pos017_kit354": null,
+    "pos018_kit341": null,
+    "pos019_kit663": null,
+    "pos020_kit212": null,
+    "pos021_kit443": null,
+    "pos022_kit421": 2,
+    "pos023_kit589": null,
+    "pos024_kit233": null,
+    "pos026_kit261": 2,
+    "pos027_kit556": 1,
+    "pos028_kit409": 7,
+    "pos029_kit575": 1,
+    "pos030_kit279": null,
+    "pos031_kit485": null,
+    "pos032_kit383": null,
+    "pos033_kit233": null,
+    "pos034_kit516": 2,
+    "pos035_kit615": 1,
+    "pos036_kit375": null,
+    "pos037_kit409": null,
+    "pos038_kit233": 1,
+    "pos039_kit651": null,
+    "pos040_kit657": 2,
+    "pos041_kit397": null,
+    "pos042_kit397": 1,
+    "pos043_kit629": null,
+    "pos044_kit350": 1,
+    "pos045_kit372": 7,
+    "pos046_kit487": null,
+    "pos047_kit589": null,
+    "pos048_kit591": 2,
+    "pos049_kit561": null,
+    "pos050_kit375": 1,
+    "pos051_kit651": null,
+    "pos052_kit673": 1,
+    "pos053_kit589": null,
+    "pos054_kit485": null,
+    "pos055_kit575": 1,
+    "pos056_kit651": null,
+    "pos057_kit405": 2,
+    "pos058_kit651": 1,
+    "pos059_kit383": 1,
+    "pos060_kit350": 1,
+    "pos061_kit397": 1,
+    "pos062_kit561": 3,
+    "pos063_kit566": null,
+    "pos064_kit383": 1,
+    "pos065_kit484": 2,
+    "pos066_kit397": 2,
+    "pos067_kit657": 1,
+    "pos068_kit487": null,
+    "pos069_kit225": 1,
+    "pos070_kit589": 1,
+    "pos071_kit313": 1
+   }
+  }
+ },
+ "candidati": {
+  "neg090_kit400": {
+   "insieme": []
+  },
+  "neg091_kit661": {
+   "insieme": []
+  },
+  "neg092_kit415": {
+   "insieme": []
+  },
+  "neg093_kit629": {
+   "insieme": [
+    {
+     "box": [
+      0.3196,
+      0.1493,
+      0.0952,
+      0.0538
+     ],
+     "comparsa": "2026-11-06 08:02:00",
+     "comparsa_prima": "2026-11-06 08:01:00",
+     "punteggio": 23109.2,
+     "area": 1281,
+     "dE": 18.04,
+     "durata_min": 26,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8551363945007324
+    },
+    {
+     "box": [
+      0.3736,
+      0.1771,
+      0.0511,
+      0.0399
+     ],
+     "comparsa": "2026-11-06 08:02:00",
+     "comparsa_prima": "2026-11-06 08:01:00",
+     "punteggio": 4572.2,
+     "area": 301,
+     "dE": 15.19,
+     "durata_min": 26,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5117244720458984
+    },
+    {
+     "box": [
+      0.4716,
+      0.1493,
+      0.0256,
+      0.0451
+     ],
+     "comparsa": "2026-11-06 08:02:00",
+     "comparsa_prima": "2026-11-06 08:01:00",
+     "punteggio": 3473.1,
+     "area": 196,
+     "dE": 17.72,
+     "durata_min": 26,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.5227487087249756
+    }
+   ]
+  },
+  "neg095_kit409": {
+   "insieme": []
+  },
+  "neg096_kit560": {
+   "insieme": []
+  },
+  "neg097_kit353": {
+   "insieme": [
+    {
+     "box": [
+      0.4318,
+      0.1111,
+      0.0199,
+      0.026
+     ],
+     "comparsa": "2026-11-10 08:52:00",
+     "comparsa_prima": "2026-11-10 08:51:00",
+     "punteggio": 6013.1,
+     "area": 157,
+     "dE": 38.3,
+     "durata_min": 41,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.808476448059082
+    }
+   ]
+  },
+  "neg098_kit596": {
+   "insieme": []
+  },
+  "neg099_kit374": {
+   "insieme": []
+  },
+  "neg100_kit435": {
+   "insieme": []
+  },
+  "neg101_kit591": {
+   "insieme": []
+  },
+  "neg102_kit556": {
+   "insieme": [
+    {
+     "box": [
+      0.5696,
+      0.224,
+      0.0455,
+      0.1059
+     ],
+     "comparsa": "2026-11-10 10:54:00",
+     "comparsa_prima": "2026-11-10 10:53:00",
+     "punteggio": 44492.2,
+     "area": 1432,
+     "dE": 31.07,
+     "durata_min": 25,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.194780111312866
+    }
+   ]
+  },
+  "neg103_kit519": {
+   "insieme": [
+    {
+     "box": [
+      0.5,
+      0.276,
+      0.0824,
+      0.1042
+     ],
+     "comparsa": "2026-11-09 23:45:00",
+     "comparsa_prima": "2026-11-09 23:44:00",
+     "punteggio": 28692.0,
+     "area": 1337,
+     "dE": 21.46,
+     "durata_min": 20,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.583500385284424
+    },
+    {
+     "box": [
+      0.642,
+      0.2448,
+      0.0412,
+      0.0382
+     ],
+     "comparsa": "2026-11-09 23:45:00",
+     "comparsa_prima": "2026-11-09 23:44:00",
+     "punteggio": 6100.8,
+     "area": 246,
+     "dE": 24.8,
+     "durata_min": 20,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4658455848693848
+    }
+   ]
+  },
+  "neg104_kit605": {
+   "insieme": [
+    {
+     "box": [
+      0.5554,
+      0.4913,
+      0.0597,
+      0.2674
+     ],
+     "comparsa": "2026-11-08 06:51:00",
+     "comparsa_prima": "2026-11-08 06:50:00",
+     "punteggio": 51860.2,
+     "area": 2925,
+     "dE": 17.73,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.7184051275253296
+    },
+    {
+     "box": [
+      0.5938,
+      0.4844,
+      0.0327,
+      0.0434
+     ],
+     "comparsa": "2026-11-08 06:51:00",
+     "comparsa_prima": "2026-11-08 06:50:00",
+     "punteggio": 4970.0,
+     "area": 284,
+     "dE": 17.5,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5320863723754883
+    },
+    {
+     "box": [
+      0.0,
+      0.7448,
+      0.0256,
+      0.0139
+     ],
+     "comparsa": "2026-11-08 06:51:00",
+     "comparsa_prima": "2026-11-08 06:50:00",
+     "punteggio": 1780.0,
+     "area": 100,
+     "dE": 17.8,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.8950779438018799
+    }
+   ]
+  },
+  "neg105_kit603": {
+   "insieme": []
+  },
+  "neg106_kit293": {
+   "insieme": []
+  },
+  "neg107_kit676": {
+   "insieme": []
+  },
+  "neg108_kit632": {
+   "insieme": [
+    {
+     "box": [
+      0.8722,
+      0.2014,
+      0.0312,
+      0.0243
+     ],
+     "comparsa": "2026-11-07 02:29:00",
+     "comparsa_prima": "2026-11-07 02:28:00",
+     "punteggio": 4089.1,
+     "area": 195,
+     "dE": 20.97,
+     "durata_min": 10,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.1598520278930664
+    }
+   ]
+  },
+  "neg109_kit485": {
+   "insieme": []
+  },
+  "neg110_kit364": {
+   "insieme": []
+  },
+  "neg111_kit456": {
+   "insieme": [
+    {
+     "box": [
+      0.8409,
+      0.2483,
+      0.0199,
+      0.0312
+     ],
+     "comparsa": "2026-11-09 11:26:00",
+     "comparsa_prima": "2026-11-09 11:25:00",
+     "punteggio": 5454.7,
+     "area": 173,
+     "dE": 31.53,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5726215839385986
+    },
+    {
+     "box": [
+      0.8182,
+      0.3212,
+      0.0085,
+      0.0191
+     ],
+     "comparsa": "2026-11-09 11:26:00",
+     "comparsa_prima": "2026-11-09 11:25:00",
+     "punteggio": 1640.6,
+     "area": 55,
+     "dE": 29.83,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6882245540618896
+    }
+   ]
+  },
+  "neg112_kit447": {
+   "insieme": []
+  },
+  "neg113_kit281": {
+   "insieme": []
+  },
+  "neg114_kit362": {
+   "insieme": []
+  },
+  "neg115_kit346": {
+   "insieme": []
+  },
+  "neg116_kit247": {
+   "insieme": []
+  },
+  "neg117_kit417": {
+   "insieme": []
+  },
+  "neg118_kit372": {
+   "insieme": [
+    {
+     "box": [
+      0.7003,
+      0.2448,
+      0.0455,
+      0.0434
+     ],
+     "comparsa": "2026-11-10 09:05:00",
+     "comparsa_prima": "2026-11-10 09:04:00",
+     "punteggio": 8158.3,
+     "area": 517,
+     "dE": 15.78,
+     "durata_min": 38,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.1541072130203247
+    }
+   ]
+  },
+  "neg119_kit467": {
+   "insieme": []
+  },
+  "neg120_kit523": {
+   "insieme": []
+  },
+  "neg121_kit377": {
+   "insieme": [
+    {
+     "box": [
+      0.8523,
+      0.2014,
+      0.0582,
+      0.1493
+     ],
+     "comparsa": "2026-11-11 13:06:00",
+     "comparsa_prima": "2026-11-11 13:05:00",
+     "punteggio": 53270.8,
+     "area": 2215,
+     "dE": 24.05,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.4013001918792725
+    },
+    {
+     "box": [
+      0.6506,
+      0.0243,
+      0.0795,
+      0.0764
+     ],
+     "comparsa": "2026-11-11 13:11:00",
+     "comparsa_prima": "2026-11-11 13:10:00",
+     "punteggio": 36741.6,
+     "area": 1512,
+     "dE": 24.3,
+     "durata_min": 34,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.8751137256622314
+    },
+    {
+     "box": [
+      0.9645,
+      0.3767,
+      0.0355,
+      0.0694
+     ],
+     "comparsa": "2026-11-11 12:55:00",
+     "comparsa_prima": "2026-11-11 12:54:00",
+     "punteggio": 13408.6,
+     "area": 698,
+     "dE": 19.21,
+     "durata_min": 50,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.385737180709839
+    },
+    {
+     "box": [
+      0.5199,
+      0.1319,
+      0.0426,
+      0.0486
+     ],
+     "comparsa": "2026-11-11 13:08:00",
+     "comparsa_prima": "2026-11-11 13:07:00",
+     "punteggio": 9537.2,
+     "area": 452,
+     "dE": 21.1,
+     "durata_min": 37,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.290327548980713
+    },
+    {
+     "box": [
+      0.5199,
+      0.1736,
+      0.0412,
+      0.0295
+     ],
+     "comparsa": "2026-11-11 13:03:00",
+     "comparsa_prima": "2026-11-11 13:02:00",
+     "punteggio": 7229.0,
+     "area": 350,
+     "dE": 19.22,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.060772180557251
+    }
+   ]
+  },
+  "neg122_kit302": {
+   "insieme": []
+  },
+  "neg123_kit386": {
+   "insieme": []
+  },
+  "neg124_kit321": {
+   "insieme": [
+    {
+     "box": [
+      0.9915,
+      0.8993,
+      0.0085,
+      0.0226
+     ],
+     "comparsa": "2026-11-09 11:04:00",
+     "comparsa_prima": "2026-11-09 11:03:00",
+     "punteggio": 1200.7,
+     "area": 52,
+     "dE": 23.09,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.3430886268615723
+    }
+   ]
+  },
+  "neg125_kit212": {
+   "insieme": []
+  },
+  "neg126_kit573": {
+   "insieme": []
+  },
+  "neg127_kit397": {
+   "insieme": []
+  },
+  "neg128_kit506": {
+   "insieme": []
+  },
+  "neg129_kit324": {
+   "insieme": []
+  },
+  "neg130_kit242": {
+   "insieme": []
+  },
+  "neg131_kit201": {
+   "insieme": []
+  },
+  "neg132_kit526": {
+   "insieme": [
+    {
+     "box": [
+      0.0284,
+      0.3108,
+      0.0682,
+      0.1163
+     ],
+     "comparsa": "2026-11-10 23:46:00",
+     "comparsa_prima": "2026-11-10 23:45:00",
+     "punteggio": 53770.6,
+     "area": 1896,
+     "dE": 28.36,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.5644606351852417
+    },
+    {
+     "box": [
+      0.5938,
+      0.0955,
+      0.0156,
+      0.1562
+     ],
+     "comparsa": "2026-11-10 23:46:00",
+     "comparsa_prima": "2026-11-10 23:45:00",
+     "punteggio": 22989.6,
+     "area": 927,
+     "dE": 24.8,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1604793071746826
+    },
+    {
+     "box": [
+      0.2855,
+      0.1198,
+      0.0256,
+      0.026
+     ],
+     "comparsa": "2026-11-10 23:46:00",
+     "comparsa_prima": "2026-11-10 23:45:00",
+     "punteggio": 2699.9,
+     "area": 131,
+     "dE": 20.61,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.5259684324264526
+    }
+   ]
+  },
+  "neg133_kit294": {
+   "insieme": [
+    {
+     "box": [
+      0.9673,
+      0.0972,
+      0.0199,
+      0.059
+     ],
+     "comparsa": "2026-11-05 05:24:00",
+     "comparsa_prima": "2026-11-05 05:23:00",
+     "punteggio": 3723.8,
+     "area": 137,
+     "dE": 25.77,
+     "durata_min": 64,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.756462574005127
+    }
+   ]
+  },
+  "neg134_kit643": {
+   "insieme": []
+  },
+  "neg135_kit484": {
+   "insieme": []
+  },
+  "neg136_kit301": {
+   "insieme": []
+  },
+  "neg137_kit419": {
+   "insieme": []
+  },
+  "neg138_kit651": {
+   "insieme": []
+  },
+  "neg139_kit601": {
+   "insieme": []
+  },
+  "neg140_kit594": {
+   "insieme": []
+  },
+  "neg141_kit657": {
+   "insieme": []
+  },
+  "neg142_kit401": {
+   "insieme": [
+    {
+     "box": [
+      0.3068,
+      0.2708,
+      0.0483,
+      0.033
+     ],
+     "comparsa": "2026-11-07 14:05:00",
+     "comparsa_prima": "2026-11-07 14:04:00",
+     "punteggio": 7548.6,
+     "area": 345,
+     "dE": 21.88,
+     "durata_min": 60,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.4728550910949707
+    },
+    {
+     "box": [
+      0.9162,
+      0.2465,
+      0.0142,
+      0.0208
+     ],
+     "comparsa": "2026-11-07 14:52:00",
+     "comparsa_prima": "2026-11-07 14:51:00",
+     "punteggio": 2476.5,
+     "area": 98,
+     "dE": 25.27,
+     "durata_min": 13,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8763630390167236
+    }
+   ]
+  },
+  "neg143_kit461": {
+   "insieme": []
+  },
+  "neg144_kit235": {
+   "insieme": []
+  },
+  "neg145_kit421": {
+   "insieme": []
+  },
+  "neg146_kit413": {
+   "insieme": []
+  },
+  "neg147_kit613": {
+   "insieme": []
+  },
+  "neg148_kit521": {
+   "insieme": []
+  },
+  "neg149_kit299": {
+   "insieme": []
+  },
+  "neg150_kit383": {
+   "insieme": [
+    {
+     "box": [
+      0.5696,
+      0.1493,
+      0.1903,
+      0.0799
+     ],
+     "comparsa": "2026-11-10 07:25:00",
+     "comparsa_prima": "2026-11-10 07:24:00",
+     "punteggio": 88621.7,
+     "area": 2856,
+     "dE": 31.03,
+     "durata_min": 23,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.688889980316162
+    },
+    {
+     "box": [
+      0.5341,
+      0.1493,
+      0.108,
+      0.1042
+     ],
+     "comparsa": "2026-11-10 07:21:00",
+     "comparsa_prima": "2026-11-10 07:20:00",
+     "punteggio": 75213.0,
+     "area": 2055,
+     "dE": 36.6,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6305506229400635
+    },
+    {
+     "box": [
+      0.3452,
+      0.2448,
+      0.0923,
+      0.1562
+     ],
+     "comparsa": "2026-11-10 07:21:00",
+     "comparsa_prima": "2026-11-10 07:20:00",
+     "punteggio": 28909.0,
+     "area": 1374,
+     "dE": 21.04,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.8724370002746582
+    },
+    {
+     "box": [
+      0.5384,
+      0.4149,
+      0.0781,
+      0.0833
+     ],
+     "comparsa": "2026-11-10 06:58:00",
+     "comparsa_prima": "2026-11-10 06:57:00",
+     "punteggio": 16831.8,
+     "area": 1103,
+     "dE": 15.26,
+     "durata_min": 50,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4802086353302
+    },
+    {
+     "box": [
+      0.3622,
+      0.2517,
+      0.0327,
+      0.0312
+     ],
+     "comparsa": "2026-11-10 07:21:00",
+     "comparsa_prima": "2026-11-10 07:20:00",
+     "punteggio": 6998.4,
+     "area": 243,
+     "dE": 28.8,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.003044366836548
+    },
+    {
+     "box": [
+      0.5696,
+      0.2396,
+      0.0256,
+      0.0677
+     ],
+     "comparsa": "2026-11-10 07:25:00",
+     "comparsa_prima": "2026-11-10 07:24:00",
+     "punteggio": 4993.7,
+     "area": 243,
+     "dE": 20.55,
+     "durata_min": 23,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.9637451171875
+    },
+    {
+     "box": [
+      0.5071,
+      0.6128,
+      0.0156,
+      0.0434
+     ],
+     "comparsa": "2026-11-10 07:23:00",
+     "comparsa_prima": "2026-11-10 07:22:00",
+     "punteggio": 2238.4,
+     "area": 107,
+     "dE": 20.92,
+     "durata_min": 25,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.359985828399658
+    }
+   ]
+  },
+  "neg151_kit571": {
+   "insieme": []
+  },
+  "neg152_kit228": {
+   "insieme": []
+  },
+  "pos001_kit657": {
+   "insieme": [
+    {
+     "box": [
+      0.5838,
+      0.2639,
+      0.1051,
+      0.0747
+     ],
+     "comparsa": "2026-10-23 18:29:16",
+     "comparsa_prima": "2026-10-23 18:28:16",
+     "punteggio": 61003.0,
+     "area": 2382,
+     "dE": 25.61,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.512040615081787
+    },
+    {
+     "box": [
+      0.4886,
+      0.099,
+      0.1477,
+      0.0486
+     ],
+     "comparsa": "2026-10-23 18:29:16",
+     "comparsa_prima": "2026-10-23 18:28:16",
+     "punteggio": 32762.8,
+     "area": 1739,
+     "dE": 18.84,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.2327163219451904
+    },
+    {
+     "box": [
+      0.4886,
+      0.2656,
+      0.0241,
+      0.0729
+     ],
+     "comparsa": "2026-10-23 18:48:16",
+     "comparsa_prima": "2026-10-23 18:47:16",
+     "punteggio": 21958.4,
+     "area": 629,
+     "dE": 34.91,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4017891883850098
+    },
+    {
+     "box": [
+      0.5,
+      0.2604,
+      0.0426,
+      0.0781
+     ],
+     "comparsa": "2026-10-23 18:34:16",
+     "comparsa_prima": "2026-10-23 18:33:16",
+     "punteggio": 19233.5,
+     "area": 779,
+     "dE": 24.69,
+     "durata_min": 41,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.267317295074463
+    },
+    {
+     "box": [
+      0.5824,
+      0.1458,
+      0.0866,
+      0.0521
+     ],
+     "comparsa": "2026-10-23 18:29:16",
+     "comparsa_prima": "2026-10-23 18:28:16",
+     "punteggio": 10188.1,
+     "area": 613,
+     "dE": 16.62,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.466346263885498
+    }
+   ]
+  },
+  "pos002_kit581": {
+   "insieme": [
+    {
+     "box": [
+      0.7457,
+      0.4201,
+      0.0256,
+      0.0278
+     ],
+     "comparsa": "2026-10-26 10:30:30",
+     "comparsa_prima": "2026-10-26 10:29:30",
+     "punteggio": 6874.1,
+     "area": 187,
+     "dE": 36.76,
+     "durata_min": 51,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.503361940383911
+    },
+    {
+     "box": [
+      0.9318,
+      0.2049,
+      0.0284,
+      0.0087
+     ],
+     "comparsa": "2026-10-26 11:11:30",
+     "comparsa_prima": "2026-10-26 11:10:30",
+     "punteggio": 1846.0,
+     "area": 71,
+     "dE": 26.0,
+     "durata_min": 10,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.571991205215454
+    },
+    {
+     "box": [
+      0.9744,
+      0.6597,
+      0.0114,
+      0.0191
+     ],
+     "comparsa": "2026-10-26 11:10:30",
+     "comparsa_prima": "2026-10-26 11:09:30",
+     "punteggio": 942.1,
+     "area": 46,
+     "dE": 20.48,
+     "durata_min": 11,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9682953357696533
+    }
+   ]
+  },
+  "pos003_kit577": {
+   "insieme": [
+    {
+     "box": [
+      0.3267,
+      0.4531,
+      0.0327,
+      0.0486
+     ],
+     "comparsa": "2026-11-03 17:00:03",
+     "comparsa_prima": "2026-11-03 16:59:03",
+     "punteggio": 9519.4,
+     "area": 382,
+     "dE": 24.92,
+     "durata_min": 36,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5446815490722656
+    },
+    {
+     "box": [
+      0.2997,
+      0.2188,
+      0.0085,
+      0.0139
+     ],
+     "comparsa": "2026-11-03 17:19:03",
+     "comparsa_prima": "2026-11-03 17:18:03",
+     "punteggio": 997.2,
+     "area": 45,
+     "dE": 22.16,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8857784271240234
+    }
+   ]
+  },
+  "pos004_kit445": {
+   "insieme": [
+    {
+     "box": [
+      0.2145,
+      0.0503,
+      0.0213,
+      0.0087
+     ],
+     "comparsa": "2026-10-28 11:11:43",
+     "comparsa_prima": "2026-10-28 11:10:43",
+     "punteggio": 831.1,
+     "area": 45,
+     "dE": 18.47,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.524160861968994
+    }
+   ]
+  },
+  "pos005_kit341": {
+   "insieme": [
+    {
+     "box": [
+      0.733,
+      0.2847,
+      0.0568,
+      0.0764
+     ],
+     "comparsa": "2026-10-20 15:38:02",
+     "comparsa_prima": "2026-10-20 15:37:02",
+     "punteggio": 32202.7,
+     "area": 963,
+     "dE": 33.44,
+     "durata_min": 45,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8695056438446045
+    },
+    {
+     "box": [
+      0.5582,
+      0.3611,
+      0.0412,
+      0.0399
+     ],
+     "comparsa": "2026-10-20 15:38:02",
+     "comparsa_prima": "2026-10-20 15:37:02",
+     "punteggio": 9575.8,
+     "area": 414,
+     "dE": 23.13,
+     "durata_min": 45,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6196112632751465
+    },
+    {
+     "box": [
+      0.5739,
+      0.3264,
+      0.0142,
+      0.0243
+     ],
+     "comparsa": "2026-10-20 15:38:02",
+     "comparsa_prima": "2026-10-20 15:37:02",
+     "punteggio": 1457.6,
+     "area": 77,
+     "dE": 18.93,
+     "durata_min": 45,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.3206722736358643
+    }
+   ]
+  },
+  "pos006_kit638": {
+   "insieme": [
+    {
+     "box": [
+      0.6378,
+      0.099,
+      0.054,
+      0.1493
+     ],
+     "comparsa": "2026-10-27 09:30:24",
+     "comparsa_prima": "2026-10-27 09:29:24",
+     "punteggio": 61032.2,
+     "area": 2559,
+     "dE": 23.85,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.531935453414917
+    },
+    {
+     "box": [
+      0.3352,
+      0.0122,
+      0.0966,
+      0.0729
+     ],
+     "comparsa": "2026-10-27 09:30:24",
+     "comparsa_prima": "2026-10-27 09:29:24",
+     "punteggio": 15631.7,
+     "area": 902,
+     "dE": 17.33,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.0546460151672363
+    },
+    {
+     "box": [
+      0.1463,
+      0.026,
+      0.017,
+      0.0174
+     ],
+     "comparsa": "2026-10-27 09:29:24",
+     "comparsa_prima": "2026-10-27 09:28:24",
+     "punteggio": 1678.0,
+     "area": 100,
+     "dE": 16.78,
+     "durata_min": 7,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7841122150421143
+    }
+   ]
+  },
+  "pos007_kit657": {
+   "insieme": [
+    {
+     "box": [
+      0.5412,
+      0.2344,
+      0.0511,
+      0.0625
+     ],
+     "comparsa": "2026-10-24 16:45:56",
+     "comparsa_prima": "2026-10-24 16:44:56",
+     "punteggio": 21018.6,
+     "area": 899,
+     "dE": 23.38,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.275693893432617
+    }
+   ]
+  },
+  "pos008_kit384": {
+   "insieme": [
+    {
+     "box": [
+      0.7642,
+      0.5538,
+      0.0156,
+      0.0278
+     ],
+     "comparsa": "2026-11-01 07:37:42",
+     "comparsa_prima": "2026-11-01 07:36:42",
+     "punteggio": 3891.8,
+     "area": 122,
+     "dE": 31.9,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.9758223295211792
+    },
+    {
+     "box": [
+      0.7259,
+      0.2552,
+      0.0227,
+      0.026
+     ],
+     "comparsa": "2026-11-01 07:22:42",
+     "comparsa_prima": "2026-11-01 07:21:42",
+     "punteggio": 3088.8,
+     "area": 163,
+     "dE": 18.95,
+     "durata_min": 32,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4423198699951172
+    },
+    {
+     "box": [
+      0.6719,
+      0.8628,
+      0.0185,
+      0.0104
+     ],
+     "comparsa": "2026-11-01 07:30:42",
+     "comparsa_prima": "2026-11-01 07:29:42",
+     "punteggio": 1197.6,
+     "area": 52,
+     "dE": 23.03,
+     "durata_min": 24,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4761066436767578
+    }
+   ]
+  },
+  "pos009_kit629": {
+   "insieme": [
+    {
+     "box": [
+      0.3835,
+      0.2569,
+      0.0511,
+      0.0538
+     ],
+     "comparsa": "2026-10-25 17:47:04",
+     "comparsa_prima": "2026-10-25 17:46:04",
+     "punteggio": 27233.8,
+     "area": 548,
+     "dE": 48.28,
+     "durata_min": 14,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.6841230392456055
+    }
+   ]
+  },
+  "pos010_kit384": {
+   "insieme": [
+    {
+     "box": [
+      0.6562,
+      0.3299,
+      0.0327,
+      0.059
+     ],
+     "comparsa": "2026-11-01 13:33:59",
+     "comparsa_prima": "2026-11-01 13:32:59",
+     "punteggio": 14159.0,
+     "area": 493,
+     "dE": 28.72,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1482012271881104
+    },
+    {
+     "box": [
+      0.7386,
+      0.25,
+      0.0682,
+      0.0365
+     ],
+     "comparsa": "2026-11-01 13:52:59",
+     "comparsa_prima": "2026-11-01 13:51:59",
+     "punteggio": 12823.4,
+     "area": 449,
+     "dE": 28.56,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.174170970916748
+    },
+    {
+     "box": [
+      0.7372,
+      0.2378,
+      0.0156,
+      0.0087
+     ],
+     "comparsa": "2026-11-01 13:52:59",
+     "comparsa_prima": "2026-11-01 13:51:59",
+     "punteggio": 1548.9,
+     "area": 51,
+     "dE": 30.37,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.2322638034820557
+    }
+   ]
+  },
+  "pos011_kit350": {
+   "insieme": [
+    {
+     "box": [
+      0.8182,
+      0.1302,
+      0.0384,
+      0.1128
+     ],
+     "comparsa": "2026-10-27 12:33:41",
+     "comparsa_prima": "2026-10-27 12:32:41",
+     "punteggio": 25210.8,
+     "area": 940,
+     "dE": 26.82,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9155497550964355
+    },
+    {
+     "box": [
+      0.358,
+      0.3438,
+      0.0412,
+      0.0087
+     ],
+     "comparsa": "2026-10-27 12:32:41",
+     "comparsa_prima": "2026-10-27 12:31:41",
+     "punteggio": 1913.5,
+     "area": 77,
+     "dE": 24.85,
+     "durata_min": 47,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9256644248962402
+    },
+    {
+     "box": [
+      0.3324,
+      0.2431,
+      0.0057,
+      0.0347
+     ],
+     "comparsa": "2026-10-27 13:09:41",
+     "comparsa_prima": "2026-10-27 13:08:41",
+     "punteggio": 1413.8,
+     "area": 59,
+     "dE": 22.57,
+     "durata_min": 10,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.746389389038086
+    }
+   ]
+  },
+  "pos012_kit281": {
+   "insieme": []
+  },
+  "pos013_kit421": {
+   "insieme": [
+    {
+     "box": [
+      0.3111,
+      0.6615,
+      0.027,
+      0.0712
+     ],
+     "comparsa": "2026-10-31 09:31:28",
+     "comparsa_prima": "2026-10-31 09:30:28",
+     "punteggio": 3883.9,
+     "area": 154,
+     "dE": 25.22,
+     "durata_min": 65,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.8748762607574463
+    },
+    {
+     "box": [
+      0.0085,
+      0.2135,
+      0.0213,
+      0.0174
+     ],
+     "comparsa": "2026-10-31 10:04:28",
+     "comparsa_prima": "2026-10-31 10:03:28",
+     "punteggio": 2068.8,
+     "area": 98,
+     "dE": 21.11,
+     "durata_min": 32,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.8901724815368652
+    },
+    {
+     "box": [
+      0.7841,
+      0.8542,
+      0.0156,
+      0.0295
+     ],
+     "comparsa": "2026-10-31 10:01:28",
+     "comparsa_prima": "2026-10-31 10:00:28",
+     "punteggio": 1335.2,
+     "area": 58,
+     "dE": 23.02,
+     "durata_min": 35,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.915160894393921
+    }
+   ]
+  },
+  "pos014_kit383": {
+   "insieme": [
+    {
+     "box": [
+      0.3295,
+      0.1493,
+      0.0426,
+      0.0191
+     ],
+     "comparsa": "2026-10-28 10:58:49",
+     "comparsa_prima": "2026-10-28 10:57:49",
+     "punteggio": 10637.3,
+     "area": 258,
+     "dE": 41.23,
+     "durata_min": 47,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.768428325653076
+    },
+    {
+     "box": [
+      0.4645,
+      0.4462,
+      0.0298,
+      0.0208
+     ],
+     "comparsa": "2026-10-28 10:49:49",
+     "comparsa_prima": "2026-10-28 10:48:49",
+     "punteggio": 4179.3,
+     "area": 163,
+     "dE": 25.64,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.694706678390503
+    },
+    {
+     "box": [
+      0.4915,
+      0.3785,
+      0.0142,
+      0.0312
+     ],
+     "comparsa": "2026-10-28 11:13:49",
+     "comparsa_prima": "2026-10-28 11:12:49",
+     "punteggio": 3028.8,
+     "area": 125,
+     "dE": 24.23,
+     "durata_min": 32,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.99943208694458
+    },
+    {
+     "box": [
+      0.5,
+      0.6476,
+      0.0085,
+      0.0208
+     ],
+     "comparsa": "2026-10-28 11:13:49",
+     "comparsa_prima": "2026-10-28 11:12:49",
+     "punteggio": 1770.0,
+     "area": 59,
+     "dE": 30.0,
+     "durata_min": 32,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0112061500549316
+    }
+   ]
+  },
+  "pos015_kit575": {
+   "insieme": [
+    {
+     "box": [
+      0.5398,
+      0.4983,
+      0.0639,
+      0.1372
+     ],
+     "comparsa": "2026-10-28 15:50:16",
+     "comparsa_prima": "2026-10-28 15:49:16",
+     "punteggio": 39209.9,
+     "area": 2079,
+     "dE": 18.86,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5720508098602295
+    },
+    {
+     "box": [
+      0.5455,
+      0.2934,
+      0.0142,
+      0.125
+     ],
+     "comparsa": "2026-10-28 16:08:16",
+     "comparsa_prima": "2026-10-28 16:07:16",
+     "punteggio": 9748.9,
+     "area": 411,
+     "dE": 23.72,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.706670045852661
+    },
+    {
+     "box": [
+      0.5099,
+      0.5208,
+      0.0256,
+      0.0538
+     ],
+     "comparsa": "2026-10-28 15:50:16",
+     "comparsa_prima": "2026-10-28 15:49:16",
+     "punteggio": 4585.8,
+     "area": 266,
+     "dE": 17.24,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.562154531478882
+    },
+    {
+     "box": [
+      0.5398,
+      0.3872,
+      0.0199,
+      0.0226
+     ],
+     "comparsa": "2026-10-28 15:50:16",
+     "comparsa_prima": "2026-10-28 15:49:16",
+     "punteggio": 3225.0,
+     "area": 137,
+     "dE": 23.54,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0785131454467773
+    },
+    {
+     "box": [
+      0.3068,
+      0.0747,
+      0.0156,
+      0.0208
+     ],
+     "comparsa": "2026-10-28 16:38:16",
+     "comparsa_prima": "2026-10-28 16:37:16",
+     "punteggio": 1294.6,
+     "area": 72,
+     "dE": 17.98,
+     "durata_min": 9,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.621840000152588
+    }
+   ]
+  },
+  "pos016_kit632": {
+   "insieme": [
+    {
+     "box": [
+      0.0895,
+      0.3177,
+      0.0554,
+      0.0799
+     ],
+     "comparsa": "2026-10-27 07:54:00",
+     "comparsa_prima": "2026-10-27 07:53:00",
+     "punteggio": 75950.4,
+     "area": 1439,
+     "dE": 52.78,
+     "durata_min": 38,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.486534357070923
+    }
+   ]
+  },
+  "pos017_kit354": {
+   "insieme": [
+    {
+     "box": [
+      0.4889,
+      0.1128,
+      0.0403,
+      0.0399
+     ],
+     "comparsa": "2026-10-27 13:57:30",
+     "comparsa_prima": "2026-10-27 13:56:30",
+     "punteggio": 5154.1,
+     "area": 259,
+     "dE": 19.9,
+     "durata_min": 62,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.864210367202759
+    },
+    {
+     "box": [
+      0.4403,
+      0.0885,
+      0.0375,
+      0.0174
+     ],
+     "comparsa": "2026-10-27 13:56:30",
+     "comparsa_prima": "2026-10-27 13:55:30",
+     "punteggio": 3622.1,
+     "area": 168,
+     "dE": 21.56,
+     "durata_min": 63,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.550417184829712
+    },
+    {
+     "box": [
+      0.4847,
+      0.1042,
+      0.025,
+      0.0139
+     ],
+     "comparsa": "2026-10-27 14:01:30",
+     "comparsa_prima": "2026-10-27 14:00:30",
+     "punteggio": 1357.1,
+     "area": 73,
+     "dE": 18.59,
+     "durata_min": 58,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.678274393081665
+    }
+   ]
+  },
+  "pos018_kit341": {
+   "insieme": [
+    {
+     "box": [
+      0.7514,
+      0.3663,
+      0.0412,
+      0.0399
+     ],
+     "comparsa": "2026-10-23 07:42:27",
+     "comparsa_prima": "2026-10-23 07:41:27",
+     "punteggio": 8727.0,
+     "area": 422,
+     "dE": 20.68,
+     "durata_min": 29,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1615426540374756
+    },
+    {
+     "box": [
+      0.1236,
+      0.0,
+      0.0156,
+      0.033
+     ],
+     "comparsa": "2026-10-23 07:23:27",
+     "comparsa_prima": "2026-10-23 07:22:27",
+     "punteggio": 2608.3,
+     "area": 143,
+     "dE": 18.24,
+     "durata_min": 48,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6511192321777344
+    }
+   ]
+  },
+  "pos019_kit663": {
+   "insieme": []
+  },
+  "pos020_kit212": {
+   "insieme": [
+    {
+     "box": [
+      0.8636,
+      0.1875,
+      0.017,
+      0.0312
+     ],
+     "comparsa": "2026-10-27 12:02:20",
+     "comparsa_prima": "2026-10-27 12:01:20",
+     "punteggio": 3689.0,
+     "area": 167,
+     "dE": 22.09,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.639415740966797
+    },
+    {
+     "box": [
+      0.7784,
+      0.1545,
+      0.0099,
+      0.0382
+     ],
+     "comparsa": "2026-10-27 11:48:20",
+     "comparsa_prima": "2026-10-27 11:47:20",
+     "punteggio": 2041.6,
+     "area": 116,
+     "dE": 17.6,
+     "durata_min": 32,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0551042556762695
+    },
+    {
+     "box": [
+      0.8509,
+      0.1823,
+      0.0099,
+      0.0174
+     ],
+     "comparsa": "2026-10-27 11:58:20",
+     "comparsa_prima": "2026-10-27 11:57:20",
+     "punteggio": 1033.8,
+     "area": 60,
+     "dE": 17.23,
+     "durata_min": 22,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0607056617736816
+    }
+   ]
+  },
+  "pos021_kit443": {
+   "insieme": [
+    {
+     "box": [
+      0.3764,
+      0.7101,
+      0.0227,
+      0.033
+     ],
+     "comparsa": "2026-10-31 16:58:16",
+     "comparsa_prima": "2026-10-31 16:57:16",
+     "punteggio": 2692.1,
+     "area": 134,
+     "dE": 20.09,
+     "durata_min": 14,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.9887360334396362
+    }
+   ]
+  },
+  "pos022_kit421": {
+   "insieme": [
+    {
+     "box": [
+      0.8366,
+      0.8889,
+      0.0639,
+      0.1111
+     ],
+     "comparsa": "2026-11-01 08:01:50",
+     "comparsa_prima": "2026-11-01 08:00:50",
+     "punteggio": 35428.1,
+     "area": 1753,
+     "dE": 20.21,
+     "durata_min": 35,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.704604148864746
+    },
+    {
+     "box": [
+      0.9034,
+      0.8611,
+      0.044,
+      0.099
+     ],
+     "comparsa": "2026-11-01 07:54:50",
+     "comparsa_prima": "2026-11-01 07:53:50",
+     "punteggio": 32871.1,
+     "area": 1099,
+     "dE": 29.91,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0290446281433105
+    },
+    {
+     "box": [
+      0.2969,
+      0.7222,
+      0.0241,
+      0.0347
+     ],
+     "comparsa": "2026-11-01 08:05:50",
+     "comparsa_prima": "2026-11-01 08:04:50",
+     "punteggio": 4701.4,
+     "area": 228,
+     "dE": 20.62,
+     "durata_min": 31,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9094626903533936
+    },
+    {
+     "box": [
+      0.669,
+      0.6024,
+      0.0057,
+      0.0278
+     ],
+     "comparsa": "2026-11-01 07:39:50",
+     "comparsa_prima": "2026-11-01 07:38:50",
+     "punteggio": 1145.2,
+     "area": 56,
+     "dE": 20.45,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7374610900878906
+    }
+   ]
+  },
+  "pos023_kit589": {
+   "insieme": [
+    {
+     "box": [
+      0.7841,
+      0.0885,
+      0.0497,
+      0.0365
+     ],
+     "comparsa": "2026-10-27 19:35:06",
+     "comparsa_prima": "2026-10-27 19:34:06",
+     "punteggio": 8276.4,
+     "area": 495,
+     "dE": 16.72,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.716066837310791
+    },
+    {
+     "box": [
+      0.8594,
+      0.0885,
+      0.0213,
+      0.0278
+     ],
+     "comparsa": "2026-10-27 19:35:06",
+     "comparsa_prima": "2026-10-27 19:34:06",
+     "punteggio": 3801.0,
+     "area": 210,
+     "dE": 18.1,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.3046469688415527
+    }
+   ]
+  },
+  "pos024_kit233": {
+   "insieme": []
+  },
+  "pos026_kit261": {
+   "insieme": [
+    {
+     "box": [
+      0.8509,
+      0.1181,
+      0.0284,
+      0.1615
+     ],
+     "comparsa": "2026-10-28 09:42:14",
+     "comparsa_prima": "2026-10-28 09:41:14",
+     "punteggio": 26587.0,
+     "area": 1128,
+     "dE": 23.57,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.8124635219573975
+    },
+    {
+     "box": [
+      0.6761,
+      0.1562,
+      0.0227,
+      0.0538
+     ],
+     "comparsa": "2026-10-28 09:18:14",
+     "comparsa_prima": "2026-10-28 09:17:14",
+     "punteggio": 8868.8,
+     "area": 368,
+     "dE": 24.1,
+     "durata_min": 41,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7301642894744873
+    }
+   ]
+  },
+  "pos027_kit556": {
+   "insieme": [
+    {
+     "box": [
+      0.7855,
+      0.0694,
+      0.017,
+      0.0556
+     ],
+     "comparsa": "2026-10-28 16:08:47",
+     "comparsa_prima": "2026-10-28 16:07:47",
+     "punteggio": 9209.2,
+     "area": 285,
+     "dE": 29.61,
+     "durata_min": 30,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.958636999130249
+    }
+   ]
+  },
+  "pos028_kit409": {
+   "insieme": [
+    {
+     "box": [
+      0.9048,
+      0.0451,
+      0.0312,
+      0.0469
+     ],
+     "comparsa": "2026-10-31 12:31:40",
+     "comparsa_prima": "2026-10-31 12:30:40",
+     "punteggio": 7212.9,
+     "area": 321,
+     "dE": 22.47,
+     "durata_min": 61,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.3157362937927246
+    },
+    {
+     "box": [
+      0.9787,
+      0.1476,
+      0.0213,
+      0.0816
+     ],
+     "comparsa": "2026-10-31 12:26:40",
+     "comparsa_prima": "2026-10-31 12:25:40",
+     "punteggio": 5777.9,
+     "area": 296,
+     "dE": 19.52,
+     "durata_min": 66,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.2822303771972656
+    },
+    {
+     "box": [
+      0.7145,
+      0.0764,
+      0.0256,
+      0.0174
+     ],
+     "comparsa": "2026-10-31 13:07:40",
+     "comparsa_prima": "2026-10-31 13:06:40",
+     "punteggio": 3181.3,
+     "area": 123,
+     "dE": 24.93,
+     "durata_min": 25,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.8403170108795166
+    },
+    {
+     "box": [
+      0.6974,
+      0.0729,
+      0.0256,
+      0.0191
+     ],
+     "comparsa": "2026-10-31 13:03:40",
+     "comparsa_prima": "2026-10-31 13:02:40",
+     "punteggio": 3109.6,
+     "area": 130,
+     "dE": 23.92,
+     "durata_min": 29,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.347092390060425
+    },
+    {
+     "box": [
+      0.9247,
+      0.0573,
+      0.0114,
+      0.0399
+     ],
+     "comparsa": "2026-10-31 12:35:40",
+     "comparsa_prima": "2026-10-31 12:34:40",
+     "punteggio": 2168.2,
+     "area": 119,
+     "dE": 18.22,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9092838764190674
+    },
+    {
+     "box": [
+      0.75,
+      0.0,
+      0.0213,
+      0.0191
+     ],
+     "comparsa": "2026-10-31 13:11:40",
+     "comparsa_prima": "2026-10-31 13:10:40",
+     "punteggio": 1747.0,
+     "area": 95,
+     "dE": 18.39,
+     "durata_min": 21,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.4855284690856934
+    },
+    {
+     "box": [
+      0.1875,
+      0.1701,
+      0.0099,
+      0.0226
+     ],
+     "comparsa": "2026-10-31 13:03:40",
+     "comparsa_prima": "2026-10-31 13:02:40",
+     "punteggio": 1511.2,
+     "area": 65,
+     "dE": 23.25,
+     "durata_min": 29,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8399949073791504
+    },
+    {
+     "box": [
+      0.7784,
+      0.0,
+      0.0114,
+      0.0139
+     ],
+     "comparsa": "2026-10-31 13:18:40",
+     "comparsa_prima": "2026-10-31 13:17:40",
+     "punteggio": 1329.9,
+     "area": 59,
+     "dE": 22.54,
+     "durata_min": 14,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.748157024383545
+    },
+    {
+     "box": [
+      0.2514,
+      0.0,
+      0.017,
+      0.0191
+     ],
+     "comparsa": "2026-10-31 13:05:40",
+     "comparsa_prima": "2026-10-31 13:04:40",
+     "punteggio": 1173.4,
+     "area": 54,
+     "dE": 21.73,
+     "durata_min": 27,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9096829891204834
+    },
+    {
+     "box": [
+      0.2415,
+      0.0,
+      0.0085,
+      0.0174
+     ],
+     "comparsa": "2026-10-31 12:46:40",
+     "comparsa_prima": "2026-10-31 12:45:40",
+     "punteggio": 1005.0,
+     "area": 49,
+     "dE": 20.51,
+     "durata_min": 46,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.405888795852661
+    }
+   ]
+  },
+  "pos029_kit575": {
+   "insieme": [
+    {
+     "box": [
+      0.4716,
+      0.7083,
+      0.0611,
+      0.1059
+     ],
+     "comparsa": "2026-10-29 15:55:36",
+     "comparsa_prima": "2026-10-29 15:54:36",
+     "punteggio": 41524.6,
+     "area": 1744,
+     "dE": 23.81,
+     "durata_min": 37,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.391979455947876
+    },
+    {
+     "box": [
+      0.5639,
+      0.5156,
+      0.0497,
+      0.0729
+     ],
+     "comparsa": "2026-10-29 16:13:36",
+     "comparsa_prima": "2026-10-29 16:12:36",
+     "punteggio": 20039.0,
+     "area": 737,
+     "dE": 27.19,
+     "durata_min": 19,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.807745099067688
+    }
+   ]
+  },
+  "pos030_kit279": {
+   "insieme": []
+  },
+  "pos031_kit485": {
+   "insieme": [
+    {
+     "box": [
+      0.0156,
+      0.474,
+      0.0582,
+      0.0885
+     ],
+     "comparsa": "2026-10-29 12:53:56",
+     "comparsa_prima": "2026-10-29 12:52:56",
+     "punteggio": 88744.5,
+     "area": 1137,
+     "dE": 36.37,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.109786033630371
+    },
+    {
+     "box": [
+      0.0298,
+      0.5139,
+      0.071,
+      0.1667
+     ],
+     "comparsa": "2026-10-29 12:40:56",
+     "comparsa_prima": "2026-10-29 12:39:56",
+     "punteggio": 81265.2,
+     "area": 2410,
+     "dE": 33.72,
+     "durata_min": 31,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0629942417144775
+    },
+    {
+     "box": [
+      0.2372,
+      0.5278,
+      0.2727,
+      0.2517
+     ],
+     "comparsa": "2026-10-29 12:29:56",
+     "comparsa_prima": "2026-10-29 12:28:56",
+     "punteggio": 31559.7,
+     "area": 1472,
+     "dE": 21.44,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.784895181655884
+    },
+    {
+     "box": [
+      0.5341,
+      0.474,
+      0.108,
+      0.0972
+     ],
+     "comparsa": "2026-10-29 12:29:56",
+     "comparsa_prima": "2026-10-29 12:28:56",
+     "punteggio": 10319.4,
+     "area": 468,
+     "dE": 22.05,
+     "durata_min": 42,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1233155727386475
+    },
+    {
+     "box": [
+      0.4403,
+      0.3854,
+      0.0241,
+      0.0382
+     ],
+     "comparsa": "2026-10-29 12:59:56",
+     "comparsa_prima": "2026-10-29 12:58:56",
+     "punteggio": 3250.0,
+     "area": 146,
+     "dE": 22.26,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.1062088012695312
+    },
+    {
+     "box": [
+      0.4247,
+      0.4097,
+      0.0213,
+      0.0382
+     ],
+     "comparsa": "2026-10-29 12:59:56",
+     "comparsa_prima": "2026-10-29 12:58:56",
+     "punteggio": 2906.8,
+     "area": 151,
+     "dE": 19.25,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.5911242961883545
+    }
+   ]
+  },
+  "pos032_kit383": {
+   "insieme": [
+    {
+     "box": [
+      0.6051,
+      0.1667,
+      0.1136,
+      0.0556
+     ],
+     "comparsa": "2026-10-30 16:10:34",
+     "comparsa_prima": "2026-10-30 16:09:34",
+     "punteggio": 27645.4,
+     "area": 940,
+     "dE": 29.41,
+     "durata_min": 63,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.411724090576172
+    },
+    {
+     "box": [
+      0.4773,
+      0.1493,
+      0.0298,
+      0.0538
+     ],
+     "comparsa": "2026-10-30 17:02:34",
+     "comparsa_prima": "2026-10-30 17:01:34",
+     "punteggio": 19758.5,
+     "area": 434,
+     "dE": 26.32,
+     "durata_min": 11,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7498891353607178
+    },
+    {
+     "box": [
+      0.3068,
+      0.3073,
+      0.0412,
+      0.0764
+     ],
+     "comparsa": "2026-10-30 17:05:34",
+     "comparsa_prima": "2026-10-30 17:04:34",
+     "punteggio": 8265.1,
+     "area": 331,
+     "dE": 24.97,
+     "durata_min": 8,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.5883206129074097
+    },
+    {
+     "box": [
+      0.6122,
+      0.1493,
+      0.0284,
+      0.0243
+     ],
+     "comparsa": "2026-10-30 16:17:34",
+     "comparsa_prima": "2026-10-30 16:16:34",
+     "punteggio": 7450.1,
+     "area": 204,
+     "dE": 36.52,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.324528694152832
+    },
+    {
+     "box": [
+      0.4503,
+      0.7378,
+      0.0341,
+      0.026
+     ],
+     "comparsa": "2026-10-30 16:15:34",
+     "comparsa_prima": "2026-10-30 16:14:34",
+     "punteggio": 7044.8,
+     "area": 224,
+     "dE": 31.45,
+     "durata_min": 58,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5167481899261475
+    },
+    {
+     "box": [
+      0.4247,
+      0.1493,
+      0.0426,
+      0.0191
+     ],
+     "comparsa": "2026-10-30 17:02:34",
+     "comparsa_prima": "2026-10-30 17:01:34",
+     "punteggio": 6344.9,
+     "area": 283,
+     "dE": 22.42,
+     "durata_min": 11,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.3185501098632812
+    }
+   ]
+  },
+  "pos033_kit233": {
+   "insieme": [
+    {
+     "box": [
+      0.0,
+      0.0,
+      0.0554,
+      0.0712
+     ],
+     "comparsa": "2026-11-02 06:37:33",
+     "comparsa_prima": "2026-11-02 06:36:33",
+     "punteggio": 17459.9,
+     "area": 996,
+     "dE": 17.53,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.5732927322387695
+    },
+    {
+     "box": [
+      0.2869,
+      0.1198,
+      0.0469,
+      0.0764
+     ],
+     "comparsa": "2026-11-02 06:37:33",
+     "comparsa_prima": "2026-11-02 06:36:33",
+     "punteggio": 12506.1,
+     "area": 819,
+     "dE": 15.27,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4830851554870605
+    },
+    {
+     "box": [
+      0.1349,
+      0.1128,
+      0.0355,
+      0.0712
+     ],
+     "comparsa": "2026-11-02 06:37:33",
+     "comparsa_prima": "2026-11-02 06:36:33",
+     "punteggio": 10871.3,
+     "area": 719,
+     "dE": 15.12,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.229571580886841
+    },
+    {
+     "box": [
+      0.2472,
+      0.1667,
+      0.0156,
+      0.0122
+     ],
+     "comparsa": "2026-11-02 06:33:33",
+     "comparsa_prima": "2026-11-02 06:32:33",
+     "punteggio": 1211.7,
+     "area": 55,
+     "dE": 22.03,
+     "durata_min": 21,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.295374870300293
+    }
+   ]
+  },
+  "pos034_kit516": {
+   "insieme": [
+    {
+     "box": [
+      0.6705,
+      0.0642,
+      0.0895,
+      0.0833
+     ],
+     "comparsa": "2026-10-28 18:51:36",
+     "comparsa_prima": "2026-10-28 18:50:36",
+     "punteggio": 31458.3,
+     "area": 1479,
+     "dE": 21.27,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.4816176891326904
+    },
+    {
+     "box": [
+      0.6151,
+      0.2917,
+      0.0156,
+      0.0417
+     ],
+     "comparsa": "2026-10-28 18:29:36",
+     "comparsa_prima": "2026-10-28 18:28:36",
+     "punteggio": 5132.2,
+     "area": 191,
+     "dE": 26.87,
+     "durata_min": 28,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.367060661315918
+    }
+   ]
+  },
+  "pos035_kit615": {
+   "insieme": [
+    {
+     "box": [
+      0.4929,
+      0.4757,
+      0.0554,
+      0.0938
+     ],
+     "comparsa": "2026-11-02 15:00:23",
+     "comparsa_prima": "2026-11-02 14:59:23",
+     "punteggio": 39345.6,
+     "area": 1680,
+     "dE": 23.42,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.1994457244873047
+    }
+   ]
+  },
+  "pos036_kit375": {
+   "insieme": []
+  },
+  "pos037_kit409": {
+   "insieme": [
+    {
+     "box": [
+      0.517,
+      0.0868,
+      0.0099,
+      0.0174
+     ],
+     "comparsa": "2026-11-01 12:19:55",
+     "comparsa_prima": "2026-11-01 12:18:55",
+     "punteggio": 1825.7,
+     "area": 54,
+     "dE": 33.81,
+     "durata_min": 31,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.215543508529663
+    }
+   ]
+  },
+  "pos038_kit233": {
+   "insieme": [
+    {
+     "box": [
+      0.3693,
+      0.1892,
+      0.0128,
+      0.0208
+     ],
+     "comparsa": "2026-11-03 19:44:07",
+     "comparsa_prima": "2026-11-03 19:43:07",
+     "punteggio": 2398.1,
+     "area": 98,
+     "dE": 24.47,
+     "durata_min": 40,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.599765658378601
+    }
+   ]
+  },
+  "pos039_kit651": {
+   "insieme": [
+    {
+     "box": [
+      0.2869,
+      0.1562,
+      0.0625,
+      0.1146
+     ],
+     "comparsa": "2026-10-31 07:24:55",
+     "comparsa_prima": "2026-10-31 07:23:55",
+     "punteggio": 40223.2,
+     "area": 1475,
+     "dE": 27.27,
+     "durata_min": 62,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.7799607515335083
+    },
+    {
+     "box": [
+      0.0455,
+      0.0191,
+      0.0398,
+      0.026
+     ],
+     "comparsa": "2026-10-31 08:20:55",
+     "comparsa_prima": "2026-10-31 08:19:55",
+     "punteggio": 5506.2,
+     "area": 315,
+     "dE": 17.48,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9141716957092285
+    },
+    {
+     "box": [
+      0.1676,
+      0.4392,
+      0.0142,
+      0.0608
+     ],
+     "comparsa": "2026-10-31 07:34:55",
+     "comparsa_prima": "2026-10-31 07:33:55",
+     "punteggio": 4198.9,
+     "area": 211,
+     "dE": 19.9,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4517438411712646
+    },
+    {
+     "box": [
+      0.233,
+      0.8073,
+      0.0199,
+      0.026
+     ],
+     "comparsa": "2026-10-31 07:30:55",
+     "comparsa_prima": "2026-10-31 07:29:55",
+     "punteggio": 2091.4,
+     "area": 104,
+     "dE": 20.11,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6830899715423584
+    }
+   ]
+  },
+  "pos040_kit657": {
+   "insieme": [
+    {
+     "box": [
+      0.5753,
+      0.2726,
+      0.1136,
+      0.066
+     ],
+     "comparsa": "2026-10-28 17:23:26",
+     "comparsa_prima": "2026-10-28 17:22:26",
+     "punteggio": 66643.9,
+     "area": 1889,
+     "dE": 35.28,
+     "durata_min": 37,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.961574673652649
+    },
+    {
+     "box": [
+      0.4886,
+      0.2361,
+      0.0455,
+      0.0955
+     ],
+     "comparsa": "2026-10-28 17:39:26",
+     "comparsa_prima": "2026-10-28 17:38:26",
+     "punteggio": 29483.4,
+     "area": 1141,
+     "dE": 25.84,
+     "durata_min": 21,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9077346324920654
+    },
+    {
+     "box": [
+      0.4886,
+      0.1528,
+      0.0639,
+      0.0903
+     ],
+     "comparsa": "2026-10-28 17:32:26",
+     "comparsa_prima": "2026-10-28 17:31:26",
+     "punteggio": 16356.3,
+     "area": 1118,
+     "dE": 14.63,
+     "durata_min": 28,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.637146472930908
+    }
+   ]
+  },
+  "pos041_kit397": {
+   "insieme": [
+    {
+     "box": [
+      0.5455,
+      0.3299,
+      0.0426,
+      0.066
+     ],
+     "comparsa": "2026-11-01 17:27:56",
+     "comparsa_prima": "2026-11-01 17:26:56",
+     "punteggio": 9054.1,
+     "area": 448,
+     "dE": 20.21,
+     "durata_min": 25,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0974273681640625
+    },
+    {
+     "box": [
+      0.5327,
+      0.5208,
+      0.0114,
+      0.0174
+     ],
+     "comparsa": "2026-11-01 17:27:56",
+     "comparsa_prima": "2026-11-01 17:26:56",
+     "punteggio": 811.2,
+     "area": 52,
+     "dE": 15.6,
+     "durata_min": 25,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.641387701034546
+    }
+   ]
+  },
+  "pos042_kit397": {
+   "insieme": [
+    {
+     "box": [
+      0.5582,
+      0.5104,
+      0.081,
+      0.1441
+     ],
+     "comparsa": "2026-11-01 09:02:42",
+     "comparsa_prima": "2026-11-01 09:01:42",
+     "punteggio": 115141.2,
+     "area": 2748,
+     "dE": 41.9,
+     "durata_min": 47,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6601600646972656
+    },
+    {
+     "box": [
+      0.0,
+      0.5069,
+      0.0327,
+      0.0642
+     ],
+     "comparsa": "2026-11-01 08:53:42",
+     "comparsa_prima": "2026-11-01 08:52:42",
+     "punteggio": 15544.0,
+     "area": 599,
+     "dE": 25.95,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7435548305511475
+    }
+   ]
+  },
+  "pos043_kit629": {
+   "insieme": []
+  },
+  "pos044_kit350": {
+   "insieme": [
+    {
+     "box": [
+      0.8608,
+      0.2587,
+      0.0369,
+      0.099
+     ],
+     "comparsa": "2026-10-31 13:53:06",
+     "comparsa_prima": "2026-10-31 13:52:06",
+     "punteggio": 19609.8,
+     "area": 812,
+     "dE": 24.15,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.038947105407715
+    },
+    {
+     "box": [
+      0.8821,
+      0.1875,
+      0.0114,
+      0.0538
+     ],
+     "comparsa": "2026-10-31 13:53:06",
+     "comparsa_prima": "2026-10-31 13:52:06",
+     "punteggio": 2597.8,
+     "area": 119,
+     "dE": 21.83,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.3713483810424805
+    }
+   ]
+  },
+  "pos045_kit372": {
+   "insieme": [
+    {
+     "box": [
+      0.4986,
+      0.0,
+      0.0938,
+      0.0434
+     ],
+     "comparsa": "2026-10-31 17:20:56",
+     "comparsa_prima": "2026-10-31 17:19:56",
+     "punteggio": 15904.4,
+     "area": 892,
+     "dE": 17.83,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7375192642211914
+    },
+    {
+     "box": [
+      0.1591,
+      0.0833,
+      0.0355,
+      0.1024
+     ],
+     "comparsa": "2026-10-31 16:34:56",
+     "comparsa_prima": "2026-10-31 16:33:56",
+     "punteggio": 15216.2,
+     "area": 869,
+     "dE": 17.51,
+     "durata_min": 63,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.000432252883911
+    },
+    {
+     "box": [
+      0.7685,
+      0.2031,
+      0.0526,
+      0.0434
+     ],
+     "comparsa": "2026-10-31 17:09:56",
+     "comparsa_prima": "2026-10-31 17:08:56",
+     "punteggio": 11229.9,
+     "area": 410,
+     "dE": 27.39,
+     "durata_min": 28,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.909355401992798
+    },
+    {
+     "box": [
+      0.7159,
+      0.3333,
+      0.0298,
+      0.0538
+     ],
+     "comparsa": "2026-10-31 16:57:56",
+     "comparsa_prima": "2026-10-31 16:56:56",
+     "punteggio": 6519.1,
+     "area": 278,
+     "dE": 23.45,
+     "durata_min": 40,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.741913080215454
+    },
+    {
+     "box": [
+      0.6548,
+      0.2031,
+      0.0426,
+      0.0347
+     ],
+     "comparsa": "2026-10-31 17:29:56",
+     "comparsa_prima": "2026-10-31 17:28:56",
+     "punteggio": 6391.7,
+     "area": 322,
+     "dE": 19.85,
+     "durata_min": 8,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.545625925064087
+    },
+    {
+     "box": [
+      0.5213,
+      0.0,
+      0.0412,
+      0.0174
+     ],
+     "comparsa": "2026-10-31 16:34:56",
+     "comparsa_prima": "2026-10-31 16:33:56",
+     "punteggio": 4094.6,
+     "area": 243,
+     "dE": 16.85,
+     "durata_min": 63,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.2135894298553467
+    },
+    {
+     "box": [
+      0.3835,
+      0.283,
+      0.0128,
+      0.0122
+     ],
+     "comparsa": "2026-10-31 17:21:56",
+     "comparsa_prima": "2026-10-31 17:20:56",
+     "punteggio": 1607.0,
+     "area": 50,
+     "dE": 32.14,
+     "durata_min": 16,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6505625247955322
+    }
+   ]
+  },
+  "pos046_kit487": {
+   "insieme": []
+  },
+  "pos047_kit589": {
+   "insieme": [
+    {
+     "box": [
+      0.7301,
+      0.1215,
+      0.0966,
+      0.0903
+     ],
+     "comparsa": "2026-10-31 13:51:16",
+     "comparsa_prima": "2026-10-31 13:50:16",
+     "punteggio": 53055.9,
+     "area": 1765,
+     "dE": 30.06,
+     "durata_min": 34,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6087803840637207
+    },
+    {
+     "box": [
+      0.7287,
+      0.2396,
+      0.0682,
+      0.033
+     ],
+     "comparsa": "2026-10-31 13:56:16",
+     "comparsa_prima": "2026-10-31 13:55:16",
+     "punteggio": 5150.4,
+     "area": 240,
+     "dE": 21.46,
+     "durata_min": 29,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.7549757957458496
+    },
+    {
+     "box": [
+      0.7912,
+      0.2014,
+      0.0099,
+      0.0399
+     ],
+     "comparsa": "2026-10-31 14:02:16",
+     "comparsa_prima": "2026-10-31 14:01:16",
+     "punteggio": 2195.4,
+     "area": 104,
+     "dE": 21.11,
+     "durata_min": 23,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.7116758823394775
+    }
+   ]
+  },
+  "pos048_kit591": {
+   "insieme": [
+    {
+     "box": [
+      0.6591,
+      0.2083,
+      0.0923,
+      0.1181
+     ],
+     "comparsa": "2026-11-01 09:05:25",
+     "comparsa_prima": "2026-11-01 09:04:25",
+     "punteggio": 63545.7,
+     "area": 1979,
+     "dE": 32.11,
+     "durata_min": 30,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.176926374435425
+    },
+    {
+     "box": [
+      0.7386,
+      0.0885,
+      0.0653,
+      0.066
+     ],
+     "comparsa": "2026-11-01 09:05:25",
+     "comparsa_prima": "2026-11-01 09:04:25",
+     "punteggio": 16942.0,
+     "area": 747,
+     "dE": 22.68,
+     "durata_min": 30,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0822060108184814
+    }
+   ]
+  },
+  "pos049_kit561": {
+   "insieme": [
+    {
+     "box": [
+      0.0,
+      0.2066,
+      0.0611,
+      0.1719
+     ],
+     "comparsa": "2026-11-01 17:47:19",
+     "comparsa_prima": "2026-11-01 17:46:19",
+     "punteggio": 42512.6,
+     "area": 2561,
+     "dE": 16.6,
+     "durata_min": 11,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9443864822387695
+    },
+    {
+     "box": [
+      0.2401,
+      0.1302,
+      0.0355,
+      0.1198
+     ],
+     "comparsa": "2026-11-01 17:47:19",
+     "comparsa_prima": "2026-11-01 17:46:19",
+     "punteggio": 27880.6,
+     "area": 1265,
+     "dE": 22.04,
+     "durata_min": 11,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.524106740951538
+    },
+    {
+     "box": [
+      0.9489,
+      0.0851,
+      0.0511,
+      0.0833
+     ],
+     "comparsa": "2026-11-01 17:41:19",
+     "comparsa_prima": "2026-11-01 17:40:19",
+     "punteggio": 27552.0,
+     "area": 840,
+     "dE": 32.8,
+     "durata_min": 17,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9240126609802246
+    },
+    {
+     "box": [
+      0.5284,
+      0.0521,
+      0.0412,
+      0.0365
+     ],
+     "comparsa": "2026-11-01 17:37:19",
+     "comparsa_prima": "2026-11-01 17:36:19",
+     "punteggio": 8523.4,
+     "area": 423,
+     "dE": 20.15,
+     "durata_min": 21,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1910548210144043
+    },
+    {
+     "box": [
+      0.8182,
+      0.0365,
+      0.027,
+      0.0295
+     ],
+     "comparsa": "2026-11-01 17:01:19",
+     "comparsa_prima": "2026-11-01 17:00:19",
+     "punteggio": 3453.5,
+     "area": 159,
+     "dE": 21.72,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.191587209701538
+    },
+    {
+     "box": [
+      0.6832,
+      0.0278,
+      0.0128,
+      0.0278
+     ],
+     "comparsa": "2026-11-01 17:40:19",
+     "comparsa_prima": "2026-11-01 17:39:19",
+     "punteggio": 1884.9,
+     "area": 103,
+     "dE": 18.3,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.407339096069336
+    }
+   ]
+  },
+  "pos050_kit375": {
+   "insieme": [
+    {
+     "box": [
+      0.0696,
+      0.4722,
+      0.0611,
+      0.1094
+     ],
+     "comparsa": "2026-11-01 18:09:22",
+     "comparsa_prima": "2026-11-01 18:08:22",
+     "punteggio": 29779.9,
+     "area": 1224,
+     "dE": 24.33,
+     "durata_min": 37,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.391308307647705
+    },
+    {
+     "box": [
+      0.081,
+      0.4288,
+      0.0156,
+      0.0451
+     ],
+     "comparsa": "2026-11-01 18:39:22",
+     "comparsa_prima": "2026-11-01 18:38:22",
+     "punteggio": 3070.8,
+     "area": 154,
+     "dE": 19.94,
+     "durata_min": 7,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.210763931274414
+    },
+    {
+     "box": [
+      0.0,
+      0.4826,
+      0.0142,
+      0.0156
+     ],
+     "comparsa": "2026-11-01 17:53:22",
+     "comparsa_prima": "2026-11-01 17:52:22",
+     "punteggio": 1092.3,
+     "area": 53,
+     "dE": 20.61,
+     "durata_min": 53,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.97025465965271
+    }
+   ]
+  },
+  "pos051_kit651": {
+   "insieme": [
+    {
+     "box": [
+      0.0966,
+      0.7934,
+      0.044,
+      0.2066
+     ],
+     "comparsa": "2026-11-01 16:40:08",
+     "comparsa_prima": "2026-11-01 16:39:08",
+     "punteggio": 49752.3,
+     "area": 1654,
+     "dE": 30.08,
+     "durata_min": 22,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.620302677154541
+    },
+    {
+     "box": [
+      0.1193,
+      0.5712,
+      0.1037,
+      0.1927
+     ],
+     "comparsa": "2026-11-01 16:29:08",
+     "comparsa_prima": "2026-11-01 16:28:08",
+     "punteggio": 28601.7,
+     "area": 1466,
+     "dE": 19.51,
+     "durata_min": 33,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.853407621383667
+    },
+    {
+     "box": [
+      0.1548,
+      0.9288,
+      0.1108,
+      0.0712
+     ],
+     "comparsa": "2026-11-01 16:40:08",
+     "comparsa_prima": "2026-11-01 16:39:08",
+     "punteggio": 24390.2,
+     "area": 952,
+     "dE": 25.62,
+     "durata_min": 22,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.67875075340271
+    },
+    {
+     "box": [
+      0.2514,
+      0.6823,
+      0.0455,
+      0.033
+     ],
+     "comparsa": "2026-11-01 16:47:08",
+     "comparsa_prima": "2026-11-01 16:46:08",
+     "punteggio": 4419.3,
+     "area": 268,
+     "dE": 16.49,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7208616733551025
+    },
+    {
+     "box": [
+      0.6776,
+      0.908,
+      0.0213,
+      0.033
+     ],
+     "comparsa": "2026-11-01 16:50:08",
+     "comparsa_prima": "2026-11-01 16:49:08",
+     "punteggio": 2414.1,
+     "area": 130,
+     "dE": 18.57,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.408247709274292
+    },
+    {
+     "box": [
+      0.3835,
+      0.6285,
+      0.0128,
+      0.026
+     ],
+     "comparsa": "2026-11-01 16:43:08",
+     "comparsa_prima": "2026-11-01 16:42:08",
+     "punteggio": 1805.2,
+     "area": 87,
+     "dE": 20.75,
+     "durata_min": 19,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.2090096473693848
+    },
+    {
+     "box": [
+      0.5568,
+      0.1719,
+      0.0227,
+      0.0087
+     ],
+     "comparsa": "2026-11-01 16:44:08",
+     "comparsa_prima": "2026-11-01 16:43:08",
+     "punteggio": 1325.5,
+     "area": 61,
+     "dE": 21.73,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7943084239959717
+    },
+    {
+     "box": [
+      0.2926,
+      0.6493,
+      0.0142,
+      0.0122
+     ],
+     "comparsa": "2026-11-01 16:47:08",
+     "comparsa_prima": "2026-11-01 16:46:08",
+     "punteggio": 788.9,
+     "area": 46,
+     "dE": 17.15,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.2353920936584473
+    }
+   ]
+  },
+  "pos052_kit673": {
+   "insieme": [
+    {
+     "box": [
+      0.5213,
+      0.2847,
+      0.054,
+      0.0312
+     ],
+     "comparsa": "2026-11-03 16:40:09",
+     "comparsa_prima": "2026-11-03 16:39:09",
+     "punteggio": 10558.1,
+     "area": 416,
+     "dE": 25.38,
+     "durata_min": 23,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.482896089553833
+    }
+   ]
+  },
+  "pos053_kit589": {
+   "insieme": [
+    {
+     "box": [
+      0.8537,
+      0.3576,
+      0.1151,
+      0.0712
+     ],
+     "comparsa": "2026-10-31 09:28:55",
+     "comparsa_prima": "2026-10-31 09:27:55",
+     "punteggio": 18619.0,
+     "area": 1136,
+     "dE": 16.39,
+     "durata_min": 33,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.85612154006958
+    },
+    {
+     "box": [
+      0.9034,
+      0.2882,
+      0.0597,
+      0.0486
+     ],
+     "comparsa": "2026-10-31 09:22:55",
+     "comparsa_prima": "2026-10-31 09:21:55",
+     "punteggio": 10913.4,
+     "area": 540,
+     "dE": 20.21,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.9883029460906982
+    },
+    {
+     "box": [
+      0.3395,
+      0.1858,
+      0.0284,
+      0.0503
+     ],
+     "comparsa": "2026-10-31 09:09:55",
+     "comparsa_prima": "2026-10-31 09:08:55",
+     "punteggio": 7959.0,
+     "area": 350,
+     "dE": 22.74,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.712989568710327
+    },
+    {
+     "box": [
+      0.7656,
+      0.1736,
+      0.0185,
+      0.033
+     ],
+     "comparsa": "2026-10-31 09:48:55",
+     "comparsa_prima": "2026-10-31 09:47:55",
+     "punteggio": 3499.9,
+     "area": 182,
+     "dE": 19.23,
+     "durata_min": 13,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.2026267051696777
+    }
+   ]
+  },
+  "pos054_kit485": {
+   "insieme": [
+    {
+     "box": [
+      0.2017,
+      0.4306,
+      0.0653,
+      0.1181
+     ],
+     "comparsa": "2026-11-01 22:21:43",
+     "comparsa_prima": "2026-11-01 22:20:43",
+     "punteggio": 66740.0,
+     "area": 2000,
+     "dE": 33.37,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.7784233093261719
+    },
+    {
+     "box": [
+      0.6406,
+      0.4497,
+      0.0298,
+      0.0747
+     ],
+     "comparsa": "2026-11-01 22:25:43",
+     "comparsa_prima": "2026-11-01 22:24:43",
+     "punteggio": 17894.9,
+     "area": 516,
+     "dE": 34.68,
+     "durata_min": 14,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.635462999343872
+    },
+    {
+     "box": [
+      0.0,
+      0.526,
+      0.017,
+      0.0538
+     ],
+     "comparsa": "2026-11-01 22:21:43",
+     "comparsa_prima": "2026-11-01 22:20:43",
+     "punteggio": 12171.1,
+     "area": 297,
+     "dE": 40.98,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.8506702184677124
+    },
+    {
+     "box": [
+      0.6562,
+      0.3889,
+      0.0341,
+      0.059
+     ],
+     "comparsa": "2026-11-01 22:25:43",
+     "comparsa_prima": "2026-11-01 22:24:43",
+     "punteggio": 9996.4,
+     "area": 377,
+     "dE": 26.19,
+     "durata_min": 14,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8233985900878906
+    },
+    {
+     "box": [
+      0.0,
+      0.599,
+      0.0327,
+      0.0451
+     ],
+     "comparsa": "2026-11-01 22:21:43",
+     "comparsa_prima": "2026-11-01 22:20:43",
+     "punteggio": 7685.3,
+     "area": 362,
+     "dE": 21.23,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4599913358688354
+    }
+   ]
+  },
+  "pos055_kit575": {
+   "insieme": [
+    {
+     "box": [
+      0.3835,
+      0.6684,
+      0.0341,
+      0.0694
+     ],
+     "comparsa": "2026-11-02 14:10:32",
+     "comparsa_prima": "2026-11-02 14:09:32",
+     "punteggio": 21135.2,
+     "area": 682,
+     "dE": 30.99,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6837096214294434
+    },
+    {
+     "box": [
+      0.5043,
+      0.3576,
+      0.0426,
+      0.1094
+     ],
+     "comparsa": "2026-11-02 14:10:32",
+     "comparsa_prima": "2026-11-02 14:09:32",
+     "punteggio": 9616.4,
+     "area": 445,
+     "dE": 21.61,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.8881852626800537
+    },
+    {
+     "box": [
+      0.2812,
+      0.4983,
+      0.0312,
+      0.0903
+     ],
+     "comparsa": "2026-11-02 14:07:32",
+     "comparsa_prima": "2026-11-02 14:06:32",
+     "punteggio": 5423.6,
+     "area": 209,
+     "dE": 25.95,
+     "durata_min": 57,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.1951723098754883
+    },
+    {
+     "box": [
+      0.2188,
+      0.6458,
+      0.0156,
+      0.0417
+     ],
+     "comparsa": "2026-11-02 14:57:32",
+     "comparsa_prima": "2026-11-02 14:56:32",
+     "punteggio": 3801.0,
+     "area": 140,
+     "dE": 27.15,
+     "durata_min": 7,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.437861204147339
+    },
+    {
+     "box": [
+      0.2983,
+      0.5521,
+      0.0185,
+      0.0538
+     ],
+     "comparsa": "2026-11-02 14:05:32",
+     "comparsa_prima": "2026-11-02 14:04:32",
+     "punteggio": 2984.8,
+     "area": 112,
+     "dE": 26.65,
+     "durata_min": 59,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.805219888687134
+    }
+   ]
+  },
+  "pos056_kit651": {
+   "insieme": [
+    {
+     "box": [
+      0.304,
+      0.1198,
+      0.0639,
+      0.1094
+     ],
+     "comparsa": "2026-11-02 04:45:38",
+     "comparsa_prima": "2026-11-02 04:44:38",
+     "punteggio": 9735.4,
+     "area": 506,
+     "dE": 19.24,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.321920871734619
+    }
+   ]
+  },
+  "pos057_kit405": {
+   "insieme": [
+    {
+     "box": [
+      0.6562,
+      0.4271,
+      0.0753,
+      0.026
+     ],
+     "comparsa": "2026-10-31 15:46:01",
+     "comparsa_prima": "2026-10-31 15:45:01",
+     "punteggio": 6348.0,
+     "area": 345,
+     "dE": 18.4,
+     "durata_min": 48,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.228579044342041
+    },
+    {
+     "box": [
+      0.3253,
+      0.5191,
+      0.0369,
+      0.0226
+     ],
+     "comparsa": "2026-10-31 16:21:01",
+     "comparsa_prima": "2026-10-31 16:20:01",
+     "punteggio": 4924.3,
+     "area": 230,
+     "dE": 21.41,
+     "durata_min": 13,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9352831840515137
+    },
+    {
+     "box": [
+      0.1051,
+      0.1406,
+      0.0526,
+      0.026
+     ],
+     "comparsa": "2026-10-31 15:31:01",
+     "comparsa_prima": "2026-10-31 15:30:01",
+     "punteggio": 3671.4,
+     "area": 174,
+     "dE": 21.1,
+     "durata_min": 63,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.899294137954712
+    },
+    {
+     "box": [
+      0.3366,
+      0.467,
+      0.017,
+      0.0208
+     ],
+     "comparsa": "2026-10-31 16:21:01",
+     "comparsa_prima": "2026-10-31 16:20:01",
+     "punteggio": 1444.1,
+     "area": 88,
+     "dE": 16.41,
+     "durata_min": 13,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.0413978099823
+    },
+    {
+     "box": [
+      0.9744,
+      0.2917,
+      0.0142,
+      0.0104
+     ],
+     "comparsa": "2026-10-31 16:14:01",
+     "comparsa_prima": "2026-10-31 16:13:01",
+     "punteggio": 947.1,
+     "area": 51,
+     "dE": 18.57,
+     "durata_min": 20,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.255305290222168
+    }
+   ]
+  },
+  "pos058_kit651": {
+   "insieme": [
+    {
+     "box": [
+      0.0,
+      0.691,
+      0.0511,
+      0.1997
+     ],
+     "comparsa": "2026-11-02 17:33:01",
+     "comparsa_prima": "2026-11-02 17:32:01",
+     "punteggio": 76230.7,
+     "area": 2768,
+     "dE": 27.54,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.3419792652130127
+    },
+    {
+     "box": [
+      0.419,
+      0.1146,
+      0.1009,
+      0.0851
+     ],
+     "comparsa": "2026-11-02 17:46:01",
+     "comparsa_prima": "2026-11-02 17:45:01",
+     "punteggio": 42872.8,
+     "area": 1498,
+     "dE": 28.62,
+     "durata_min": 41,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4745683670043945
+    },
+    {
+     "box": [
+      0.0,
+      0.5677,
+      0.0071,
+      0.026
+     ],
+     "comparsa": "2026-11-02 17:46:01",
+     "comparsa_prima": "2026-11-02 17:45:01",
+     "punteggio": 1551.2,
+     "area": 62,
+     "dE": 25.02,
+     "durata_min": 41,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.4535415172576904
+    }
+   ]
+  },
+  "pos059_kit383": {
+   "insieme": [
+    {
+     "box": [
+      0.3466,
+      0.4149,
+      0.0327,
+      0.0278
+     ],
+     "comparsa": "2026-11-03 11:45:00",
+     "comparsa_prima": "2026-11-03 11:44:00",
+     "punteggio": 5431.4,
+     "area": 176,
+     "dE": 30.86,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.7270097732543945
+    }
+   ]
+  },
+  "pos060_kit350": {
+   "insieme": [
+    {
+     "box": [
+      0.206,
+      0.2951,
+      0.0156,
+      0.0347
+     ],
+     "comparsa": "2026-11-03 17:50:59",
+     "comparsa_prima": "2026-11-03 17:49:59",
+     "punteggio": 5611.8,
+     "area": 152,
+     "dE": 36.92,
+     "durata_min": 30,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.534623861312866
+    },
+    {
+     "box": [
+      0.0398,
+      0.2413,
+      0.0128,
+      0.0295
+     ],
+     "comparsa": "2026-11-03 17:22:59",
+     "comparsa_prima": "2026-11-03 17:21:59",
+     "punteggio": 2138.8,
+     "area": 125,
+     "dE": 17.11,
+     "durata_min": 58,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6658594608306885
+    }
+   ]
+  },
+  "pos061_kit397": {
+   "insieme": [
+    {
+     "box": [
+      0.7159,
+      0.5035,
+      0.0795,
+      0.1198
+     ],
+     "comparsa": "2026-11-04 16:02:46",
+     "comparsa_prima": "2026-11-04 16:01:46",
+     "punteggio": 104227.9,
+     "area": 2406,
+     "dE": 43.32,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.302093982696533
+    },
+    {
+     "box": [
+      0.5923,
+      0.474,
+      0.0639,
+      0.1476
+     ],
+     "comparsa": "2026-11-04 15:44:46",
+     "comparsa_prima": "2026-11-04 15:43:46",
+     "punteggio": 62189.8,
+     "area": 1617,
+     "dE": 38.46,
+     "durata_min": 33,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.843946695327759
+    },
+    {
+     "box": [
+      0.6151,
+      0.6562,
+      0.0639,
+      0.0781
+     ],
+     "comparsa": "2026-11-04 15:43:46",
+     "comparsa_prima": "2026-11-04 15:42:46",
+     "punteggio": 30823.8,
+     "area": 1148,
+     "dE": 26.85,
+     "durata_min": 34,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5711989402770996
+    },
+    {
+     "box": [
+      0.5852,
+      0.5885,
+      0.0185,
+      0.0382
+     ],
+     "comparsa": "2026-11-04 15:43:46",
+     "comparsa_prima": "2026-11-04 15:42:46",
+     "punteggio": 4918.7,
+     "area": 156,
+     "dE": 31.53,
+     "durata_min": 34,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.310579776763916
+    },
+    {
+     "box": [
+      0.6889,
+      0.5399,
+      0.017,
+      0.0139
+     ],
+     "comparsa": "2026-11-04 16:02:46",
+     "comparsa_prima": "2026-11-04 16:01:46",
+     "punteggio": 2029.6,
+     "area": 80,
+     "dE": 25.37,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6219642162323
+    },
+    {
+     "box": [
+      0.7017,
+      0.6319,
+      0.0128,
+      0.0295
+     ],
+     "comparsa": "2026-11-04 15:43:46",
+     "comparsa_prima": "2026-11-04 15:42:46",
+     "punteggio": 1685.2,
+     "area": 87,
+     "dE": 19.37,
+     "durata_min": 34,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5692687034606934
+    },
+    {
+     "box": [
+      0.4389,
+      0.7448,
+      0.017,
+      0.0139
+     ],
+     "comparsa": "2026-11-04 15:42:46",
+     "comparsa_prima": "2026-11-04 15:41:46",
+     "punteggio": 1224.0,
+     "area": 49,
+     "dE": 24.98,
+     "durata_min": 35,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4985105991363525
+    }
+   ]
+  },
+  "pos062_kit561": {
+   "insieme": [
+    {
+     "box": [
+      0.3082,
+      0.2049,
+      0.0384,
+      0.1007
+     ],
+     "comparsa": "2026-11-03 21:19:53",
+     "comparsa_prima": "2026-11-03 21:18:53",
+     "punteggio": 31776.7,
+     "area": 1153,
+     "dE": 27.56,
+     "durata_min": 43,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.3950936794281006
+    },
+    {
+     "box": [
+      0.3793,
+      0.1476,
+      0.0341,
+      0.0191
+     ],
+     "comparsa": "2026-11-03 21:19:53",
+     "comparsa_prima": "2026-11-03 21:18:53",
+     "punteggio": 8490.3,
+     "area": 195,
+     "dE": 43.54,
+     "durata_min": 43,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.0454745292663574
+    },
+    {
+     "box": [
+      0.7457,
+      0.2309,
+      0.017,
+      0.0417
+     ],
+     "comparsa": "2026-11-03 21:14:53",
+     "comparsa_prima": "2026-11-03 21:13:53",
+     "punteggio": 3857.3,
+     "area": 224,
+     "dE": 17.22,
+     "durata_min": 48,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.7602550983428955
+    },
+    {
+     "box": [
+      0.1534,
+      0.0226,
+      0.0327,
+      0.0139
+     ],
+     "comparsa": "2026-11-03 21:09:53",
+     "comparsa_prima": "2026-11-03 21:08:53",
+     "punteggio": 2433.3,
+     "area": 127,
+     "dE": 19.16,
+     "durata_min": 53,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.44677472114563
+    }
+   ]
+  },
+  "pos063_kit566": {
+   "insieme": [
+    {
+     "box": [
+      0.4389,
+      0.4149,
+      0.0341,
+      0.0521
+     ],
+     "comparsa": "2026-11-07 16:54:31",
+     "comparsa_prima": "2026-11-07 16:53:31",
+     "punteggio": 9480.1,
+     "area": 354,
+     "dE": 26.78,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.541308641433716
+    },
+    {
+     "box": [
+      0.5952,
+      0.1319,
+      0.0341,
+      0.033
+     ],
+     "comparsa": "2026-11-07 16:58:31",
+     "comparsa_prima": "2026-11-07 16:57:31",
+     "punteggio": 4618.2,
+     "area": 179,
+     "dE": 25.8,
+     "durata_min": 52,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.646507501602173
+    },
+    {
+     "box": [
+      0.5312,
+      0.2326,
+      0.0128,
+      0.0174
+     ],
+     "comparsa": "2026-11-07 17:21:31",
+     "comparsa_prima": "2026-11-07 17:20:31",
+     "punteggio": 1309.8,
+     "area": 77,
+     "dE": 17.01,
+     "durata_min": 29,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.9368175268173218
+    }
+   ]
+  },
+  "pos064_kit383": {
+   "insieme": [
+    {
+     "box": [
+      0.4744,
+      0.3663,
+      0.0412,
+      0.0729
+     ],
+     "comparsa": "2026-11-04 18:45:09",
+     "comparsa_prima": "2026-11-04 18:44:09",
+     "punteggio": 20600.3,
+     "area": 659,
+     "dE": 31.26,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.6686530113220215
+    }
+   ]
+  },
+  "pos065_kit484": {
+   "insieme": [
+    {
+     "box": [
+      0.875,
+      0.3281,
+      0.0824,
+      0.1267
+     ],
+     "comparsa": "2026-11-01 17:25:54",
+     "comparsa_prima": "2026-11-01 17:24:54",
+     "punteggio": 29720.2,
+     "area": 1861,
+     "dE": 15.97,
+     "durata_min": 54,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9934282302856445
+    },
+    {
+     "box": [
+      0.4105,
+      0.2378,
+      0.0483,
+      0.0868
+     ],
+     "comparsa": "2026-11-01 18:06:54",
+     "comparsa_prima": "2026-11-01 18:05:54",
+     "punteggio": 18609.9,
+     "area": 994,
+     "dE": 18.5,
+     "durata_min": 12,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.469332695007324
+    },
+    {
+     "box": [
+      0.2798,
+      0.1927,
+      0.0284,
+      0.0573
+     ],
+     "comparsa": "2026-11-01 18:01:54",
+     "comparsa_prima": "2026-11-01 18:00:54",
+     "punteggio": 6361.7,
+     "area": 306,
+     "dE": 20.79,
+     "durata_min": 18,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.5805976390838623
+    }
+   ]
+  },
+  "pos066_kit397": {
+   "insieme": [
+    {
+     "box": [
+      0.0,
+      0.4983,
+      0.044,
+      0.1701
+     ],
+     "comparsa": "2026-11-05 19:06:02",
+     "comparsa_prima": "2026-11-05 19:05:02",
+     "punteggio": 55028.7,
+     "area": 2290,
+     "dE": 24.03,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.5314810276031494
+    },
+    {
+     "box": [
+      0.6776,
+      0.4757,
+      0.0483,
+      0.1094
+     ],
+     "comparsa": "2026-11-05 18:16:02",
+     "comparsa_prima": "2026-11-05 18:15:02",
+     "punteggio": 45915.9,
+     "area": 1557,
+     "dE": 29.49,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.9970483779907227
+    },
+    {
+     "box": [
+      0.733,
+      0.5069,
+      0.0384,
+      0.1424
+     ],
+     "comparsa": "2026-11-05 18:16:02",
+     "comparsa_prima": "2026-11-05 18:15:02",
+     "punteggio": 18548.0,
+     "area": 942,
+     "dE": 19.69,
+     "durata_min": 56,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.575510025024414
+    },
+    {
+     "box": [
+      0.6236,
+      0.4531,
+      0.044,
+      0.0469
+     ],
+     "comparsa": "2026-11-05 18:06:02",
+     "comparsa_prima": "2026-11-05 18:05:02",
+     "punteggio": 10145.4,
+     "area": 457,
+     "dE": 22.2,
+     "durata_min": 66,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.610578775405884
+    },
+    {
+     "box": [
+      0.1918,
+      0.9375,
+      0.0384,
+      0.0382
+     ],
+     "comparsa": "2026-11-05 18:07:02",
+     "comparsa_prima": "2026-11-05 18:06:02",
+     "punteggio": 8728.5,
+     "area": 393,
+     "dE": 22.21,
+     "durata_min": 65,
+     "fino": true,
+     "tess": null,
+     "mosso": 3.3504841327667236
+    }
+   ]
+  },
+  "pos067_kit657": {
+   "insieme": [
+    {
+     "box": [
+      0.5511,
+      0.2292,
+      0.0625,
+      0.0694
+     ],
+     "comparsa": "2026-11-01 21:09:36",
+     "comparsa_prima": "2026-11-01 21:08:36",
+     "punteggio": 27204.3,
+     "area": 902,
+     "dE": 30.16,
+     "durata_min": 22,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4198050498962402
+    }
+   ]
+  },
+  "pos068_kit487": {
+   "insieme": [
+    {
+     "box": [
+      0.1562,
+      0.4618,
+      0.027,
+      0.0139
+     ],
+     "comparsa": "2026-11-03 12:21:51",
+     "comparsa_prima": "2026-11-03 12:20:51",
+     "punteggio": 2072.6,
+     "area": 107,
+     "dE": 19.37,
+     "durata_min": 62,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6878013610839844
+    }
+   ]
+  },
+  "pos069_kit225": {
+   "insieme": [
+    {
+     "box": [
+      0.4276,
+      0.2569,
+      0.0256,
+      0.0538
+     ],
+     "comparsa": "2026-10-28 07:03:52",
+     "comparsa_prima": "2026-10-28 07:02:52",
+     "punteggio": 18260.5,
+     "area": 495,
+     "dE": 36.89,
+     "durata_min": 39,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.2501354217529297
+    },
+    {
+     "box": [
+      0.4915,
+      0.2049,
+      0.0582,
+      0.0365
+     ],
+     "comparsa": "2026-10-28 06:40:52",
+     "comparsa_prima": "2026-10-28 06:39:52",
+     "punteggio": 15154.0,
+     "area": 633,
+     "dE": 23.94,
+     "durata_min": 62,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.6596689224243164
+    },
+    {
+     "box": [
+      0.4318,
+      0.0972,
+      0.0526,
+      0.0677
+     ],
+     "comparsa": "2026-10-28 06:40:52",
+     "comparsa_prima": "2026-10-28 06:39:52",
+     "punteggio": 10073.9,
+     "area": 623,
+     "dE": 16.17,
+     "durata_min": 62,
+     "fino": true,
+     "tess": null,
+     "mosso": 1.8275904655456543
+    },
+    {
+     "box": [
+      0.2798,
+      0.1406,
+      0.0085,
+      0.0747
+     ],
+     "comparsa": "2026-10-28 07:36:52",
+     "comparsa_prima": "2026-10-28 07:35:52",
+     "punteggio": 4211.2,
+     "area": 187,
+     "dE": 22.52,
+     "durata_min": 6,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9869086742401123
+    }
+   ]
+  },
+  "pos070_kit589": {
+   "insieme": [
+    {
+     "box": [
+      0.3935,
+      0.3056,
+      0.0199,
+      0.0295
+     ],
+     "comparsa": "2026-11-07 16:57:21",
+     "comparsa_prima": "2026-11-07 16:56:21",
+     "punteggio": 5811.9,
+     "area": 169,
+     "dE": 34.39,
+     "durata_min": 16,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.4258852005004883
+    },
+    {
+     "box": [
+      0.8153,
+      0.2292,
+      0.0071,
+      0.066
+     ],
+     "comparsa": "2026-11-07 16:09:21",
+     "comparsa_prima": "2026-11-07 16:08:21",
+     "punteggio": 3271.1,
+     "area": 135,
+     "dE": 24.23,
+     "durata_min": 64,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.9109280109405518
+    }
+   ]
+  },
+  "pos071_kit313": {
+   "insieme": [
+    {
+     "box": [
+      0.3423,
+      0.7309,
+      0.0597,
+      0.1111
+     ],
+     "comparsa": "2026-10-28 16:19:24",
+     "comparsa_prima": "2026-10-28 16:18:24",
+     "punteggio": 90209.6,
+     "area": 2080,
+     "dE": 43.37,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.6785764694213867
+    },
+    {
+     "box": [
+      0.4048,
+      0.4792,
+      0.044,
+      0.1562
+     ],
+     "comparsa": "2026-10-28 16:19:24",
+     "comparsa_prima": "2026-10-28 16:18:24",
+     "punteggio": 87210.4,
+     "area": 1884,
+     "dE": 46.29,
+     "durata_min": 15,
+     "fino": true,
+     "tess": null,
+     "mosso": 2.70379376411438
+    }
+   ]
+  }
+ }
+}
