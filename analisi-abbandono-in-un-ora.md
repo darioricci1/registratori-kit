@@ -224,18 +224,18 @@ l'una, 21 minuti in tutto.
 Prossimi passi: mettere Qwen dentro la catena dell'ora (miniature -> insieme -> pezzi a piena risoluzione -> Qwen), la
 domanda v3 col fotogramma «dopo» preso quando la scena e' ferma, e riprovare sulle ore nuove della scorta serale.
 
-## 9. La scorta serale con Qwen (compito 35, notte fra 13 e 14/11)
+## 9. La scorta con Qwen (compiti 35 e 36, mattina del 14/11)
 
-Il compito era fatto per lavorare dalle 19 alle 7 su 168 ore (scaricare l'ora intera dal registratore, analizzarla con
-«insieme», giudicare i primi candidati con Qwen3-VL 4B). È partito solo alle 5:58, a fine finestra, e alle 7 si è fermato
-da solo: **15 ore fatte su 168** (8 positive e 7 negative, 1,1 GB scaricati), 153 restano in «non_fatte». Nessuna delle
-ore «mai viste» è stata fatta.
+Due compiti con lo stesso elenco di 220 ore: il 35 con la finestra 19-07, il 36 con la finestra di tutto il giorno. Il 35 è
+partito alle 6:02 e ha fatto 15 ore; il 36 è partito alle 6:45 e ha fatto 30 ore (le 15 del 35 comprese) più Qwen su 38
+carte. Tutti e due si sono chiusi quando su Drive è arrivato un compito nuovo. Qui i conti del 36, che contiene il 35.
 
 | | ore | abbandono primo | fra i primi | primo dopo Qwen | falsi all'ora | falsi all'ora dopo Qwen |
 |---|---|---|---|---|---|---|
-| positive | 8 | 3 | 4 | 4 | 1,62 | 1,25 |
-| negative | 7 | - | - | - | 0,57 | 0,29 |
+| positive | 13 | 3 | 5 | 4 | 1,92 | 1,23 |
+| negative | 14 | - | - | - | 0,57 | 0,29 |
+| positive mai viste | 2 | 0 | 1 | 0 | 2,5 | 2,0 |
 
-Qwen ha giudicato 21 carte: un abbandono in più al primo posto, e circa un falso su quattro tolto nelle ore positive, uno
-su due nelle negative. Sono 15 ore: i numeri dicono la direzione, non quanto vale il metodo. Il resto delle 168 ore va
-fatto in una notte intera (19-7), col compito caricato prima delle 19.
+Qwen toglie un terzo dei falsi nelle ore con l'abbandono e metà in quelle senza, e mette un abbandono in più al primo posto;
+nelle due ore mai viste non aiuta. Sono 29 ore: la direzione, non il valore del metodo. Le 190 ore rimaste partono la sera
+del 14/11 col compito 35b (finestra 19-07); i suoi conti vanno nella sezione 10.
