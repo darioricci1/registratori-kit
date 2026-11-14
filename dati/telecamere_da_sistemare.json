@@ -1,5 +1,5 @@
 {
- "versione": "0.1.0",
+ "versione": "0.2.0",
  "misura_versione": "0.1.0",
  "telecamere_misurate": 525,
  "criterio": "visto a occhio con un problema; poi le «si» della misura; poi le «forse» con indice <= -1.5 e almeno 1.0 sotto le altre del kit; in fondo i falsi allarmi visti a occhio",
@@ -75,24 +75,6 @@
    "certezza": "visto a occhio",
    "cosa_fare": "fuoco da remoto: prova",
    "nota": "morbida rispetto alla c1, probabile fuoco",
-   "gruppo": 1
-  },
-  {
-   "kit": "EX KIT628 Via Rivali S. Bartolomeo 1",
-   "kit_n": 628,
-   "ex": true,
-   "comune": "UBR-Lugo",
-   "cam": 2,
-   "nitidezza": -2.992,
-   "rispetto_kit": -3.426,
-   "rango": 9,
-   "misura": "si",
-   "giro": "097d3c8ddf-rfdetr",
-   "giorno": "2026-10-06",
-   "problema": "da verificare",
-   "certezza": "visto a occhio",
-   "cosa_fare": "da guardare",
-   "nota": "strisce un po' morbide, scena povera: incerta",
    "gruppo": 1
   },
   {
@@ -186,24 +168,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EX KIT397 Via B. Magli 39",
-   "kit_n": 397,
-   "ex": true,
-   "comune": "SAN PIETRO IN CASALE",
-   "cam": 3,
-   "nitidezza": -2.514,
-   "rispetto_kit": -3.172,
-   "rango": 15,
-   "misura": "forse",
-   "giro": "ff2aa12ed6-rfdetr",
-   "giorno": "2026-09-28",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: forse (le due clip non sono d'accordo)",
-   "gruppo": 2
-  },
-  {
    "kit": "KIT266 - Via Tiro a Segno",
    "kit_n": 266,
    "ex": false,
@@ -294,24 +258,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EX KIT299 Viale Stazione angolo Via Manzoni",
-   "kit_n": 299,
-   "ex": true,
-   "comune": "PALMANOVA",
-   "cam": 2,
-   "nitidezza": -2.236,
-   "rispetto_kit": -2.829,
-   "rango": 23,
-   "misura": "si",
-   "giro": "4c8a14ee5b-rfdetr",
-   "giorno": "2026-10-15",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: 8% peggiore e sotto le altre del kit",
-   "gruppo": 2
-  },
-  {
    "kit": "KIT501 Via Firenze 33",
    "kit_n": 501,
    "ex": false,
@@ -384,24 +330,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EX KIT316 Via Candiani 34",
-   "kit_n": 316,
-   "ex": true,
-   "comune": "PORDENONE",
-   "cam": 1,
-   "nitidezza": -1.997,
-   "rispetto_kit": -1.58,
-   "rango": 30,
-   "misura": "si",
-   "giro": "1e2e633c89-rfdetr",
-   "giorno": "2026-10-16",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: 8% peggiore e sotto le altre del kit",
-   "gruppo": 2
-  },
-  {
    "kit": "KIT253 Via del Canneto int.Via lungomare del sole Siponto",
    "kit_n": 253,
    "ex": false,
@@ -420,42 +348,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EX KIT200 Via Fratelli Rosselli 7",
-   "kit_n": 200,
-   "ex": true,
-   "comune": "GEOVEST-Calderara di Reno",
-   "cam": 1,
-   "nitidezza": -1.962,
-   "rispetto_kit": -1.716,
-   "rango": 32,
-   "misura": "si",
-   "giro": "fd59cfa9ec-rfdetr",
-   "giorno": "2026-10-05",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: 8% peggiore e sotto le altre del kit",
-   "gruppo": 2
-  },
-  {
-   "kit": "EX KIT630 Via Fiumazzo intersez. Via Margotta - Voltana",
-   "kit_n": 630,
-   "ex": true,
-   "comune": "UBR-Lugo",
-   "cam": 1,
-   "nitidezza": -1.928,
-   "rispetto_kit": -2.966,
-   "rango": 34,
-   "misura": "si",
-   "giro": "192d334400-rfdetr",
-   "giorno": "2026-10-19",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: 8% peggiore e sotto le altre del kit",
-   "gruppo": 2
-  },
-  {
    "kit": "KIT522 Parcheggio Atleti Azzurri d'Italia",
    "kit_n": 522,
    "ex": false,
@@ -467,24 +359,6 @@
    "misura": "si",
    "giro": "dfa60bfdac-rfdetr",
    "giorno": "2026-10-15",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: 8% peggiore e sotto le altre del kit",
-   "gruppo": 2
-  },
-  {
-   "kit": "EX KIT621 Via Piano Caricatore 22",
-   "kit_n": 621,
-   "ex": true,
-   "comune": "UBR-Lugo",
-   "cam": 3,
-   "nitidezza": -1.869,
-   "rispetto_kit": -3.026,
-   "rango": 36,
-   "misura": "si",
-   "giro": "1b1a3b09e1-rfdetr",
-   "giorno": "2026-08-17",
    "problema": "da verificare",
    "certezza": "solo misura",
    "cosa_fare": "da guardare",
@@ -600,24 +474,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EXKIT384 Via Duca D’Aosta",
-   "kit_n": 384,
-   "ex": true,
-   "comune": "BOLZANO",
-   "cam": 3,
-   "nitidezza": -1.641,
-   "rispetto_kit": -1.003,
-   "rango": 46,
-   "misura": "forse",
-   "giro": "b4e75f297a-rfdetr",
-   "giorno": "2026-09-27",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: forse (una condizione sola)",
-   "gruppo": 2
-  },
-  {
    "kit": "KIT663 Via Baracca (Parcheggio)",
    "kit_n": 663,
    "ex": false,
@@ -647,24 +503,6 @@
    "misura": "forse",
    "giro": "0e68b5ddb2-rfdetr",
    "giorno": "2026-10-28",
-   "problema": "da verificare",
-   "certezza": "solo misura",
-   "cosa_fare": "da guardare",
-   "nota": "misura: forse (una condizione sola)",
-   "gruppo": 2
-  },
-  {
-   "kit": "EXKIT639 Via Brennero (Condominio Ceves)",
-   "kit_n": 639,
-   "ex": true,
-   "comune": "VIPITENO",
-   "cam": 4,
-   "nitidezza": -1.55,
-   "rispetto_kit": -2.088,
-   "rango": 51,
-   "misura": "forse",
-   "giro": "cf1452e4b1-rfdetr",
-   "giorno": "2026-08-25",
    "problema": "da verificare",
    "certezza": "solo misura",
    "cosa_fare": "da guardare",
@@ -744,24 +582,6 @@
    "gruppo": 2
   },
   {
-   "kit": "EX KIT206 Via Marega",
-   "kit_n": 206,
-   "ex": true,
-   "comune": "GORIZIA",
-   "cam": 2,
-   "nitidezza": -3.61,
-   "rispetto_kit": -2.39,
-   "rango": 4,
-   "misura": "si",
-   "giro": "f0ae7f8e6c-rfdetr",
-   "giorno": "2026-09-20",
-   "problema": "falso allarme della misura",
-   "certezza": "visto a occhio",
-   "cosa_fare": "niente",
-   "nota": "asfalto in ombra: sembra a posto, misura ingannata dalla scena",
-   "gruppo": 3
-  },
-  {
    "kit": "KIT521 Via Adige - Loc. Tressano",
    "kit_n": 521,
    "ex": false,
@@ -798,24 +618,6 @@
    "gruppo": 3
   },
   {
-   "kit": "EXKIT345 - Via Santoro verso Via Colicchio",
-   "kit_n": 345,
-   "ex": true,
-   "comune": "FOGGIA",
-   "cam": 3,
-   "nitidezza": -3.191,
-   "rispetto_kit": -4.172,
-   "rango": 8,
-   "misura": "si",
-   "giro": "ee224646d7-rfdetr",
-   "giorno": "2026-08-10",
-   "problema": "falso allarme della misura",
-   "certezza": "visto a occhio",
-   "cosa_fare": "niente",
-   "nota": "asfalto chiaro uniforme: non si giudica",
-   "gruppo": 3
-  },
-  {
    "kit": "KIT654 Via Larga 18 - Longara",
    "kit_n": 654,
    "ex": false,
@@ -833,5 +635,6 @@
    "nota": "ombre di foglie su asfalto: sembra a posto",
    "gruppo": 3
   }
- ]
+ ],
+ "esclusi": "i kit «EX»: posizioni lasciate (il kit e' stato spostato e ha un nome nuovo)"
 }

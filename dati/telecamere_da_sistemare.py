@@ -1,6 +1,8 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.2.0 (14/11/2026) - fuori i kit «EX» (Dario): sono posizioni dove il kit non c'e' piu' (spostato altrove,
+  nome nuovo); la telecamera si misura e si sistema nella posizione nuova.
 VERSION 0.1.0 (14/11/2026) - prima versione.
 
 Perche' (Dario, 14/11/2026: «mi fai in registratori kit anche un elenco di queste? KIT249 Viano telecamera 3 sfocata
@@ -24,7 +26,7 @@ import os
 import re
 import sys
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 QUI = os.path.dirname(os.path.abspath(__file__))
 INGRESSO = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "analisi", "nitidezza_telecamere.json")
 USCITA = os.path.join(QUI, "telecamere_da_sistemare.json")
@@ -65,6 +67,8 @@ def elenco(misura):
     righe = []
     for t in tele:
         n, ex = numero_kit(t["kit"])
+        if ex:   # 0.2.0: posizione lasciata, il kit ora e' altrove
+            continue
         nota = t.get("a_occhio") or OCCHIO_IN_PIU.get((n, ex, t["cam"]))
         base = {
             "kit": t["kit"], "kit_n": n, "ex": ex, "comune": t["comune"], "cam": t["cam"],
@@ -92,6 +96,7 @@ def elenco(misura):
                     f"{FORSE_INDICE} e almeno {-FORSE_KIT} sotto le altre del kit; in fondo i falsi allarmi visti a occhio",
         "guardate_a_occhio": misura.get("guardate_a_occhio"),
         "telecamere": righe,
+        "esclusi": "i kit «EX»: posizioni lasciate (il kit e' stato spostato e ha un nome nuovo)",
     }
 
 
