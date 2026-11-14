@@ -45,6 +45,10 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte35b (mandato al COMPUTERONE il 14/11 alle 20:40): la scorta del 35 per le 190 ore che né il 35 né il 36
+  hanno fatto (il 36, stesso scorta.json con la finestra 00-23:59, la mattina del 14/11 ne ha fatte 30, comprese le 15 del
+  35). Codice uguale al 35 (ponte 0.18.0); finestra 19-07, stessi limiti; parti in `scorta35b_1..7.zip`, Qwen con
+  l'etichetta c35b, risultato in `risultato_p2p_ponte35b.zip`. Un compito nuovo su compito.zip lo chiude entro 10 minuti.
 - Ponte 0.18.0 (compito p2p_ponte35, pronto il 14/11 mattina e NON mandato, zip nello scratchpad della sessione:
   `compito35/compito.zip` col suo LEGGIMI.txt): la **scorta serale** e la **catena dell'ora con Qwen**.
   - Si prepara con `python3 prepara_scorta.py <video.json> <stato_nvr.json> <elenco.tsv.gz> <cartella dei giri>
