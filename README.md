@@ -13,6 +13,10 @@ quello che serve per continuare senza la conversazione di prima.
   - `public/stato.html`: «Registrazioni dei kit». Una riga per ogni telecamera che funziona, raggruppate per kit:
     adesso (registra / ferma / niente), registrazione più vecchia e più recente, giorni, media, percentuale di ogni
     giorno sulle 24 ore dal più recente, foto. In cima «Cose che non tornano» col confronto con l'ANAGRAFICA KIT.
+    Dal 14/11 (2.30.0) anche «Telecamere da sistemare»: sfocate, morbide, coperte da un palo o da rami, dalla misura di
+    nitidezza di Kit_Rifiuti (`analisi/nitidezza_telecamere.py` di kit-rifiuti-programma) più le note a occhio. Il file
+    `dati/telecamere_da_sistemare.json` lo rifà `python3 dati/telecamere_da_sistemare.py` (le note a occhio nuove vanno in
+    `OCCHIO_IN_PIU`) e lo serve `op=sistemare` di `api/p2p.js` dietro l'accesso (`includeFiles` in `vercel.json`).
   - `api/p2p.js`: la coda e i dati (Neon, database Alma, schema `nvr_remoto`: richieste, registratori, camera,
     camera_storia, archivio, anagrafica, pc). Il PC entra col biglietto Google dell'account di servizio di Alma
     (aud https://mappakit.alma/nvr-remoto), la pagina con la sessione dell'accesso unico (o un token RMS valido).

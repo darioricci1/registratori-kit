@@ -1,4 +1,6 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.12.0 (10/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.13.0 (14/11/2026)
+// 1.13.0: op=sistemare, l'elenco delle telecamere sfocate o coperte (dati/telecamere_da_sistemare.json, fatto da
+//         dati/telecamere_da_sistemare.py) servito dietro l'accesso: nomi di kit e comuni non stanno in public/.
 // 1.12.0: l'anagrafica tiene anche come è alimentato il kit (colonna BATT: «42Ah + solare 140W», «alimentato 220v», «42ah»).
 // 1.11.0: un kit che non risponde e che ha nell'ODM le ore in cui e' acceso («risponde solo di sera», «acceso solo dalle
 //         10 alle 16») si mette in coda davanti al giro proprio in quelle ore, al massimo una volta ogni 45 minuti (Dario:
@@ -35,6 +37,7 @@
 // Chi risponde: il PC, con il biglietto Google dell'account di servizio di Alma (aud DESTINATARIO).
 // Le password dei registratori non passano da qui: le ha il PC.
 // Neon, schema nvr_remoto.
+import { readFileSync } from "node:fs";
 import { neon } from "@neondatabase/serverless";
 import { chiE } from "./_accesso.js";
 import { finestreAccese, dentro, noteOdm } from "./_orari.js";
@@ -43,6 +46,7 @@ const DESTINATARIO = "https://mappakit.alma/nvr-remoto";
 const ACCOUNT = "account-di-servizio@almasicurezza-479911.iam.gserviceaccount.com";
 const RE_UID = /^[A-Z0-9]{20}$/;
 let pronto = null;
+let sistemare = null;   // 1.13.0: il json si legge una volta per processo
 
 function db() {
   const url = process.env.ALMA_DATABASE_URL || process.env.ALMA_POSTGRES_URL;
@@ -241,6 +245,10 @@ export default async function handler(req, res) {
       const can = Number(b.canale) >= 1 && Number(b.canale) <= 16 ? Number(b.canale) : null;
       const r = await sql`insert into nvr_remoto.richieste (kit, uid, canale, priorita) values (${String(b.kit || "").slice(0, 80)}, ${uid}, ${can}, ${b.priorita === 0 ? 0 : 1}) returning id`;
       return res.json({ id: r[0].id });
+    }
+    if (op === "sistemare") {   // 1.13.0: niente database, il file viaggia con la funzione (includeFiles in vercel.json)
+      if (!sistemare) sistemare = JSON.parse(readFileSync(new URL("../dati/telecamere_da_sistemare.json", import.meta.url), "utf8"));
+      return res.json(sistemare);
     }
     if (op === "ore") {   // 1.9.0: le ore di ogni giorno, una volta per apertura di pagina
       return res.json(await sql`select uid, canale, ore from nvr_remoto.archivio where ore is not null`);

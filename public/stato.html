@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.30.0 (14/11/2026) - «Telecamere da sistemare» (Dario: «mi fai in registratori kit anche un elenco di queste?»):
+     le telecamere sfocate, morbide o coperte da un palo o da rami, dalla misura di nitidezza di Kit_Rifiuti e dalle note a
+     occhio (op=sistemare), prima le viste a occhio; per ognuna la foto dell'ultimo giro, se c'è. -->
 <!-- version: 2.29.0 (14/11/2026) - chi non è entrato vede solo la schermata d'ingresso a tutto schermo, non la pagina vuota. -->
 <!-- version: 2.28.0 (10/11/2026) - sotto ogni kit con un ODM la riga dell'ODM (numero, aperto il, tipo, note); «non è l'host» diventa
      «spento o senza rete» (Dario).
@@ -155,6 +158,15 @@ h2 { font-size:16px; margin:18px 0 6px }
 .filtroCol .tr-pastiglia button { padding:0 4px }
 th:focus-within { z-index:5 }
 #grande img { max-width:95vw; max-height:90vh; cursor:zoom-out }
+/* 2.30.0: al telefono la tabella delle telecamere da sistemare tiene le colonne che servono per decidere */
+@media (max-width:700px) {
+  #sistemare col:nth-child(5), #sistemare col:nth-child(7), #sistemare col:nth-child(8), #sistemare col:nth-child(9),
+  #sistemare tr > :nth-child(5), #sistemare tr > :nth-child(7), #sistemare tr > :nth-child(8), #sistemare tr > :nth-child(9) { display:none }
+  #sistemare col:nth-child(1) { width:24% !important } #sistemare col:nth-child(2) { width:18% !important } #sistemare col:nth-child(3) { width:12% !important }
+  #sistemare col:nth-child(4) { width:16% !important } #sistemare col:nth-child(6) { width:14% !important } #sistemare col:nth-child(10) { width:16% !important }
+  #sistemare td, #sistemare th { font-size:13px; padding:4px 3px }
+  #sistemare button[data-foto] { padding:4px 6px; font-size:13px }
+}
 .schermo-entra{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--sfondo);color:var(--testo);padding:16px}
 .schermo-entra[hidden]{display:none}
 .riquadro-entra{max-width:420px;width:100%;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
@@ -181,12 +193,26 @@ th:focus-within { z-index:5 }
   <button id="giro" title="Mette in coda tutti i registratori: il PC dell'ufficio li controlla uno alla volta">Ricontrolla tutti</button>
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
+  <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami): prima quelle viste a occhio, poi quelle segnalate solo dalla misura di nitidezza sui video di Kit_Rifiuti">Telecamere da sistemare</button>
 </header>
 <div class="conti" id="conti"></div>
 <main>
   <div id="sezNonTorna" hidden>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:19%"><col style="width:6%"><col style="width:24%"><col style="width:26%"><col style="width:7%"><col style="width:8%"><col style="width:10%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th><th data-chiave="odm_n">ODM</th><th data-chiave="odm_ap_ord" data-verso="giu">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezSistemare" hidden>
+  <h2><span id="titolo-sistemare" title="">Telecamere da sistemare</span> <button data-scarica="sistemare" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
+  <table id="sistemare"><colgroup><col style="width:17%"><col style="width:11%"><col style="width:6%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:6%"><col style="width:13%"><col style="width:12%"></colgroup><thead><tr>
+    <th data-chiave="kit">Kit</th><th data-chiave="comune">Comune</th><th data-chiave="cam" title="Il canale come in UVMS (telecamera 1 = CH 01)">Tel.</th>
+    <th data-chiave="problema" title="sfocata, morbida (poco a fuoco), ostruzione (un palo, una staffa o dei rami davanti all'obiettivo), da verificare (lo dice solo la misura, o a occhio è incerta), falso allarme (guardata a occhio: è a posto o la scena non si giudica)">Problema</th>
+    <th data-chiave="certezza" title="visto a occhio: ritagli a piena risoluzione confrontati con la telecamera migliore dello stesso kit (14/11); solo misura: lo dice la nitidezza misurata sui video, nessuno l'ha ancora guardata">Certezza</th>
+    <th data-chiave="cosa_fare" title="fuoco da remoto: prova (se l'obiettivo è motorizzato si prova a rifare il fuoco dal registratore); sul posto (va spostato o liberato a mano); da guardare (prima aprire la foto o un video)">Cosa fare</th>
+    <th data-chiave="nitidezza" title="Indice di nitidezza misurato sui video di giorno: 0 è la telecamera tipica, -1 una deviazione sotto; più è negativo, più è sfocata. Nel fumetto anche quanto sta sotto le altre telecamere dello stesso kit">Nitidezza</th>
+    <th data-chiave="rango" title="Il posto nella classifica delle telecamere misurate, dalla meno nitida (1)">Rango</th>
+    <th data-chiave="giro" title="Il giro di Kit_Rifiuti (e il giorno) del video su cui è stata misurata">Esempio di giro</th>
+    <th data-chiave="haFoto" title="La foto della telecamera all'ultimo giro dei registratori">Foto</th>
+  </tr></thead><tbody></tbody></table>
   </div>
   <h2>Kit e telecamere <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
@@ -429,7 +455,7 @@ const odmCol = (n) => { const l = odmLista(n); return { n: l.map((x) => x.n).fil
 const aaaammgg = (d) => { const m = String(d || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? m[3] + m[2].padStart(2, "0") + m[1].padStart(2, "0") : ""; };
 const odmDi = (k) => odmCol(parseInt(k.kit, 10)).n;
 /** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
-const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {} };
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {} };
 const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
@@ -438,7 +464,48 @@ const VALORE = {
   nonTorna: { tipo: (x) => x.tipo, kit: (x) => String(x.kit || "-"), dove: (x) => x.dove || "-", odm_n: (x) => x.odm_n || "-", odm_tipo: (x) => x.odm_tipo || "-" },
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
+  sistemare: { kit: (x) => x.kit || "-", comune: (x) => x.comune || "-", cam: (x) => "CH " + String(x.cam).padStart(2, "0"), problema: (x) => x.problema || "-", certezza: (x) => x.certezza || "-", cosa_fare: (x) => x.cosa_fare || "-", haFoto: (x) => (x.foto ? "c'è" : "no") },
 };
+/** 2.30.0: le telecamere da sistemare (op=sistemare, letto una volta) con la foto dell'ultimo giro, se c'è. */
+let SISTEMARE = null, ordSi = { chiave: "gruppo", verso: 1 };
+const nomeNorm = (t) => norm(t).replace(/[^a-z0-9]/g, "");
+/** Il registratore e la foto di una telecamera dell'elenco: prima per nome uguale in UVMS, poi per numero del kit (EX con EX). */
+function fotoDi(x, d) {
+  const ks = (d.kit || []).filter((k) => !/NON INSTALLATI/i.test(k.gruppo || ""));
+  const k = ks.find((k) => nomeNorm(k.nome) === nomeNorm(x.kit))
+    || ks.find((k) => parseInt(k.kit, 10) === x.kit_n && /\bEX\s*KIT/i.test(k.nome || "") === !!x.ex);
+  if (!k) return null;
+  const c = (d.camere || []).find((c) => c.uid === k.uid && c.canale === x.cam - 1);
+  return c && c.ha_foto ? { uid: k.uid, canale: c.canale, il: c.il, vista: c.vista, quando: quandoFoto(c) } : null;
+}
+function righeSistemare() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const l = ((SISTEMARE || {}).telecamere || []).filter((x) => parole.every((p) => norm(x.kit + " " + x.comune + " " + x.problema).includes(p)) && passaFiltri("sistemare", x));
+  const v = (x) => (ordSi.chiave === "gruppo" ? x.gruppo : ordSi.chiave === "haFoto" ? (x.foto ? 1 : 0) : ordSi.chiave === "cam" ? x.cam : x[ordSi.chiave]);
+  return l.sort((a, b) => { const p = v(a), q = v(b);
+    const c = typeof p === "number" && typeof q === "number" ? p - q : String(p ?? "").localeCompare(String(q ?? ""), "it", { numeric: true });
+    return c * ordSi.verso || a.gruppo - b.gruppo || a.rango - b.rango; });
+}
+function disegnaSistemare() {
+  if (!SISTEMARE) return;
+  for (const x of SISTEMARE.telecamere) x.foto = fotoDi(x, dati);
+  preparaFiltri("sistemare", SISTEMARE.telecamere);
+  const l = righeSistemare(), tutte = SISTEMARE.telecamere, vere = tutte.filter((x) => x.gruppo < 3);
+  const cls = (x) => (x.gruppo === 3 ? "tenue" : x.certezza === "visto a occhio" ? "no" : "mezzo");
+  $("#vediSistemare").textContent = `Telecamere da sistemare (${vere.length})`;
+  $("#titolo-sistemare").textContent = `Telecamere da sistemare (${l.filter((x) => x.gruppo < 3).length})`;
+  $("#titolo-sistemare").title = `Dalla misura di nitidezza ${SISTEMARE.misura_versione || ""} su ${SISTEMARE.telecamere_misurate || "?"} telecamere (video di giorno di Kit_Rifiuti) e dalle note a occhio: ${SISTEMARE.guardate_a_occhio || ""}. In fondo, in grigio, le guardate a occhio e risultate a posto o non giudicabili (falso allarme della misura). Elenco ${SISTEMARE.versione || ""}.`;
+  $("#sistemare tbody").innerHTML = l.map((x) => `<tr${x.gruppo === 3 ? ' class="tenue"' : ""}><td>${esc(x.kit)}</td><td>${esc(x.comune)}</td><td class="num">CH ${String(x.cam).padStart(2, "0")}</td>
+    <td class="${cls(x)}" title="${esc(x.nota)}">${esc(x.problema)}</td><td title="${esc(x.nota)}">${esc(x.certezza)}</td><td>${esc(x.cosa_fare)}</td>
+    <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
+    <td class="num">${x.rango}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
+    <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}">Vedi foto</button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
+}
+async function caricaSistemare() {
+  if (SISTEMARE) return disegnaSistemare();
+  try { const r = await fetch("/api/p2p?op=sistemare"); if (r.ok) SISTEMARE = await r.json(); } catch { /* resta il bottone senza conto */ }
+  disegnaSistemare();
+}
 /** 2.28.0 (Dario: «cosa vuol dire non è l'host»): i messaggi del server P2P di Focus in parole chiare. */
 function chiaro(m) {
   const s = String(m || "");
@@ -624,6 +691,7 @@ function disegna() {
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${esc(k.odm_n)}</td><td>${esc(k.odm_ap)}</td><td>${esc(k.odm_tipo)}</td></tr>${notaSotto(k.odm_note, 7)}`).join("");
   $("#fermi thead").hidden = !kitFermi.length;
   $("#senzaOdm thead").hidden = !senzaOdm().length;
+  disegnaSistemare();
 }
 let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {
@@ -645,10 +713,12 @@ async function carica() {
   dati = d; costruisci(d);
   GIORNI_SCALA = Math.max(2, Math.round((new Date() - new Date(DAL + "T00:00:00")) / 864e5) + 1);
   disegna();
+  caricaSistemare();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#senzaOdm"), { alCambio: (chiave, verso) => { ordSo = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#sistemare"), { alCambio: (chiave, verso) => { ordSi = { chiave, verso }; disegnaSistemare(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
 $("#cerca").addEventListener("input", disegna);
 for (const b of document.querySelectorAll("button[data-filtro]")) b.addEventListener("click", () => {
@@ -660,6 +730,12 @@ $("#vediNonTorna").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediNonTorna").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
 });
+$("#vediSistemare").addEventListener("click", () => {
+  const sez = $("#sezSistemare"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediSistemare").setAttribute("aria-pressed", String(apri));
+  if (apri) $("main").scrollTop = 0;
+});
+$("#sistemare").addEventListener("click", (e) => { const b = e.target.closest("button[data-foto]"); if (b) { $("#grande").innerHTML = `<img src="${b.dataset.foto}" alt="foto della telecamera">`; $("#grande").hidden = false; } });
 $("#prova").addEventListener("click", () => { location.href = "/"; });
 $("#giro").addEventListener("click", async () => {
   const r = await fetch("/api/p2p?op=accoda", { method: "POST" });
@@ -680,6 +756,9 @@ document.addEventListener("click", (e) => {
     scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", ...giorni.map(giornoIt)],
       righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, ...giorni.map(() => 6)]);
   }
+  if (b.dataset.scarica === "sistemare")
+    scaricaXlsx("Telecamere da sistemare", ["Kit", "Comune", "Telecamera", "Problema", "Certezza", "Cosa fare", "Nota", "Nitidezza", "Rango", "Giro", "Giorno"],
+      righeSistemare().map((x) => [x.kit, x.comune, x.cam, x.problema, x.certezza, x.cosa_fare, x.nota, x.nitidezza, x.rango, x.giro, x.giorno]), [36, 26, 10, 22, 14, 20, 50, 10, 8, 22, 12]);
   if (b.dataset.scarica === "senzaOdm")
     scaricaXlsx("Non registrano senza ODM", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "Telecamere", "Nota (Barbara)", "ODM aperto (numero)"], senzaOdm().map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", attesaDi(k), "", ""]), [26, 36, 44, 20, 11, 40, 18]);
   if (b.dataset.scarica === "fermi")
