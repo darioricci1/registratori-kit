@@ -2,6 +2,8 @@
 sacchi di gpu2 non scrive piu' ~\\kr_gpu\\vivo.txt da 20 minuti), prepara un Python suo (~\\kr_vlm, uv), scarica
 Qwen3-VL (Apache 2.0) e fa giudicare le carte di Scorri (carte/): prima 8B in 4 bit, poi 4B in 4 bit, poi 2B.
 Risultati su Drive in vlm_pcN.zip ogni 30 minuti e alla fine.
+version: 0.5.0 (14/11/2026) - una prova di prove.json puo' avere un quarto elemento, l'etichetta del giro (compito 35:
+"c35"), che va nel nome del risultato: giudizi_<modello>_<domanda>_<etichetta>.json non copre quello del 34.
 version: 0.4.0 (13/11/2026) - le prove da prove.json del compito (compito 34: solo il 4B con la domanda v3, prima e dopo).
 version: 0.3.0 (11/11/2026) - solo il 4B in 4 bit, con la domanda nuova (v2, v2d col primo piano del riquadro) e con
 quella del 10/11 (v1) sulle stesse 173 carte: giudizi_Qwen3-VL-4B-Instruct_<v>.json. Niente 2B (risponde fuori elenco)
@@ -124,8 +126,9 @@ try:
     if not os.path.isdir(carte):
         with zipfile.ZipFile(os.path.join(C, "carte.zip")) as zz:
             zz.extractall(carte)
-    for nome, modo, domanda in PROVE:
-        corto = nome.split("/")[-1] + "_" + domanda
+    for prova in PROVE:
+        nome, modo, domanda = prova[:3]
+        corto = nome.split("/")[-1] + "_" + domanda + ("_" + prova[3] if len(prova) > 3 and prova[3] else "")
         esegui([PY, os.path.join(C, "vlm_giudica.py"), carte, os.path.join(U, f"giudizi_{corto}.json"), nome, modo,
                 "--prompt", domanda], f"giudica_{corto}.txt", env)
         manda()

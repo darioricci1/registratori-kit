@@ -31,6 +31,15 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.18.0 (14/11/2026): compito 35, scorta.json (prepara_scorta.py) una volta sola sul COMPUTERONE (segno
+  scorta_fatto.txt), in un filo suo e solo nella finestra serale (di difetto 19-7, al massimo 11 ore di lavoro): per
+  ogni abbandono sicuro ancora sul registratore le miniature dei minuti dell'ora e 90 s a piena risoluzione (scorta.py
+  0.1.0, un processo per ora con scorta_lavoro.py; video e miniature restano in ~/kr_lavori/scorta/<compito>), per le
+  ore della catena (e le negative degli stessi kit) b_tavolino «insieme», i pezzi a piena risoluzione dei primi 3
+  candidati e le carte prima/dopo; tetto di MB per kit e in tutto, e del disco. Le miniature su Drive in zip da al
+  massimo 180 MB (segnaposto scorta35_N.zip), nel risultato solo json e immagini piccole. Alla fine Qwen (vlm.py 0.5.0,
+  domanda v3) giudica le carte e uscita/catena.json unisce ore, candidati, giudizi e verita'. Con scorta.json Qwen non
+  parte piu' all'avvio del ponte.
 version: 0.17.0 (13/11/2026): compito 34, Qwen giudica i candidati del secondo passaggio: carte_dai_pezzi fa le carte
   prima/dopo dai video del compito 33 rimasti sul PC (pezzi_vlm.json di prepara_vlm33.py), vlm.py le giudica con la
   domanda v3 (prove.json). Le carte anche in uscita/carte34.
@@ -122,7 +131,7 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.17.0"
+VERSIONE = "p2p_ponte 0.18.0"
 DURATA = 24 * 3600
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
@@ -1875,6 +1884,184 @@ def lavoro_pilota(cfg):
 
     pl.lavoro(cfg, lancia, lambda o: scrivi_json("pilota.json", dict(o, pc=PC, versione=VERSIONE)), av, gia=gia)
 
+
+# ------------------------------------------------------------------ 0.18.0: scorta.json (compito 35, una volta sola)
+def _cartella_mb(d):
+    tot = 0
+    for radice, _, files in os.walk(d):
+        for f in files:
+            try:
+                tot += os.path.getsize(os.path.join(radice, f))
+            except OSError:
+                pass
+    return tot / 1e6
+
+
+def _manda_parte(base, ud, ore, k, posti, nome_c):
+    """Uno zip delle miniature di `ore` (<ora>/minuti/*.jpg e <ora>/ora.json) nel segnaposto posti[k-1] su Drive.
+    Lo zip resta sul PC in <base>/parti. Ritorna la voce di scorta.json."""
+    import drive_alma
+    os.makedirs(os.path.join(base, "parti"), exist_ok=True)
+    posto = posti[k - 1] if k - 1 < len(posti) else None
+    z = os.path.join(base, "parti", posto or f"scorta_parte{k}.zip")
+    with zipfile.ZipFile(z, "w", zipfile.ZIP_STORED) as zz:   # JPEG: comprimere non serve
+        for o in ore:
+            for f in sorted(glob.glob(os.path.join(base, o, "minuti", "*.jpg"))):
+                zz.write(f, f"{o}/minuti/{os.path.basename(f)}")
+            j = os.path.join(ud, o, "ora.json")
+            if os.path.exists(j):
+                zz.write(j, f"{o}/ora.json")
+    voce = {"parte": k, "posto": posto, "zip_sul_pc": z, "mb": round(os.path.getsize(z) / 1e6, 1), "ore": list(ore),
+            "quando": time.strftime("%Y-%m-%d %H:%M")}
+    if not posto:
+        voce.update(ok=False, drive="nessun segnaposto su Drive per questa parte: lo zip resta sul PC")
+        return voce
+    ok, msg = drive_alma.carica(z, posto, (C, os.path.dirname(sys.executable)),
+                                proprieta={"compito": nome_c, "parte": str(k), "ore": str(len(ore))})
+    voce.update(ok=bool(ok), drive=msg)
+    return voce
+
+
+def _qwen_sulla_catena(sc, cat, base, ore_x, attesa_max=4 * 3600):
+    """Le carte di tutte le ore in carte.zip (come il compito 34), Qwen staccato (vlm.py, prove.json) e l'attesa dei suoi
+    giudizi. Ritorna (giudizi o None, perche')."""
+    voci = sc.carte_per_qwen(ore_x)
+    if not voci:
+        return None, "nessuna carta"
+    with zipfile.ZipFile(os.path.join(C, "carte.zip"), "w") as zz:
+        for v in voci:
+            for suf in ("_prima.jpg", "_dopo.jpg", ".jpg"):
+                f = os.path.join(base, v["ora"], "carte", v["id"] + suf)
+                if os.path.exists(f):
+                    zz.write(f, v["id"] + suf)
+        zz.writestr("carte.json", json.dumps(voci, ensure_ascii=False, indent=1))
+    with open(os.path.join(C, "prove.json"), "w", encoding="utf-8") as fh:
+        json.dump(cat["qwen"], fh)
+    nome_g = sc.nome_giudizi(cat["qwen"][0])
+    giudizi = os.path.join(os.path.expanduser("~"), "kr_vlm", "uscita", nome_g)
+    if os.path.exists(giudizi):   # un risultato di prima con lo stesso nome non deve sembrare quello di stasera
+        os.replace(giudizi, giudizi + f".prima_{int(time.time())}")
+    av(f"scorta: {len(voci)} carte per Qwen ({nome_g})")
+    parti_qwen()
+    viv = os.path.join(os.path.expanduser("~"), "kr_vlm", "vivo.txt")
+    t0 = time.time()
+    while time.time() - t0 < attesa_max:
+        time.sleep(60)
+        try:
+            d = json.load(open(giudizi, encoding="utf-8"))
+            if d.get("totale_s") is not None:
+                shutil.copy2(giudizi, os.path.join(U, "catena_" + nome_g))
+                return d.get("giudizi") or [], "fatto"
+        except (OSError, ValueError):
+            pass
+        try:
+            fermo = time.time() - float(open(viv).read().strip()) > 20 * 60
+        except (OSError, ValueError):
+            fermo = time.time() - t0 > 30 * 60
+        if fermo:
+            return None, "Qwen si e' fermato senza finire (vedi ~/kr_vlm/uscita/vlm.txt)"
+    return None, f"Qwen non ha finito in {attesa_max // 3600} ore"
+
+
+def lavoro_scorta(cfg):
+    """scorta.json (0.18.0, compito 35): la scorta serale (miniature dei minuti e video a piena risoluzione degli
+    abbandoni sicuri) e la catena dell'ora con Qwen (scorta.py 0.1.0, prove in prova_scorta.py). Il giro delle ore e'
+    scorta.giro; qui i mezzi veri: ogni ora in un processo suo (scorta_lavoro.py, come pilota_lavoro.py), le parti su
+    Drive, il disco, la chiusura del ponte. Le ore finite (uscita/scorta/<ora>/ora.json) non si rifanno. Alla fine
+    Qwen sulle carte e uscita/catena.json."""
+    import scorta as sc
+    cat = sc.catena_da(cfg)
+    nome_c = os.path.basename(os.path.normpath(C))
+    base = os.path.join(os.path.expanduser("~"), "kr_lavori", "scorta", nome_c)
+    ud = os.path.join(U, "scorta")
+    for d in (base, ud):
+        os.makedirs(d, exist_ok=True)
+    posti = list(cfg.get("posti_drive") or [])
+    prima = {}
+    try:
+        prima = json.load(open(os.path.join(U, "scorta.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
+    gia = {}
+    for o in cfg.get("ore") or []:
+        try:
+            x = json.load(open(os.path.join(ud, o["nome"], "ora.json"), encoding="utf-8"))
+            if not x.get("in_corso") and x.get("esito"):
+                gia[o["nome"]] = x
+        except (OSError, ValueError):
+            pass
+
+    def lancia(ora, secondi_max):
+        d = os.path.join(base, "_proc", ora["nome"])
+        pc, dr = os.path.join(base, ora["nome"]), os.path.join(ud, ora["nome"])
+        for x in (os.path.join(d, "uscita"), pc, dr):
+            os.makedirs(x, exist_ok=True)
+        risultato = os.path.join(dr, "ora.json")
+        if os.path.exists(risultato):
+            os.replace(risultato, risultato + ".prima")
+        shutil.copy2(os.path.join(C, "compito.py"), os.path.join(d, "ponte.py"))
+        shutil.copy2(os.path.join(C, "scorta_lavoro.py"), os.path.join(d, "compito.py"))
+        with open(os.path.join(d, "ora.json"), "w", encoding="utf-8") as fh:
+            json.dump({"ora": ora, "cfg": {k: v for k, v in cfg.items() if k not in ("ore", "scelta")}, "compito": C,
+                       "pc": pc, "drive": dr}, fh, ensure_ascii=False)
+        with SDK:   # la libreria e' del processo dell'ora: il ponte intanto non la usa
+            p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=ambiente_figlio(), stdin=subprocess.DEVNULL,
+                                 stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
+                                 creationflags=0x00004000 | NOFIN)
+            av(f"scorta {ora['nome']}: processo a parte (pid {p.pid})")
+            try:
+                codice = p.wait(timeout=secondi_max)
+            except subprocess.TimeoutExpired:
+                p.kill()
+                try:
+                    p.wait(60)
+                except subprocess.TimeoutExpired:
+                    pass
+                codice = f"fermato dopo {round(secondi_max / 60)} minuti"
+        x = None
+        try:
+            x = json.load(open(risultato, encoding="utf-8"))
+        except (OSError, ValueError):
+            pass
+        for nome in ("avanzamento.txt", "guasto_memoria.txt"):
+            f = os.path.join(d, "uscita", nome)
+            if os.path.exists(f) and 0 < os.path.getsize(f) < 2e6:
+                shutil.copy2(f, os.path.join(dr, "processo_" + nome))
+        return codice, x
+
+    def perche_chiudere():
+        if time.time() > t_fine - 900:
+            return "il ponte chiude"
+        if compito_nuovo_su_drive():
+            return "su Drive c'e' un compito nuovo"
+        return None
+
+    def gb_liberi():
+        try:
+            return shutil.disk_usage(base).free / 1e9
+        except OSError:
+            return 999.0
+
+    sc.giro(cfg, lancia, lambda ore, k: _manda_parte(base, ud, ore, k, posti, nome_c),
+            lambda o: _cartella_mb(os.path.join(base, o, "minuti")),
+            lambda o: scrivi_json("scorta.json", dict(o, pc=PC, versione=VERSIONE, cartella_pc=base)), av,
+            perche_chiudere=perche_chiudere, gb_liberi=gb_liberi, gia=gia, prima=prima)
+    # Qwen sulle carte, poi catena.json: tutto quello che serve per misurare (ora, candidati, giudizio, verita')
+    ore_x = []
+    for o in cfg.get("ore") or []:
+        try:
+            ore_x.append(json.load(open(os.path.join(ud, o["nome"], "ora.json"), encoding="utf-8")))
+        except (OSError, ValueError):
+            pass
+    try:
+        giudizi, perche = _qwen_sulla_catena(sc, cat, base, ore_x)
+    except Exception as ex:   # noqa: BLE001
+        giudizi, perche = None, f"{type(ex).__name__}: {str(ex)[:300]}"
+        av(traceback.format_exc()[-1500:])
+    fin = sc.catena_finale(ore_x, giudizi, perche, cat)
+    scrivi_json("catena.json", dict(fin, versione=VERSIONE, pc=PC))
+    av(f"scorta: fatta. Qwen: {perche}, {fin['carte_giudicate']} carte giudicate; catena.json scritto")
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
@@ -2006,7 +2193,9 @@ if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "pezzi_vlm.jso
     except Exception as ex:   # noqa: BLE001
         av(f"carte dai pezzi: {type(ex).__name__}: {str(ex)[:300]}")
         av(traceback.format_exc()[-1500:])
-if PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "vlm.py")):
+# 0.18.0: con scorta.json Qwen parte alla fine della scorta, sulle carte della notte (lavoro_scorta), non qui
+if (PC.upper() == "COMPUTERONE" and os.path.exists(os.path.join(C, "vlm.py"))
+        and not os.path.exists(os.path.join(C, "scorta.json"))):
     try:
         parti_qwen()
     except Exception as ex:   # noqa: BLE001
@@ -2019,7 +2208,8 @@ for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_
                                ("dimezza.json", "dimezza_fatto.txt", lavoro_dimezza),   # 0.11.0
                                ("movimento.json", "movimento_fatto.txt", lavoro_movimento),   # 0.12.0
                                ("allunga.json", "allunga_fatto.txt", lavoro_allunga),   # 0.13.0
-                               ("pilota.json", "pilota_fatto.txt", lavoro_pilota)):   # 0.14.0
+                               ("pilota.json", "pilota_fatto.txt", lavoro_pilota),   # 0.14.0
+                               ("scorta.json", "scorta_fatto.txt", lavoro_scorta)):   # 0.18.0
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001

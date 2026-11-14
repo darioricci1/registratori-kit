@@ -37,6 +37,28 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Ponte 0.18.0 (compito p2p_ponte35, pronto il 14/11 mattina e NON mandato, zip nello scratchpad della sessione:
+  `compito35/compito.zip` col suo LEGGIMI.txt): la **scorta serale** e la **catena dell'ora con Qwen**.
+  - Si prepara con `python3 prepara_scorta.py <video.json> <stato_nvr.json> <elenco.tsv.gz> <cartella dei giri>
+    <eventi_corrette.json> scorta.json --lancio AAAA-MM-GG` (sola lettura: op=video leggero del sito kit-rifiuti, op=stato
+    di questo sito, l'elenco di ArchiveData, i giri di Guarda e op=evento delle clip corrette da Dario per i suoi riquadri).
+    Il 14/11: 153 ore positive con 165 abbandoni sicuri ancora sul registratore (68 kit), di cui 96 nella catena (47 kit;
+    28 mai viste, 59 gia' nella prova grande e 9 nella pilota: campo `vista`), e 67 negative degli stessi kit e
+    telecamere. Fuori: CONFERIMENTI, casi limite, «no» di Dario; la parte cieca, le telecamere senza zona e gli EX
+    fanno solo la scorta.
+  - Nel compito: `scorta.json` (niente `pilota.json`, `lungo.json`, `pezzi_vlm.json`), `scorta.py`, `scorta_lavoro.py`,
+    `b_tavolino.py`, `vlm.py` 0.5.0, `vlm_giudica.py`, oltre a quello di sempre. Il ponte fa scorta.json una volta sola
+    (segno `scorta_fatto.txt`), solo dalle 19 alle 7 (`finestra`), al massimo 11 ore di lavoro, un processo per ora:
+    miniature dei minuti e 90 s a piena risoluzione di ogni abbandono (A); per le ore della catena «insieme», i pezzi di
+    ~100 s dei primi 3 candidati e le carte prima/dopo come nel compito 34 (B). Tetti: 1.000 MB per kit, 30 GB in
+    tutto, 15 GB liberi sul disco. Video e miniature restano sul PC (`~/kr_lavori/scorta/p2p_ponte35`); su Drive le
+    miniature in zip da al massimo 180 MB nei segnaposto `scorta35_1.zip`... (li crea Dario, insieme a
+    `risultato_p2p_ponte35.zip`), nel risultato solo json e immagini piccole (~100-120 MB). Alla fine Qwen giudica le
+    carte (domanda v3, `giudizi_Qwen3-VL-4B-Instruct_v3_c35.json`) e `uscita/catena.json` mette insieme ore, candidati,
+    verita' (`vero`, `tocca_vero`, `altro_noto`) e giudizio di Qwen, con i conti prima e dopo Qwen.
+  - Stima: ~10 ore di registratore e ~1 ora di Qwen, ~23-24 GB dai registratori (al massimo 1 GB per kit), ~24 GB sul PC.
+  - Prove: `prova_scorta.py` (funzioni pure, il giro con la finestra e i tetti, un'ora col registratore finto, il ponte
+    vero con i processi a parte e un Qwen finto).
 - Ponte 0.16.0 (compito p2p_ponte33, mandato al COMPUTERONE il 13/11 alle 12:50): il secondo passaggio della prova
   grande. `prepara_secondo.py` fa `secondo.json` (138 pezzi da 2-3 minuti intorno ai primi 3 candidati «insieme» di
   ogni ora, una telecamera, dalle ore piu' vecchie), che va nel compito come `lungo.json` «leggero»: scarico a piena
