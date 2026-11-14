@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.29.0 (14/11/2026) - chi non è entrato vede solo la schermata d'ingresso a tutto schermo, non la pagina vuota. -->
 <!-- version: 2.28.0 (10/11/2026) - sotto ogni kit con un ODM la riga dell'ODM (numero, aperto il, tipo, note); «non è l'host» diventa
      «spento o senza rete» (Dario).
      2.27.0 - la colonna «Alimentazione» (solare, 220 V, batteria, dalla colonna BATT dell'anagrafica),
@@ -154,9 +155,22 @@ h2 { font-size:16px; margin:18px 0 6px }
 .filtroCol .tr-pastiglia button { padding:0 4px }
 th:focus-within { z-index:5 }
 #grande img { max-width:95vw; max-height:90vh; cursor:zoom-out }
+.schermo-entra{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--sfondo);color:var(--testo);padding:16px}
+.schermo-entra[hidden]{display:none}
+.riquadro-entra{max-width:420px;width:100%;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.riquadro-entra h1{font-size:26px;margin:0}
+.riquadro-entra p{margin:0;opacity:.75}
+.riquadro-entra .grande{font-size:18px;min-height:48px;padding:10px 28px}
 </style>
 </head>
 <body>
+<div id="schermo-entra" class="schermo-entra" hidden>
+  <div class="riquadro-entra">
+    <h1>Registrazioni dei kit</h1>
+    <p>Lo stato dei registratori dei kit di Alma Sicurezza.</p>
+    <button type="button" class="primo grande" onclick="location.href='/api/entra'">Entra con Alma</button>
+  </div>
+</div>
 <header>
   <h1>Registrazioni dei kit</h1>
   <span id="chi" class="tenue"></span>
@@ -621,7 +635,12 @@ async function carica() {
   }
   const r = await fetch("/api/p2p?op=stato");
   const d = await r.json().catch(() => ({}));
-  if (d.entra || r.status === 401) { $("#entra").hidden = false; $("#chi").textContent = "entra con Alma per vedere i kit"; return; }
+  if (d.entra || r.status === 401) {
+    // 2.29.0 (Dario: «che senso ha farmi vedere senza entrare... metti uno schermo totale, pagina di login»): chi non e'
+    // entrato vede solo la schermata d'ingresso, a tutto schermo
+    $("#schermo-entra").hidden = false; return;
+  }
+
   if (!d.kit) return;
   dati = d; costruisci(d);
   GIORNI_SCALA = Math.max(2, Math.round((new Date() - new Date(DAL + "T00:00:00")) / 864e5) + 1);
