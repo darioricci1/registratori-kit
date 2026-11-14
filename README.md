@@ -17,6 +17,10 @@ quello che serve per continuare senza la conversazione di prima.
     nitidezza di Kit_Rifiuti (`analisi/nitidezza_telecamere.py` di kit-rifiuti-programma) più le note a occhio. Il file
     `dati/telecamere_da_sistemare.json` lo rifà `python3 dati/telecamere_da_sistemare.py` (le note a occhio nuove vanno in
     `OCCHIO_IN_PIU`) e lo serve `op=sistemare` di `api/p2p.js` dietro l'accesso (`includeFiles` in `vercel.json`).
+  - Dal 14/11 (2.31.0) anche «Schemi delle ore»: per ogni kit installato il gruppo (si spegne di giorno e riparte al
+    tramonto, solare che si spegne di notte, una telecamera sola...), la causa probabile e cosa fare, dalle ore registrate e
+    dall'ANAGRAFICA KIT. Il file `dati/schemi_ore.json` lo rifà `python3 dati/schemi_ore.py <cartella> --scarica <chiave>`
+    (sola lettura) e lo serve `op=schemi`; il ragionamento e la riga per kit in `analisi-ore-registrazione-2026-11-14.md`.
   - `api/p2p.js`: la coda e i dati (Neon, database Alma, schema `nvr_remoto`: richieste, registratori, camera,
     camera_storia, archivio, anagrafica, pc). Il PC entra col biglietto Google dell'account di servizio di Alma
     (aud https://mappakit.alma/nvr-remoto), la pagina con la sessione dell'accesso unico (o un token RMS valido).

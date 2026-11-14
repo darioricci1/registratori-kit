@@ -1,5 +1,5 @@
 {
   "functions": {
-    "api/p2p.js": { "includeFiles": "dati/telecamere_da_sistemare.json" }
+    "api/p2p.js": { "includeFiles": "dati/*.json" }
   }
 }

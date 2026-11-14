@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.13.0 (14/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.14.0 (14/11/2026)
+// 1.14.0: op=schemi, gli schemi delle ore per kit (dati/schemi_ore.json, fatto da dati/schemi_ore.py) dietro l'accesso.
 // 1.13.0: op=sistemare, l'elenco delle telecamere sfocate o coperte (dati/telecamere_da_sistemare.json, fatto da
 //         dati/telecamere_da_sistemare.py) servito dietro l'accesso: nomi di kit e comuni non stanno in public/.
 // 1.12.0: l'anagrafica tiene anche come è alimentato il kit (colonna BATT: «42Ah + solare 140W», «alimentato 220v», «42ah»).
@@ -47,6 +48,7 @@ const ACCOUNT = "account-di-servizio@almasicurezza-479911.iam.gserviceaccount.co
 const RE_UID = /^[A-Z0-9]{20}$/;
 let pronto = null;
 let sistemare = null;   // 1.13.0: il json si legge una volta per processo
+let schemi = null;      // 1.14.0: idem
 
 function db() {
   const url = process.env.ALMA_DATABASE_URL || process.env.ALMA_POSTGRES_URL;
@@ -249,6 +251,10 @@ export default async function handler(req, res) {
     if (op === "sistemare") {   // 1.13.0: niente database, il file viaggia con la funzione (includeFiles in vercel.json)
       if (!sistemare) sistemare = JSON.parse(readFileSync(new URL("../dati/telecamere_da_sistemare.json", import.meta.url), "utf8"));
       return res.json(sistemare);
+    }
+    if (op === "schemi") {   // 1.14.0: come op=sistemare, il file viaggia con la funzione
+      if (!schemi) schemi = JSON.parse(readFileSync(new URL("../dati/schemi_ore.json", import.meta.url), "utf8"));
+      return res.json(schemi);
     }
     if (op === "ore") {   // 1.9.0: le ore di ogni giorno, una volta per apertura di pagina
       return res.json(await sql`select uid, canale, ore from nvr_remoto.archivio where ore is not null`);

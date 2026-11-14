@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.31.0 (14/11/2026) - «Schemi delle ore» (Dario: «capire qual è il problema del kit, se è ricorrente: se funziona
+     sempre solo a mezzogiorno, o sempre solo di notte»): per ogni kit installato il gruppo (A si spegne di giorno e riparte al
+     tramonto, B solare, C ripartito, D fermo, E giorni interi, F sparsi, G una telecamera sola, H senza ore, M senza
+     registratore, N non risponde), lo schema, la causa probabile, la certezza e cosa fare, e il giorno per giorno; dal file
+     dati/schemi_ore.json (dati/schemi_ore.py, op=schemi). Il ragionamento: analisi-ore-registrazione-2026-11-14.md. -->
 <!-- version: 2.30.0 (14/11/2026) - «Telecamere da sistemare» (Dario: «mi fai in registratori kit anche un elenco di queste?»):
      le telecamere sfocate, morbide o coperte da un palo o da rami, dalla misura di nitidezza di Kit_Rifiuti e dalle note a
      occhio (op=sistemare), prima le viste a occhio; per ognuna la foto dell'ultimo giro, se c'è. -->
@@ -158,6 +163,16 @@ h2 { font-size:16px; margin:18px 0 6px }
 .filtroCol .tr-pastiglia button { padding:0 4px }
 th:focus-within { z-index:5 }
 #grande img { max-width:95vw; max-height:90vh; cursor:zoom-out }
+/* 2.31.0: il giorno per giorno di un kit, un quadretto per giorno */
+.giorni { display:flex; gap:1px; flex-wrap:nowrap } .giorni i { display:block; width:5px; height:14px; border-radius:1px; background:var(--bordo) }
+.giorni i.v { background:var(--verde) } .giorni i.g { background:var(--arancio) } .giorni i.r { background:var(--rosso) }
+@media (max-width:700px) {
+  #schemi col:nth-child(3), #schemi col:nth-child(6), #schemi col:nth-child(7), #schemi tr > :nth-child(3), #schemi tr > :nth-child(6), #schemi tr > :nth-child(7) { display:none }
+  #schemi col:nth-child(1) { width:12% !important } #schemi col:nth-child(2) { width:20% !important } #schemi col:nth-child(4) { width:22% !important }
+  #schemi col:nth-child(5) { width:24% !important } #schemi col:nth-child(8) { width:22% !important }
+  .giorni i { width:3px }
+  #schemi td, #schemi th { font-size:13px; padding:4px 3px }
+}
 /* 2.30.0: al telefono la tabella delle telecamere da sistemare tiene le colonne che servono per decidere */
 @media (max-width:700px) {
   #sistemare col:nth-child(5), #sistemare col:nth-child(7), #sistemare col:nth-child(8), #sistemare col:nth-child(9),
@@ -193,6 +208,7 @@ th:focus-within { z-index:5 }
   <button id="giro" title="Mette in coda tutti i registratori: il PC dell'ufficio li controlla uno alla volta">Ricontrolla tutti</button>
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
+  <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami): prima quelle viste a occhio, poi quelle segnalate solo dalla misura di nitidezza sui video di Kit_Rifiuti">Telecamere da sistemare</button>
 </header>
 <div class="conti" id="conti"></div>
@@ -200,6 +216,18 @@ th:focus-within { z-index:5 }
   <div id="sezNonTorna" hidden>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:19%"><col style="width:6%"><col style="width:24%"><col style="width:26%"><col style="width:7%"><col style="width:8%"><col style="width:10%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th><th data-chiave="odm_n">ODM</th><th data-chiave="odm_ap_ord" data-verso="giu">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezSchemi" hidden>
+  <h2><span id="titolo-schemi" title="">Schemi delle ore</span> <button data-scarica="schemi" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
+  <table id="schemi"><colgroup><col style="width:5%"><col style="width:11%"><col style="width:7%"><col style="width:13%"><col style="width:20%"><col style="width:21%"><col style="width:7%"><col style="width:16%"></colgroup><thead><tr>
+    <th data-chiave="kit">Kit</th><th data-chiave="comune">Comune</th>
+    <th data-chiave="alim" title="Dalla colonna BATT dell'ANAGRAFICA KIT: batteria (42Ah senza pannello: si ricarica dalla pubblica illuminazione), solare, 220V, Townet">Alim.</th>
+    <th data-chiave="gruppo" title="A si spegne di giorno e riparte al tramonto; B solare che si spegne di notte o per giorni; C spento per giorni e poi ripartito; D fermo adesso; E spento a giorni interi; F buchi sparsi; G il kit registra ma una telecamera no; H risponde ma senza ore; M nessun registratore in UVMS; N non risponde (ore mai lette); OK sempre verde">Gruppo</th>
+    <th data-ordina="no" title="Un quadretto per giorno dal 27/10 (o dal giorno dopo l'installazione), oggi a destra: verde il kit ha registrato quasi tutto il giorno, giallo una parte, rosso niente o quasi. Sotto lo schema delle ore">Schema</th>
+    <th data-chiave="causa">Causa probabile</th>
+    <th data-chiave="certezza" title="alta: lo schema e l'anagrafica dicono la stessa cosa; media: lo schema è chiaro, la causa si deduce; bassa: dalle ore non si distingue">Certezza</th>
+    <th data-chiave="fare">Cosa fare</th>
+  </tr></thead><tbody></tbody></table>
   </div>
   <div id="sezSistemare" hidden>
   <h2><span id="titolo-sistemare" title="">Telecamere da sistemare</span> <button data-scarica="sistemare" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
@@ -455,7 +483,7 @@ const odmCol = (n) => { const l = odmLista(n); return { n: l.map((x) => x.n).fil
 const aaaammgg = (d) => { const m = String(d || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? m[3] + m[2].padStart(2, "0") + m[1].padStart(2, "0") : ""; };
 const odmDi = (k) => odmCol(parseInt(k.kit, 10)).n;
 /** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
-const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {} };
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {}, schemi: {} };
 const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
@@ -464,6 +492,7 @@ const VALORE = {
   nonTorna: { tipo: (x) => x.tipo, kit: (x) => String(x.kit || "-"), dove: (x) => x.dove || "-", odm_n: (x) => x.odm_n || "-", odm_tipo: (x) => x.odm_tipo || "-" },
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
+  schemi: { kit: (x) => String(x.kit), comune: (x) => x.comune || "-", alim: (x) => x.alim || "-", gruppo: (x) => x.gruppo || "-", causa: (x) => x.causa || "-", certezza: (x) => x.certezza || "-", fare: (x) => x.fare || "-" },
   sistemare: { kit: (x) => x.kit || "-", comune: (x) => x.comune || "-", cam: (x) => "CH " + String(x.cam).padStart(2, "0"), problema: (x) => x.problema || "-", certezza: (x) => x.certezza || "-", cosa_fare: (x) => x.cosa_fare || "-", haFoto: (x) => (x.foto ? "c'è" : "no") },
 };
 /** 2.30.0: le telecamere da sistemare (op=sistemare, letto una volta) con la foto dell'ultimo giro, se c'è. */
@@ -500,6 +529,43 @@ function disegnaSistemare() {
     <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
     <td class="num">${x.rango}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
     <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}">Vedi foto</button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
+}
+/** 2.31.0: gli schemi delle ore per kit (op=schemi, letto una volta): prima i gruppi con un problema, gli OK in fondo. */
+let SCHEMI = null, ordSc = { chiave: "gruppo", verso: 1 };
+const gruppoOrd = (x) => (x.gruppo === "OK" ? "Z" : x.gruppo || "Y");
+function righeSchemi() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const l = ((SCHEMI || {}).righe || []).filter((x) => parole.every((p) => norm(x.kit + " " + x.comune + " " + x.indirizzo + " " + x.gruppo + " " + x.schema).includes(p)) && passaFiltri("schemi", x));
+  const v = (x) => (ordSc.chiave === "gruppo" ? gruppoOrd(x) : ordSc.chiave === "kit" ? x.kit : x[ordSc.chiave]);
+  return l.sort((a, b) => { const p = v(a), q = v(b);
+    const c = typeof p === "number" && typeof q === "number" ? p - q : String(p ?? "").localeCompare(String(q ?? ""), "it", { numeric: true });
+    return c * ordSc.verso || gruppoOrd(a).localeCompare(gruppoOrd(b)) || a.kit - b.kit; });
+}
+/** Il giorno per giorno: una cifra per giorno (0 niente, A tutto il giorno) diventa un quadretto colorato. */
+function quadretti(x) {
+  if (!x.tl) return "";
+  const d0 = new Date((x.dal || DAL) + "T12:00:00");
+  return `<span class="giorni">${[...x.tl].map((c, i) => { const p = c === "A" ? 10 : Number(c), g = new Date(d0.getTime() + i * 864e5);
+    return `<i class="${p >= 9 ? "v" : p >= 4 ? "g" : "r"}" title="${g.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit" })}: ${p * 10}% delle ore${i === x.tl.length - 1 ? " (giorno letto a metà)" : ""}"></i>`; }).join("")}</span>`;
+}
+function disegnaSchemi() {
+  if (!SCHEMI) return;
+  preparaFiltri("schemi", SCHEMI.righe);
+  const l = righeSchemi(), male = SCHEMI.righe.filter((x) => x.gruppo !== "OK").length;
+  const cls = (x) => (/^[ABDEN]\./.test(x.gruppo) ? "no" : x.gruppo === "OK" ? "ok" : "mezzo");
+  $("#vediSchemi").textContent = `Schemi delle ore (${male})`;
+  $("#titolo-schemi").textContent = `Schemi delle ore (${l.length} kit)`;
+  $("#titolo-schemi").title = `Kit installati nell'ANAGRAFICA KIT, ore registrate dal 27/10 (dal giorno dopo l'installazione) lette dagli archivi dei registratori. Elenco ${SCHEMI.versione || ""} del ${SCHEMI.fatto_il ? giornoIt(SCHEMI.fatto_il) : "?"}: si rifà con dati/schemi_ore.py.`;
+  $("#schemi tbody").innerHTML = l.map((x) => `<tr><td class="num">${x.kit}</td><td title="${esc(x.indirizzo)}">${esc(x.comune)}</td><td title="${esc(x.batt)}">${esc(x.alim)}</td>
+    <td class="${cls(x)}">${esc(x.gruppo)}</td>
+    <td>${quadretti(x)}<div style="font-size:13px" title="${esc(x.telecamere || "")}">${esc(x.schema === "-" ? "" : x.schema)}${x.telecamere && x.gruppo[0] !== "G" ? `<div class="tenue">${esc(x.telecamere)}</div>` : ""}</div></td>
+    <td style="font-size:13px">${esc(x.causa)}${x.sfocate ? `<div class="tenue" title="Dalle telecamere da sistemare">sfocate: ${esc(x.sfocate)}</div>` : ""}</td>
+    <td>${esc(x.certezza)}</td><td style="font-size:13px">${esc(x.fare)}${x.odm ? `<div class="tenue">${x.odm} ODM dal 20/10</div>` : ""}</td></tr>`).join("");
+}
+async function caricaSchemi() {
+  if (SCHEMI) return disegnaSchemi();
+  try { const r = await fetch("/api/p2p?op=schemi"); if (r.ok) SCHEMI = await r.json(); } catch { /* resta il bottone senza conto */ }
+  disegnaSchemi();
 }
 async function caricaSistemare() {
   if (SISTEMARE) return disegnaSistemare();
@@ -692,6 +758,7 @@ function disegna() {
   $("#fermi thead").hidden = !kitFermi.length;
   $("#senzaOdm thead").hidden = !senzaOdm().length;
   disegnaSistemare();
+  disegnaSchemi();
 }
 let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {
@@ -714,10 +781,12 @@ async function carica() {
   GIORNI_SCALA = Math.max(2, Math.round((new Date() - new Date(DAL + "T00:00:00")) / 864e5) + 1);
   disegna();
   caricaSistemare();
+  caricaSchemi();
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#senzaOdm"), { alCambio: (chiave, verso) => { ordSo = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#schemi"), { alCambio: (chiave, verso) => { ordSc = { chiave, verso }; disegnaSchemi(); } });
 tabellaOrdinabile($("#sistemare"), { alCambio: (chiave, verso) => { ordSi = { chiave, verso }; disegnaSistemare(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
 $("#cerca").addEventListener("input", disegna);
@@ -728,6 +797,11 @@ $("#entra").addEventListener("click", () => { location.href = "/api/entra"; });
 $("#vediNonTorna").addEventListener("click", () => {
   const sez = $("#sezNonTorna"), apri = sez.hidden;
   sez.hidden = !apri; $("#vediNonTorna").setAttribute("aria-pressed", String(apri));
+  if (apri) $("main").scrollTop = 0;
+});
+$("#vediSchemi").addEventListener("click", () => {
+  const sez = $("#sezSchemi"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediSchemi").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
 });
 $("#vediSistemare").addEventListener("click", () => {
@@ -756,6 +830,10 @@ document.addEventListener("click", (e) => {
     scaricaXlsx("Telecamere dei kit", ["Comune o cliente", "Kit", "Canale", "Adesso", "Dal", "Al", ...giorni.map(giornoIt)],
       righe.map((r) => { const m = new Map(r.perc); return [r.gruppo, r.nome, "CH " + String(r.canale + 1).padStart(2, "0"), r.adesso, r.primo, r.ultimo, ...giorni.map((g) => (m.has(g) ? m.get(g) : ""))]; }), [24, 30, 8, 22, 16, 16, ...giorni.map(() => 6)]);
   }
+  if (b.dataset.scarica === "schemi")
+    scaricaXlsx("Schemi delle ore", ["Kit", "Comune", "Indirizzo", "Alimentazione", "BATT", "Telecamere", "Gruppo", "Schema", "Telecamere da sole", "Causa probabile", "Certezza", "Cosa fare", "% ore", "% di giorno", "% di notte", "Giorni sul disco", "Dal", "Giorno per giorno"],
+      righeSchemi().map((x) => [x.kit, x.comune, x.indirizzo, x.alim, x.batt, x.tlc, x.gruppo, x.schema, x.telecamere, x.causa, x.certezza, x.fare, x.K ?? "", x.Kd ?? "", x.Kn ?? "", x.disco ?? "", x.dal || "", x.tl || ""]),
+      [7, 22, 30, 10, 18, 9, 30, 50, 40, 50, 10, 40, 7, 7, 7, 8, 11, 22]);
   if (b.dataset.scarica === "sistemare")
     scaricaXlsx("Telecamere da sistemare", ["Kit", "Comune", "Telecamera", "Problema", "Certezza", "Cosa fare", "Nota", "Nitidezza", "Rango", "Giro", "Giorno"],
       righeSistemare().map((x) => [x.kit, x.comune, x.cam, x.problema, x.certezza, x.cosa_fare, x.nota, x.nitidezza, x.rango, x.giro, x.giorno]), [36, 26, 10, 22, 14, 20, 50, 10, 8, 22, 12]);
