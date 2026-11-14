@@ -223,3 +223,19 @@ l'una, 21 minuti in tutto.
 
 Prossimi passi: mettere Qwen dentro la catena dell'ora (miniature -> insieme -> pezzi a piena risoluzione -> Qwen), la
 domanda v3 col fotogramma «dopo» preso quando la scena e' ferma, e riprovare sulle ore nuove della scorta serale.
+
+## 9. La scorta serale con Qwen (compito 35, notte fra 13 e 14/11)
+
+Il compito era fatto per lavorare dalle 19 alle 7 su 168 ore (scaricare l'ora intera dal registratore, analizzarla con
+«insieme», giudicare i primi candidati con Qwen3-VL 4B). È partito solo alle 5:58, a fine finestra, e alle 7 si è fermato
+da solo: **15 ore fatte su 168** (8 positive e 7 negative, 1,1 GB scaricati), 153 restano in «non_fatte». Nessuna delle
+ore «mai viste» è stata fatta.
+
+| | ore | abbandono primo | fra i primi | primo dopo Qwen | falsi all'ora | falsi all'ora dopo Qwen |
+|---|---|---|---|---|---|---|
+| positive | 8 | 3 | 4 | 4 | 1,62 | 1,25 |
+| negative | 7 | - | - | - | 0,57 | 0,29 |
+
+Qwen ha giudicato 21 carte: un abbandono in più al primo posto, e circa un falso su quattro tolto nelle ore positive, uno
+su due nelle negative. Sono 15 ore: i numeri dicono la direzione, non quanto vale il metodo. Il resto delle 168 ore va
+fatto in una notte intera (19-7), col compito caricato prima delle 19.
