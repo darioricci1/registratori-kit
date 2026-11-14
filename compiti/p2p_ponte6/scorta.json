@@ -6,8 +6,8 @@
  "lancio": "2026-11-14",
  "solo_minuti": true,
  "finestra": {
-  "dalle": "19:00",
-  "alle": "07:00"
+  "dalle": "00:00",
+  "alle": "23:59"
  },
  "limiti": {
   "ore_di_lavoro": 11.0,
