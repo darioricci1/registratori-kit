@@ -1,6 +1,8 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.3.1 (15/11/2026) - KIT577 Vergato cam 2 non e' sfocata (foto dal vivo a fuoco): inquadratura sbagliata, sul
+  posto. Nuovo problema «inquadratura sbagliata».
 VERSION 0.3.0 (15/11/2026) - anche le telecamere da riposizionare (Dario, 15/11: «lo vorrei in registratore»): dal campo
   «spostare» di kit-rifiuti-web/dati/kit.json (pagina_kit.py 0.3.0, contato dagli abbandoni giudicati): l'abbandono
   avviene lontano, sul margine dell'immagine o dietro un cassonetto. Problema «da spostare: ...», cosa fare «sul posto:
@@ -30,14 +32,15 @@ import os
 import re
 import sys
 
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 QUI = os.path.dirname(os.path.abspath(__file__))
 INGRESSO = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "analisi", "nitidezza_telecamere.json")
 USCITA = os.path.join(QUI, "telecamere_da_sistemare.json")
 
 # le note a occhio che non sono (ancora) nel json della misura: (numero del kit, EX, telecamera) -> nota
 OCCHIO_IN_PIU = {
-    (577, False, 2): "sfocata (20° posto della misura)",
+    # 0.3.1: la prova del 15/11 (compito fuoco2) ha mostrato la foto dal vivo a fuoco: e' l'inquadratura, non il fuoco
+    (577, False, 2): "a fuoco nella foto dal vivo del 15/11: inquadra solo la strada, non i cassonetti, va girata sul posto",
 }
 
 FORSE_INDICE, FORSE_KIT = -1.5, -1.0
@@ -53,6 +56,8 @@ def classifica(nota):
     n = nota.lower()
     if re.search(r"a posto|non si giudica", n):
         return None
+    if re.search(r"va girata|inquadra solo", n):   # 0.3.1
+        return "inquadratura sbagliata", "sul posto"
     if re.search(r"palo|staffa", n):
         return "ostruzione: palo o staffa", "sul posto"
     if re.search(r"rami|foglie davanti", n):
@@ -139,6 +144,7 @@ def prova():
     assert classifica("ombre di foglie su asfalto: sembra a posto") is None
     assert classifica("solo asfalto uniforme: non si giudica") is None
     assert classifica("strisce un po' morbide, scena povera: incerta")[0] == "da verificare"
+    assert classifica("a fuoco: inquadra solo la strada, va girata sul posto") == ("inquadratura sbagliata", "sul posto")
     assert numero_kit("EX KIT206 Via Marega") == (206, True) and numero_kit("KIT 452 Via Foggia") == (452, False)
 
 

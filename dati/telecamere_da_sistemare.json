@@ -1,5 +1,5 @@
 {
- "versione": "0.3.0",
+ "versione": "0.3.1",
  "misura_versione": "0.1.0",
  "telecamere_misurate": 525,
  "criterio": "visto a occhio con un problema; poi le «si» della misura; poi le «forse» con indice <= -1.5 e almeno 1.0 sotto le altre del kit; in fondo i falsi allarmi visti a occhio; dopo le viste a occhio, le telecamere da riposizionare contate dagli abbandoni giudicati",
@@ -125,10 +125,10 @@
    "misura": "si",
    "giro": "f64774472e-rfdetr",
    "giorno": "2026-09-26",
-   "problema": "sfocata",
+   "problema": "inquadratura sbagliata",
    "certezza": "visto a occhio",
-   "cosa_fare": "fuoco da remoto: prova",
-   "nota": "sfocata (20° posto della misura)",
+   "cosa_fare": "sul posto",
+   "nota": "a fuoco nella foto dal vivo del 15/11: inquadra solo la strada, non i cassonetti, va girata sul posto",
    "gruppo": 1
   },
   {
