@@ -239,3 +239,34 @@ carte. Tutti e due si sono chiusi quando su Drive è arrivato un compito nuovo. 
 Qwen toglie un terzo dei falsi nelle ore con l'abbandono e metà in quelle senza, e mette un abbandono in più al primo posto;
 nelle due ore mai viste non aiuta. Sono 29 ore: la direzione, non il valore del metodo. Le 190 ore rimaste partono la sera
 del 14/11 col compito 35b (finestra 19-07); i suoi conti vanno nella sezione 10.
+
+## 10. La scorta 35b (notte fra il 14 e il 15/11) e i conti uniti
+
+Il compito 35b è girato sul COMPUTERONE dalle 20:46 alle 02:37, nella finestra 19-07: 175 ore scaricate su 190
+(13 GB), più Qwen su 193 carte, con l'etichetta c35b. Le 15 ore mancanti sono 6 già cancellate dal registratore, 5 di
+registratori non raggiunti e 4 saltate per il tetto di 1.000 MB per kit. La catena gira solo sulle ore di validazione
+e su quelle mai viste: le ore di sviluppo e quelle «cieche» si scaricano e basta. Alle 05:51 il compito si è chiuso,
+quando su Drive è arrivato un compito nuovo, ma a quel punto aveva già finito.
+
+| 35b | ore | abbandono primo | fra i primi | primo dopo Qwen | fra i primi dopo Qwen | falsi all'ora | falsi all'ora dopo Qwen |
+|---|---|---|---|---|---|---|---|
+| positive | 72 | 28 | 41 | 33 | 39 | 1,50 | 0,54 |
+| negative | 53 | - | - | - | - | 0,85 | 0,28 |
+| positive mai viste | 21 | 3 | 10 | 4 | 9 | 1,52 | 0,62 |
+
+Uniti a quelli del compito 36 (sezione 9):
+
+| 36 + 35b | ore | abbandono primo | fra i primi | primo dopo Qwen | falsi all'ora | falsi all'ora dopo Qwen |
+|---|---|---|---|---|---|---|
+| positive | 85 | 31 (36%) | 46 (54%) | 37 (44%) | 1,56 | 0,65 |
+| negative | 67 | - | - | - | 0,79 | 0,28 |
+| positive mai viste | 23 | 3 | 11 | 4 | 1,61 | 0,74 |
+
+Quello che dicono 175 ore:
+- **Qwen toglie quasi due falsi su tre** (da 1,56 a 0,65 all'ora nelle ore con l'abbandono, da 0,79 a 0,28 in quelle
+  senza) e porta 6 abbandoni in più al primo posto. Costa poco: 2 abbandoni escono dai primi (41 diventano 39).
+- **Un'ora vuota dà allarme poco**: 0,28 falsi all'ora dopo Qwen, cioè uno ogni tre ore e mezza circa.
+- **Nelle ore mai viste** il metodo va peggio: abbandono al primo posto 4 su 23, fra i primi 11. Le ore mai viste
+  sono quelle che contano per l'uso vero, e sono ancora poche.
+- Con l'abbandono al primo posto nel 44% delle ore e fra i primi nel 54%, il metodo serve a ordinare le ore per chi
+  guarda, ma non basta per trovarle da solo.
