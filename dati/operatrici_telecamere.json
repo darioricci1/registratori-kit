@@ -1,0 +1,302 @@
+{
+ "nota": "kit dove in clip dello stesso giorno, entro 3 ore da una clip completa, l'operatrice ha salvato meno telecamere (analisi/telecamere-mancanti-2026-11-16.md di kit-rifiuti-programma, elenco del NAS del 10/11)",
+ "kit": [
+  {
+   "comune": "BUSTO ARSIZIO",
+   "kit": "KIT667 Via Correggio (Parcheggio)",
+   "eventi": 268,
+   "di_solito": 3,
+   "pochi": 84,
+   "sul_sito": 14,
+   "entro_3_ore": 13,
+   "canale_mancante": {
+    "02": 84,
+    "00": 1
+   },
+   "dal": "2026-09-09",
+   "al": "2026-10-18",
+   "registratori": ""
+  },
+  {
+   "comune": "REGGIO EMILIA",
+   "kit": "KIT411 Via Don Giovanni Alai",
+   "eventi": 940,
+   "di_solito": 3,
+   "pochi": 14,
+   "sul_sito": 1,
+   "entro_3_ore": 12,
+   "canale_mancante": {
+    "02": 11,
+    "01": 8,
+    "00": 4
+   },
+   "dal": "2026-07-23",
+   "al": "2026-10-18",
+   "registratori": ""
+  },
+  {
+   "comune": "LERICI",
+   "kit": "KIT252 Via Spinola",
+   "eventi": 348,
+   "di_solito": 3,
+   "pochi": 10,
+   "sul_sito": 1,
+   "entro_3_ore": 8,
+   "canale_mancante": {
+    "02": 10,
+    "01": 1
+   },
+   "dal": "2026-07-31",
+   "al": "2026-10-18",
+   "registratori": ""
+  },
+  {
+   "comune": "FORTE DEI MARMI",
+   "kit": "KIT066 AlmaOne P.za Donatori di organi (Mercato Coperto)",
+   "eventi": 484,
+   "di_solito": 2,
+   "pochi": 483,
+   "sul_sito": 56,
+   "entro_3_ore": 5,
+   "canale_mancante": {
+    "03": 483,
+    "01": 1,
+    "00": 1
+   },
+   "dal": "2026-07-26",
+   "al": "2026-11-02",
+   "registratori": ""
+  },
+  {
+   "comune": "BOLZANO",
+   "kit": "EXKIT384 Via Duca D’Aosta",
+   "eventi": 275,
+   "di_solito": 3,
+   "pochi": 7,
+   "sul_sito": 2,
+   "entro_3_ore": 5,
+   "canale_mancante": {
+    "03": 3,
+    "01": 3,
+    "00": 1
+   },
+   "dal": "2026-08-02",
+   "al": "2026-09-07",
+   "registratori": ""
+  },
+  {
+   "comune": "SAN PIETRO IN CASALE",
+   "kit": "EX KIT557 Via Rubizzano",
+   "eventi": 239,
+   "di_solito": 3,
+   "pochi": 5,
+   "sul_sito": 2,
+   "entro_3_ore": 3,
+   "canale_mancante": {
+    "02": 5,
+    "00": 2,
+    "01": 1
+   },
+   "dal": "2026-08-26",
+   "al": "2026-10-11",
+   "registratori": ""
+  },
+  {
+   "comune": "FOGGIA",
+   "kit": "KIT266 - Via Tiro a Segno",
+   "eventi": 748,
+   "di_solito": 3,
+   "pochi": 3,
+   "sul_sito": 0,
+   "entro_3_ore": 3,
+   "canale_mancante": {
+    "00": 3,
+    "01": 2
+   },
+   "dal": "2026-08-12",
+   "al": "2026-10-20",
+   "registratori": ""
+  },
+  {
+   "comune": "REGGIO EMILIA",
+   "kit": "KIT566 Via Paradisi",
+   "eventi": 1005,
+   "di_solito": 4,
+   "pochi": 3,
+   "sul_sito": 1,
+   "entro_3_ore": 3,
+   "canale_mancante": {
+    "02": 3,
+    "01": 2,
+    "03": 2,
+    "00": 1
+   },
+   "dal": "2026-08-09",
+   "al": "2026-09-20",
+   "registratori": ""
+  },
+  {
+   "comune": "BOLZANO",
+   "kit": "KIT375 Via Deeg ang Via Agruzzo Grutzenweg",
+   "eventi": 159,
+   "di_solito": 3,
+   "pochi": 3,
+   "sul_sito": 1,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "00": 2,
+    "01": 1,
+    "02": 1
+   },
+   "dal": "2026-08-01",
+   "al": "2026-09-18",
+   "registratori": ""
+  },
+  {
+   "comune": "SAN BONIFACIO",
+   "kit": "KIT261 Piazza Camillo Cavour intersez. Via Ceola",
+   "eventi": 393,
+   "di_solito": 3,
+   "pochi": 3,
+   "sul_sito": 0,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "02": 2,
+    "00": 1,
+    "01": 1
+   },
+   "dal": "2026-08-01",
+   "al": "2026-09-18",
+   "registratori": ""
+  },
+  {
+   "comune": "AMAGA-Abbiategrasso",
+   "kit": "EX KIT304 Via Silvio Pellico",
+   "eventi": 5,
+   "di_solito": 3,
+   "pochi": 2,
+   "sul_sito": 0,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "00": 2,
+    "01": 2
+   },
+   "dal": "2026-08-19",
+   "al": "2026-08-19",
+   "registratori": "CH3 ferma dal 29/10"
+  },
+  {
+   "comune": "BOLZANO",
+   "kit": "KIT324 Via Cologna",
+   "eventi": 257,
+   "di_solito": 3,
+   "pochi": 2,
+   "sul_sito": 2,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "01": 2,
+    "00": 1,
+    "02": 1
+   },
+   "dal": "2026-10-18",
+   "al": "2026-10-19",
+   "registratori": ""
+  },
+  {
+   "comune": "FOGGIA",
+   "kit": "KIT377 - Via Silvio Pellico",
+   "eventi": 165,
+   "di_solito": 3,
+   "pochi": 2,
+   "sul_sito": 0,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "00": 2,
+    "02": 1,
+    "01": 1
+   },
+   "dal": "2026-07-28",
+   "al": "2026-10-03",
+   "registratori": ""
+  },
+  {
+   "comune": "MERANO",
+   "kit": "KIT321 Via Mainardo 46",
+   "eventi": 180,
+   "di_solito": 4,
+   "pochi": 2,
+   "sul_sito": 1,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "02": 2,
+    "03": 2
+   },
+   "dal": "2026-09-04",
+   "al": "2026-09-20",
+   "registratori": ""
+  },
+  {
+   "comune": "MERANO",
+   "kit": "KIT518 Via Wolkenstein sottopassaggio",
+   "eventi": 109,
+   "di_solito": 4,
+   "pochi": 2,
+   "sul_sito": 1,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "02": 2,
+    "03": 2,
+    "01": 1
+   },
+   "dal": "2026-08-21",
+   "al": "2026-09-07",
+   "registratori": ""
+  },
+  {
+   "comune": "PIANORO",
+   "kit": "KIT445 SS65 della Futa - Rastignano (Ristorante Al Cavallino Bianco)",
+   "eventi": 90,
+   "di_solito": 3,
+   "pochi": 2,
+   "sul_sito": 0,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "00": 2
+   },
+   "dal": "2026-07-31",
+   "al": "2026-07-31",
+   "registratori": ""
+  },
+  {
+   "comune": "SASSUOLO",
+   "kit": "KIT556 Via S.Giacomo",
+   "eventi": 168,
+   "di_solito": 3,
+   "pochi": 2,
+   "sul_sito": 2,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "00": 2
+   },
+   "dal": "2026-08-19",
+   "al": "2026-10-09",
+   "registratori": ""
+  },
+  {
+   "comune": "VIPITENO",
+   "kit": "KIT639 Via Johann Kofler 29",
+   "eventi": 18,
+   "di_solito": 4,
+   "pochi": 2,
+   "sul_sito": 1,
+   "entro_3_ore": 2,
+   "canale_mancante": {
+    "02": 2,
+    "03": 2
+   },
+   "dal": "2026-10-04",
+   "al": "2026-10-25",
+   "registratori": ""
+  }
+ ]
+}

@@ -1,6 +1,10 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.4.0 (16/11/2026) - anche le telecamere che le operatrici non salvano (Dario, 16/11: «aggiungilo a quello che
+  stiamo facendo nella pagina registratori kit»): da dati/operatrici_telecamere.json (kit con almeno 2 clip a cui manca
+  una telecamera mentre lo stesso giorno, entro 3 ore, c'e' una clip completa), una riga per kit e telecamera che manca;
+  problema «non salvata dall'operatrice», cosa fare «dire alle operatrici», gruppo 1.7. Fuori i kit EX come sempre.
 VERSION 0.3.1 (15/11/2026) - KIT577 Vergato cam 2 non e' sfocata (foto dal vivo a fuoco): inquadratura sbagliata, sul
   posto. Nuovo problema «inquadratura sbagliata».
 VERSION 0.3.0 (15/11/2026) - anche le telecamere da riposizionare (Dario, 15/11: «lo vorrei in registratore»): dal campo
@@ -32,7 +36,7 @@ import os
 import re
 import sys
 
-VERSION = "0.3.1"
+VERSION = "0.4.0"
 QUI = os.path.dirname(os.path.abspath(__file__))
 INGRESSO = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "analisi", "nitidezza_telecamere.json")
 USCITA = os.path.join(QUI, "telecamere_da_sistemare.json")
@@ -132,7 +136,35 @@ def da_spostare(kit):
     return sorted(righe, key=lambda r: -r["quota"])
 
 
+OPERATRICI = os.path.join(QUI, "operatrici_telecamere.json")
+
+
+def da_operatrici(kit):
+    """Funzione pura (0.4.0): una riga per kit e telecamera che le operatrici non salvano (almeno 2 clip con una clip
+    completa vicina), senza i kit EX. La telecamera e' il canale + 1."""
+    righe = []
+    for k in kit:
+        n, ex = numero_kit(k.get("kit") or "")
+        if ex or (k.get("entro_3_ore") or 0) < 2:
+            continue
+        for canale, quante in sorted((k.get("canale_mancante") or {}).items(), key=lambda t: -t[1]):
+            if quante < 2:
+                continue
+            righe.append({"kit": k["kit"], "kit_n": n, "ex": False, "comune": k.get("comune") or "", "cam": int(canale) + 1,
+                          "nitidezza": "-", "rispetto_kit": None, "rango": None, "misura": "-", "giro": "-",
+                          "giorno": k.get("al") or "", "problema": "non salvata dall'operatrice",
+                          "certezza": "contato sul NAS", "cosa_fare": "dire alle operatrici",
+                          "nota": f"{quante} clip su {k.get('eventi')} senza questa telecamera, dal {k.get('dal')} al {k.get('al')}; "
+                                  f"in {k.get('entro_3_ore')} c'era una clip completa lo stesso giorno, entro 3 ore",
+                          "gruppo": 1.7, "quota": round(quante / max(1, k.get("eventi") or 1), 3)})
+    return sorted(righe, key=lambda r: -int(r["nota"].split()[0]))
+
+
 def prova():
+    o = da_operatrici([{"kit": "KIT667 Via Correggio", "comune": "BUSTO", "eventi": 268, "entro_3_ore": 13,
+                        "canale_mancante": {"02": 84, "00": 1}, "dal": "2026-09-09", "al": "2026-10-18"},
+                       {"kit": "EX KIT263 Via X", "comune": "P", "eventi": 90, "entro_3_ore": 5, "canale_mancante": {"01": 80}}])
+    assert len(o) == 1 and o[0]["cam"] == 3 and o[0]["problema"] == "non salvata dall'operatrice" and o[0]["gruppo"] == 1.7
     r = da_spostare([{"kit": "KIT1 Via A", "comune": "X", "giudicate": [{"evento": "a", "giorno": "2026-11-01"}],
                       "spostare": [{"motivo": "dietro", "cam": "2", "quanti": 3, "su": 5, "testo": "t"}]},
                      {"kit": "EX KIT2", "comune": "Y", "spostare": [{"motivo": "bordo", "cam": "1", "quanti": 4, "su": 4, "testo": "u"}]}])
@@ -158,6 +190,10 @@ if __name__ == "__main__":
         with open(KIT_JSON, encoding="utf-8") as f:
             e["telecamere"] = sorted(e["telecamere"] + da_spostare(json.load(f)["kit"]), key=lambda r: r["gruppo"])
         e["criterio"] += "; dopo le viste a occhio, le telecamere da riposizionare contate dagli abbandoni giudicati"
+    if os.path.exists(OPERATRICI):   # 0.4.0
+        with open(OPERATRICI, encoding="utf-8") as f:
+            e["telecamere"] = sorted(e["telecamere"] + da_operatrici(json.load(f)["kit"]), key=lambda r: r["gruppo"])
+        e["criterio"] += "; poi le telecamere che le operatrici non salvano (contate sul NAS)"
     with open(usc, "w", encoding="utf-8") as f:
         json.dump(e, f, ensure_ascii=False, indent=1)
     from collections import Counter
