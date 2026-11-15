@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.32.0 (15/11/2026) - fra le «Telecamere da sistemare» anche quelle da riposizionare (Dario, 15/11: «lo vorrei in
+     registratore»): abbandoni lontani, sul margine o dietro i cassonetti, contati dagli abbandoni giudicati (dati/
+     telecamere_da_sistemare.py 0.3.0), certezza «contato dagli abbandoni», cosa fare «sul posto: riposizionare». -->
 <!-- version: 2.31.0 (14/11/2026) - «Schemi delle ore» (Dario: «capire qual è il problema del kit, se è ricorrente: se funziona
      sempre solo a mezzogiorno, o sempre solo di notte»): per ogni kit installato il gruppo (A si spegne di giorno e riparte al
      tramonto, B solare, C ripartito, D fermo, E giorni interi, F sparsi, G una telecamera sola, H senza ore, M senza
@@ -209,7 +212,7 @@ th:focus-within { z-index:5 }
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
   <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
-  <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami): prima quelle viste a occhio, poi quelle segnalate solo dalla misura di nitidezza sui video di Kit_Rifiuti">Telecamere da sistemare</button>
+  <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
 </header>
 <div class="conti" id="conti"></div>
 <main>
@@ -523,11 +526,11 @@ function disegnaSistemare() {
   const cls = (x) => (x.gruppo === 3 ? "tenue" : x.certezza === "visto a occhio" ? "no" : "mezzo");
   $("#vediSistemare").textContent = `Telecamere da sistemare (${vere.length})`;
   $("#titolo-sistemare").textContent = `Telecamere da sistemare (${l.filter((x) => x.gruppo < 3).length})`;
-  $("#titolo-sistemare").title = `Dalla misura di nitidezza ${SISTEMARE.misura_versione || ""} su ${SISTEMARE.telecamere_misurate || "?"} telecamere (video di giorno di Kit_Rifiuti) e dalle note a occhio: ${SISTEMARE.guardate_a_occhio || ""}. In fondo, in grigio, le guardate a occhio e risultate a posto o non giudicabili (falso allarme della misura). Elenco ${SISTEMARE.versione || ""}.`;
+  $("#titolo-sistemare").title = `Dalla misura di nitidezza ${SISTEMARE.misura_versione || ""} su ${SISTEMARE.telecamere_misurate || "?"} telecamere (video di giorno di Kit_Rifiuti) e dalle note a occhio: ${SISTEMARE.guardate_a_occhio || ""}. Dopo le viste a occhio, le telecamere da riposizionare, contate dagli abbandoni giudicati (passa sopra il problema per il perché). In fondo, in grigio, le guardate a occhio e risultate a posto o non giudicabili (falso allarme della misura). Elenco ${SISTEMARE.versione || ""}.`;
   $("#sistemare tbody").innerHTML = l.map((x) => `<tr${x.gruppo === 3 ? ' class="tenue"' : ""}><td>${esc(x.kit)}</td><td>${esc(x.comune)}</td><td class="num">CH ${String(x.cam).padStart(2, "0")}</td>
     <td class="${cls(x)}" title="${esc(x.nota)}">${esc(x.problema)}</td><td title="${esc(x.nota)}">${esc(x.certezza)}</td><td>${esc(x.cosa_fare)}</td>
     <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
-    <td class="num">${x.rango}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
+    <td class="num">${x.rango ?? "-"}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
     <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}">Vedi foto</button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
 }
 /** 2.31.0: gli schemi delle ore per kit (op=schemi, letto una volta): prima i gruppi con un problema, gli OK in fondo. */

@@ -1,6 +1,10 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.3.0 (15/11/2026) - anche le telecamere da riposizionare (Dario, 15/11: «lo vorrei in registratore»): dal campo
+  «spostare» di kit-rifiuti-web/dati/kit.json (pagina_kit.py 0.3.0, contato dagli abbandoni giudicati): l'abbandono
+  avviene lontano, sul margine dell'immagine o dietro un cassonetto. Problema «da spostare: ...», cosa fare «sul posto:
+  riposizionare», gruppo 1.5 (dopo le viste a occhio, prima della sola misura).
 VERSION 0.2.0 (14/11/2026) - fuori i kit «EX» (Dario): sono posizioni dove il kit non c'e' piu' (spostato altrove,
   nome nuovo); la telecamera si misura e si sistema nella posizione nuova.
 VERSION 0.1.0 (14/11/2026) - prima versione.
@@ -26,7 +30,7 @@ import os
 import re
 import sys
 
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 QUI = os.path.dirname(os.path.abspath(__file__))
 INGRESSO = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "analisi", "nitidezza_telecamere.json")
 USCITA = os.path.join(QUI, "telecamere_da_sistemare.json")
@@ -100,7 +104,34 @@ def elenco(misura):
     }
 
 
+KIT_JSON = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "kit-rifiuti-web", "dati", "kit.json")
+SPOSTARE = {"lontano": "da spostare: abbandoni lontani", "bordo": "da spostare: abbandoni sul margine",
+            "dietro": "da spostare: abbandoni dietro i cassonetti"}
+
+
+def da_spostare(kit):
+    """Funzione pura: le righe «da spostare» dai kit di kit.json (campo spostare), senza i kit EX."""
+    righe = []
+    for k in kit:
+        n, ex = numero_kit(k.get("kit") or "")
+        if ex or not k.get("spostare"):
+            continue
+        ultima = max(k.get("giudicate") or [{}], key=lambda c: (c.get("giorno") or "", c.get("ora") or 0))
+        for m in k["spostare"]:
+            righe.append({"kit": k["kit"], "kit_n": n, "ex": False, "comune": k.get("comune") or "", "cam": int(m["cam"]),
+                          "nitidezza": "-", "rispetto_kit": None, "rango": None, "misura": "-",
+                          "giro": ultima.get("evento") or "-", "giorno": ultima.get("giorno") or "",
+                          "problema": SPOSTARE.get(m["motivo"], "da spostare"), "certezza": "contato dagli abbandoni",
+                          "cosa_fare": "sul posto: riposizionare", "nota": m["testo"], "gruppo": 1.5,
+                          "quota": round(m["quanti"] / max(1, m["su"]), 2)})
+    return sorted(righe, key=lambda r: -r["quota"])
+
+
 def prova():
+    r = da_spostare([{"kit": "KIT1 Via A", "comune": "X", "giudicate": [{"evento": "a", "giorno": "2026-11-01"}],
+                      "spostare": [{"motivo": "dietro", "cam": "2", "quanti": 3, "su": 5, "testo": "t"}]},
+                     {"kit": "EX KIT2", "comune": "Y", "spostare": [{"motivo": "bordo", "cam": "1", "quanti": 4, "su": 4, "testo": "u"}]}])
+    assert len(r) == 1 and r[0]["cam"] == 2 and r[0]["problema"].endswith("dietro i cassonetti") and r[0]["gruppo"] == 1.5
     assert classifica("sfocata davvero (la c1 dello stesso kit e' nitida)") == ("sfocata", "fuoco da remoto: prova")
     assert classifica("morbida rispetto alla c1, probabile fuoco")[0] == "morbida"
     assert classifica("un palo/staffa a pochi cm dall'obiettivo, fuori fuoco: e' l'inquadratura, non il fuoco")[1] == "sul posto"
@@ -117,6 +148,10 @@ if __name__ == "__main__":
     usc = sys.argv[2] if len(sys.argv) > 2 else USCITA
     with open(ing, encoding="utf-8") as f:
         e = elenco(json.load(f))
+    if os.path.exists(KIT_JSON):   # 0.3.0
+        with open(KIT_JSON, encoding="utf-8") as f:
+            e["telecamere"] = sorted(e["telecamere"] + da_spostare(json.load(f)["kit"]), key=lambda r: r["gruppo"])
+        e["criterio"] += "; dopo le viste a occhio, le telecamere da riposizionare contate dagli abbandoni giudicati"
     with open(usc, "w", encoding="utf-8") as f:
         json.dump(e, f, ensure_ascii=False, indent=1)
     from collections import Counter
