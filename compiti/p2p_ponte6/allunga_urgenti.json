@@ -1,0 +1,941 @@
+{
+ "come": "le 39 clip tagliate o con l'oggetto gia' li' ancora entro 24 giorni (analisi/casi-limite-2026-11-16.md di kit-rifiuti-programma), dalla piu' vicina alla scadenza; 120 s prima e 180 s dopo; senza UID (il ponte li prende da op=registratori) e senza nomi delle cartelle",
+ "preparato_il": "2026-11-15 23:25",
+ "prima_s": 120,
+ "dopo_s": 180,
+ "eventi": [
+  {
+   "evento": "e2b2ed8537",
+   "kit": 611,
+   "giorno": "2026-10-24",
+   "ora_inizio_clip": "21:01:55",
+   "durata_clip": 92.24,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 92.08,
+    "1": 92.2,
+    "2": 92.24
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-17"
+  },
+  {
+   "evento": "c0d6cc1157",
+   "kit": 65,
+   "giorno": "2026-10-25",
+   "ora_inizio_clip": "11:13:16",
+   "durata_clip": 74.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 74.08,
+    "1": 72.88
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-18"
+  },
+  {
+   "evento": "80bc4ddb3a",
+   "kit": 235,
+   "giorno": "2026-10-25",
+   "ora_inizio_clip": "12:30:52",
+   "durata_clip": 35.4,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 35.04,
+    "1": 35.4,
+    "2": 35.32,
+    "3": 35.12
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-18"
+  },
+  {
+   "evento": "36fc71a30b",
+   "kit": 329,
+   "giorno": "2026-10-25",
+   "ora_inizio_clip": "14:28:20",
+   "durata_clip": 85.28,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 85.08,
+    "1": 85.28,
+    "2": 85.0
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-18"
+  },
+  {
+   "evento": "a9b09a0c59",
+   "kit": 203,
+   "giorno": "2026-10-25",
+   "ora_inizio_clip": "18:33:20",
+   "durata_clip": 69.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 69.08,
+    "1": 68.96
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-18"
+  },
+  {
+   "evento": "7cbd06347f",
+   "kit": 401,
+   "giorno": "2026-10-26",
+   "ora_inizio_clip": "09:05:39",
+   "durata_clip": 100.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 100.12,
+    "1": 100.12,
+    "2": 99.2
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-19"
+  },
+  {
+   "evento": "2fc7c132f7",
+   "kit": 235,
+   "giorno": "2026-10-26",
+   "ora_inizio_clip": "09:25:02",
+   "durata_clip": 22.04,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 21.92,
+    "1": 22.04,
+    "2": 21.88,
+    "3": 21.4
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-19"
+  },
+  {
+   "evento": "b3855af55e",
+   "kit": 312,
+   "giorno": "2026-10-26",
+   "ora_inizio_clip": "16:05:20",
+   "durata_clip": 64.12,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 64.08,
+    "1": 64.12
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-19"
+  },
+  {
+   "evento": "9f1da59d35",
+   "kit": 268,
+   "giorno": "2026-10-26",
+   "ora_inizio_clip": "16:08:11",
+   "durata_clip": 94.32,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 94.08,
+    "1": 94.32,
+    "2": 94.08
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-19"
+  },
+  {
+   "evento": "d61d42b8b3",
+   "kit": 632,
+   "giorno": "2026-10-26",
+   "ora_inizio_clip": "20:31:05",
+   "durata_clip": 55.11,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 55.08,
+    "1": 39.68
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "1920x1080",
+   "scade_il": "2026-11-19"
+  },
+  {
+   "evento": "2fe36f4fee",
+   "kit": 423,
+   "giorno": "2026-10-27",
+   "ora_inizio_clip": "16:16:58",
+   "durata_clip": 126.4,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 126.12,
+    "1": 126.08,
+    "2": 126.4
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-20"
+  },
+  {
+   "evento": "b6879bdad2",
+   "kit": 203,
+   "giorno": "2026-10-27",
+   "ora_inizio_clip": "18:37:20",
+   "durata_clip": 68.16,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 68.08,
+    "1": 68.16
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-20"
+  },
+  {
+   "evento": "9933dd88b9",
+   "kit": 501,
+   "giorno": "2026-10-27",
+   "ora_inizio_clip": "18:46:05",
+   "durata_clip": 40.08,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 40.08,
+    "1": 40.08,
+    "2": 40.08,
+    "3": 40.0
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-20"
+  },
+  {
+   "evento": "76b05c7054",
+   "kit": 492,
+   "giorno": "2026-10-27",
+   "ora_inizio_clip": "18:53:43",
+   "durata_clip": 87.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 87.08,
+    "1": 87.08,
+    "2": 87.08
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-20"
+  },
+  {
+   "evento": "2784f92c60",
+   "kit": 632,
+   "giorno": "2026-10-27",
+   "ora_inizio_clip": "20:45:50",
+   "durata_clip": 30.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 30.08,
+    "1": 30.08,
+    "2": 21.0
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "1920x1080",
+   "scade_il": "2026-11-20"
+  },
+  {
+   "evento": "0cc306c9b4",
+   "kit": 249,
+   "giorno": "2026-10-28",
+   "ora_inizio_clip": "06:33:38",
+   "durata_clip": 108.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 108.08,
+    "1": 108.08,
+    "2": 108.12
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-21"
+  },
+  {
+   "evento": "0650a50573",
+   "kit": 235,
+   "giorno": "2026-10-28",
+   "ora_inizio_clip": "11:59:15",
+   "durata_clip": 67.52,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 67.12,
+    "1": 67.52,
+    "2": 67.32,
+    "3": 67.24
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-21"
+  },
+  {
+   "evento": "295156bd78",
+   "kit": 515,
+   "giorno": "2026-10-28",
+   "ora_inizio_clip": "14:23:03",
+   "durata_clip": 100.0,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 99.16,
+    "1": 100.0,
+    "2": 98.92
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-21"
+  },
+  {
+   "evento": "3dbd5f3c30",
+   "kit": 355,
+   "giorno": "2026-10-29",
+   "ora_inizio_clip": "09:00:16",
+   "durata_clip": 3.72,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 3.72,
+    "1": 3.72,
+    "2": 3.12
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)",
+    "telecamere sotto 5 s: 1, 2, 3"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-22"
+  },
+  {
+   "evento": "14c6c5332e",
+   "kit": 279,
+   "giorno": "2026-10-29",
+   "ora_inizio_clip": "10:18:40",
+   "durata_clip": 71.0,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 70.08,
+    "1": 71.0,
+    "2": 70.2
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-22"
+  },
+  {
+   "evento": "1594fec555",
+   "kit": 66,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "09:17:27",
+   "durata_clip": 78.89,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 55.52,
+    "1": 56.8
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "1920x1080",
+   "scade_il": "2026-11-23"
+  },
+  {
+   "evento": "9b1a3c87fd",
+   "kit": 631,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "09:39:19",
+   "durata_clip": 53.08,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 53.08,
+    "1": 53.08,
+    "2": 52.84,
+    "3": 53.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2560x1440",
+   "scade_il": "2026-11-23"
+  },
+  {
+   "evento": "a3edf5c51c",
+   "kit": 383,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "17:08:38",
+   "durata_clip": 207.4,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 207.08,
+    "1": 207.4,
+    "2": 207.12
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-23"
+  },
+  {
+   "evento": "7b6ec17100",
+   "kit": 203,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "18:07:55",
+   "durata_clip": 74.16,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 74.08,
+    "1": 74.16
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-23"
+  },
+  {
+   "evento": "63e4766559",
+   "kit": 663,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "02:44:52",
+   "durata_clip": 70.08,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 70.08,
+    "1": 70.08,
+    "2": 70.0,
+    "3": 70.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "af5b14f250",
+   "kit": 445,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "10:21:21",
+   "durata_clip": 81.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 80.08,
+    "1": 81.08,
+    "2": 80.84
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "6da7a06860",
+   "kit": 423,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "10:30:09",
+   "durata_clip": 84.68,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 84.12,
+    "1": 84.0,
+    "2": 84.68
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "0d33979834",
+   "kit": 66,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "11:21:40",
+   "durata_clip": 59.11,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 42.56,
+    "1": 42.52
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "1920x1080",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "c4369625ac",
+   "kit": 631,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "17:05:31",
+   "durata_clip": 45.16,
+   "canali": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 45.08,
+    "1": 45.12,
+    "2": 44.84,
+    "3": 45.16
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2560x1440",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "1edf3a1ce2",
+   "kit": 520,
+   "giorno": "2026-10-31",
+   "ora_inizio_clip": "17:20:50",
+   "durata_clip": 60.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 60.08,
+    "1": 60.08,
+    "2": 59.64
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-24"
+  },
+  {
+   "evento": "0d066e13aa",
+   "kit": 666,
+   "giorno": "2026-11-02",
+   "ora_inizio_clip": "05:30:57",
+   "durata_clip": 84.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 84.08,
+    "1": 84.12,
+    "2": 84.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-26"
+  },
+  {
+   "evento": "ffdd3e2d32",
+   "kit": 520,
+   "giorno": "2026-11-02",
+   "ora_inizio_clip": "08:47:00",
+   "durata_clip": 40.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 40.08,
+    "1": 40.08,
+    "2": 39.72
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-26"
+  },
+  {
+   "evento": "c2b14c0947",
+   "kit": 262,
+   "giorno": "2026-11-02",
+   "ora_inizio_clip": "13:12:44",
+   "durata_clip": 57.48,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 57.12,
+    "1": 57.48,
+    "2": 57.12
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-26"
+  },
+  {
+   "evento": "92390ad397",
+   "kit": 312,
+   "giorno": "2026-11-02",
+   "ora_inizio_clip": "15:35:39",
+   "durata_clip": 61.08,
+   "canali": [
+    0,
+    1
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 61.08,
+    "1": 61.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-26"
+  },
+  {
+   "evento": "8725c0e6c0",
+   "kit": 576,
+   "giorno": "2026-11-03",
+   "ora_inizio_clip": "04:00:01",
+   "durata_clip": 80.12,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 80.12,
+    "1": 80.0,
+    "2": 80.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-27"
+  },
+  {
+   "evento": "bf86cebe64",
+   "kit": 654,
+   "giorno": "2026-11-03",
+   "ora_inizio_clip": "09:56:01",
+   "durata_clip": 122.08,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 122.08,
+    "1": 122.08,
+    "2": 122.08
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-27"
+  },
+  {
+   "evento": "c542505606",
+   "kit": 506,
+   "giorno": "2026-11-03",
+   "ora_inizio_clip": "23:14:03",
+   "durata_clip": 40.06,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 28.84,
+    "1": 28.16,
+    "2": 28.84
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "1920x1080",
+   "scade_il": "2026-11-27"
+  },
+  {
+   "evento": "6c371fc392",
+   "kit": 397,
+   "giorno": "2026-11-04",
+   "ora_inizio_clip": "11:36:01",
+   "durata_clip": 130.48,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 130.08,
+    "1": 130.48,
+    "2": 130.12
+   },
+   "motivi": [
+    "giudizio: niente trovato, oggetto gia' li' dall'inizio (abbandono prima della clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-28"
+  },
+  {
+   "evento": "da7bb4db70",
+   "kit": 383,
+   "giorno": "2026-11-04",
+   "ora_inizio_clip": "19:32:45",
+   "durata_clip": 288.16,
+   "canali": [
+    0,
+    1,
+    2
+   ],
+   "prima_s": 120,
+   "dopo_s": 180,
+   "durate_canali": {
+    "0": 288.08,
+    "1": 288.16,
+    "2": 288.08
+   },
+   "motivi": [
+    "giudizio: clip tagliata (l'abbandono esce dalla clip)"
+   ],
+   "misura": "2688x1520",
+   "scade_il": "2026-11-28"
+  }
+ ]
+}

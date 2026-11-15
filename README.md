@@ -49,6 +49,21 @@ quello che serve per continuare senza la conversazione di prima.
   hanno fatto (il 36, stesso scorta.json con la finestra 00-23:59, la mattina del 14/11 ne ha fatte 30, comprese le 15 del
   35). Codice uguale al 35 (ponte 0.18.0); finestra 19-07, stessi limiti; parti in `scorta35b_1..7.zip`, Qwen con
   l'etichetta c35b, risultato in `risultato_p2p_ponte35b.zip`. Un compito nuovo su compito.zip lo chiude entro 10 minuti.
+- Ponte 0.19.0 (compito p2p_ponte37, pronto il 16/11 notte e NON mandato, zip nello scratchpad della sessione): la coda
+  degli allungamenti di Kit_Rifiuti, che nessun ponte leggeva (la patch del 12/11 in kit-rifiuti-programma
+  `analisi/compiti/ponte-0.15.0/` non era mai stata applicata: le versioni 0.15-0.18 sono nate senza). Sul COMPUTERONE
+  legge `~/kr_lavori/allunga/coda.json` dopo 5 minuti, poi ogni ora e ogni 5 minuti finché c'è lavoro; davanti le
+  urgenti del compito (`allunga_urgenti.json`, le 39 clip tagliate dei casi limite ancora entro 24 giorni, dalla più
+  vicina alla scadenza, fuori dal tetto di 3 per kit al giorno). Scelta e registro in `coda_allunga.py` 0.2.0 (prove in
+  `prova_coda_allunga.py`, anche un giro intero col ponte vero e il lavoro finto); video in
+  `~/kr_lavori/allunga/coda/<evento>/`, che Kit_Rifiuti monta come «<id>-al». In uscita `allunga_coda.json` (il giro),
+  `allunga_coda_stato.json` (stati, urgenti fatte e no) e `allunga_diagnosi.json` (i risultati già sul disco e cosa ne
+  ha fatto Kit_Rifiuti: il compito 30 ne ha 8 «fatto/parziale» e Kit_Rifiuti ne risulta averne trattati 2). Il ponte
+  non si chiude più per un compito di un altro PC (`compito_mi_chiude`: prima ogni compito nuovo su Drive lo spegneva,
+  e i ponti 34-36 sono vissuti 698, 31 e 73 minuti) e `ponte.json` («durata_ore», 1-168) ne decide la vita: 72 ore.
+  Senza `vlm.py`, scorta e prove grandi: Qwen non parte. Serve il segnaposto `risultato_p2p_ponte37.zip`. Stima per le
+  39: 13-28 GB dai registratori (120 s prima e 180 dopo su 2-4 canali), poche ore. Dettagli e ordine:
+  kit-rifiuti-programma `analisi/allungamenti-2026-11-16.md`.
 - Ponte 0.18.0 (compito p2p_ponte35, pronto il 14/11 mattina e NON mandato, zip nello scratchpad della sessione:
   `compito35/compito.zip` col suo LEGGIMI.txt): la **scorta serale** e la **catena dell'ora con Qwen**.
   - Si prepara con `python3 prepara_scorta.py <video.json> <stato_nvr.json> <elenco.tsv.gz> <cartella dei giri>

@@ -31,7 +31,21 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
-version: 0.18.0 (14/11/2026): compito 35, scorta.json (prepara_scorta.py) una volta sola sul COMPUTERONE (segno
+version: 0.19.0 (16/11/2026): la coda degli allungamenti di Kit_Rifiuti, che nessun ponte leggeva (la patch del 12/11,
+  kit-rifiuti-programma analisi/compiti/ponte-0.15.0, non era mai entrata: le versioni 0.15-0.18 sono nate senza; il
+  16/11 sul COMPUTERONE c'erano 579 richieste in coda e un solo evento allungato sul sito). Sul COMPUTERONE il ponte
+  legge ~/kr_lavori/allunga/coda.json la prima volta 5 minuti dopo la partenza, poi ogni ora, e ogni 5 minuti finche'
+  c'e' lavoro; davanti alla coda le richieste urgenti del compito (allunga_urgenti.json: le clip tagliate trovate dai
+  giudizi, dalla piu' vicina alla scadenza, fuori dal tetto per kit). Sceglie coda_allunga.py 0.2.0 (finiti mai piu',
+  collegamenti falliti riprovati dopo un'ora fino a 3 volte, scaduti no, al massimo 6 eventi per giro e 3 per kit al
+  giorno) e allunga come allunga.json (lavoro_allunga, un processo per evento) in ~/kr_lavori/allunga/coda/<evento>/;
+  l'esito in ~/kr_lavori/allunga/coda/registro.json, il giro in uscita/allunga_coda.json e lo stato in
+  uscita/allunga_coda_stato.json (senza i nomi delle cartelle). Kit_Rifiuti sullo stesso PC monta i video e rianalizza
+  l'evento («<id>-al»). Il giro non parte mentre gira un lavoro una volta sola, ne' due giri insieme.
+  Due cose che tenevano spento il ponte: si chiudeva per qualunque compito nuovo su Drive, anche per un altro PC (il
+  16/11 compito.zip era «nas3» per il 2026-002): ora solo per un compito di questo PC (compito_mi_chiude); e durava
+  sempre 24 ore: ponte.json («durata_ore», da 1 a 168) la cambia.
+0.18.0 (14/11/2026): compito 35, scorta.json (prepara_scorta.py) una volta sola sul COMPUTERONE (segno
   scorta_fatto.txt), in un filo suo e solo nella finestra serale (di difetto 19-7, al massimo 11 ore di lavoro): per
   ogni abbandono sicuro ancora sul registratore le miniature dei minuti dell'ora e 90 s a piena risoluzione (scorta.py
   0.1.0, un processo per ora con scorta_lavoro.py; video e miniature restano in ~/kr_lavori/scorta/<compito>), per le
@@ -131,8 +145,24 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.18.0"
+VERSIONE = "p2p_ponte 0.19.0"
 DURATA = 24 * 3600
+
+
+def durata_da(cfg, difetto=DURATA):
+    """0.19.0: i secondi di vita del ponte da ponte.json ({"durata_ore": N}, da 1 a 168); il difetto se manca o e'
+    sbagliato. Funzione pura."""
+    try:
+        ore = float((cfg or {}).get("durata_ore"))
+    except (TypeError, ValueError, AttributeError):
+        return difetto
+    return int(min(168.0, max(1.0, ore)) * 3600) if ore == ore else difetto
+
+
+try:
+    DURATA = durata_da(json.load(open(os.path.join(C, "ponte.json"), encoding="utf-8")))
+except (OSError, ValueError):
+    pass
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
 SDK = threading.Lock()   # 0.11.0: la libreria Focus da un filo alla volta (il ponte e il dimezzamento)
 # 0.13.0: i Registratori chiusi restano qui fino alla fine del processo. Il compito 28 e' morto con 0xC0000005 fra due
@@ -716,13 +746,27 @@ def copia_risultati(risultati, u, t0, codice, leggero=False):
         fh.write(f"analisi finita con codice {codice} in {round(time.time() - t0)} s\n")
 
 
+def compito_mi_chiude(proprieta, nome_mio, pc):
+    """0.19.0: il compito.zip su Drive (le sue proprieta') chiude questo ponte? Solo se ha un altro nome ed e' per questo
+    PC (o per nessuno in particolare, come guarda_compito di Kit_Rifiuti): un compito per un altro PC non lo prende
+    nessuno qui, e chiudere il ponte per lui lo lasciava spento fino al compito dopo. Funzione pura."""
+    pr = proprieta or {}
+    nome = str(pr.get("compito") or "")
+    per = str(pr.get("pc") or "")
+    return bool(nome) and nome != nome_mio and (not per or per.upper() == str(pc).upper())
+
+
 def compito_nuovo_su_drive():
-    """0.6.0: su Drive c'e' un compito con un altro nome? Allora questo si chiude e lascia il posto."""
+    """0.6.0: su Drive c'e' un compito con un altro nome per questo PC? Allora questo si chiude e lascia il posto."""
     try:
         import drive_alma
         f = drive_alma.trova("compito.zip", (C, os.path.dirname(sys.executable)))
-        nome = ((f or {}).get("appProperties") or {}).get("compito", "")
-        return bool(nome) and nome != os.path.basename(os.path.normpath(C))
+        pr = (f or {}).get("appProperties") or {}
+        try:
+            pc = drive_alma.nome_del_pc()   # lo stesso nome con cui guarda_compito confronta «pc»
+        except Exception:   # noqa: BLE001
+            pc = PC
+        return compito_mi_chiude(pr, os.path.basename(os.path.normpath(C)), pc)
     except Exception:   # noqa: BLE001
         return False
 
@@ -1719,7 +1763,7 @@ def registratori_dal_sito():
         return json.loads(r.read().decode())
 
 
-def lavoro_allunga(cfg):
+def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
     """allunga.json (0.13.0): allunga.lavoro con un processo a parte per ogni evento (allunga_lavoro.py, lanciato come
     compito: exe --compito <cartella>), aspettato al massimo minuti_per_caso e poi ucciso. Mentre il processo lavora la
     libreria e' sua: il ponte tiene il lucchetto SDK e non prende prove. Se il processo dice che la libreria non si
@@ -1728,7 +1772,7 @@ def lavoro_allunga(cfg):
     fotogrammi, il json dell'evento e i registri del processo."""
     import allunga as al
     casa = os.path.expanduser("~")
-    base = os.path.join(casa, "kr_lavori", "allunga", os.path.basename(os.path.normpath(C)))
+    base = base or os.path.join(casa, "kr_lavori", "allunga", os.path.basename(os.path.normpath(C)))
     nel_filo = {"si": cfg.get("processo_a_parte") is False}
     elenco = {}
     for ev in cfg.get("eventi") or []:   # un evento senza UID: lo cerca nell'elenco della pagina (dal database UVMS)
@@ -1810,7 +1854,113 @@ def lavoro_allunga(cfg):
             nel_filo["si"] = True
         return codice, x
 
-    al.lavoro(cfg, lancia, lambda o: scrivi_json("allunga.json", dict(o, pc=PC, versione=VERSIONE)), av)
+    return al.lavoro(cfg, lancia, lambda o: scrivi_json(nome_uscita, dict(o, pc=PC, versione=VERSIONE)), av)
+
+
+# ------------------------------------------------------------------ 0.19.0: la coda degli allungamenti di Kit_Rifiuti
+CODA_VIVA = []   # il filo del giro della coda, finche' gira
+
+
+def _leggi(f, difetto):
+    try:
+        with open(f, encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return difetto
+
+
+def giro_coda_allunga(adesso=None):
+    """0.19.0: un giro della coda: le urgenti del compito (allunga_urgenti.json) e la coda di Kit_Rifiuti
+    (~/kr_lavori/allunga/coda.json) unite da coda_allunga.unisci, coda_allunga.da_fare sceglie, poi lavoro_allunga in
+    ~/kr_lavori/allunga/coda/<evento>/ e coda_allunga.segna nel registro. Ritorna quanti eventi ha fatto."""
+    import coda_allunga as ca
+    radice = os.path.join(os.path.expanduser("~"), "kr_lavori", "allunga")
+    coda = (_leggi(os.path.join(radice, "coda.json"), {}) or {}).get("eventi") or []
+    urgenti = (_leggi(os.path.join(C, "allunga_urgenti.json"), {}) or {}).get("eventi") or []
+    lista = ca.unisci(urgenti, coda)
+    base = os.path.join(radice, "coda")
+    os.makedirs(base, exist_ok=True)
+    f_reg = os.path.join(base, "registro.json")
+    registro = _leggi(f_reg, {})
+    scelti = ca.da_fare(lista, registro, adesso or time.time())
+    oggi = datetime.date.today()
+    try:
+        diagnosi_allunga()
+    except Exception as ex:   # noqa: BLE001 - la diagnosi non ferma il giro
+        av(f"diagnosi degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
+    if not scelti:
+        scrivi_json("allunga_coda_stato.json", dict(ca.riassunto(registro, lista, oggi), quando=time.strftime(
+            "%Y-%m-%d %H:%M:%S"), versione=VERSIONE, coda=ca.VERSIONE))
+        return 0
+    urg = {r["evento"] for r in scelti if r.get("urgente")}
+    av(f"coda degli allungamenti: {len(scelti)} eventi su {len(lista)} ({len(urgenti)} urgenti, {len(coda)} da "
+       f"Kit_Rifiuti): {', '.join(r['evento'] for r in scelti)}")
+    out = lavoro_allunga({"eventi": [ca.per_ponte(r) for r in scelti]}, base=base, nome_uscita="allunga_coda.json")
+    for x in (out or {}).get("eventi") or []:
+        ca.segna(registro, x, time.time(), urgente=x.get("evento") in urg)
+    tmp = f_reg + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(registro, fh, ensure_ascii=False, indent=1)
+    os.replace(tmp, f_reg)
+    scrivi_json("allunga_coda_stato.json", dict(ca.riassunto(registro, lista, oggi), quando=time.strftime(
+        "%Y-%m-%d %H:%M:%S"), versione=VERSIONE, coda=ca.VERSIONE))
+    av(f"coda degli allungamenti: fatto, {((out or {}).get('conti') or {}).get('in_tutto')}")
+    return len(scelti)
+
+
+CODA_FATTI = [0]   # quanti eventi ha fatto l'ultimo giro: se ne ha fatti, il prossimo parte dopo 5 minuti
+
+
+def diagnosi_allunga():
+    """0.19.0, sola lettura: cosa ne ha fatto Kit_Rifiuti dei risultati che ci sono gia' sul disco. Il 16/11 il compito
+    30 aveva 8 eventi «fatto»/«parziale» in ~/kr_lavori/allunga/p2p_ponte30, ma in allungati.json di Kit_Rifiuti ne
+    risultavano trattati 2 (uno montato, uno chiuso): qui per ogni cartella di risultati l'esito del ponte e cosa dice
+    allungati.json (azione, esito, tentativi), senza nomi; la cartella di lavoro di Kit_Rifiuti e' quella sopra
+    _compiti. In uscita/allunga_diagnosi.json."""
+    import coda_allunga as ca
+    radice = os.path.join(os.path.expanduser("~"), "kr_lavori", "allunga")
+    lavoro = os.path.dirname(os.path.dirname(os.path.abspath(C)))
+    trattati = _leggi(os.path.join(lavoro, "allungati.json"), {})
+    richieste = _leggi(os.path.join(lavoro, "allunga_richieste.json"), {})
+    risultati = []
+    for f in sorted(glob.glob(os.path.join(radice, "*", "*", "uscita", "allunga_evento.json"))):
+        x = _leggi(f, {}) or {}
+        d = os.path.dirname(os.path.dirname(f))
+        risultati.append({"cartella": os.path.basename(os.path.dirname(d)), "evento": os.path.basename(d),
+                          "esito": str(x.get("esito") or "")[:80], "in_corso": bool(x.get("in_corso")),
+                          "mb": (x.get("conti") or {}).get("mb"), "aggiornato": time.strftime(
+                              "%Y-%m-%d %H:%M", time.localtime(os.path.getmtime(f)))})
+    scrivi_json("allunga_diagnosi.json", dict(ca.diagnosi(risultati, trattati, richieste), versione=VERSIONE,
+                                              quando=time.strftime("%Y-%m-%d %H:%M:%S"), lavoro_trovato=os.path.isdir(
+                                                  os.path.join(lavoro, "_compiti"))))
+
+
+def parti_coda_allunga():
+    """0.19.0: il giro della coda in un filo suo (il ponte intanto risponde, tranne mentre la libreria e' presa), solo
+    sul COMPUTERONE, mai due insieme e mai mentre gira un lavoro una volta sola (pilota, allunga, scorta...: la
+    libreria e la banda sono loro). Ritorna True se e' partito."""
+    if PC.upper() != "COMPUTERONE" or any(t.is_alive() for t in CODA_VIVA) or misure_in_corso():
+        return False
+
+    def gira():
+        try:
+            CODA_FATTI[0] = giro_coda_allunga()
+        except Exception as ex:   # noqa: BLE001
+            CODA_FATTI[0] = 0
+            av(f"coda degli allungamenti: {type(ex).__name__}: {str(ex)[:300]}")
+            av(traceback.format_exc()[-1500:])
+    t = threading.Thread(target=gira, daemon=True)
+    t.start()
+    CODA_VIVA.append(t)
+    return True
+
+
+def prossimo_giro_coda(ultimo, adesso, fatti_prima, vivo):
+    """0.19.0: e' ora di un giro della coda? Mai mentre uno gira; dopo 5 minuti se l'ultimo ha fatto qualcosa (c'e'
+    altro lavoro), se no dopo un'ora. Funzione pura."""
+    if vivo:
+        return False
+    return adesso - ultimo >= (300 if fatti_prima else 3600)
 
 
 
@@ -2221,6 +2371,7 @@ f_lungo = os.path.join(C, "lungo.json")
 if PC.upper() == "COMPUTERONE" and os.path.exists(f_lungo) and not os.path.exists(os.path.join(U, "lungo_fatto.txt")):
     da_scaricare = json.load(open(f_lungo, encoding="utf-8"))
 ultimo_guardato = time.time()
+ultima_coda = time.time() - 3600 + 300   # 0.19.0: la coda degli allungamenti la prima volta dopo 5 minuti
 def finisci_lunghe():
     """0.16.0: le analisi finite si copiano in uscita (prima solo a scarichi finiti: con 138 pezzi si accumulavano)."""
     for a in list(analisi_lunghe):
@@ -2247,9 +2398,16 @@ while time.time() < t_fine:
         if not da_scaricare:
             open(os.path.join(U, "lungo_fatto.txt"), "w").write(time.strftime("%Y-%m-%d %H:%M"))
         continue
+    if prossimo_giro_coda(ultima_coda, time.time(), CODA_FATTI[0], any(t.is_alive() for t in CODA_VIVA)):   # 0.19.0
+        ultima_coda = time.time()
+        try:
+            parti_coda_allunga()
+        except Exception as ex:   # noqa: BLE001
+            av(f"coda degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
     if time.time() - ultimo_guardato > 600:
         ultimo_guardato = time.time()
-        if not analisi_lunghe and not misure_in_corso() and compito_nuovo_su_drive():
+        if not analisi_lunghe and not misure_in_corso() and not any(t.is_alive() for t in CODA_VIVA) \
+                and compito_nuovo_su_drive():
             av("su Drive c'e' un compito nuovo: chiudo questo")
             break
     if time.time() - ultimo_uvms > 24 * 3600:
@@ -2292,6 +2450,8 @@ while time.time() < t_fine:
         if errori in (1, 10, 100):
             av(f"pagina non raggiunta ({errori}): {type(ex).__name__}: {str(ex)[:200]}")
         time.sleep(min(300, 15 * errori))
+for t in CODA_VIVA:   # 0.19.0: un giro della coda in corso finisce (al massimo 3 ore)
+    t.join(3 * 3600)
 for t in MISURE_VIVE:   # 0.10.0: le misure (0.11.0: e il dimezzamento) finiscono prima di chiudere (al massimo 3 ore in piu')
     t.join(3 * 3600)
 av("fatto")

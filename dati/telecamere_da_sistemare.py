@@ -1,6 +1,8 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.4.1 (16/11/2026) - le telecamere che le operatrici non salvano escono da qui e vanno nella sezione «Errori di
+  salvataggio» (dati/errori_salvataggio.json, op=errori; Dario: «voglio una sezione di registratori kit»).
 VERSION 0.4.0 (16/11/2026) - anche le telecamere che le operatrici non salvano (Dario, 16/11: «aggiungilo a quello che
   stiamo facendo nella pagina registratori kit»): da dati/operatrici_telecamere.json (kit con almeno 2 clip a cui manca
   una telecamera mentre lo stesso giorno, entro 3 ore, c'e' una clip completa), una riga per kit e telecamera che manca;
@@ -36,7 +38,7 @@ import os
 import re
 import sys
 
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 QUI = os.path.dirname(os.path.abspath(__file__))
 INGRESSO = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "analisi", "nitidezza_telecamere.json")
 USCITA = os.path.join(QUI, "telecamere_da_sistemare.json")
@@ -190,7 +192,7 @@ if __name__ == "__main__":
         with open(KIT_JSON, encoding="utf-8") as f:
             e["telecamere"] = sorted(e["telecamere"] + da_spostare(json.load(f)["kit"]), key=lambda r: r["gruppo"])
         e["criterio"] += "; dopo le viste a occhio, le telecamere da riposizionare contate dagli abbandoni giudicati"
-    if os.path.exists(OPERATRICI):   # 0.4.0
+    if False and os.path.exists(OPERATRICI):   # 0.4.0; 0.4.1: nella sezione «Errori di salvataggio»
         with open(OPERATRICI, encoding="utf-8") as f:
             e["telecamere"] = sorted(e["telecamere"] + da_operatrici(json.load(f)["kit"]), key=lambda r: r["gruppo"])
         e["criterio"] += "; poi le telecamere che le operatrici non salvano (contate sul NAS)"

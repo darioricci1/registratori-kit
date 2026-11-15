@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.33.0 (16/11/2026) - sezione «Errori di salvataggio» (Dario: «voglio una sezione di registratori kit»): nomi dei
+     file sbagliati, telecamere non salvate dalle operatrici, segnalazioni da chiarire (op=errori, dati/errori_salvataggio.json),
+     tabella ordinabile e filtrabile, scaricabile in Excel. -->
 <!-- version: 2.32.0 (15/11/2026) - fra le «Telecamere da sistemare» anche quelle da riposizionare (Dario, 15/11: «lo vorrei in
      registratore»): abbandoni lontani, sul margine o dietro i cassonetti, contati dagli abbandoni giudicati (dati/
      telecamere_da_sistemare.py 0.3.0), certezza «contato dagli abbandoni», cosa fare «sul posto: riposizionare». -->
@@ -212,6 +215,7 @@ th:focus-within { z-index:5 }
   <button id="prova" title="La pagina delle prove a mano e di RMS">Prove singole</button>
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
   <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
+  <button id="vediErrori" aria-pressed="false" title="Apre gli errori nel salvataggio delle clip sul NAS: nomi dei file scritti diversi fra le telecamere della stessa clip, telecamere che le operatrici non salvano, segnalazioni da chiarire">Errori di salvataggio</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
 </header>
 <div class="conti" id="conti"></div>
@@ -230,6 +234,15 @@ th:focus-within { z-index:5 }
     <th data-chiave="causa">Causa probabile</th>
     <th data-chiave="certezza" title="alta: lo schema e l'anagrafica dicono la stessa cosa; media: lo schema è chiaro, la causa si deduce; bassa: dalle ore non si distingue">Certezza</th>
     <th data-chiave="fare">Cosa fare</th>
+  </tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezErrori" hidden>
+  <h2><span id="titolo-errori" title="">Errori di salvataggio</span> <button data-scarica="errori" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
+  <table id="errori"><colgroup><col style="width:14%"><col style="width:9%"><col style="width:13%"><col style="width:7%"><col style="width:39%"><col style="width:18%"></colgroup><thead><tr>
+    <th data-chiave="tipo" title="nome del file sbagliato (la clip si spezza: il programma 0.99.7 la ricuce), copia di Windows nella cartella, telecamera non salvata (lo stesso giorno, entro 3 ore, c'è una clip completa: la telecamera registrava), segnalazione da chiarire (dai casi limite)">Errore</th>
+    <th data-chiave="kit">Kit</th><th data-chiave="comune">Comune</th>
+    <th data-chiave="quante" title="Quante clip">Clip</th>
+    <th data-chiave="esempio">Esempio</th><th data-chiave="cosa_fare">Cosa fare</th>
   </tr></thead><tbody></tbody></table>
   </div>
   <div id="sezSistemare" hidden>
@@ -486,7 +499,7 @@ const odmCol = (n) => { const l = odmLista(n); return { n: l.map((x) => x.n).fil
 const aaaammgg = (d) => { const m = String(d || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? m[3] + m[2].padStart(2, "0") + m[1].padStart(2, "0") : ""; };
 const odmDi = (k) => odmCol(parseInt(k.kit, 10)).n;
 /** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
-const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {}, schemi: {} };
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {}, schemi: {}, errori: {} };
 const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
@@ -496,6 +509,7 @@ const VALORE = {
   fermi: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, odm_n: (k) => k.odm_n || "-", odm_tipo: (k) => k.odm_tipo || "-" },
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
   schemi: { kit: (x) => String(x.kit), comune: (x) => x.comune || "-", alim: (x) => x.alim || "-", gruppo: (x) => x.gruppo || "-", causa: (x) => x.causa || "-", certezza: (x) => x.certezza || "-", fare: (x) => x.fare || "-" },
+  errori: { tipo: (x) => x.tipo, comune: (x) => x.comune || "-", cosa_fare: (x) => x.cosa_fare || "-" },
   sistemare: { kit: (x) => x.kit || "-", comune: (x) => x.comune || "-", cam: (x) => "CH " + String(x.cam).padStart(2, "0"), problema: (x) => x.problema || "-", certezza: (x) => x.certezza || "-", cosa_fare: (x) => x.cosa_fare || "-", haFoto: (x) => (x.foto ? "c'è" : "no") },
 };
 /** 2.30.0: le telecamere da sistemare (op=sistemare, letto una volta) con la foto dell'ultimo giro, se c'è. */
@@ -564,6 +578,31 @@ function disegnaSchemi() {
     <td>${quadretti(x)}<div style="font-size:13px" title="${esc(x.telecamere || "")}">${esc(x.schema === "-" ? "" : x.schema)}${x.telecamere && x.gruppo[0] !== "G" ? `<div class="tenue">${esc(x.telecamere)}</div>` : ""}</div></td>
     <td style="font-size:13px">${esc(x.causa)}${x.sfocate ? `<div class="tenue" title="Dalle telecamere da sistemare">sfocate: ${esc(x.sfocate)}</div>` : ""}</td>
     <td>${esc(x.certezza)}</td><td style="font-size:13px">${esc(x.fare)}${x.odm ? `<div class="tenue">${x.odm} ODM dal 20/10</div>` : ""}</td></tr>`).join("");
+}
+/** 2.33.0: gli errori di salvataggio delle clip (op=errori, letto una volta). */
+let ERRORI = null, ordEr = { chiave: "tipo", verso: 1 };
+function righeErrori() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const l = ((ERRORI || {}).righe || []).filter((x) => parole.every((p) => norm(x.tipo + " " + x.kit + " " + x.comune + " " + x.esempio).includes(p)) && passaFiltri("errori", x));
+  const v = (x) => x[ordEr.chiave];
+  return l.sort((a, b) => { const p = v(a), q = v(b);
+    const c = typeof p === "number" && typeof q === "number" ? p - q : String(p ?? "").localeCompare(String(q ?? ""), "it", { numeric: true });
+    return c * ordEr.verso || b.quante - a.quante; });
+}
+function disegnaErrori() {
+  if (!ERRORI) return;
+  preparaFiltri("errori", ERRORI.righe);
+  const l = righeErrori();
+  $("#vediErrori").textContent = `Errori di salvataggio (${ERRORI.righe.length})`;
+  $("#titolo-errori").textContent = `Errori di salvataggio (${l.length})`;
+  $("#titolo-errori").title = `Dall'elenco del NAS (ArchiveData) e dalle clip giudicate: ${ERRORI.fonte || ""}. Elenco ${ERRORI.versione || ""} del ${ERRORI.fatto_il ? giornoIt(ERRORI.fatto_il) : "?"}.`;
+  const cls = (x) => (x.tipo === "telecamera non salvata" ? "no" : x.tipo === "segnalazione da chiarire" ? "mezzo" : "");
+  $("#errori tbody").innerHTML = l.map((x) => `<tr><td class="${cls(x)}">${esc(x.tipo)}</td><td>${esc(x.kit)}</td><td>${esc(x.comune)}</td><td class="num">${x.quante}</td><td style="font-size:13px">${esc(x.esempio)}</td><td style="font-size:13px">${esc(x.cosa_fare)}</td></tr>`).join("");
+}
+async function caricaErrori() {
+  if (ERRORI) return disegnaErrori();
+  try { const r = await fetch("/api/p2p?op=errori"); if (r.ok) ERRORI = await r.json(); } catch { /* resta il bottone senza conto */ }
+  disegnaErrori();
 }
 async function caricaSchemi() {
   if (SCHEMI) return disegnaSchemi();
@@ -762,6 +801,7 @@ function disegna() {
   $("#senzaOdm thead").hidden = !senzaOdm().length;
   disegnaSistemare();
   disegnaSchemi();
+  disegnaErrori();
 }
 let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {
@@ -785,10 +825,12 @@ async function carica() {
   disegna();
   caricaSistemare();
   caricaSchemi();
+  caricaErrori();   // 2.33.0
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#senzaOdm"), { alCambio: (chiave, verso) => { ordSo = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave, verso }; disegna(); } });
+tabellaOrdinabile($("#errori"), { alCambio: (chiave, verso) => { ordEr = { chiave, verso }; disegnaErrori(); } });
 tabellaOrdinabile($("#schemi"), { alCambio: (chiave, verso) => { ordSc = { chiave, verso }; disegnaSchemi(); } });
 tabellaOrdinabile($("#sistemare"), { alCambio: (chiave, verso) => { ordSi = { chiave, verso }; disegnaSistemare(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
@@ -806,6 +848,11 @@ $("#vediSchemi").addEventListener("click", () => {
   const sez = $("#sezSchemi"), apri = sez.hidden;
   sez.hidden = !apri; $("#vediSchemi").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
+});
+$("#vediErrori").addEventListener("click", () => {
+  const sez = $("#sezErrori"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediErrori").setAttribute("aria-pressed", String(apri));
+  if (apri) { $("main").scrollTop = 0; caricaErrori(); }
 });
 $("#vediSistemare").addEventListener("click", () => {
   const sez = $("#sezSistemare"), apri = sez.hidden;
@@ -837,6 +884,9 @@ document.addEventListener("click", (e) => {
     scaricaXlsx("Schemi delle ore", ["Kit", "Comune", "Indirizzo", "Alimentazione", "BATT", "Telecamere", "Gruppo", "Schema", "Telecamere da sole", "Causa probabile", "Certezza", "Cosa fare", "% ore", "% di giorno", "% di notte", "Giorni sul disco", "Dal", "Giorno per giorno"],
       righeSchemi().map((x) => [x.kit, x.comune, x.indirizzo, x.alim, x.batt, x.tlc, x.gruppo, x.schema, x.telecamere, x.causa, x.certezza, x.fare, x.K ?? "", x.Kd ?? "", x.Kn ?? "", x.disco ?? "", x.dal || "", x.tl || ""]),
       [7, 22, 30, 10, 18, 9, 30, 50, 40, 50, 10, 40, 7, 7, 7, 8, 11, 22]);
+  if (b.dataset.scarica === "errori")
+    scaricaXlsx("Errori di salvataggio", ["Errore", "Kit", "Comune", "Clip", "Esempio", "Cosa fare"],
+      righeErrori().map((x) => [x.tipo, x.kit, x.comune, x.quante, x.esempio, x.cosa_fare]), [26, 12, 24, 8, 70, 40]);
   if (b.dataset.scarica === "sistemare")
     scaricaXlsx("Telecamere da sistemare", ["Kit", "Comune", "Telecamera", "Problema", "Certezza", "Cosa fare", "Nota", "Nitidezza", "Rango", "Giro", "Giorno"],
       righeSistemare().map((x) => [x.kit, x.comune, x.cam, x.problema, x.certezza, x.cosa_fare, x.nota, x.nitidezza, x.rango, x.giro, x.giorno]), [36, 26, 10, 22, 14, 20, 50, 10, 8, 22, 12]);
