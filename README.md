@@ -49,6 +49,13 @@ quello che serve per continuare senza la conversazione di prima.
   hanno fatto (il 36, stesso scorta.json con la finestra 00-23:59, la mattina del 14/11 ne ha fatte 30, comprese le 15 del
   35). Codice uguale al 35 (ponte 0.18.0); finestra 19-07, stessi limiti; parti in `scorta35b_1..7.zip`, Qwen con
   l'etichetta c35b, risultato in `risultato_p2p_ponte35b.zip`. Un compito nuovo su compito.zip lo chiude entro 10 minuti.
+- Ponte 0.20.0 (compito p2p_ponte38, pronto il 16/11 mattina e NON mandato, zip nello scratchpad della sessione): si
+  allunga solo quello che chiede Dario (16/11: «sono semplicemente delle dubbie, che io se ritengo posso anche chiedere di
+  allungare»). Il giro della coda chiede a op=allungare del sito kit-rifiuti (biglietto dell'account di servizio, aud
+  https://mappakit.alma/kit-rifiuti) le clip dove Dario ha premuto «⤢ Allunga» in video.html, le scrive in
+  `~/kr_lavori/allunga/confermate.json` per Kit_Rifiuti, le scarica (coda_allunga 0.3.0, fuori dal tetto per kit) e
+  rimanda al sito quelle chiuse (POST op=allungare {fatti}). Non legge più `coda.json` (Kit_Rifiuti 0.99.10 la lascia
+  vuota: le 460 richieste automatiche del 16/11 non si scaricano) né `allunga_urgenti.json` (le 39 sono fatte).
 - Ponte 0.19.0 (compito p2p_ponte37, pronto il 16/11 notte e NON mandato, zip nello scratchpad della sessione): la coda
   degli allungamenti di Kit_Rifiuti, che nessun ponte leggeva (la patch del 12/11 in kit-rifiuti-programma
   `analisi/compiti/ponte-0.15.0/` non era mai stata applicata: le versioni 0.15-0.18 sono nate senza). Sul COMPUTERONE

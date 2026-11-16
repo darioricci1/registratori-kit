@@ -9,6 +9,14 @@ sceglie qui cosa fare (da_fare), allunga con allunga.py in ~/kr_lavori/allunga/c
 ~/kr_lavori/allunga/coda/registro.json (segna). Kit_Rifiuti guarda quelle cartelle e il registro: monta l'evento
 «<id>-al», o chiude la richiesta quando il ponte rinuncia.
 
+0.3.0 (16/11/2026): si allunga solo quello che chiede Dario (16/11 mattina: «facciamo che allunghi solo quelle che ti
+chiedo di allungare»; «sono semplicemente delle dubbie, che io se ritengo posso anche chiedere di allungare»). La lista
+non e' piu' la coda automatica di Kit_Rifiuti (coda.json, che dalla 0.99.10 resta vuota e qui non si legge: le 460 del
+16/11 non si scaricano) ne' allunga_urgenti.json (le 39 del 16/11 sono fatte): e' op=allungare del sito kit-rifiuti,
+letto col biglietto dell'account di servizio (dal_sito), cioe' le clip dove Dario ha premuto «⤢ Allunga» in
+video.html. Tutte fuori dal tetto per kit (le ha scelte lui, una per una). Alla fine del giro gli eventi finiti o
+rinunciati tornano al sito (fatti_per_sito, POST op=allungare {fatti}), cosi' non si chiedono piu'.
+
 0.2.0 (16/11/2026): le richieste urgenti del compito (allunga_urgenti.json, le clip tagliate trovate dai giudizi che il
 programma non aveva chiesto: 39 il 16/11, che scadono fra 2 e 13 giorni) vanno davanti a tutta la coda, dalla piu'
 vicina alla scadenza (unisci), e non contano nel tetto per kit: una clip che il registratore sovrascrive domani non
@@ -23,11 +31,12 @@ Regole (provate in prova_coda_allunga.py):
   - per giro al massimo PER_GIRO eventi e per kit al massimo PER_KIT_AL_GIORNO al giorno (la banda delle SIM dei kit:
     nessun tetto fisso deciso da Dario, ma i MB si scrivono); le urgenti fuori dal tetto per kit;
   - l'ordine: prima le urgenti per scadenza, poi la coda com'e' (Kit_Rifiuti la scrive gia' in ordine d'urgenza).
-version: 0.2.0 (16/11/2026); diagnosi per i risultati gia' sul disco che Kit_Rifiuti non ha montato
+version: 0.3.0 (16/11/2026); la lista dal sito (dal_sito, fatti_per_sito)
+0.2.0: diagnosi per i risultati gia' sul disco che Kit_Rifiuti non ha montato
 """
 import datetime
 
-VERSIONE = "0.2.0"
+VERSIONE = "0.3.0"
 TENTATIVI_MAX = 3
 RIPROVA_S = 3600
 PER_GIRO = 6
@@ -35,7 +44,7 @@ PER_KIT_AL_GIORNO = 3
 GIORNI_MAX = 24        # come ALLUNGA_GIORNI_MAX di archivio_kit: oltre, il registratore l'ha quasi certamente sovrascritto
 FINALI = ("fatto", "parziale", "non piu' sul registratore", "niente scaricato", "niente da chiedere",
           "registratore sconosciuto")
-DA_TOGLIERE = ("e", "da_pc", "chiesto_il", "urgente")   # per allunga.py e per l'uscita su Drive: niente nomi delle cartelle
+DA_TOGLIERE = ("e", "da_pc", "chiesto_il", "urgente", "chiesta_da", "chiesta_il", "canali_stimati")   # per allunga.py e per l'uscita su Drive: niente nomi delle cartelle
 
 
 def _giorno(s):
@@ -69,6 +78,35 @@ def unisci(urgenti, coda, giorni_max=GIORNI_MAX):
     urg.sort(key=lambda r: (scadenza(r, giorni_max) or datetime.date.max, str(r.get("ora_inizio_clip") or ""), r["evento"]))
     visti = {r["evento"] for r in urg}
     return urg + [r for r in coda or [] if isinstance(r, dict) and r.get("evento") not in visti]
+
+
+def dal_sito(risposta):
+    """0.3.0: le richieste da allungare dalla risposta di op=allungare del sito ({"eventi": [richieste con «chiesta_da»]}),
+    tutte chieste da Dario: solo quelle con evento, giorno, ora della clip, kit e canali; doppioni fuori; tutte «urgente»
+    (fuori dal tetto per kit: le ha scelte lui). L'ordine resta quello del sito (dalla prima che scade). Funzione pura."""
+    out, visti = [], set()
+    eventi = (risposta.get("eventi") or []) if isinstance(risposta, dict) else []
+    for r in eventi:
+        if not isinstance(r, dict):
+            continue
+        ev = str(r.get("evento") or "")
+        if not ev or ev in visti or not r.get("giorno") or not r.get("ora_inizio_clip") or not r.get("kit") \
+                or not isinstance(r.get("canali"), list) or not r["canali"]:
+            continue
+        visti.add(ev)
+        out.append(dict(r, urgente=True))
+    return out
+
+
+def fatti_per_sito(registro, lista):
+    """0.3.0: per il sito (POST op=allungare {fatti}): gli eventi della lista che il ponte ha chiuso (finito o rinunciato),
+    con l'esito breve. Funzione pura."""
+    out = []
+    for r in lista or []:
+        x = (registro or {}).get(r.get("evento")) or {}
+        if x.get("stato") in ("finito", "rinunciato"):
+            out.append({"evento": r["evento"], "esito": (x.get("esito") or x["stato"])[:160]})
+    return out
 
 
 def da_fare(coda, registro, adesso, oggi=None, per_giro=PER_GIRO, per_kit=PER_KIT_AL_GIORNO, riprova_s=RIPROVA_S,

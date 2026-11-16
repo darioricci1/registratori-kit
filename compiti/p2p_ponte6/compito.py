@@ -31,6 +31,13 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.20.0 (16/11/2026): si allunga solo quello che chiede Dario (16/11 mattina: «facciamo che allunghi solo quelle
+  che ti chiedo di allungare»; «sono semplicemente delle dubbie, che io se ritengo posso anche chiedere di allungare»).
+  Il giro della coda non legge piu' ~/kr_lavori/allunga/coda.json (Kit_Rifiuti 0.99.10 la lascia vuota: le 460 del 16/11
+  non si scaricano) ne' allunga_urgenti.json (le 39 del 16/11 sono fatte): chiede a op=allungare del sito kit-rifiuti le
+  clip dove Dario ha premuto «⤢ Allunga» (biglietto_kit, aud https://mappakit.alma/kit-rifiuti), le scrive in
+  ~/kr_lavori/allunga/confermate.json (Kit_Rifiuti ci trova scade_il e l'evento per montare; se il sito non risponde si
+  usa l'ultima scritta), sceglie con coda_allunga 0.3.0 e alla fine rimanda al sito gli eventi chiusi (POST {fatti}).
 version: 0.19.0 (16/11/2026): la coda degli allungamenti di Kit_Rifiuti, che nessun ponte leggeva (la patch del 12/11,
   kit-rifiuti-programma analisi/compiti/ponte-0.15.0, non era mai entrata: le versioni 0.15-0.18 sono nate senza; il
   16/11 sul COMPUTERONE c'erano 579 richieste in coda e un solo evento allungato sul sito). Sul COMPUTERONE il ponte
@@ -145,7 +152,9 @@ U = os.path.join(C, "uscita"); os.makedirs(U, exist_ok=True)
 AV = open(os.path.join(U, "avanzamento.txt"), "a", encoding="utf-8")
 API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
-VERSIONE = "p2p_ponte 0.19.0"
+SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
+DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
+VERSIONE = "p2p_ponte 0.20.0"
 DURATA = 24 * 3600
 
 
@@ -200,6 +209,32 @@ def biglietto():
     cred.refresh(Request())
     _big.update(t=cred.token, fino=time.time() + 45 * 60)
     return cred.token
+
+
+_big_kit = {"t": "", "fino": 0}
+
+
+def biglietto_kit():
+    """0.20.0: il biglietto dell'account di servizio per il sito kit-rifiuti (un altro destinatario)."""
+    if _big_kit["t"] and time.time() < _big_kit["fino"]:
+        return _big_kit["t"]
+    import drive_alma
+    from google.oauth2 import service_account
+    from google.auth.transport.requests import Request
+    chiave = drive_alma.file_chiave((C, os.path.dirname(sys.executable)))
+    cred = service_account.IDTokenCredentials.from_service_account_file(chiave, target_audience=DESTINATARIO_KIT)
+    cred.refresh(Request())
+    _big_kit.update(t=cred.token, fino=time.time() + 45 * 60)
+    return cred.token
+
+
+def sito_kit(op, dati=None):
+    """0.20.0: GET (dati None) o POST al sito kit-rifiuti col biglietto; la risposta JSON."""
+    req = urllib.request.Request(f"{SITO_KIT}?op={op}", data=None if dati is None else json.dumps(dati).encode(),
+                                 method="GET" if dati is None else "POST",
+                                 headers={"Authorization": "Bearer " + biglietto_kit(), "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read().decode() or "{}")
 
 
 def chiama(op, dati):
@@ -1870,14 +1905,25 @@ def _leggi(f, difetto):
 
 
 def giro_coda_allunga(adesso=None):
-    """0.19.0: un giro della coda: le urgenti del compito (allunga_urgenti.json) e la coda di Kit_Rifiuti
-    (~/kr_lavori/allunga/coda.json) unite da coda_allunga.unisci, coda_allunga.da_fare sceglie, poi lavoro_allunga in
-    ~/kr_lavori/allunga/coda/<evento>/ e coda_allunga.segna nel registro. Ritorna quanti eventi ha fatto."""
+    """0.20.0: un giro della coda: la lista dal sito (op=allungare: le clip dove Dario ha premuto «Allunga»),
+    scritta in ~/kr_lavori/allunga/confermate.json per Kit_Rifiuti (se il sito non risponde, l'ultima scritta),
+    coda_allunga.da_fare sceglie, poi lavoro_allunga in ~/kr_lavori/allunga/coda/<evento>/, coda_allunga.segna nel
+    registro e gli eventi chiusi tornano al sito. La coda automatica di Kit_Rifiuti (coda.json) non si legge piu'.
+    Ritorna quanti eventi ha fatto."""
     import coda_allunga as ca
     radice = os.path.join(os.path.expanduser("~"), "kr_lavori", "allunga")
-    coda = (_leggi(os.path.join(radice, "coda.json"), {}) or {}).get("eventi") or []
-    urgenti = (_leggi(os.path.join(C, "allunga_urgenti.json"), {}) or {}).get("eventi") or []
-    lista = ca.unisci(urgenti, coda)
+    os.makedirs(radice, exist_ok=True)
+    f_conf = os.path.join(radice, "confermate.json")
+    try:
+        risposta = sito_kit("allungare")
+        tmp = f_conf + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(dict(risposta, scritta_il=time.strftime("%Y-%m-%d %H:%M:%S"), da=VERSIONE), fh, ensure_ascii=False, indent=1)
+        os.replace(tmp, f_conf)
+    except Exception as ex:   # noqa: BLE001 - il sito giu': l'ultima lista scritta
+        av(f"coda degli allungamenti: il sito non risponde ({type(ex).__name__}: {str(ex)[:150]}), uso l'ultima lista")
+        risposta = _leggi(f_conf, {}) or {}
+    lista = ca.dal_sito(risposta)
     base = os.path.join(radice, "coda")
     os.makedirs(base, exist_ok=True)
     f_reg = os.path.join(base, "registro.json")
@@ -1888,23 +1934,26 @@ def giro_coda_allunga(adesso=None):
         diagnosi_allunga()
     except Exception as ex:   # noqa: BLE001 - la diagnosi non ferma il giro
         av(f"diagnosi degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
-    if not scelti:
-        scrivi_json("allunga_coda_stato.json", dict(ca.riassunto(registro, lista, oggi), quando=time.strftime(
-            "%Y-%m-%d %H:%M:%S"), versione=VERSIONE, coda=ca.VERSIONE))
-        return 0
-    urg = {r["evento"] for r in scelti if r.get("urgente")}
-    av(f"coda degli allungamenti: {len(scelti)} eventi su {len(lista)} ({len(urgenti)} urgenti, {len(coda)} da "
-       f"Kit_Rifiuti): {', '.join(r['evento'] for r in scelti)}")
-    out = lavoro_allunga({"eventi": [ca.per_ponte(r) for r in scelti]}, base=base, nome_uscita="allunga_coda.json")
-    for x in (out or {}).get("eventi") or []:
-        ca.segna(registro, x, time.time(), urgente=x.get("evento") in urg)
-    tmp = f_reg + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as fh:
-        json.dump(registro, fh, ensure_ascii=False, indent=1)
-    os.replace(tmp, f_reg)
+    if scelti:
+        urg = {r["evento"] for r in scelti if r.get("urgente")}
+        av(f"coda degli allungamenti: {len(scelti)} eventi su {len(lista)} chiesti da Dario sul sito: "
+           f"{', '.join(r['evento'] for r in scelti)}")
+        out = lavoro_allunga({"eventi": [ca.per_ponte(r) for r in scelti]}, base=base, nome_uscita="allunga_coda.json")
+        for x in (out or {}).get("eventi") or []:
+            ca.segna(registro, x, time.time(), urgente=x.get("evento") in urg)
+        tmp = f_reg + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(registro, fh, ensure_ascii=False, indent=1)
+        os.replace(tmp, f_reg)
+        av(f"coda degli allungamenti: fatto, {((out or {}).get('conti') or {}).get('in_tutto')}")
+    fatti = ca.fatti_per_sito(registro, lista)
+    if fatti:
+        try:
+            sito_kit("allungare", {"fatti": fatti})
+        except Exception as ex:   # noqa: BLE001 - si riprova al giro dopo (restano nella lista finche' il sito non li sa)
+            av(f"coda degli allungamenti: esiti non mandati al sito ({type(ex).__name__}: {str(ex)[:150]})")
     scrivi_json("allunga_coda_stato.json", dict(ca.riassunto(registro, lista, oggi), quando=time.strftime(
-        "%Y-%m-%d %H:%M:%S"), versione=VERSIONE, coda=ca.VERSIONE))
-    av(f"coda degli allungamenti: fatto, {((out or {}).get('conti') or {}).get('in_tutto')}")
+        "%Y-%m-%d %H:%M:%S"), versione=VERSIONE, coda=ca.VERSIONE, al_sito=len(fatti)))
     return len(scelti)
 
 

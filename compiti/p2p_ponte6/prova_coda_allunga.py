@@ -2,7 +2,9 @@
 durata_da, prossimo_giro_coda): quali richieste di Kit_Rifiuti si allungano in un giro, in che ordine, cosa si ricorda
 di ognuna, e quando il ponte si chiude. Niente rete, niente DLL.
 Uso: python3 prova_coda_allunga.py
-version: 0.2.0 (16/11/2026): le urgenti (unisci, fuori dal tetto per kit), il riassunto, e le funzioni del ponte.
+version: 0.3.0 (16/11/2026): la lista viene dal sito (dal_sito, fatti_per_sito): solo le clip chieste da Dario; il giro
+intero col sito finto (niente coda.json, niente allunga_urgenti.json).
+0.2.0 (16/11/2026): le urgenti (unisci, fuori dal tetto per kit), il riassunto, e le funzioni del ponte.
 0.1.0 (12/11/2026)
 """
 import ast
@@ -94,6 +96,18 @@ ria = ca.riassunto(reg, lista, OGGI)
 ok(ria["stati"] == {"finito": 1} and ria["aperte"] == 3 and [u["stato"] for u in ria["urgenti"]] == ["finito", "da fare", "da fare"]
    and json.dumps(ria).find("no targa") < 0, "riassunto: stati, aperte, urgenti; niente nomi")
 
+# ------------------------------------------------------------------ 0.3.0: dal sito, solo le clip chieste da Dario
+sito = {"oggi": "2026-11-16", "eventi": [dict(r("s1"), chiesta_da="dario@alma", canali_stimati=True), dict(r("s2", kit=7)),
+                                         {"evento": "s3", "kit": 7}, dict(r("s1")), "x"]}
+ds = ca.dal_sito(sito)
+ok([x["evento"] for x in ds] == ["s1", "s2"] and all(x["urgente"] for x in ds), "dal sito: complete, senza doppioni, tutte di Dario")
+ok(ca.dal_sito(None) == [] and ca.dal_sito([1]) == [] and ca.dal_sito({"eventi": None}) == [], "dal sito: una risposta rotta e' vuota")
+pp = ca.per_ponte(ds[0])
+ok(not any(k in pp for k in ("chiesta_da", "canali_stimati", "e", "urgente")) and pp["canali"] == [0, 1],
+   "per allunga.py senza chi l'ha chiesta e senza i nomi")
+ok(ca.fatti_per_sito({"s1": {"stato": "finito", "esito": "fatto"}, "s2": {"stato": "da_riprovare"}, "zz": {"stato": "finito"}}, ds)
+   == [{"evento": "s1", "esito": "fatto"}], "al sito tornano solo i chiusi della lista")
+
 # ------------------------------------------------------------------ 0.2.0: la diagnosi dei risultati gia' sul disco
 dg = ca.diagnosi([{"cartella": "p2p_ponte30", "evento": "a", "esito": "fatto"},
                   {"cartella": "p2p_ponte30", "evento": "b", "esito": "non piu' sul registratore"},
@@ -137,8 +151,8 @@ os.makedirs(os.path.join(casa, "kr_lavori", "allunga"))
 os.makedirs(comp)
 oggi = datetime.date.today()
 g_ = (oggi - datetime.timedelta(days=20)).isoformat()
-json.dump({"eventi": [dict(r("q1", kit=5, giorno=g_), scade_il=None), dict(r("q2", kit=5, giorno=g_), scade_il=None)]},
-          open(os.path.join(casa, "kr_lavori", "allunga", "coda.json"), "w"))
+# la coda automatica di Kit_Rifiuti e le urgenti del compito ci sono ancora sul disco: il ponte 0.20.0 non le legge
+json.dump({"eventi": [dict(r("v1", kit=5, giorno=g_), scade_il=None)]}, open(os.path.join(casa, "kr_lavori", "allunga", "coda.json"), "w"))
 json.dump({"eventi": [{"evento": "u9", "kit": 6, "giorno": (oggi - datetime.timedelta(days=23)).isoformat(),
                        "ora_inizio_clip": "21:01:55", "durata_clip": 92.2, "canali": [0, 1, 2], "prima_s": 120, "dopo_s": 180}]},
           open(os.path.join(comp, "allunga_urgenti.json"), "w"))
@@ -166,19 +180,39 @@ def finto(cfg, base=None, nome_uscita="allunga.json"):
 
 
 gp["lavoro_allunga"] = finto
+mandati = []
+sito_su = [True]
+
+
+def sito_finto(op, dati=None):
+    if not sito_su[0]:
+        raise OSError("sito giu'")
+    if dati is not None:
+        mandati.append((op, dati))
+        return {"ok": True}
+    return {"oggi": oggi.isoformat(), "eventi": [dict(r(e, kit=k, giorno=g_), scade_il=None, chiesta_da="dario@alma")
+                                                 for e, k in (("u9", 6), ("q1", 5), ("q2", 5))]}
+
+
+gp["sito_kit"] = sito_finto
 n = gp["giro_coda_allunga"]()
 reg_v = json.load(open(os.path.join(casa, "kr_lavori", "allunga", "coda", "registro.json")))
-ok(n == 3 and chiesti == ["u9", "q1", "q2"], f"un giro: prima l'urgente, poi la coda ({chiesti})")
+ok(n == 3 and chiesti == ["u9", "q1", "q2"], f"un giro: solo le clip chieste da Dario, nell'ordine del sito ({chiesti})")
+conf = json.load(open(os.path.join(casa, "kr_lavori", "allunga", "confermate.json")))
+ok([x["evento"] for x in conf["eventi"]] == ["u9", "q1", "q2"], "la lista del sito scritta in confermate.json per Kit_Rifiuti")
+ok(mandati == [("allungare", {"fatti": [{"evento": "u9", "esito": "fatto"}, {"evento": "q1", "esito": "fatto"}]})],
+   f"al sito tornano le chiuse ({mandati})")
 ok(reg_v["u9"]["stato"] == "finito" and reg_v["u9"].get("urgente") and reg_v["q2"]["stato"] == "da_riprovare",
    "il registro del ponte: finiti, urgenti, da riprovare")
 stato = json.load(open(os.path.join(comp, "uscita", "allunga_coda_stato.json")))
-ok(stato["stati"] == {"finito": 2, "da_riprovare": 1} and stato["urgenti"][0]["stato"] == "finito", "lo stato in uscita")
+ok(stato["stati"] == {"finito": 2, "da_riprovare": 1} and stato["urgenti"][0]["stato"] == "finito" and stato["al_sito"] == 2, "lo stato in uscita")
 dgv = json.load(open(os.path.join(comp, "uscita", "allunga_diagnosi.json")))
 ok(dgv["per_azione"] == {} and dgv["lavoro_trovato"] is False, "la diagnosi in uscita, prima dei risultati")
 ok(os.path.exists(os.path.join(casa, "kr_lavori", "allunga", "coda", "u9", "uscita", "allunga_evento.json")),
    "il risultato dove lo cerca Kit_Rifiuti (risultati_allunga: */*/uscita/allunga_evento.json)")
 chiesti.clear()
-ok(gp["giro_coda_allunga"]() == 0 and chiesti == [], "subito dopo niente: q2 si riprova solo dopo un'ora")
+sito_su[0] = False
+ok(gp["giro_coda_allunga"]() == 0 and chiesti == [], "subito dopo niente (q2 si riprova dopo un'ora), anche col sito giu' (l'ultima lista)")
 dgv = json.load(open(os.path.join(comp, "uscita", "allunga_diagnosi.json")))
 ok(dgv["per_azione"] == {"mai guardato": 3} and dgv["fatti_non_montati"] == ["q1", "u9"],
    "al giro dopo la diagnosi vede i risultati che Kit_Rifiuti non ha ancora guardato")
