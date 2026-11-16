@@ -45,6 +45,12 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito parallelo1 0.1.0 (pronto il 16/11 e NON mandato, zip in `compito_parallelo1/compito.zip` dello scratchpad; codice
+  e spiegazione in `compiti/parallelo1/LEGGIMI.md`): più registratori insieme. Sugli stessi 40 kit che rispondono, sola
+  lettura leggera: N=1 come il ponte, strada A (una libreria, N=4/8/16 Connect insieme, ritorni smistati per hSERVER) e
+  strada B (N=2/4/8 processi, ognuno con la sua libreria). Si ferma da solo al primo crash o a +5 punti di falliti, tetto 2
+  ore. Vince chi a N=8 fa il giro in meno di un quarto del tempo di N=1 senza più falliti. Serve il segnaposto
+  `risultato_parallelo1.zip`; chiude il ponte del COMPUTERONE, che poi va rimandato.
 - Compito p2p_ponte35b (mandato al COMPUTERONE il 14/11 alle 20:40): la scorta del 35 per le 190 ore che né il 35 né il 36
   hanno fatto (il 36, stesso scorta.json con la finestra 00-23:59, la mattina del 14/11 ne ha fatte 30, comprese le 15 del
   35). Codice uguale al 35 (ponte 0.18.0); finestra 19-07, stessi limiti; parti in `scorta35b_1..7.zip`, Qwen con

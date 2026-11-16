@@ -1,0 +1,11 @@
+{
+ "_perche": "parallelo1 0.1.0 (16/11/2026): strada A (una libreria, N collegamenti insieme) contro strada B (N processi), stessi kit",
+ "_criterio": "una strada vince se con N=8 fa il giro in meno di un quarto del tempo di N=1 senza piu' falliti di N=1",
+ "kit_quanti": 40,
+ "seme": 1,
+ "ordine": [["1", 1], ["B", 2], ["A", 4], ["B", 4], ["A", 8], ["B", 8], ["A", 16]],
+ "tetto_ore": 2.0,
+ "pausa_s": 30,
+ "attesa": 40,
+ "soglia_punti": 5.0
+}
