@@ -154,7 +154,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.20.0"
+VERSIONE = "p2p_ponte 0.20.1"
 DURATA = 24 * 3600
 
 
@@ -1893,6 +1893,7 @@ def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
 
 
 # ------------------------------------------------------------------ 0.19.0: la coda degli allungamenti di Kit_Rifiuti
+CODA_FERMA = [False]   # 0.20.1: un compito nuovo su Drive non fa partire altri allungamenti
 CODA_VIVA = []   # il filo del giro della coda, finche' gira
 
 
@@ -2447,7 +2448,7 @@ while time.time() < t_fine:
         if not da_scaricare:
             open(os.path.join(U, "lungo_fatto.txt"), "w").write(time.strftime("%Y-%m-%d %H:%M"))
         continue
-    if prossimo_giro_coda(ultima_coda, time.time(), CODA_FATTI[0], any(t.is_alive() for t in CODA_VIVA)):   # 0.19.0
+    if not CODA_FERMA[0] and prossimo_giro_coda(ultima_coda, time.time(), CODA_FATTI[0], any(t.is_alive() for t in CODA_VIVA)):   # 0.19.0
         ultima_coda = time.time()
         try:
             parti_coda_allunga()
@@ -2455,10 +2456,13 @@ while time.time() < t_fine:
             av(f"coda degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
     if time.time() - ultimo_guardato > 600:
         ultimo_guardato = time.time()
-        if not analisi_lunghe and not misure_in_corso() and not any(t.is_alive() for t in CODA_VIVA) \
-                and compito_nuovo_su_drive():
-            av("su Drive c'e' un compito nuovo: chiudo questo")
-            break
+        # 0.20.1: un compito nuovo su Drive ferma la coda degli allungamenti (finisce quello in corso, non ne parte un altro):
+        # il 16/11 il ponte 37 non si chiudeva mai perche' un allungamento era sempre in corso, e teneva il PC per ore
+        if compito_nuovo_su_drive():
+            CODA_FERMA[0] = True
+            if not analisi_lunghe and not misure_in_corso() and not any(t.is_alive() for t in CODA_VIVA):
+                av("su Drive c'e' un compito nuovo: chiudo questo")
+                break
     if time.time() - ultimo_uvms > 24 * 3600:
         ultimo_uvms = time.time()
         try:
