@@ -1,0 +1,12 @@
+{
+ "nota": "fuoco5 0.5.0: RIPRISTINO di KIT249 SP7 (Viano), cam 3 del sito, canale 2 (da 0). Dopo fuoco4 (16/11 9:31-9:37) la telecamera e' rimasta sfocata. Autorizzazione di Dario del 15/11: «solo KIT249, solo zoom e fuoco, rimettere com'era». Solo il fuoco, solo questo canale; uid e kit da remoto.json.",
+ "canale": 2,
+ "verso_iniziale": -1,
+ "ms": 75,
+ "ms_vicino": 37,
+ "obiettivo": 0.70,
+ "impulsi_max": 150,
+ "minuti_max": 45,
+ "finestra": [9.5, 15.0],
+ "aspetta_giorno": true
+}
