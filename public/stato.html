@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.41.0 (17/11/2026) - la torta delle telecamere che inquadrano male (fuoco, puntate, lontane, bordi,
+     dietro i cassonetti), clic = elenco con le foto; la heatmap sulle foto come in kit.html: dal giallo all'arancio al rosso dove gli abbandoni
+     si accumulano (Dario: «era orribile tutta rossa, gialla con rosso al centro»). -->
 <!-- version: 2.40.0 (17/11/2026) - due torte (Dario: «cliccando sulla fetta vai a quell'elenco; due torte sovrapposte, quelli che
      vanno davvero rispetto a quello che è dichiarato nel software; quali sono problemi di batteria, con solare o meno, e di
      solare che non funziona»): dentro l'ODM dichiarato, fuori come va davvero; accanto le cause probabili (schemi delle ore
@@ -219,6 +222,7 @@ th:focus-within { z-index:5 }
 #sistemare button.mini img { display:block; width:200px; max-width:100%; height:auto; border-radius:6px; background:#0001 }
 /* 2.37.0: heatmap degli abbandoni sulla foto */
 .conCaldo { position:relative; display:inline-block; line-height:0; overflow:hidden; border-radius:6px }
+.conCaldo canvas.caldo { position:absolute; inset:0; width:100%; height:100%; pointer-events:none }
 .conCaldo .macchia { position:absolute; width:22%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(230,30,30,.75) 0%, rgba(230,30,30,.35) 40%, rgba(230,30,30,0) 70%); pointer-events:none }
 #grande .conCaldo img { max-width:95vw; max-height:90vh }
 /* 2.39.0: la torta di come stanno i kit */
@@ -227,10 +231,10 @@ th:focus-within { z-index:5 }
 .torta { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px 16px; min-width:0 }
 .torta h3 { flex-basis:100%; margin:0; font-size:15px }
 .torta path, .torta circle { cursor:pointer } .torta path:hover { opacity:.8 }
-#tortaLegenda li, #causeLegenda li { cursor:pointer; min-height:28px } #tortaLegenda li:hover, #causeLegenda li:hover { text-decoration:underline }
-#causeLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; gap:4px; flex:1; min-width:0 }
-#causeLegenda li { display:flex; gap:8px; align-items:baseline } #causeLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
-#causeLegenda b { font-variant-numeric:tabular-nums; min-width:2.4em; text-align:right } #causeLegenda small { color:var(--tenue) }
+#teleLegenda li[data-t], #tortaLegenda li, #causeLegenda li { cursor:pointer; min-height:28px } #tortaLegenda li:hover, #causeLegenda li:hover { text-decoration:underline }
+#teleLegenda, #causeLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; gap:4px; flex:1; min-width:0 }
+#teleLegenda li, #causeLegenda li { display:flex; gap:8px; align-items:baseline } #teleLegenda i, #causeLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
+#teleLegenda b, #causeLegenda b { font-variant-numeric:tabular-nums; min-width:2.4em; text-align:right } #teleLegenda small, #causeLegenda small { color:var(--tenue) }
 #fettaElenco { margin-top:12px } #fettaElenco h3 { display:flex; gap:12px; align-items:center; font-size:15px }
 .torta svg { flex:none; max-width:100% }
 #tortaLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; gap:4px; flex:1; min-width:0 }
@@ -274,6 +278,8 @@ th:focus-within { z-index:5 }
       <svg id="torta" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="ODM dichiarati e stato reale dei kit"></svg><ul id="tortaLegenda"></ul></div>
     <div class="torta"><h3 title="Per i kit che non funzionano del tutto o non rispondono: la causa probabile letta dallo schema delle ore e dall'alimentazione (Schemi delle ore del 14/11)">Perché non vanno</h3>
       <svg id="tortaCause" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Cause probabili dei kit che non funzionano"></svg><ul id="causeLegenda"></ul></div>
+    <div class="torta"><h3 title="Le telecamere che registrano ma inquadrano male: fuori fuoco, puntate male, coperte, o con gli abbandoni lontani, sul bordo o dietro i cassonetti (dalla misura di nitidezza, dalle foto guardate a occhio e dalla heatmap degli abbandoni giudicati in Kit_Rifiuti). Clic su uno spicchio: l'elenco con le foto">Telecamere che inquadrano male</h3>
+      <svg id="tortaTele" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Telecamere che inquadrano male, per problema"></svg><ul id="teleLegenda"></ul></div>
   </div>
   <div id="fettaElenco" hidden><h3><span id="fettaTitolo"></span> <button id="fettaChiudi" title="Chiude l'elenco">Chiudi</button></h3>
   <table id="fettaTab"><thead><tr><th data-chiave="comune">Comune</th><th data-chiave="nome">Kit</th><th data-chiave="alim">Alimentazione</th><th data-chiave="dich">Nel software</th><th data-chiave="reale">Davvero</th><th data-chiave="causa">Causa probabile</th><th data-chiave="fare">Cosa fare</th></tr></thead><tbody></tbody></table></div>
@@ -601,6 +607,43 @@ function righeSistemare() {
     const c = typeof p === "number" && typeof q === "number" ? p - q : String(p ?? "").localeCompare(String(q ?? ""), "it", { numeric: true });
     return c * ordSi.verso || a.gruppo - b.gruppo || a.rango - b.rango; });
 }
+/** 2.41.0 (Dario, 17/11: «quali hanno un problema di telecamera puntata male, fuori fuoco/zoom, o andrebbero installati più
+ * vicino; quanti inquadrano lontano o hanno abbandoni ai bordi»): le telecamere da sistemare raggruppate per cosa c'è da fare. */
+const TELE = [
+  ["fuoco", "Fuori fuoco o morbida: zoom e fuoco da remoto", "#8a5cd6", (p) => /sfocata|morbida/.test(p)],
+  ["puntata", "Puntata male: da rigirare", "var(--rosso)", (p) => /inquadratura/.test(p)],
+  ["coperta", "Coperta da un palo o da rami", "#5b6b85", (p) => /ostruzione|rami/.test(p)],
+  ["lontani", "Abbandoni lontani: più vicino o più zoom", "var(--arancio)", (p) => /lontani/.test(p)],
+  ["bordi", "Abbandoni sul bordo dell'inquadratura: da girare", "#c9a24a", (p) => /margine/.test(p)],
+  ["dietro", "Abbandoni dietro i cassonetti: da spostare", "var(--blu)", (p) => /dietro/.test(p)],
+  ["verifica", "Segnalate dalla misura, da guardare", "var(--tenue)", (p) => /verificare/.test(p)],
+];
+const teleDi = (x) => (TELE.find((t) => t[3](String(x.problema || ""))) || [""])[0];
+function disegnaTortaTele() {
+  const l = ((SISTEMARE || {}).telecamere || []).filter((x) => x.gruppo < 3 && teleDi(x)), tot = l.length, cx = 120, cy = 120;
+  let svg = "", leg = "", a = -Math.PI / 2;
+  for (const [k, t, col] of TELE) {
+    const sub = l.filter((x) => teleDi(x) === k); if (!sub.length) continue;
+    const a2 = a + 2 * Math.PI * sub.length / tot, kit = new Set(sub.map((x) => x.kit_n || x.kit)).size;
+    svg += `<path d="${arco(cx, cy, 112, 60, a, a2)}" fill="${col}" stroke="var(--carta)" stroke-width="1.5" data-t="${k}"><title>${t}: ${sub.length} telecamere in ${kit} kit</title></path>`;
+    leg += `<li data-t="${k}"><i style="background:${col}"></i><b>${sub.length}</b><span>${t} <small>${kit} kit</small></span></li>`;
+    a = a2;
+  }
+  svg += `<text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="22" font-weight="700" fill="var(--testo)">${tot}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="10" fill="var(--tenue)">telecamere</text>`;
+  $("#tortaTele").innerHTML = tot ? svg : "";
+  $("#teleLegenda").innerHTML = tot ? leg + "<li><small>Inquadrano a terra o troppo in alto: non ancora misurato</small></li>" : "<li><small>Le telecamere arrivano…</small></li>";
+}
+/** Clic su uno spicchio: si apre «Telecamere da sistemare» filtrata su quei problemi. */
+function mostraTele(k) {
+  const scelti = FILTRI.sistemare.problema || (FILTRI.sistemare.problema = new Set());
+  scelti.clear();
+  for (const x of (SISTEMARE || {}).telecamere || []) if (teleDi(x) === k && x.gruppo < 3) scelti.add(x.problema);
+  delete firme.sistemareproblema;
+  const box = document.querySelector('#sistemare thead th[data-chiave="problema"] .filtroCol'); if (box) box.remove();
+  $("#sezSistemare").hidden = false; $("#vediSistemare").setAttribute("aria-pressed", "true");
+  disegnaSistemare();
+  $("#sezSistemare").scrollIntoView({ block: "start" });
+}
 function disegnaSistemare() {
   if (!SISTEMARE) return;
   for (const x of SISTEMARE.telecamere) x.foto = fotoDi(x, dati);
@@ -615,6 +658,8 @@ function disegnaSistemare() {
     <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
     <td class="num">${x.rango ?? "-"}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
     <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" class="mini" data-caldo="${esc(JSON.stringify(x.caldo || []))}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}${(x.caldo || []).length ? " · in rosso dove sono avvenuti gli abbandoni giudicati" : ""} · toccala per vederla grande"><span class="conCaldo"><img loading="lazy" src="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" alt="foto di ${esc(x.kit)} CH ${String(x.cam).padStart(2, "0")}">${macchie(x.caldo)}</span></button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
+  riempiCaldi($("#sistemare"));
+  disegnaTortaTele();
 }
 /** 2.31.0: gli schemi delle ore per kit (op=schemi, letto una volta): prima i gruppi con un problema, gli OK in fondo. */
 let SCHEMI = null, ordSc = { chiave: "gruppo", verso: 1 };
@@ -1040,6 +1085,7 @@ $("#vediErrori").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediErrori").setAttribute("aria-pressed", String(apri));
   if (apri) { $("main").scrollTop = 0; caricaErrori(); }
 });
+for (const id of ["#tortaTele", "#teleLegenda"]) $(id).addEventListener("click", (e) => { const el = e.target.closest("[data-t]"); if (el) mostraTele(el.dataset.t); });
 for (const id of ["#torta", "#tortaLegenda", "#tortaCause", "#causeLegenda"]) $(id).addEventListener("click", (e) => { const el = e.target.closest("[data-f]"); if (el) mostraFetta(el.dataset.f); });
 $("#fettaChiudi").addEventListener("click", () => { fettaScelta = null; $("#fettaElenco").hidden = true; });
 tabellaOrdinabile($("#fettaTab"), { alCambio: (chiave, verso) => { ordFetta = { chiave, verso }; if (fettaScelta) mostraFetta(fettaScelta); } });
@@ -1055,10 +1101,46 @@ $("#vediSistemare").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediSistemare").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
 });
-$("#sistemare").addEventListener("click", (e) => { const b = e.target.closest("button[data-foto]"); if (b) { let c = []; try { c = JSON.parse(b.dataset.caldo || "[]"); } catch { /* niente heatmap */ } $("#grande").innerHTML = `<span class="conCaldo"><img src="${b.dataset.foto}" alt="foto della telecamera">${macchie(c)}</span>`; $("#grande").hidden = false; } });
+$("#sistemare").addEventListener("click", (e) => { const b = e.target.closest("button[data-foto]"); if (b) { let c = []; try { c = JSON.parse(b.dataset.caldo || "[]"); } catch { /* niente heatmap */ } $("#grande").innerHTML = `<span class="conCaldo"><img src="${b.dataset.foto}" alt="foto della telecamera">${macchie(c)}</span>`; $("#grande").hidden = false; riempiCaldi($("#grande")); } });
 /** 2.37.0: la heatmap degli abbandoni giudicati sopra la foto: una macchia rossa sfumata per abbandono (centro in frazioni). */
 function macchie(caldo) {
-  return (caldo || []).map(([cx, cy]) => `<i class="macchia" style="left:${(100 * cx).toFixed(1)}%;top:${(100 * cy).toFixed(1)}%"></i>`).join("");
+  return (caldo || []).length ? `<canvas class="caldo" data-punti="${esc(JSON.stringify(caldo))}" aria-hidden="true"></canvas>` : "";
+}
+/** 2.41.0: la heatmap come in kit.html (Dario: «gialla con rosso al centro»): una macchia gaussiana per abbandono sommata
+ * in un canale di densità, poi colorata dal trasparente al giallo all'arancio al rosso dove si accumulano. */
+function tavolozzaCaldo() {
+  if (tavolozzaCaldo.pal) return tavolozzaCaldo.pal;
+  const c = document.createElement("canvas"); c.width = 256; c.height = 1;
+  const x = c.getContext("2d"), g = x.createLinearGradient(0, 0, 256, 0);
+  g.addColorStop(0, "rgba(255,225,77,0)"); g.addColorStop(0.08, "rgba(255,225,77,0.35)"); g.addColorStop(0.35, "rgba(255,225,77,0.5)");
+  g.addColorStop(0.65, "rgba(255,138,0,0.65)"); g.addColorStop(1, "rgba(227,18,11,0.78)");
+  x.fillStyle = g; x.fillRect(0, 0, 256, 1);
+  return (tavolozzaCaldo.pal = x.getImageData(0, 0, 256, 1).data);
+}
+function disegnaCaldo(cv) {
+  const img = cv.previousElementSibling; let punti = [];
+  try { punti = JSON.parse(cv.dataset.punti || "[]"); } catch { return; }
+  if (!img || !img.naturalWidth || !punti.length) return;
+  const W = Math.max(1, Math.round(img.clientWidth * Math.min(window.devicePixelRatio || 1, 2))), H = Math.max(1, Math.round(W * img.naturalHeight / img.naturalWidth));
+  cv.width = W; cv.height = H;
+  const d = document.createElement("canvas"); d.width = W; d.height = H;
+  const dx = d.getContext("2d"), rr = Math.max(6, 0.06 * W);
+  for (const [cx, cy] of punti) {
+    const px = cx * W, py = cy * H, g = dx.createRadialGradient(px, py, 0, px, py, rr);
+    for (let i = 0; i <= 6; i++) { const t = i / 6; g.addColorStop(t, `rgba(0,0,0,${(0.32 * Math.exp(-4.5 * t * t)).toFixed(3)})`); }
+    dx.fillStyle = g; dx.fillRect(px - rr, py - rr, 2 * rr, 2 * rr);
+  }
+  const img2 = dx.getImageData(0, 0, W, H), dati = img2.data, pal = tavolozzaCaldo();
+  let mx = 0; for (let i = 3; i < dati.length; i += 4) if (dati[i] > mx) mx = dati[i];
+  const k = mx ? Math.min(2.5, 235 / mx) : 1;
+  for (let i = 3; i < dati.length; i += 4) { const a = Math.min(255, Math.round(dati[i] * k)); if (!a) continue; const j = a * 4; dati[i - 3] = pal[j]; dati[i - 2] = pal[j + 1]; dati[i - 1] = pal[j + 2]; dati[i] = pal[j + 3]; }
+  cv.getContext("2d").putImageData(img2, 0, 0);
+}
+function riempiCaldi(radice) {
+  for (const cv of radice.querySelectorAll("canvas.caldo")) {
+    const img = cv.previousElementSibling;
+    if (img && img.complete && img.naturalWidth) disegnaCaldo(cv); else if (img) img.addEventListener("load", () => disegnaCaldo(cv), { once: true });
+  }
 }
 $("#prova").addEventListener("click", () => { location.href = "/"; });
 $("#giro").addEventListener("click", async () => {
