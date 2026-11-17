@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.39.0 (17/11/2026) - «Come stanno i kit»: una torta con ogni kit installato in una fetta (funziona, funziona con un
+     ODM da chiudere, in parte con o senza ODM, non registra con o senza ODM, mai letto), in cima alla pagina (Dario). -->
 <!-- version: 2.38.1 (17/11/2026) - in «Solo problemi» un registratore con i dati vecchi conta come problema solo per i giorni
      sotto il 90%, non perché è ancora da ricontrollare. -->
 <!-- version: 2.38.0 (17/11/2026) - i registratori ancora in coda, che il giro non ha ricontrollato, mostrano i dati vecchi
@@ -215,6 +217,15 @@ th:focus-within { z-index:5 }
 .conCaldo { position:relative; display:inline-block; line-height:0; overflow:hidden; border-radius:6px }
 .conCaldo .macchia { position:absolute; width:22%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(230,30,30,.75) 0%, rgba(230,30,30,.35) 40%, rgba(230,30,30,0) 70%); pointer-events:none }
 #grande .conCaldo img { max-width:95vw; max-height:90vh }
+/* 2.39.0: la torta di come stanno i kit */
+#sezTorta h2 { margin:12px 0 6px }
+.torta { display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px 16px }
+.torta svg { flex:none; max-width:100% }
+#tortaLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:6px 24px; flex:1; min-width:0 }
+#tortaLegenda li { display:flex; gap:8px; align-items:baseline }
+#tortaLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
+#tortaLegenda b { font-variant-numeric:tabular-nums; min-width:3.2em; text-align:right }
+#tortaLegenda small { color:var(--tenue) }
 </style>
 </head>
 <body>
@@ -237,12 +248,17 @@ th:focus-within { z-index:5 }
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
   <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
   <button id="vediErrori" aria-pressed="false" title="Apre gli errori nel salvataggio delle clip sul NAS: nomi dei file scritti diversi fra le telecamere della stessa clip, telecamere che le operatrici non salvano, segnalazioni da chiarire">Errori di salvataggio</button>
+  <button id="vediTorta" aria-pressed="true" title="Mostra o nasconde il grafico di come stanno i kit installati">Come stanno i kit</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
   <button id="vediSenzaOdm" aria-pressed="false" title="Apre i kit che non registrano (non rispondono o niente registrato oggi) e non hanno un ODM aperto: sono quelli da segnalare">Non registrano, senza ODM</button>
   <button id="vediFermi" aria-pressed="false" title="Apre i kit che non rispondono o non hanno registrazioni oggi ma hanno già un ODM aperto">Fermi con un ODM aperto</button>
 </header>
 <div class="conti" id="conti"></div>
 <main>
+  <div id="sezTorta">
+  <h2 id="titolo-torta" title="Ogni kit INSTALLATO dell'ANAGRAFICA KIT, con l'ultimo giro letto: di oggi, o di prima per i registratori ancora in coda">Come stanno i kit</h2>
+  <div class="torta"><svg id="torta" viewBox="0 0 220 220" width="220" height="220" role="img" aria-label="Come stanno i kit installati"></svg><ul id="tortaLegenda"></ul></div>
+  </div>
   <div id="sezNonTorna" hidden>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
   <table id="nonTorna"><colgroup><col style="width:19%"><col style="width:6%"><col style="width:24%"><col style="width:26%"><col style="width:7%"><col style="width:8%"><col style="width:10%"></colgroup><thead><tr><th data-chiave="tipo">Cosa non torna</th><th data-chiave="kit">Kit</th><th data-chiave="dove">Dove</th><th data-ordina="no">Dettaglio</th><th data-chiave="odm_n">ODM</th><th data-chiave="odm_ap_ord" data-verso="giu">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
@@ -679,6 +695,51 @@ function statoKit(kit, fermo) {
   if (c.n) return /TOTALE/i.test(c.tipo || "") ? "ODM totale" : "ODM parziale";
   return fermo ? "non risponde, senza ODM" : "attivo";
 }
+/** 2.39.0 (Dario, 17/11: «un grafico a torta che dice quali kit funzionano perfettamente e, di quelli che hanno problemi,
+ * quali sono»): ogni kit INSTALLATO dell'anagrafica in una sola fetta, con l'ultimo giro letto (di oggi, o di prima per i
+ * registratori in coda). Una telecamera funziona se oggi registra o, coi dati vecchi, se gli ultimi giorni letti sono
+ * sopra il 50%; il kit funziona del tutto se lavorano tutte le telecamere attese e nessuna sta sotto il 90% in media. */
+const FETTE = [
+  ["ok", "Funziona, nessun ODM", "var(--verde)"],
+  ["okOdm", "Funziona ma ha un ODM aperto: da chiudere", "var(--blu)"],
+  ["parte", "Funziona in parte, senza ODM: da aprire", "var(--arancio)"],
+  ["parteOdm", "Funziona in parte, con un ODM aperto", "#c9a24a"],
+  ["fermoOdm", "Non registra, con un ODM aperto", "#d97a6f"],
+  ["fermo", "Non registra e non ha un ODM: da segnalare", "var(--rosso)"],
+  ["mai", "Mai letto da remoto", "var(--tenue)"],
+];
+function classeKit(n, perKit, regDi) {
+  const odm = !!odmCol(n).n, rr = perKit.get(n) || [], reg = regDi.get(n);
+  if (!rr.length) return reg && reg.stato ? (odm ? "fermoOdm" : "fermo") : "mai";
+  const lavora = (r) => r.vecchio ? r.perc.slice(0, 3).some(([, p]) => p != null && p >= 50) : r.adessoOrd === 2;
+  const vanno = rr.filter(lavora).length;
+  if (!vanno) return odm ? "fermoOdm" : "fermo";
+  const attese = parseInt((ANA.get(n) || {}).telecamere, 10) || rr.length;
+  const tutto = vanno >= attese && rr.every((r) => r.media == null || r.media >= 90);
+  return tutto ? (odm ? "okOdm" : "ok") : (odm ? "parteOdm" : "parte");
+}
+function disegnaTorta() {
+  const regDi = new Map(), kitDiUid = new Map();
+  for (const k of (dati.kit || [])) { const n = parseInt(k.kit, 10); if (!isNaN(n)) { kitDiUid.set(k.uid, n); if (!regDi.has(n) || k.stato) regDi.set(n, k); } }
+  const perKit = new Map();
+  for (const r of righe) { const n = kitDiUid.get(r.uid); if (n != null) (perKit.get(n) || perKit.set(n, []).get(n)).push(r); }
+  const conti = Object.fromEntries(FETTE.map(([k]) => [k, 0]));
+  let tot = 0;
+  for (const [n, a] of ANA) { if (a.stato !== "INSTALLATO") continue; conti[classeKit(n, perKit, regDi)]++; tot++; }
+  let ang = -Math.PI / 2, svg = "";
+  const R = 100, r0 = 58, cx = 110, cy = 110, pt = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  for (const [k, , col] of FETTE) {
+    const v = conti[k]; if (!v) continue;
+    const a2 = ang + 2 * Math.PI * v / tot, g = a2 - ang > Math.PI ? 1 : 0;
+    const [x1, y1] = pt(ang, R), [x2, y2] = pt(a2, R), [x3, y3] = pt(a2, r0), [x4, y4] = pt(ang, r0);
+    svg += v === tot ? `<circle cx="${cx}" cy="${cy}" r="${(R + r0) / 2}" fill="none" stroke="${col}" stroke-width="${R - r0}"/>`
+      : `<path d="M${x1} ${y1}A${R} ${R} 0 ${g} 1 ${x2} ${y2}L${x3} ${y3}A${r0} ${r0} 0 ${g} 0 ${x4} ${y4}Z" fill="${col}" stroke="var(--carta)" stroke-width="1.5"><title>${FETTE.find((f) => f[0] === k)[1]}: ${v}</title></path>`;
+    ang = a2;
+  }
+  svg += `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="30" font-weight="700" fill="var(--testo)">${tot}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="12" fill="var(--tenue)">kit installati</text>`;
+  $("#torta").innerHTML = svg;
+  $("#tortaLegenda").innerHTML = FETTE.map(([k, t, col]) => `<li><i style="background:${col}"></i><b>${conti[k]}</b><span>${t} <small>${tot ? Math.round(100 * conti[k] / tot) : 0}%</small></span></li>`).join("");
+}
 /** 2.26.0: i kit che non rispondono entrano nella tabella con una riga sola, così stanno nel loro comune. */
 const righeFermi = () => kitFermi.map((k) => ({ uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: -1, adesso: k.perche,
   adessoOrd: -1, perc: [], ore: {}, fermo: true, finito_il: k.finito_il, stato: statoKit(k.kit, true), note: odmCol(parseInt(k.kit, 10)).note,
@@ -799,6 +860,7 @@ function disegna() {
       const d = (a.k > b.k ? 1 : a.k < b.k ? -1 : 0) * ordine.verso;
       return d || (a.rs[0].gruppo + a.rs[0].nome > b.rs[0].gruppo + b.rs[0].nome ? 1 : -1);
     });
+  disegnaTorta();
   const vive = righe.filter((r) => !r.nonRisponde);   // 2.35.0: i giorni passati dei kit che non rispondono non contano qui
   const kitOk = new Set(vive.map((r) => r.uid));
   $("#conti").innerHTML = [
@@ -891,6 +953,7 @@ $("#vediErrori").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediErrori").setAttribute("aria-pressed", String(apri));
   if (apri) { $("main").scrollTop = 0; caricaErrori(); }
 });
+$("#vediTorta").addEventListener("click", () => { const sez = $("#sezTorta"); sez.hidden = !sez.hidden; $("#vediTorta").setAttribute("aria-pressed", String(!sez.hidden)); });
 // 2.34.0: anche i kit fermi si aprono da un bottone in alto (Dario, 17/11)
 for (const [btn, sid] of [["#vediSenzaOdm", "#sezSenzaOdm"], ["#vediFermi", "#sezFermi"]]) $(btn).addEventListener("click", () => {
   const sez = $(sid), apri = sez.hidden;
