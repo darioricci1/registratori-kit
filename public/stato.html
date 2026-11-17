@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.40.0 (17/11/2026) - due torte (Dario: «cliccando sulla fetta vai a quell'elenco; due torte sovrapposte, quelli che
+     vanno davvero rispetto a quello che è dichiarato nel software; quali sono problemi di batteria, con solare o meno, e di
+     solare che non funziona»): dentro l'ODM dichiarato, fuori come va davvero; accanto le cause probabili (schemi delle ore
+     e alimentazione). Ogni spicchio e ogni voce della legenda apre l'elenco dei suoi kit. -->
 <!-- version: 2.39.0 (17/11/2026) - «Come stanno i kit»: una torta con ogni kit installato in una fetta (funziona, funziona con un
      ODM da chiudere, in parte con o senza ODM, non registra con o senza ODM, mai letto), in cima alla pagina (Dario). -->
 <!-- version: 2.38.1 (17/11/2026) - in «Solo problemi» un registratore con i dati vecchi conta come problema solo per i giorni
@@ -219,9 +223,17 @@ th:focus-within { z-index:5 }
 #grande .conCaldo img { max-width:95vw; max-height:90vh }
 /* 2.39.0: la torta di come stanno i kit */
 #sezTorta h2 { margin:12px 0 6px }
-.torta { display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px 16px }
+.torte { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:12px }
+.torta { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px 16px; min-width:0 }
+.torta h3 { flex-basis:100%; margin:0; font-size:15px }
+.torta path, .torta circle { cursor:pointer } .torta path:hover { opacity:.8 }
+#tortaLegenda li, #causeLegenda li { cursor:pointer; min-height:28px } #tortaLegenda li:hover, #causeLegenda li:hover { text-decoration:underline }
+#causeLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; gap:4px; flex:1; min-width:0 }
+#causeLegenda li { display:flex; gap:8px; align-items:baseline } #causeLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
+#causeLegenda b { font-variant-numeric:tabular-nums; min-width:2.4em; text-align:right } #causeLegenda small { color:var(--tenue) }
+#fettaElenco { margin-top:12px } #fettaElenco h3 { display:flex; gap:12px; align-items:center; font-size:15px }
 .torta svg { flex:none; max-width:100% }
-#tortaLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:6px 24px; flex:1; min-width:0 }
+#tortaLegenda { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr; gap:4px; flex:1; min-width:0 }
 #tortaLegenda li { display:flex; gap:8px; align-items:baseline }
 #tortaLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
 #tortaLegenda b { font-variant-numeric:tabular-nums; min-width:3.2em; text-align:right }
@@ -257,7 +269,14 @@ th:focus-within { z-index:5 }
 <main>
   <div id="sezTorta">
   <h2 id="titolo-torta" title="Ogni kit INSTALLATO dell'ANAGRAFICA KIT, con l'ultimo giro letto: di oggi, o di prima per i registratori ancora in coda">Come stanno i kit</h2>
-  <div class="torta"><svg id="torta" viewBox="0 0 220 220" width="220" height="220" role="img" aria-label="Come stanno i kit installati"></svg><ul id="tortaLegenda"></ul></div>
+  <div class="torte">
+    <div class="torta"><h3 title="Dentro: quello che dice il software (l'ODM aperto). Fuori, per ogni spicchio di dentro: come va davvero il kit secondo i registratori">Dichiarato e reale</h3>
+      <svg id="torta" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="ODM dichiarati e stato reale dei kit"></svg><ul id="tortaLegenda"></ul></div>
+    <div class="torta"><h3 title="Per i kit che non funzionano del tutto o non rispondono: la causa probabile letta dallo schema delle ore e dall'alimentazione (Schemi delle ore del 14/11)">Perché non vanno</h3>
+      <svg id="tortaCause" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="Cause probabili dei kit che non funzionano"></svg><ul id="causeLegenda"></ul></div>
+  </div>
+  <div id="fettaElenco" hidden><h3><span id="fettaTitolo"></span> <button id="fettaChiudi" title="Chiude l'elenco">Chiudi</button></h3>
+  <table id="fettaTab"><thead><tr><th data-chiave="comune">Comune</th><th data-chiave="nome">Kit</th><th data-chiave="alim">Alimentazione</th><th data-chiave="dich">Nel software</th><th data-chiave="reale">Davvero</th><th data-chiave="causa">Causa probabile</th><th data-chiave="fare">Cosa fare</th></tr></thead><tbody></tbody></table></div>
   </div>
   <div id="sezNonTorna" hidden>
   <h2><span id="titolo-nonTorna"></span> <button data-scarica="nonTorna" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
@@ -699,46 +718,114 @@ function statoKit(kit, fermo) {
  * quali sono»): ogni kit INSTALLATO dell'anagrafica in una sola fetta, con l'ultimo giro letto (di oggi, o di prima per i
  * registratori in coda). Una telecamera funziona se oggi registra o, coi dati vecchi, se gli ultimi giorni letti sono
  * sopra il 50%; il kit funziona del tutto se lavorano tutte le telecamere attese e nessuna sta sotto il 90% in media. */
-const FETTE = [
-  ["ok", "Funziona, nessun ODM", "var(--verde)"],
-  ["okOdm", "Funziona ma ha un ODM aperto: da chiudere", "var(--blu)"],
-  ["parte", "Funziona in parte, senza ODM: da aprire", "var(--arancio)"],
-  ["parteOdm", "Funziona in parte, con un ODM aperto", "#c9a24a"],
-  ["fermoOdm", "Non registra, con un ODM aperto", "#d97a6f"],
-  ["fermo", "Non registra e non ha un ODM: da segnalare", "var(--rosso)"],
-  ["mai", "Mai letto da remoto", "var(--tenue)"],
+const DICH = [["nessuno", "Nessun ODM", "var(--verde-chiaro)", "var(--verde)"], ["parziale", "ODM parziale", "var(--arancio-chiaro)", "var(--arancio)"], ["totale", "ODM totale", "var(--rosso-chiaro)", "var(--rosso)"]];
+const REALE = [["ok", "funziona", "var(--verde)"], ["parte", "funziona in parte", "var(--arancio)"], ["fermo", "non registra", "var(--rosso)"], ["mai", "mai letto", "var(--tenue)"]];
+/** 2.40.0: la causa probabile dei kit che non vanno, dallo schema delle ore (dati/schemi_ore.json) e dall'alimentazione. */
+const CAUSE = [
+  ["batt", "Batteria senza pannello: il lampione non la ricarica", "#8a5cd6"],
+  ["solTiene", "Solare: la batteria non tiene più", "#c9a24a"],
+  ["solPannello", "Solare: il pannello non ricarica (ombra, guasto, giornate corte)", "var(--arancio)"],
+  ["solMuto", "Solare che non risponde mai: batteria scarica il primo sospetto", "#d97a6f"],
+  ["tele", "Una telecamera sola: telecamera, cavo o satellite", "var(--blu)"],
+  ["spento", "Spento per giorni o fermo adesso", "var(--rosso)"],
+  ["muto", "Non risponde, a batteria o 220V: non si sa", "var(--tenue)"],
+  ["uvms", "Nessun registratore in UVMS", "#5b6b85"],
+  ["altro", "Altro o schema non chiaro", "#9aa3b2"],
 ];
-function classeKit(n, perKit, regDi) {
-  const odm = !!odmCol(n).n, rr = perKit.get(n) || [], reg = regDi.get(n);
-  if (!rr.length) return reg && reg.stato ? (odm ? "fermoOdm" : "fermo") : "mai";
+function causaKit(sc, alim) {
+  if (!sc) return "altro";
+  const g = String(sc.gruppo || "")[0], c = String(sc.causa || "").toLowerCase();
+  if (g === "A") return "batt";
+  if (g === "B") return /non tiene/.test(c) ? "solTiene" : "solPannello";
+  if (g === "N") return /solare/.test(String(sc.alim || alim || "")) ? "solMuto" : "muto";
+  if (g === "G") return "tele";
+  if ("CDE".includes(g)) return "spento";
+  if (g === "M") return "uvms";
+  return "altro";
+}
+let TORTA = [], fettaScelta = null, ordFetta = { chiave: "comune", verso: 1 };
+function realeKit(n, perKit, regDi) {
+  const rr = perKit.get(n) || [], reg = regDi.get(n);
+  if (!rr.length) return reg && reg.stato ? "fermo" : "mai";
   const lavora = (r) => r.vecchio ? r.perc.slice(0, 3).some(([, p]) => p != null && p >= 50) : r.adessoOrd === 2;
   const vanno = rr.filter(lavora).length;
-  if (!vanno) return odm ? "fermoOdm" : "fermo";
+  if (!vanno) return "fermo";
   const attese = parseInt((ANA.get(n) || {}).telecamere, 10) || rr.length;
-  const tutto = vanno >= attese && rr.every((r) => r.media == null || r.media >= 90);
-  return tutto ? (odm ? "okOdm" : "ok") : (odm ? "parteOdm" : "parte");
+  return vanno >= attese && rr.every((r) => r.media == null || r.media >= 90) ? "ok" : "parte";
+}
+function arco(cx, cy, R, r0, a1, a2) {
+  const pt = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)], g = a2 - a1 > Math.PI ? 1 : 0;
+  if (a2 - a1 >= 2 * Math.PI - 1e-6) a2 = a1 + 2 * Math.PI - 1e-4;
+  const [x1, y1] = pt(a1, R), [x2, y2] = pt(a2, R), [x3, y3] = pt(a2, r0), [x4, y4] = pt(a1, r0);
+  return `M${x1.toFixed(2)} ${y1.toFixed(2)}A${R} ${R} 0 ${g} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}L${x3.toFixed(2)} ${y3.toFixed(2)}A${r0} ${r0} 0 ${g} 0 ${x4.toFixed(2)} ${y4.toFixed(2)}Z`;
 }
 function disegnaTorta() {
+  if (SCHEMI === null && !disegnaTorta.chiesto) { disegnaTorta.chiesto = true; fetch("/api/p2p?op=schemi").then((r) => r.ok ? r.json() : null).then((j) => { if (j && SCHEMI === null) SCHEMI = j; disegnaTorta(); }).catch(() => {}); }
   const regDi = new Map(), kitDiUid = new Map();
   for (const k of (dati.kit || [])) { const n = parseInt(k.kit, 10); if (!isNaN(n)) { kitDiUid.set(k.uid, n); if (!regDi.has(n) || k.stato) regDi.set(n, k); } }
   const perKit = new Map();
   for (const r of righe) { const n = kitDiUid.get(r.uid); if (n != null) (perKit.get(n) || perKit.set(n, []).get(n)).push(r); }
-  const conti = Object.fromEntries(FETTE.map(([k]) => [k, 0]));
-  let tot = 0;
-  for (const [n, a] of ANA) { if (a.stato !== "INSTALLATO") continue; conti[classeKit(n, perKit, regDi)]++; tot++; }
-  let ang = -Math.PI / 2, svg = "";
-  const R = 100, r0 = 58, cx = 110, cy = 110, pt = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-  for (const [k, , col] of FETTE) {
-    const v = conti[k]; if (!v) continue;
-    const a2 = ang + 2 * Math.PI * v / tot, g = a2 - ang > Math.PI ? 1 : 0;
-    const [x1, y1] = pt(ang, R), [x2, y2] = pt(a2, R), [x3, y3] = pt(a2, r0), [x4, y4] = pt(ang, r0);
-    svg += v === tot ? `<circle cx="${cx}" cy="${cy}" r="${(R + r0) / 2}" fill="none" stroke="${col}" stroke-width="${R - r0}"/>`
-      : `<path d="M${x1} ${y1}A${R} ${R} 0 ${g} 1 ${x2} ${y2}L${x3} ${y3}A${r0} ${r0} 0 ${g} 0 ${x4} ${y4}Z" fill="${col}" stroke="var(--carta)" stroke-width="1.5"><title>${FETTE.find((f) => f[0] === k)[1]}: ${v}</title></path>`;
+  const sch = new Map(((SCHEMI && SCHEMI.righe) || []).map((x) => [Number(x.kit), x]));
+  TORTA = [];
+  for (const [n, a] of ANA) {
+    if (a.stato !== "INSTALLATO") continue;
+    const c = odmCol(n), dich = !c.n ? "nessuno" : /TOTALE/i.test(c.tipo || "") ? "totale" : "parziale", reale = realeKit(n, perKit, regDi);
+    const s = sch.get(n), reg = regDi.get(n);
+    TORTA.push({ n, comune: a.cloud || a.cliente || (reg && reg.gruppo) || "-", nome: n + " · " + (a.indirizzo || (reg && reg.nome) || ""), alim: alimentazione(n) || "-",
+      dich, reale, causa: reale === "ok" ? "" : causaKit(s, alimentazione(n)), causaTesto: s ? s.causa || "" : "", fare: s ? s.fare || "" : "", odm: c.n ? c.n + " " + (c.tipo || "") : "" });
+  }
+  const tot = TORTA.length, cx = 120, cy = 120;
+  // dentro il dichiarato, fuori il reale dentro ogni spicchio
+  let svg = "", ang = -Math.PI / 2;
+  for (const [d, dt, col] of DICH) {
+    const sub = TORTA.filter((x) => x.dich === d); if (!sub.length) continue;
+    const a2 = ang + 2 * Math.PI * sub.length / tot;
+    svg += `<path d="${arco(cx, cy, 66, 34, ang, a2)}" fill="${col}" stroke="var(--carta)" stroke-width="1.5" data-f="dich:${d}"><title>${dt}: ${sub.length}</title></path>`;
+    let b = ang;
+    for (const [r, rt, rc] of REALE) {
+      const v = sub.filter((x) => x.reale === r).length; if (!v) continue;
+      const b2 = b + 2 * Math.PI * v / tot;
+      svg += `<path d="${arco(cx, cy, 112, 70, b, b2)}" fill="${rc}" stroke="var(--carta)" stroke-width="1.5" data-f="dr:${d}:${r}"><title>${dt}, ${rt}: ${v}</title></path>`;
+      b = b2;
+    }
     ang = a2;
   }
-  svg += `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="30" font-weight="700" fill="var(--testo)">${tot}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="12" fill="var(--tenue)">kit installati</text>`;
+  svg += `<text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="22" font-weight="700" fill="var(--testo)">${tot}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="10" fill="var(--tenue)">kit</text>`;
   $("#torta").innerHTML = svg;
-  $("#tortaLegenda").innerHTML = FETTE.map(([k, t, col]) => `<li><i style="background:${col}"></i><b>${conti[k]}</b><span>${t} <small>${tot ? Math.round(100 * conti[k] / tot) : 0}%</small></span></li>`).join("");
+  const conta = (f) => TORTA.filter(f).length, pc = (v) => tot ? Math.round(100 * v / tot) + "%" : "";
+  let leg = "";
+  for (const [d, dt, col] of DICH) {
+    const sub = TORTA.filter((x) => x.dich === d);
+    leg += `<li data-f="dich:${d}"><i style="background:${col}"></i><b>${sub.length}</b><span><strong>${dt}</strong> <small>${pc(sub.length)}</small></span></li>`;
+    for (const [r, rt, rc] of REALE) { const v = sub.filter((x) => x.reale === r).length; if (v) leg += `<li data-f="dr:${d}:${r}" style="padding-left:20px"><i style="background:${rc}"></i><b>${v}</b><span>${rt}${d === "nessuno" && r !== "ok" ? " <small>(da aprire)</small>" : d !== "nessuno" && r === "ok" ? " <small>(da chiudere)</small>" : ""}</span></li>`; }
+  }
+  $("#tortaLegenda").innerHTML = leg;
+  // le cause
+  const prob = TORTA.filter((x) => x.reale !== "ok"), tp = prob.length;
+  let sc = "", a = -Math.PI / 2, lc = "";
+  for (const [k, t, col] of CAUSE) {
+    const v = prob.filter((x) => x.causa === k).length; if (!v) continue;
+    const a2 = a + 2 * Math.PI * v / tp;
+    sc += `<path d="${arco(cx, cy, 112, 60, a, a2)}" fill="${col}" stroke="var(--carta)" stroke-width="1.5" data-f="causa:${k}"><title>${t}: ${v}</title></path>`;
+    lc += `<li data-f="causa:${k}"><i style="background:${col}"></i><b>${v}</b><span>${t}</span></li>`;
+    a = a2;
+  }
+  sc += `<text x="${cx}" y="${cy + 2}" text-anchor="middle" font-size="22" font-weight="700" fill="var(--testo)">${tp}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="10" fill="var(--tenue)">da sistemare</text>`;
+  $("#tortaCause").innerHTML = sc;
+  $("#causeLegenda").innerHTML = lc + (SCHEMI ? "" : "<li><small>Le cause arrivano con gli schemi delle ore…</small></li>");
+  if (fettaScelta) mostraFetta(fettaScelta);
+}
+const NOMI_DICH = Object.fromEntries(DICH.map((x) => [x[0], x[1]])), NOMI_REALE = Object.fromEntries(REALE.map((x) => [x[0], x[1]])), NOMI_CAUSA = Object.fromEntries(CAUSE.map((x) => [x[0], x[1]]));
+function mostraFetta(f) {
+  fettaScelta = f;
+  const [t, a, b] = f.split(":");
+  const l = TORTA.filter((x) => t === "dich" ? x.dich === a : t === "dr" ? x.dich === a && x.reale === b : x.causa === a)
+    .sort((p, q) => { const k = ordFetta.chiave === "nome" ? "n" : ordFetta.chiave, x = p[k] ?? "", y = q[k] ?? "";
+      return (typeof x === "number" ? x - y : String(x).localeCompare(String(y), "it", { numeric: true })) * ordFetta.verso || p.n - q.n; });
+  $("#fettaTitolo").textContent = (t === "dich" ? NOMI_DICH[a] : t === "dr" ? NOMI_DICH[a] + ", " + NOMI_REALE[b] : NOMI_CAUSA[a]) + " (" + l.length + ")";
+  $("#fettaTab tbody").innerHTML = l.map((x) => `<tr><td>${esc(x.comune)}</td><td>${esc(x.nome)}</td><td>${esc(x.alim)}</td><td>${esc(x.odm || NOMI_DICH[x.dich])}</td><td>${esc(NOMI_REALE[x.reale])}</td><td title="${esc(x.causaTesto)}">${esc(x.causa ? NOMI_CAUSA[x.causa] : "")}</td><td>${esc(x.fare)}</td></tr>`).join("");
+  $("#fettaElenco").hidden = false;
+  $("#fettaElenco").scrollIntoView({ block: "nearest" });
 }
 /** 2.26.0: i kit che non rispondono entrano nella tabella con una riga sola, così stanno nel loro comune. */
 const righeFermi = () => kitFermi.map((k) => ({ uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: -1, adesso: k.perche,
@@ -953,6 +1040,9 @@ $("#vediErrori").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediErrori").setAttribute("aria-pressed", String(apri));
   if (apri) { $("main").scrollTop = 0; caricaErrori(); }
 });
+for (const id of ["#torta", "#tortaLegenda", "#tortaCause", "#causeLegenda"]) $(id).addEventListener("click", (e) => { const el = e.target.closest("[data-f]"); if (el) mostraFetta(el.dataset.f); });
+$("#fettaChiudi").addEventListener("click", () => { fettaScelta = null; $("#fettaElenco").hidden = true; });
+tabellaOrdinabile($("#fettaTab"), { alCambio: (chiave, verso) => { ordFetta = { chiave, verso }; if (fettaScelta) mostraFetta(fettaScelta); } });
 $("#vediTorta").addEventListener("click", () => { const sez = $("#sezTorta"); sez.hidden = !sez.hidden; $("#vediTorta").setAttribute("aria-pressed", String(!sez.hidden)); });
 // 2.34.0: anche i kit fermi si aprono da un bottone in alto (Dario, 17/11)
 for (const [btn, sid] of [["#vediSenzaOdm", "#sezSenzaOdm"], ["#vediFermi", "#sezFermi"]]) $(btn).addEventListener("click", () => {
