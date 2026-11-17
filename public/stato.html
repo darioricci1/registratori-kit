@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.36.0 (17/11/2026) - in «Telecamere da sistemare» la foto si vede già nella riga, piccola; toccandola si apre
+     grande come prima (Dario: «puoi far vedere le foto senza cliccare vedi foto?»). Le foto si caricano quando arrivano in vista. -->
 <!-- version: 2.35.0 (17/11/2026) - i kit che oggi non rispondono (anche con un ODM di guasto totale) mostrano le
      telecamere e i giorni che l'archivio aveva letto nei giri di prima (Dario: «se in passato hai avuto dei dati mostrali»). -->
 <!-- version: 2.34.0 (17/11/2026) - «Non registrano, senza ODM» e «Fermi con un ODM aperto» si aprono da due bottoni in alto,
@@ -199,6 +201,9 @@ th:focus-within { z-index:5 }
 .riquadro-entra h1{font-size:26px;margin:0}
 .riquadro-entra p{margin:0;opacity:.75}
 .riquadro-entra .grande{font-size:18px;min-height:48px;padding:10px 28px}
+/* 2.36.0: la foto si vede subito nella riga (Dario: «puoi far vedere le foto senza cliccare vedi foto?») */
+#sistemare button.mini { padding:2px; min-height:40px; line-height:0; background:none }
+#sistemare button.mini img { display:block; width:200px; max-width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:6px; background:#0001 }
 </style>
 </head>
 <body>
@@ -559,7 +564,7 @@ function disegnaSistemare() {
     <td class="${cls(x)}" title="${esc(x.nota)}">${esc(x.problema)}</td><td title="${esc(x.nota)}">${esc(x.certezza)}</td><td>${esc(x.cosa_fare)}</td>
     <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
     <td class="num">${x.rango ?? "-"}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
-    <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}">Vedi foto</button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
+    <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" class="mini" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))} · toccala per vederla grande"><img loading="lazy" src="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" alt="foto di ${esc(x.kit)} CH ${String(x.cam).padStart(2, "0")}"></button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
 }
 /** 2.31.0: gli schemi delle ore per kit (op=schemi, letto una volta): prima i gruppi con un problema, gli OK in fondo. */
 let SCHEMI = null, ordSc = { chiave: "gruppo", verso: 1 };
