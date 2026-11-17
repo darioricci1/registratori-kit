@@ -146,9 +146,63 @@
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: 9 abbandoni su 9 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "nota": "telecamera 3: 13 abbandoni su 13 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 1.0
+   "quota": 1.0,
+   "caldo": [
+    [
+     0.951,
+     0.325
+    ],
+    [
+     0.949,
+     0.312
+    ],
+    [
+     0.987,
+     0.35
+    ],
+    [
+     0.935,
+     0.32
+    ],
+    [
+     0.96,
+     0.33
+    ],
+    [
+     0.977,
+     0.345
+    ],
+    [
+     0.96,
+     0.295
+    ],
+    [
+     0.96,
+     0.293
+    ],
+    [
+     0.957,
+     0.316
+    ],
+    [
+     0.962,
+     0.33
+    ],
+    [
+     0.952,
+     0.314
+    ],
+    [
+     0.965,
+     0.325
+    ],
+    [
+     0.96,
+     0.308
+    ]
+   ]
   },
   {
    "kit": "KIT516",
@@ -167,7 +221,25 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.0% dell'immagine (4 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 1.0
+   "quota": 1.0,
+   "caldo": [
+    [
+     0.347,
+     0.277
+    ],
+    [
+     0.329,
+     0.193
+    ],
+    [
+     0.333,
+     0.09
+    ],
+    [
+     0.355,
+     0.218
+    ]
+   ]
   },
   {
    "kit": "KIT651",
@@ -186,7 +258,94 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: 5 abbandoni su 5 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 1.0
+   "quota": 1.0,
+   "caldo": [
+    [
+     0.4,
+     0.965
+    ],
+    [
+     0.485,
+     0.95
+    ],
+    [
+     0.485,
+     0.945
+    ],
+    [
+     0.376,
+     0.962
+    ],
+    [
+     0.41,
+     0.935
+    ]
+   ]
+  },
+  {
+   "kit": "KIT631",
+   "kit_n": 631,
+   "ex": false,
+   "comune": "COMO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "2edf76aa5a",
+   "giorno": "2026-10-15",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.3% dell'immagine (10 su 11 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.91,
+   "caldo": [
+    [
+     0.263,
+     0.166
+    ],
+    [
+     0.257,
+     0.163
+    ],
+    [
+     0.253,
+     0.169
+    ],
+    [
+     0.26,
+     0.152
+    ],
+    [
+     0.319,
+     0.208
+    ],
+    [
+     0.248,
+     0.166
+    ],
+    [
+     0.252,
+     0.17
+    ],
+    [
+     0.253,
+     0.163
+    ],
+    [
+     0.253,
+     0.162
+    ],
+    [
+     0.229,
+     0.163
+    ],
+    [
+     0.24,
+     0.16
+    ]
+   ]
   },
   {
    "kit": "KIT571",
@@ -203,9 +362,209 @@
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: 6 abbandoni su 7 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "nota": "telecamera 3: 7 abbandoni su 8 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.86
+   "quota": 0.88,
+   "caldo": [
+    [
+     0.34,
+     0.96
+    ],
+    [
+     0.155,
+     0.965
+    ],
+    [
+     0.33,
+     0.875
+    ],
+    [
+     0.35,
+     0.915
+    ],
+    [
+     0.365,
+     0.92
+    ],
+    [
+     0.365,
+     0.965
+    ],
+    [
+     0.27,
+     0.96
+    ],
+    [
+     0.325,
+     0.925
+    ]
+   ]
+  },
+  {
+   "kit": "KIT522",
+   "kit_n": 522,
+   "ex": false,
+   "comune": "COMO",
+   "cam": 4,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "a57146ac50",
+   "giorno": "2026-11-05",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 4: l'oggetto abbandonato è largo in media il 2.9% dell'immagine (21 su 25 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.84,
+   "caldo": [
+    [
+     0.33,
+     0.37
+    ],
+    [
+     0.325,
+     0.37
+    ],
+    [
+     0.565,
+     0.088
+    ],
+    [
+     0.557,
+     0.075
+    ],
+    [
+     0.592,
+     0.08
+    ],
+    [
+     0.53,
+     0.085
+    ],
+    [
+     0.573,
+     0.081
+    ],
+    [
+     0.558,
+     0.087
+    ],
+    [
+     0.585,
+     0.07
+    ],
+    [
+     0.532,
+     0.077
+    ],
+    [
+     0.563,
+     0.02
+    ],
+    [
+     0.358,
+     0.495
+    ],
+    [
+     0.325,
+     0.48
+    ],
+    [
+     0.586,
+     0.077
+    ],
+    [
+     0.573,
+     0.057
+    ],
+    [
+     0.591,
+     0.073
+    ],
+    [
+     0.558,
+     0.078
+    ],
+    [
+     0.557,
+     0.092
+    ],
+    [
+     0.564,
+     0.074
+    ],
+    [
+     0.308,
+     0.371
+    ],
+    [
+     0.565,
+     0.043
+    ],
+    [
+     0.547,
+     0.085
+    ],
+    [
+     0.568,
+     0.085
+    ],
+    [
+     0.565,
+     0.086
+    ],
+    [
+     0.561,
+     0.072
+    ]
+   ]
+  },
+  {
+   "kit": "KIT653",
+   "kit_n": 653,
+   "ex": false,
+   "comune": "CASTENASO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "0d39f26560",
+   "giorno": "2026-10-26",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.6% dell'immagine (5 su 6 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.83,
+   "caldo": [
+    [
+     0.536,
+     0.203
+    ],
+    [
+     0.582,
+     0.143
+    ],
+    [
+     0.602,
+     0.14
+    ],
+    [
+     0.581,
+     0.159
+    ],
+    [
+     0.492,
+     0.193
+    ],
+    [
+     0.578,
+     0.163
+    ]
+   ]
   },
   {
    "kit": "KIT447",
@@ -224,7 +583,78 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.3% dell'immagine (5 su 6 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.83
+   "quota": 0.83,
+   "caldo": [
+    [
+     0.52,
+     0.181
+    ],
+    [
+     0.498,
+     0.168
+    ],
+    [
+     0.5,
+     0.153
+    ],
+    [
+     0.519,
+     0.183
+    ],
+    [
+     0.57,
+     0.147
+    ],
+    [
+     0.526,
+     0.181
+    ]
+   ]
+  },
+  {
+   "kit": "KIT248",
+   "kit_n": 248,
+   "ex": false,
+   "comune": "MARANELLO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "ccc67e556f",
+   "giorno": "2026-10-08",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.0% dell'immagine (5 su 6 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.83,
+   "caldo": [
+    [
+     0.25,
+     0.36
+    ],
+    [
+     0.227,
+     0.378
+    ],
+    [
+     0.26,
+     0.35
+    ],
+    [
+     0.258,
+     0.333
+    ],
+    [
+     0.259,
+     0.345
+    ],
+    [
+     0.259,
+     0.345
+    ]
+   ]
   },
   {
    "kit": "KIT403",
@@ -236,52 +666,133 @@
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "59053500b8",
-   "giorno": "2026-10-24",
+   "giro": "2c243aceb1",
+   "giorno": "2026-10-27",
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.6% dell'immagine (7 su 9 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.6% dell'immagine (16 su 20 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.78
+   "quota": 0.8,
+   "caldo": [
+    [
+     0.886,
+     0.175
+    ],
+    [
+     0.587,
+     0.185
+    ],
+    [
+     0.916,
+     0.177
+    ],
+    [
+     0.47,
+     0.279
+    ],
+    [
+     0.88,
+     0.249
+    ],
+    [
+     0.775,
+     0.24
+    ],
+    [
+     0.468,
+     0.191
+    ],
+    [
+     0.592,
+     0.18
+    ],
+    [
+     0.915,
+     0.245
+    ],
+    [
+     0.506,
+     0.235
+    ],
+    [
+     0.88,
+     0.25
+    ],
+    [
+     0.899,
+     0.168
+    ],
+    [
+     0.458,
+     0.182
+    ],
+    [
+     0.464,
+     0.19
+    ],
+    [
+     0.802,
+     0.24
+    ],
+    [
+     0.899,
+     0.254
+    ],
+    [
+     0.47,
+     0.19
+    ],
+    [
+     0.457,
+     0.191
+    ],
+    [
+     0.901,
+     0.245
+    ],
+    [
+     0.874,
+     0.217
+    ]
+   ]
   },
   {
-   "kit": "KIT522",
-   "kit_n": 522,
+   "kit": "KIT526",
+   "kit_n": 526,
    "ex": false,
-   "comune": "COMO",
-   "cam": 4,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "a57146ac50",
-   "giorno": "2026-11-05",
-   "problema": "da spostare: abbandoni lontani",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 4: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (9 su 12 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
-   "gruppo": 1.5,
-   "quota": 0.75
-  },
-  {
-   "kit": "KIT631",
-   "kit_n": 631,
-   "ex": false,
-   "comune": "COMO",
+   "comune": "CASTENASO",
    "cam": 1,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "50b9ae0f27",
-   "giorno": "2026-10-13",
+   "giro": "adee35f829",
+   "giorno": "2026-11-02",
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.3% dell'immagine (3 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.4% dell'immagine (3 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.75
+   "quota": 0.75,
+   "caldo": [
+    [
+     0.466,
+     0.228
+    ],
+    [
+     0.575,
+     0.258
+    ],
+    [
+     0.57,
+     0.242
+    ],
+    [
+     0.52,
+     0.242
+    ]
+   ]
   },
   {
    "kit": "KIT266",
@@ -300,7 +811,330 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 2: 3 abbandoni su 4 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.75
+   "quota": 0.75,
+   "caldo": [
+    [
+     0.065,
+     0.31
+    ],
+    [
+     0.14,
+     0.16
+    ],
+    [
+     0.035,
+     0.21
+    ],
+    [
+     0.08,
+     0.03
+    ]
+   ]
+  },
+  {
+   "kit": "KIT672",
+   "kit_n": 672,
+   "ex": false,
+   "comune": "MONZUNO",
+   "cam": 2,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "e312fb393b",
+   "giorno": "2026-08-14",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "3 abbandoni su 4 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.75,
+   "caldo": [
+    [
+     0.89,
+     0.08
+    ],
+    [
+     0.93,
+     0.255
+    ],
+    [
+     0.885,
+     0.235
+    ]
+   ]
+  },
+  {
+   "kit": "KIT467",
+   "kit_n": 467,
+   "ex": false,
+   "comune": "SANT ILARIO D ENZA",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "e5bc7f180d",
+   "giorno": "2026-10-06",
+   "problema": "da spostare: abbandoni sul margine",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: 3 abbandoni su 4 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "gruppo": 1.5,
+   "quota": 0.75,
+   "caldo": [
+    [
+     0.51,
+     0.95
+    ],
+    [
+     0.53,
+     0.94
+    ],
+    [
+     0.545,
+     0.905
+    ],
+    [
+     0.745,
+     0.85
+    ]
+   ]
+  },
+  {
+   "kit": "KIT597",
+   "kit_n": 597,
+   "ex": false,
+   "comune": "UBR-BAGNACAVALLO",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "cd3e1685ab",
+   "giorno": "2026-10-11",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (3 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.75,
+   "caldo": [
+    [
+     0.69,
+     0.375
+    ],
+    [
+     0.706,
+     0.388
+    ],
+    [
+     0.7,
+     0.195
+    ],
+    [
+     0.8,
+     0.435
+    ]
+   ]
+  },
+  {
+   "kit": "KIT203",
+   "kit_n": 203,
+   "ex": false,
+   "comune": "CANOSA DI PUGLIA",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "67b239e7b6",
+   "giorno": "2026-11-05",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (24 su 33 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.73,
+   "caldo": [
+    [
+     0.865,
+     0.255
+    ],
+    [
+     0.327,
+     0.07
+    ],
+    [
+     0.291,
+     0.084
+    ],
+    [
+     0.318,
+     0.095
+    ],
+    [
+     0.259,
+     0.08
+    ],
+    [
+     0.286,
+     0.084
+    ],
+    [
+     0.27,
+     0.107
+    ],
+    [
+     0.265,
+     0.077
+    ],
+    [
+     0.295,
+     0.065
+    ],
+    [
+     0.327,
+     0.091
+    ],
+    [
+     0.295,
+     0.088
+    ],
+    [
+     0.303,
+     0.083
+    ],
+    [
+     0.29,
+     0.075
+    ],
+    [
+     0.314,
+     0.077
+    ],
+    [
+     0.305,
+     0.062
+    ],
+    [
+     0.282,
+     0.088
+    ],
+    [
+     0.289,
+     0.085
+    ],
+    [
+     0.329,
+     0.076
+    ],
+    [
+     0.29,
+     0.083
+    ],
+    [
+     0.255,
+     0.095
+    ],
+    [
+     0.245,
+     0.099
+    ],
+    [
+     0.377,
+     0.203
+    ],
+    [
+     0.325,
+     0.092
+    ],
+    [
+     0.288,
+     0.08
+    ],
+    [
+     0.3,
+     0.074
+    ],
+    [
+     0.275,
+     0.086
+    ],
+    [
+     0.314,
+     0.07
+    ],
+    [
+     0.287,
+     0.082
+    ],
+    [
+     0.321,
+     0.068
+    ],
+    [
+     0.334,
+     0.075
+    ],
+    [
+     0.273,
+     0.092
+    ],
+    [
+     0.28,
+     0.085
+    ],
+    [
+     0.237,
+     0.103
+    ]
+   ]
+  },
+  {
+   "kit": "KIT597",
+   "kit_n": 597,
+   "ex": false,
+   "comune": "UBR-BAGNACAVALLO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "cd3e1685ab",
+   "giorno": "2026-10-11",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "8 abbandoni su 11 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.73,
+   "caldo": [
+    [
+     0.299,
+     0.375
+    ],
+    [
+     0.74,
+     0.265
+    ],
+    [
+     0.255,
+     0.16
+    ],
+    [
+     0.278,
+     0.171
+    ],
+    [
+     0.26,
+     0.152
+    ],
+    [
+     0.283,
+     0.145
+    ]
+   ]
   },
   {
    "kit": "KIT549",
@@ -317,73 +1151,46 @@
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 2: 3 abbandoni su 4 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "nota": "telecamera 2: 5 abbandoni su 7 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.75
-  },
-  {
-   "kit": "KIT314",
-   "kit_n": 314,
-   "ex": false,
-   "comune": "SAN LAZZARO DI SAVENA",
-   "cam": 3,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "3ddc18b356",
-   "giorno": "2026-10-29",
-   "problema": "da spostare: abbandoni lontani",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (3 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
-   "gruppo": 1.5,
-   "quota": 0.75
-  },
-  {
-   "kit": "KIT597",
-   "kit_n": 597,
-   "ex": false,
-   "comune": "UBR-BAGNACAVALLO",
-   "cam": 3,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "cd3e1685ab",
-   "giorno": "2026-10-11",
-   "problema": "da spostare: abbandoni lontani",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (3 su 4 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
-   "gruppo": 1.5,
-   "quota": 0.75
-  },
-  {
-   "kit": "KIT596",
-   "kit_n": 596,
-   "ex": false,
-   "comune": "GEOVEST-CALDERARA DI RENO",
-   "cam": 3,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "06530146db",
-   "giorno": "2026-10-27",
-   "problema": "da spostare: abbandoni sul margine",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: 8 abbandoni su 11 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
-   "gruppo": 1.5,
-   "quota": 0.73
+   "quota": 0.71,
+   "caldo": [
+    [
+     0.935,
+     0.855
+    ],
+    [
+     0.972,
+     0.69
+    ],
+    [
+     0.532,
+     0.77
+    ],
+    [
+     0.98,
+     0.69
+    ],
+    [
+     0.568,
+     0.79
+    ],
+    [
+     0.94,
+     0.835
+    ],
+    [
+     0.96,
+     0.895
+    ]
+   ]
   },
   {
    "kit": "KIT447",
    "kit_n": 447,
    "ex": false,
    "comune": "GRIZZANA MORANDI",
-   "cam": 1,
+   "cam": 3,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
@@ -393,47 +1200,27 @@
    "problema": "da spostare: abbandoni dietro i cassonetti",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "5 abbandoni su 7 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "nota": "7 abbandoni su 10 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 3): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.71
-  },
-  {
-   "kit": "KIT597",
-   "kit_n": 597,
-   "ex": false,
-   "comune": "UBR-BAGNACAVALLO",
-   "cam": 1,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "cd3e1685ab",
-   "giorno": "2026-10-11",
-   "problema": "da spostare: abbandoni dietro i cassonetti",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "7 abbandoni su 10 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
-   "gruppo": 1.5,
-   "quota": 0.7
-  },
-  {
-   "kit": "KIT203",
-   "kit_n": 203,
-   "ex": false,
-   "comune": "CANOSA DI PUGLIA",
-   "cam": 1,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "a2cb96b38f",
-   "giorno": "2026-11-04",
-   "problema": "da spostare: abbandoni lontani",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.3% dell'immagine (11 su 16 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
-   "gruppo": 1.5,
-   "quota": 0.69
+   "quota": 0.7,
+   "caldo": [
+    [
+     0.88,
+     0.53
+    ],
+    [
+     0.295,
+     0.625
+    ],
+    [
+     0.325,
+     0.747
+    ],
+    [
+     0.855,
+     0.558
+    ]
+   ]
   },
   {
    "kit": "KIT279",
@@ -452,7 +1239,89 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "15 abbandoni su 22 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.68
+   "quota": 0.68,
+   "caldo": [
+    [
+     0.483,
+     0.193
+    ],
+    [
+     0.644,
+     0.108
+    ],
+    [
+     0.475,
+     0.206
+    ],
+    [
+     0.409,
+     0.085
+    ],
+    [
+     0.41,
+     0.09
+    ],
+    [
+     0.583,
+     0.215
+    ],
+    [
+     0.6,
+     0.22
+    ],
+    [
+     0.563,
+     0.235
+    ],
+    [
+     0.473,
+     0.195
+    ],
+    [
+     0.61,
+     0.111
+    ],
+    [
+     0.381,
+     0.239
+    ],
+    [
+     0.582,
+     0.198
+    ],
+    [
+     0.587,
+     0.2
+    ],
+    [
+     0.578,
+     0.181
+    ],
+    [
+     0.242,
+     0.239
+    ],
+    [
+     0.48,
+     0.189
+    ],
+    [
+     0.595,
+     0.205
+    ],
+    [
+     0.592,
+     0.198
+    ],
+    [
+     0.494,
+     0.215
+    ],
+    [
+     0.581,
+     0.232
+    ]
+   ]
   },
   {
    "kit": "KIT437",
@@ -469,9 +1338,205 @@
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (7 su 11 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (15 su 22 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.64
+   "quota": 0.68,
+   "caldo": [
+    [
+     0.627,
+     0.18
+    ],
+    [
+     0.577,
+     0.148
+    ],
+    [
+     0.642,
+     0.18
+    ],
+    [
+     0.605,
+     0.185
+    ],
+    [
+     0.547,
+     0.162
+    ],
+    [
+     0.607,
+     0.215
+    ],
+    [
+     0.572,
+     0.153
+    ],
+    [
+     0.23,
+     0.195
+    ],
+    [
+     0.67,
+     0.195
+    ],
+    [
+     0.63,
+     0.165
+    ],
+    [
+     0.937,
+     0.365
+    ],
+    [
+     0.636,
+     0.196
+    ],
+    [
+     0.632,
+     0.193
+    ],
+    [
+     0.72,
+     0.23
+    ],
+    [
+     0.627,
+     0.167
+    ],
+    [
+     0.57,
+     0.153
+    ],
+    [
+     0.791,
+     0.295
+    ],
+    [
+     0.667,
+     0.208
+    ],
+    [
+     0.717,
+     0.237
+    ],
+    [
+     0.57,
+     0.171
+    ],
+    [
+     0.589,
+     0.133
+    ],
+    [
+     0.579,
+     0.175
+    ]
+   ]
+  },
+  {
+   "kit": "KIT220",
+   "kit_n": 220,
+   "ex": false,
+   "comune": "CASTENASO",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "8b9f991765",
+   "giorno": "2026-11-03",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "4 abbandoni su 6 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 3): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.67,
+   "caldo": [
+    [
+     0.76,
+     0.18
+    ],
+    [
+     0.712,
+     0.162
+    ],
+    [
+     0.757,
+     0.149
+    ],
+    [
+     0.766,
+     0.145
+    ]
+   ]
+  },
+  {
+   "kit": "KIT596",
+   "kit_n": 596,
+   "ex": false,
+   "comune": "GEOVEST-CALDERARA DI RENO",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "5f40d1d7e7",
+   "giorno": "2026-11-04",
+   "problema": "da spostare: abbandoni sul margine",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: 8 abbandoni su 12 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "gruppo": 1.5,
+   "quota": 0.67,
+   "caldo": [
+    [
+     0.018,
+     0.65
+    ],
+    [
+     0.02,
+     0.685
+    ],
+    [
+     0.78,
+     0.282
+    ],
+    [
+     0.015,
+     0.67
+    ],
+    [
+     0.015,
+     0.695
+    ],
+    [
+     0.018,
+     0.647
+    ],
+    [
+     0.143,
+     0.243
+    ],
+    [
+     0.02,
+     0.78
+    ],
+    [
+     0.792,
+     0.28
+    ],
+    [
+     0.017,
+     0.655
+    ],
+    [
+     0.02,
+     0.705
+    ],
+    [
+     0.145,
+     0.27
+    ]
+   ]
   },
   {
    "kit": "KIT650",
@@ -483,52 +1548,109 @@
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "167c097fdf",
-   "giorno": "2026-10-10",
+   "giro": "536e5b0a5c",
+   "giorno": "2026-10-19",
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.0% dell'immagine (5 su 8 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 2.8% dell'immagine (6 su 9 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.62
+   "quota": 0.67,
+   "caldo": [
+    [
+     0.424,
+     0.105
+    ],
+    [
+     0.423,
+     0.098
+    ],
+    [
+     0.415,
+     0.098
+    ],
+    [
+     0.423,
+     0.1
+    ],
+    [
+     0.422,
+     0.1
+    ],
+    [
+     0.418,
+     0.098
+    ],
+    [
+     0.4,
+     0.11
+    ],
+    [
+     0.42,
+     0.11
+    ],
+    [
+     0.423,
+     0.087
+    ]
+   ]
   },
   {
-   "kit": "KIT567",
-   "kit_n": 567,
+   "kit": "KIT437",
+   "kit_n": 437,
    "ex": false,
-   "comune": "GRANAROLO",
-   "cam": 1,
+   "comune": "UBR-ALFONSINE",
+   "cam": 2,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "f3bc5358a0",
-   "giorno": "2026-10-13",
-   "problema": "da spostare: abbandoni lontani",
+   "giro": "9520a14337",
+   "giorno": "2026-10-25",
+   "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (3 su 5 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 2: 6 abbandoni su 9 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.6
-  },
-  {
-   "kit": "KIT567",
-   "kit_n": 567,
-   "ex": false,
-   "comune": "GRANAROLO",
-   "cam": 1,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "f3bc5358a0",
-   "giorno": "2026-10-13",
-   "problema": "da spostare: abbandoni dietro i cassonetti",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "3 abbandoni su 5 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
-   "gruppo": 1.5,
-   "quota": 0.6
+   "quota": 0.67,
+   "caldo": [
+    [
+     0.935,
+     0.065
+    ],
+    [
+     0.905,
+     0.105
+    ],
+    [
+     0.992,
+     0.155
+    ],
+    [
+     0.965,
+     0.11
+    ],
+    [
+     0.348,
+     0.233
+    ],
+    [
+     0.944,
+     0.116
+    ],
+    [
+     0.985,
+     0.175
+    ],
+    [
+     0.948,
+     0.135
+    ],
+    [
+     0.336,
+     0.168
+    ]
+   ]
   },
   {
    "kit": "KIT556",
@@ -545,13 +1667,242 @@
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 2: l'oggetto abbandonato è largo in media il 3.4% dell'immagine (11 su 19 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 2: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (13 su 21 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.58
+   "quota": 0.62,
+   "caldo": [
+    [
+     0.794,
+     0.11
+    ],
+    [
+     0.789,
+     0.116
+    ],
+    [
+     0.79,
+     0.108
+    ],
+    [
+     0.792,
+     0.126
+    ],
+    [
+     0.796,
+     0.113
+    ],
+    [
+     0.792,
+     0.108
+    ],
+    [
+     0.787,
+     0.118
+    ],
+    [
+     0.8,
+     0.105
+    ],
+    [
+     0.785,
+     0.115
+    ],
+    [
+     0.79,
+     0.105
+    ],
+    [
+     0.79,
+     0.115
+    ],
+    [
+     0.79,
+     0.115
+    ],
+    [
+     0.792,
+     0.1
+    ],
+    [
+     0.795,
+     0.101
+    ],
+    [
+     0.784,
+     0.128
+    ],
+    [
+     0.782,
+     0.128
+    ],
+    [
+     0.794,
+     0.105
+    ],
+    [
+     0.796,
+     0.108
+    ],
+    [
+     0.797,
+     0.103
+    ],
+    [
+     0.79,
+     0.113
+    ],
+    [
+     0.794,
+     0.115
+    ]
+   ]
   },
   {
-   "kit": "KIT369",
-   "kit_n": 369,
+   "kit": "KIT353",
+   "kit_n": 353,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "cf565849c5",
+   "giorno": "2026-10-28",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.1% dell'immagine (3 su 5 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.492,
+     0.25
+    ],
+    [
+     0.048,
+     0.312
+    ],
+    [
+     0.504,
+     0.27
+    ],
+    [
+     0.172,
+     0.267
+    ],
+    [
+     0.035,
+     0.265
+    ]
+   ]
+  },
+  {
+   "kit": "KIT305",
+   "kit_n": 305,
+   "ex": false,
+   "comune": "GRANDATE",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "d45d333371",
+   "giorno": "2026-10-25",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (3 su 5 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.775,
+     0.73
+    ],
+    [
+     0.58,
+     0.095
+    ],
+    [
+     0.54,
+     0.045
+    ],
+    [
+     0.573,
+     0.073
+    ],
+    [
+     0.544,
+     0.038
+    ]
+   ]
+  },
+  {
+   "kit": "KIT449",
+   "kit_n": 449,
+   "ex": false,
+   "comune": "OTTONE",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "a7d7267e0f",
+   "giorno": "2026-09-27",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (6 su 10 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.445,
+     0.28
+    ],
+    [
+     0.432,
+     0.36
+    ],
+    [
+     0.485,
+     0.35
+    ],
+    [
+     0.484,
+     0.272
+    ],
+    [
+     0.505,
+     0.375
+    ],
+    [
+     0.41,
+     0.34
+    ],
+    [
+     0.517,
+     0.367
+    ],
+    [
+     0.48,
+     0.365
+    ],
+    [
+     0.443,
+     0.29
+    ],
+    [
+     0.385,
+     0.33
+    ]
+   ]
+  },
+  {
+   "kit": "KIT314",
+   "kit_n": 314,
    "ex": false,
    "comune": "SAN LAZZARO DI SAVENA",
    "cam": 3,
@@ -559,14 +1910,498 @@
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "8fb9fa0424",
+   "giro": "3ddc18b356",
+   "giorno": "2026-10-29",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (3 su 5 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.215,
+     0.138
+    ],
+    [
+     0.22,
+     0.133
+    ],
+    [
+     0.226,
+     0.124
+    ],
+    [
+     0.218,
+     0.118
+    ],
+    [
+     0.202,
+     0.104
+    ]
+   ]
+  },
+  {
+   "kit": "KIT582",
+   "kit_n": 582,
+   "ex": false,
+   "comune": "SAN MARTINO IN RIO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "591757982d",
+   "giorno": "2026-11-03",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.4% dell'immagine (3 su 5 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.647,
+     0.105
+    ],
+    [
+     0.825,
+     0.34
+    ],
+    [
+     0.83,
+     0.115
+    ],
+    [
+     0.589,
+     0.27
+    ],
+    [
+     0.371,
+     0.293
+    ]
+   ]
+  },
+  {
+   "kit": "KIT400",
+   "kit_n": 400,
+   "ex": false,
+   "comune": "TRANI",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "de6d14bb2e",
+   "giorno": "2026-10-16",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (18 su 30 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.6,
+   "caldo": [
+    [
+     0.579,
+     0.222
+    ],
+    [
+     0.63,
+     0.217
+    ],
+    [
+     0.576,
+     0.198
+    ],
+    [
+     0.581,
+     0.196
+    ],
+    [
+     0.59,
+     0.198
+    ],
+    [
+     0.577,
+     0.2
+    ],
+    [
+     0.58,
+     0.2
+    ],
+    [
+     0.587,
+     0.207
+    ],
+    [
+     0.577,
+     0.208
+    ],
+    [
+     0.58,
+     0.208
+    ],
+    [
+     0.62,
+     0.205
+    ],
+    [
+     0.579,
+     0.225
+    ],
+    [
+     0.581,
+     0.214
+    ],
+    [
+     0.58,
+     0.208
+    ],
+    [
+     0.57,
+     0.208
+    ],
+    [
+     0.812,
+     0.2
+    ],
+    [
+     0.615,
+     0.212
+    ],
+    [
+     0.79,
+     0.202
+    ],
+    [
+     0.832,
+     0.193
+    ],
+    [
+     0.637,
+     0.215
+    ],
+    [
+     0.62,
+     0.23
+    ],
+    [
+     0.555,
+     0.2
+    ],
+    [
+     0.61,
+     0.22
+    ],
+    [
+     0.811,
+     0.193
+    ],
+    [
+     0.589,
+     0.184
+    ],
+    [
+     0.327,
+     0.257
+    ],
+    [
+     0.292,
+     0.214
+    ],
+    [
+     0.813,
+     0.196
+    ],
+    [
+     0.61,
+     0.2
+    ],
+    [
+     0.578,
+     0.24
+    ]
+   ]
+  },
+  {
+   "kit": "KIT526",
+   "kit_n": 526,
+   "ex": false,
+   "comune": "CASTENASO",
+   "cam": 4,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "adee35f829",
+   "giorno": "2026-11-02",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 4: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (4 su 7 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.57,
+   "caldo": [
+    [
+     0.224,
+     0.26
+    ],
+    [
+     0.44,
+     0.203
+    ],
+    [
+     0.445,
+     0.205
+    ],
+    [
+     0.12,
+     0.17
+    ],
+    [
+     0.336,
+     0.178
+    ],
+    [
+     0.22,
+     0.21
+    ],
+    [
+     0.57,
+     0.04
+    ]
+   ]
+  },
+  {
+   "kit": "KIT567",
+   "kit_n": 567,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "f3bc5358a0",
    "giorno": "2026-10-13",
    "problema": "da spostare: abbandoni lontani",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 3: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (5 su 9 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.2% dell'immagine (5 su 9 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.56
+   "quota": 0.56,
+   "caldo": [
+    [
+     0.349,
+     0.237
+    ],
+    [
+     0.53,
+     0.33
+    ],
+    [
+     0.465,
+     0.235
+    ],
+    [
+     0.346,
+     0.23
+    ],
+    [
+     0.463,
+     0.241
+    ],
+    [
+     0.47,
+     0.25
+    ],
+    [
+     0.655,
+     0.287
+    ],
+    [
+     0.46,
+     0.247
+    ],
+    [
+     0.351,
+     0.286
+    ]
+   ]
+  },
+  {
+   "kit": "KIT066",
+   "kit_n": 66,
+   "ex": false,
+   "comune": "FORTE DEI MARMI",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "4cf657ffbe",
+   "giorno": "2026-11-01",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (12 su 22 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.55,
+   "caldo": [
+    [
+     0.141,
+     0.294
+    ],
+    [
+     0.34,
+     0.24
+    ],
+    [
+     0.118,
+     0.323
+    ],
+    [
+     0.408,
+     0.21
+    ],
+    [
+     0.143,
+     0.298
+    ],
+    [
+     0.405,
+     0.2
+    ],
+    [
+     0.183,
+     0.302
+    ],
+    [
+     0.311,
+     0.255
+    ],
+    [
+     0.285,
+     0.265
+    ],
+    [
+     0.283,
+     0.24
+    ],
+    [
+     0.42,
+     0.185
+    ],
+    [
+     0.32,
+     0.255
+    ],
+    [
+     0.21,
+     0.3
+    ],
+    [
+     0.184,
+     0.309
+    ],
+    [
+     0.256,
+     0.276
+    ],
+    [
+     0.127,
+     0.32
+    ],
+    [
+     0.118,
+     0.301
+    ],
+    [
+     0.308,
+     0.261
+    ],
+    [
+     0.252,
+     0.246
+    ],
+    [
+     0.122,
+     0.283
+    ],
+    [
+     0.398,
+     0.188
+    ],
+    [
+     0.14,
+     0.31
+    ]
+   ]
+  },
+  {
+   "kit": "KIT223",
+   "kit_n": 223,
+   "ex": false,
+   "comune": "UBR-ALFONSINE",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "1c25f63e0d",
+   "giorno": "2026-10-29",
+   "problema": "da spostare: abbandoni lontani",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (6 su 11 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "gruppo": 1.5,
+   "quota": 0.55,
+   "caldo": [
+    [
+     0.079,
+     0.254
+    ],
+    [
+     0.072,
+     0.2
+    ],
+    [
+     0.471,
+     0.087
+    ],
+    [
+     0.083,
+     0.2
+    ],
+    [
+     0.691,
+     0.424
+    ],
+    [
+     0.48,
+     0.117
+    ],
+    [
+     0.515,
+     0.13
+    ],
+    [
+     0.501,
+     0.045
+    ],
+    [
+     0.253,
+     0.305
+    ],
+    [
+     0.495,
+     0.133
+    ],
+    [
+     0.461,
+     0.124
+    ]
+   ]
   },
   {
    "kit": "KIT320",
@@ -585,33 +2420,137 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (9 su 17 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
    "gruppo": 1.5,
-   "quota": 0.53
+   "quota": 0.53,
+   "caldo": [
+    [
+     0.233,
+     0.075
+    ],
+    [
+     0.239,
+     0.133
+    ],
+    [
+     0.26,
+     0.045
+    ],
+    [
+     0.239,
+     0.166
+    ],
+    [
+     0.35,
+     0.153
+    ],
+    [
+     0.225,
+     0.105
+    ],
+    [
+     0.23,
+     0.065
+    ],
+    [
+     0.239,
+     0.077
+    ],
+    [
+     0.222,
+     0.07
+    ],
+    [
+     0.222,
+     0.065
+    ],
+    [
+     0.235,
+     0.07
+    ],
+    [
+     0.242,
+     0.1
+    ],
+    [
+     0.215,
+     0.095
+    ],
+    [
+     0.23,
+     0.062
+    ],
+    [
+     0.238,
+     0.13
+    ],
+    [
+     0.238,
+     0.085
+    ],
+    [
+     0.242,
+     0.092
+    ]
+   ]
   },
   {
-   "kit": "KIT066",
-   "kit_n": 66,
+   "kit": "KIT348",
+   "kit_n": 348,
    "ex": false,
-   "comune": "FORTE DEI MARMI",
+   "comune": "OZZANO EMILIA",
    "cam": 1,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "4cf657ffbe",
-   "giorno": "2026-11-01",
-   "problema": "da spostare: abbandoni lontani",
+   "giro": "9f99fcbc23",
+   "giorno": "2026-10-11",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: l'oggetto abbandonato è largo in media il 3.5% dell'immagine (10 su 19 sotto il 3.5%): l'abbandono avviene lontano, va avvicinata o girata verso quel punto",
+   "nota": "4 abbandoni su 8 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.53
+   "quota": 0.5,
+   "caldo": [
+    [
+     0.105,
+     0.41
+    ],
+    [
+     0.67,
+     0.28
+    ],
+    [
+     0.552,
+     0.115
+    ],
+    [
+     0.462,
+     0.18
+    ],
+    [
+     0.87,
+     0.235
+    ],
+    [
+     0.428,
+     0.359
+    ],
+    [
+     0.715,
+     0.474
+    ],
+    [
+     0.625,
+     0.18
+    ]
+   ]
   },
   {
    "kit": "KIT437",
    "kit_n": 437,
    "ex": false,
    "comune": "UBR-ALFONSINE",
-   "cam": 2,
+   "cam": 3,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
@@ -621,28 +2560,325 @@
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 2: 3 abbandoni su 6 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "nota": "telecamera 3: 5 abbandoni su 10 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.5
+   "quota": 0.5,
+   "caldo": [
+    [
+     0.285,
+     0.6
+    ],
+    [
+     0.385,
+     0.89
+    ],
+    [
+     0.298,
+     0.892
+    ],
+    [
+     0.615,
+     0.83
+    ],
+    [
+     0.42,
+     0.96
+    ],
+    [
+     0.35,
+     0.935
+    ],
+    [
+     0.415,
+     0.977
+    ],
+    [
+     0.28,
+     0.915
+    ],
+    [
+     0.39,
+     0.965
+    ],
+    [
+     0.38,
+     0.86
+    ]
+   ]
   },
   {
-   "kit": "AON71 NVR Via Landi Loc. Serra",
-   "kit_n": null,
+   "kit": "KIT410",
+   "kit_n": 410,
    "ex": false,
-   "comune": "LERICI",
+   "comune": "UBR-BAGNACAVALLO",
    "cam": 1,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "1f62d297cb",
+   "giro": "4f08aacfbd",
    "giorno": "2026-11-01",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "3 abbandoni su 6 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.5,
+   "caldo": [
+    [
+     0.82,
+     0.588
+    ],
+    [
+     0.802,
+     0.655
+    ],
+    [
+     0.832,
+     0.58
+    ],
+    [
+     0.89,
+     0.14
+    ]
+   ]
+  },
+  {
+   "kit": "KIT360",
+   "kit_n": 360,
+   "ex": false,
+   "comune": "SAN VITO AL TAGLIAMENTO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "bdf79cbab8",
+   "giorno": "2026-10-28",
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "telecamera 1: 6 abbandoni su 13 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "nota": "telecamera 1: 4 abbandoni su 9 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.46
+   "quota": 0.44,
+   "caldo": [
+    [
+     0.256,
+     0.815
+    ],
+    [
+     0.368,
+     0.88
+    ],
+    [
+     0.325,
+     0.84
+    ],
+    [
+     0.285,
+     0.93
+    ],
+    [
+     0.3,
+     0.965
+    ],
+    [
+     0.29,
+     0.915
+    ],
+    [
+     0.198,
+     0.775
+    ],
+    [
+     0.31,
+     0.955
+    ],
+    [
+     0.497,
+     0.9
+    ]
+   ]
+  },
+  {
+   "kit": "KIT353",
+   "kit_n": 353,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 3,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "cf565849c5",
+   "giorno": "2026-10-28",
+   "problema": "da spostare: abbandoni sul margine",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 3: 2 abbandoni su 5 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "gruppo": 1.5,
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.492,
+     0.25
+    ],
+    [
+     0.048,
+     0.312
+    ],
+    [
+     0.504,
+     0.27
+    ],
+    [
+     0.172,
+     0.267
+    ],
+    [
+     0.035,
+     0.265
+    ]
+   ]
+  },
+  {
+   "kit": "KIT491",
+   "kit_n": 491,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "ed238a3884",
+   "giorno": "2026-09-06",
+   "problema": "da spostare: abbandoni sul margine",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: 2 abbandoni su 5 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "gruppo": 1.5,
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.022,
+     0.387
+    ],
+    [
+     0.265,
+     0.33
+    ],
+    [
+     0.47,
+     0.315
+    ],
+    [
+     0.02,
+     0.435
+    ],
+    [
+     0.478,
+     0.355
+    ]
+   ]
+  },
+  {
+   "kit": "KIT567",
+   "kit_n": 567,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "f3bc5358a0",
+   "giorno": "2026-10-13",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "4 abbandoni su 10 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.349,
+     0.237
+    ],
+    [
+     0.53,
+     0.33
+    ],
+    [
+     0.465,
+     0.235
+    ],
+    [
+     0.346,
+     0.23
+    ],
+    [
+     0.463,
+     0.241
+    ],
+    [
+     0.47,
+     0.25
+    ],
+    [
+     0.655,
+     0.287
+    ],
+    [
+     0.46,
+     0.247
+    ],
+    [
+     0.351,
+     0.286
+    ]
+   ]
+  },
+  {
+   "kit": "KIT305",
+   "kit_n": 305,
+   "ex": false,
+   "comune": "GRANDATE",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "d45d333371",
+   "giorno": "2026-10-25",
+   "problema": "da spostare: abbandoni sul margine",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "telecamera 1: 2 abbandoni su 5 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
+   "gruppo": 1.5,
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.775,
+     0.73
+    ],
+    [
+     0.58,
+     0.095
+    ],
+    [
+     0.54,
+     0.045
+    ],
+    [
+     0.573,
+     0.073
+    ],
+    [
+     0.544,
+     0.038
+    ]
+   ]
   },
   {
    "kit": "KIT511",
@@ -661,26 +2897,167 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "6 abbandoni su 15 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 3): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.4
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.34,
+     0.19
+    ],
+    [
+     0.784,
+     0.39
+    ],
+    [
+     0.602,
+     0.37
+    ],
+    [
+     0.315,
+     0.205
+    ],
+    [
+     0.465,
+     0.407
+    ],
+    [
+     0.232,
+     0.38
+    ],
+    [
+     0.255,
+     0.238
+    ],
+    [
+     0.133,
+     0.233
+    ],
+    [
+     0.46,
+     0.405
+    ],
+    [
+     0.431,
+     0.412
+    ],
+    [
+     0.475,
+     0.42
+    ],
+    [
+     0.44,
+     0.375
+    ]
+   ]
   },
   {
-   "kit": "KIT360",
-   "kit_n": 360,
+   "kit": "KIT549",
+   "kit_n": 549,
    "ex": false,
-   "comune": "SAN VITO AL TAGLIAMENTO",
+   "comune": "MONTERENZIO",
+   "cam": 2,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "844d4264ef",
+   "giorno": "2026-10-10",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "4 abbandoni su 10 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.935,
+     0.855
+    ],
+    [
+     0.972,
+     0.69
+    ],
+    [
+     0.532,
+     0.77
+    ],
+    [
+     0.98,
+     0.69
+    ],
+    [
+     0.568,
+     0.79
+    ],
+    [
+     0.94,
+     0.835
+    ],
+    [
+     0.96,
+     0.895
+    ]
+   ]
+  },
+  {
+   "kit": "KIT610",
+   "kit_n": 610,
+   "ex": false,
+   "comune": "SAN LAZZARO DI SAVENA",
    "cam": 1,
    "nitidezza": "-",
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "bdf79cbab8",
-   "giorno": "2026-10-28",
+   "giro": "b5f4f08f19",
+   "giorno": "2026-10-27",
    "problema": "da spostare: abbandoni sul margine",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: 4 abbandoni su 10 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.4
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.175,
+     0.26
+    ],
+    [
+     0.485,
+     0.915
+    ],
+    [
+     0.52,
+     0.975
+    ],
+    [
+     0.193,
+     0.275
+    ],
+    [
+     0.21,
+     0.372
+    ],
+    [
+     0.133,
+     0.113
+    ],
+    [
+     0.483,
+     0.963
+    ],
+    [
+     0.32,
+     0.405
+    ],
+    [
+     0.505,
+     0.95
+    ],
+    [
+     0.456,
+     0.67
+    ]
+   ]
   },
   {
    "kit": "KIT561",
@@ -699,64 +3076,49 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "telecamera 1: 4 abbandoni su 10 sul margine dell'immagine, mezzi fuori: va girata per avere quel punto al centro",
    "gruppo": 1.5,
-   "quota": 0.4
-  },
-  {
-   "kit": "KIT422",
-   "kit_n": 422,
-   "ex": false,
-   "comune": "SAN LAZZARO DI SAVENA",
-   "cam": 1,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "ffeb16d9d6",
-   "giorno": "2026-10-20",
-   "problema": "da spostare: abbandoni dietro i cassonetti",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "5 abbandoni su 14 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
-   "gruppo": 1.5,
-   "quota": 0.36
-  },
-  {
-   "kit": "KIT372",
-   "kit_n": 372,
-   "ex": false,
-   "comune": "MERANO",
-   "cam": 1,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "1c59de257e",
-   "giorno": "2026-10-31",
-   "problema": "da spostare: abbandoni dietro i cassonetti",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "6 abbandoni su 18 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
-   "gruppo": 1.5,
-   "quota": 0.33
-  },
-  {
-   "kit": "KIT294",
-   "kit_n": 294,
-   "ex": false,
-   "comune": "SAN LAZZARO DI SAVENA",
-   "cam": 2,
-   "nitidezza": "-",
-   "rispetto_kit": null,
-   "rango": null,
-   "misura": "-",
-   "giro": "43be11e09d",
-   "giorno": "2026-10-12",
-   "problema": "da spostare: abbandoni dietro i cassonetti",
-   "certezza": "contato dagli abbandoni",
-   "cosa_fare": "sul posto: riposizionare",
-   "nota": "5 abbandoni su 15 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
-   "gruppo": 1.5,
-   "quota": 0.33
+   "quota": 0.4,
+   "caldo": [
+    [
+     0.755,
+     0.253
+    ],
+    [
+     0.74,
+     0.22
+    ],
+    [
+     0.23,
+     0.115
+    ],
+    [
+     0.02,
+     0.317
+    ],
+    [
+     0.045,
+     0.31
+    ],
+    [
+     0.182,
+     0.285
+    ],
+    [
+     0.02,
+     0.325
+    ],
+    [
+     0.028,
+     0.28
+    ],
+    [
+     0.34,
+     0.255
+    ],
+    [
+     0.725,
+     0.23
+    ]
+   ]
   },
   {
    "kit": "KIT610",
@@ -768,14 +3130,88 @@
    "rispetto_kit": null,
    "rango": null,
    "misura": "-",
-   "giro": "643f6ad7e5",
-   "giorno": "2026-10-26",
+   "giro": "b5f4f08f19",
+   "giorno": "2026-10-27",
    "problema": "da spostare: abbandoni dietro i cassonetti",
    "certezza": "contato dagli abbandoni",
    "cosa_fare": "sul posto: riposizionare",
-   "nota": "6 abbandoni su 19 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
+   "nota": "10 abbandoni su 28 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.32
+   "quota": 0.36,
+   "caldo": [
+    [
+     0.263,
+     0.241
+    ],
+    [
+     0.205,
+     0.445
+    ],
+    [
+     0.203,
+     0.397
+    ],
+    [
+     0.13,
+     0.52
+    ],
+    [
+     0.177,
+     0.5
+    ],
+    [
+     0.18,
+     0.49
+    ],
+    [
+     0.133,
+     0.647
+    ],
+    [
+     0.205,
+     0.485
+    ],
+    [
+     0.205,
+     0.315
+    ],
+    [
+     0.26,
+     0.233
+    ],
+    [
+     0.258,
+     0.247
+    ],
+    [
+     0.19,
+     0.717
+    ],
+    [
+     0.215,
+     0.585
+    ],
+    [
+     0.202,
+     0.555
+    ],
+    [
+     0.272,
+     0.242
+    ],
+    [
+     0.21,
+     0.485
+    ],
+    [
+     0.2,
+     0.517
+    ],
+    [
+     0.203,
+     0.396
+    ]
+   ]
   },
   {
    "kit": "KIT608",
@@ -794,7 +3230,276 @@
    "cosa_fare": "sul posto: riposizionare",
    "nota": "4 abbandoni su 13 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
    "gruppo": 1.5,
-   "quota": 0.31
+   "quota": 0.31,
+   "caldo": [
+    [
+     0.522,
+     0.172
+    ],
+    [
+     0.5,
+     0.165
+    ],
+    [
+     0.517,
+     0.175
+    ],
+    [
+     0.571,
+     0.223
+    ],
+    [
+     0.55,
+     0.228
+    ],
+    [
+     0.58,
+     0.213
+    ],
+    [
+     0.575,
+     0.217
+    ],
+    [
+     0.58,
+     0.11
+    ],
+    [
+     0.58,
+     0.23
+    ],
+    [
+     0.585,
+     0.19
+    ],
+    [
+     0.512,
+     0.175
+    ]
+   ]
+  },
+  {
+   "kit": "KIT491",
+   "kit_n": 491,
+   "ex": false,
+   "comune": "GRANAROLO",
+   "cam": 2,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "ed238a3884",
+   "giorno": "2026-09-06",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "3 abbandoni su 10 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 2): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.3,
+   "caldo": [
+    [
+     0.39,
+     0.88
+    ],
+    [
+     0.88,
+     0.805
+    ],
+    [
+     0.48,
+     0.94
+    ]
+   ]
+  },
+  {
+   "kit": "KIT372",
+   "kit_n": 372,
+   "ex": false,
+   "comune": "MERANO",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "1c59de257e",
+   "giorno": "2026-10-31",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "6 abbandoni su 20 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.3,
+   "caldo": [
+    [
+     0.367,
+     0.26
+    ],
+    [
+     0.393,
+     0.285
+    ],
+    [
+     0.448,
+     0.255
+    ],
+    [
+     0.454,
+     0.261
+    ],
+    [
+     0.335,
+     0.255
+    ],
+    [
+     0.373,
+     0.273
+    ],
+    [
+     0.39,
+     0.1
+    ],
+    [
+     0.585,
+     0.422
+    ],
+    [
+     0.297,
+     0.405
+    ],
+    [
+     0.453,
+     0.25
+    ],
+    [
+     0.453,
+     0.26
+    ],
+    [
+     0.402,
+     0.065
+    ],
+    [
+     0.406,
+     0.055
+    ],
+    [
+     0.453,
+     0.312
+    ],
+    [
+     0.398,
+     0.261
+    ],
+    [
+     0.409,
+     0.088
+    ],
+    [
+     0.325,
+     0.215
+    ],
+    [
+     0.458,
+     0.365
+    ],
+    [
+     0.462,
+     0.227
+    ]
+   ]
+  },
+  {
+   "kit": "KIT422",
+   "kit_n": 422,
+   "ex": false,
+   "comune": "SAN LAZZARO DI SAVENA",
+   "cam": 1,
+   "nitidezza": "-",
+   "rispetto_kit": null,
+   "rango": null,
+   "misura": "-",
+   "giro": "ffeb16d9d6",
+   "giorno": "2026-10-20",
+   "problema": "da spostare: abbandoni dietro i cassonetti",
+   "certezza": "contato dagli abbandoni",
+   "cosa_fare": "sul posto: riposizionare",
+   "nota": "6 abbandoni su 20 avvengono dietro un cassonetto o dove non si vede (soprattutto telecamera 1): una telecamera di lato o più alta vedrebbe il gesto",
+   "gruppo": 1.5,
+   "quota": 0.3,
+   "caldo": [
+    [
+     0.885,
+     0.225
+    ],
+    [
+     0.525,
+     0.31
+    ],
+    [
+     0.478,
+     0.385
+    ],
+    [
+     0.873,
+     0.498
+    ],
+    [
+     0.53,
+     0.309
+    ],
+    [
+     0.668,
+     0.36
+    ],
+    [
+     0.677,
+     0.331
+    ],
+    [
+     0.855,
+     0.482
+    ],
+    [
+     0.88,
+     0.425
+    ],
+    [
+     0.657,
+     0.367
+    ],
+    [
+     0.65,
+     0.435
+    ],
+    [
+     0.697,
+     0.365
+    ],
+    [
+     0.938,
+     0.165
+    ],
+    [
+     0.858,
+     0.255
+    ],
+    [
+     0.885,
+     0.375
+    ],
+    [
+     0.505,
+     0.26
+    ],
+    [
+     0.672,
+     0.36
+    ],
+    [
+     0.655,
+     0.37
+    ]
+   ]
   },
   {
    "kit": "KIT257 Via Piave Rist. Il Villico - Quattro Castella Fraz. Rubbianino",

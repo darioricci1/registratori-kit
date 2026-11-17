@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.37.0 (17/11/2026) - sulle foto delle telecamere «da spostare» la heatmap degli abbandoni giudicati, in piccolo
+     e in grande (Dario: «nelle foto di abbandoni sul margine metti la heatmap?»; punti da kit.json, come in kit.html). -->
 <!-- version: 2.36.0 (17/11/2026) - in «Telecamere da sistemare» la foto si vede già nella riga, piccola; toccandola si apre
      grande come prima (Dario: «puoi far vedere le foto senza cliccare vedi foto?»). Le foto si caricano quando arrivano in vista. -->
 <!-- version: 2.35.0 (17/11/2026) - i kit che oggi non rispondono (anche con un ODM di guasto totale) mostrano le
@@ -203,7 +205,11 @@ th:focus-within { z-index:5 }
 .riquadro-entra .grande{font-size:18px;min-height:48px;padding:10px 28px}
 /* 2.36.0: la foto si vede subito nella riga (Dario: «puoi far vedere le foto senza cliccare vedi foto?») */
 #sistemare button.mini { padding:2px; min-height:40px; line-height:0; background:none }
-#sistemare button.mini img { display:block; width:200px; max-width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:6px; background:#0001 }
+#sistemare button.mini img { display:block; width:200px; max-width:100%; height:auto; border-radius:6px; background:#0001 }
+/* 2.37.0: heatmap degli abbandoni sulla foto */
+.conCaldo { position:relative; display:inline-block; line-height:0; overflow:hidden; border-radius:6px }
+.conCaldo .macchia { position:absolute; width:22%; aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(230,30,30,.75) 0%, rgba(230,30,30,.35) 40%, rgba(230,30,30,0) 70%); pointer-events:none }
+#grande .conCaldo img { max-width:95vw; max-height:90vh }
 </style>
 </head>
 <body>
@@ -564,7 +570,7 @@ function disegnaSistemare() {
     <td class="${cls(x)}" title="${esc(x.nota)}">${esc(x.problema)}</td><td title="${esc(x.nota)}">${esc(x.certezza)}</td><td>${esc(x.cosa_fare)}</td>
     <td class="num" title="${esc(`indice ${x.nitidezza}; rispetto alle altre telecamere dello stesso kit ${x.rispetto_kit ?? "-"}; misura: ${x.misura}`)}">${String(x.nitidezza).replace(".", ",")}</td>
     <td class="num">${x.rango ?? "-"}</td><td class="tenue" title="Giro di Kit_Rifiuti ${esc(x.giro)}">${esc(String(x.giro).split("-")[0])}<br>${esc(giornoIt(x.giorno))}</td>
-    <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" class="mini" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))} · toccala per vederla grande"><img loading="lazy" src="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" alt="foto di ${esc(x.kit)} CH ${String(x.cam).padStart(2, "0")}"></button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
+    <td>${x.foto ? `<button data-foto="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" class="mini" data-caldo="${esc(JSON.stringify(x.caldo || []))}" title="${esc(x.foto.quando + " · " + (x.foto.vista || ""))}${(x.caldo || []).length ? " · in rosso dove sono avvenuti gli abbandoni giudicati" : ""} · toccala per vederla grande"><span class="conCaldo"><img loading="lazy" src="/api/p2p?op=fotocam&uid=${encodeURIComponent(x.foto.uid)}&canale=${x.foto.canale}&v=${encodeURIComponent(x.foto.il || "")}" alt="foto di ${esc(x.kit)} CH ${String(x.cam).padStart(2, "0")}">${macchie(x.caldo)}</span></button>` : '<span class="tenue" title="Il giro dei registratori non ha una foto di questa telecamera">-</span>'}</td></tr>`).join("");
 }
 /** 2.31.0: gli schemi delle ore per kit (op=schemi, letto una volta): prima i gruppi con un problema, gli OK in fondo. */
 let SCHEMI = null, ordSc = { chiave: "gruppo", verso: 1 };
@@ -887,7 +893,11 @@ $("#vediSistemare").addEventListener("click", () => {
   sez.hidden = !apri; $("#vediSistemare").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
 });
-$("#sistemare").addEventListener("click", (e) => { const b = e.target.closest("button[data-foto]"); if (b) { $("#grande").innerHTML = `<img src="${b.dataset.foto}" alt="foto della telecamera">`; $("#grande").hidden = false; } });
+$("#sistemare").addEventListener("click", (e) => { const b = e.target.closest("button[data-foto]"); if (b) { let c = []; try { c = JSON.parse(b.dataset.caldo || "[]"); } catch { /* niente heatmap */ } $("#grande").innerHTML = `<span class="conCaldo"><img src="${b.dataset.foto}" alt="foto della telecamera">${macchie(c)}</span>`; $("#grande").hidden = false; } });
+/** 2.37.0: la heatmap degli abbandoni giudicati sopra la foto: una macchia rossa sfumata per abbandono (centro in frazioni). */
+function macchie(caldo) {
+  return (caldo || []).map(([cx, cy]) => `<i class="macchia" style="left:${(100 * cx).toFixed(1)}%;top:${(100 * cy).toFixed(1)}%"></i>`).join("");
+}
 $("#prova").addEventListener("click", () => { location.href = "/"; });
 $("#giro").addEventListener("click", async () => {
   const r = await fetch("/api/p2p?op=accoda", { method: "POST" });

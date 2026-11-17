@@ -1,6 +1,9 @@
 """
 telecamere_da_sistemare.py - l'elenco delle telecamere dei kit da mettere a fuoco o da liberare, per la pagina
 «Telecamere da sistemare» di stato.html (op=sistemare di api/p2p.js).
+VERSION 0.5.0 (17/11/2026) - le righe «da spostare» portano «caldo», i punti degli abbandoni giudicati su quella
+  telecamera (kit.json «heatmap»), per la heatmap sulla foto (Dario: «nelle foto di abbandoni sul margine metti la
+  heatmap?»). KIT_JSON si può dare dall'ambiente.
 VERSION 0.4.1 (16/11/2026) - le telecamere che le operatrici non salvano escono da qui e vanno nella sezione «Errori di
   salvataggio» (dati/errori_salvataggio.json, op=errori; Dario: «voglio una sezione di registratori kit»).
 VERSION 0.4.0 (16/11/2026) - anche le telecamere che le operatrici non salvano (Dario, 16/11: «aggiungilo a quello che
@@ -115,7 +118,7 @@ def elenco(misura):
     }
 
 
-KIT_JSON = os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "kit-rifiuti-web", "dati", "kit.json")
+KIT_JSON = os.environ.get("KIT_JSON") or os.path.join(QUI, "..", "..", "kit-rifiuti-programma", "kit-rifiuti-web", "dati", "kit.json")
 SPOSTARE = {"lontano": "da spostare: abbandoni lontani", "bordo": "da spostare: abbandoni sul margine",
             "dietro": "da spostare: abbandoni dietro i cassonetti"}
 
@@ -134,7 +137,9 @@ def da_spostare(kit):
                           "giro": ultima.get("evento") or "-", "giorno": ultima.get("giorno") or "",
                           "problema": SPOSTARE.get(m["motivo"], "da spostare"), "certezza": "contato dagli abbandoni",
                           "cosa_fare": "sul posto: riposizionare", "nota": m["testo"], "gruppo": 1.5,
-                          "quota": round(m["quanti"] / max(1, m["su"]), 2)})
+                          "quota": round(m["quanti"] / max(1, m["su"]), 2),
+                          # 0.5.0: dove sono gli abbandoni giudicati, per la heatmap sulla foto (centro, in frazioni)
+                          "caldo": [p["c"] for p in (k.get("heatmap") or {}).get(str(m["cam"]), []) if p.get("c")]})
     return sorted(righe, key=lambda r: -r["quota"])
 
 
@@ -171,6 +176,8 @@ def prova():
                       "spostare": [{"motivo": "dietro", "cam": "2", "quanti": 3, "su": 5, "testo": "t"}]},
                      {"kit": "EX KIT2", "comune": "Y", "spostare": [{"motivo": "bordo", "cam": "1", "quanti": 4, "su": 4, "testo": "u"}]}])
     assert len(r) == 1 and r[0]["cam"] == 2 and r[0]["problema"].endswith("dietro i cassonetti") and r[0]["gruppo"] == 1.5
+    assert da_spostare([{"kit": "KIT1", "spostare": [{"motivo": "bordo", "cam": "2", "quanti": 1, "su": 1, "testo": "t"}],
+                         "heatmap": {"2": [{"c": [0.1, 0.9]}], "1": [{"c": [0.5, 0.5]}]}}])[0]["caldo"] == [[0.1, 0.9]]
     assert classifica("sfocata davvero (la c1 dello stesso kit e' nitida)") == ("sfocata", "fuoco da remoto: prova")
     assert classifica("morbida rispetto alla c1, probabile fuoco")[0] == "morbida"
     assert classifica("un palo/staffa a pochi cm dall'obiettivo, fuori fuoco: e' l'inquadratura, non il fuoco")[1] == "sul posto"
