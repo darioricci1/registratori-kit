@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.38.1 (17/11/2026) - in «Solo problemi» un registratore con i dati vecchi conta come problema solo per i giorni
+     sotto il 90%, non perché è ancora da ricontrollare. -->
 <!-- version: 2.38.0 (17/11/2026) - i registratori ancora in coda, che il giro non ha ricontrollato, mostrano i dati vecchi
      dell'archivio («da ricontrollare», col giorno della lettura nel fumetto) e si aggiornano man mano (Dario: «così vediamo tutti
      i dati seppur vecchi»). Non entrano nei conteggi in alto. -->
@@ -779,7 +781,7 @@ function confronta(d) {
 function disegna() {
   const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
   const ok = (r) => parole.every((p) => norm(r.gruppo + " " + r.nome + " " + r.modello).includes(p));
-  const problema = (r) => r.adessoOrd < 2 || (r.media != null && r.media < 90) || r.perc.slice(1, 8).some(([, p]) => p < 90);
+  const problema = (r) => (!r.vecchio && r.adessoOrd < 2) || (r.media != null && r.media < 90) || r.perc.slice(1, 8).some(([, p]) => p < 90);
   // i canali di un kit stanno insieme: si ordina per kit (per una colonna dei canali vale il canale peggiore del kit)
   const gruppi = new Map();
   for (const r of [...righe, ...righeFermi()]) if (ok(r) && passaFiltri("tab", r) && (filtro === "tutti" || r.fermo || problema(r))) (gruppi.get(r.uid) || gruppi.set(r.uid, []).get(r.uid)).push(r);
