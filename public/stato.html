@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.38.0 (17/11/2026) - i registratori ancora in coda, che il giro non ha ricontrollato, mostrano i dati vecchi
+     dell'archivio («da ricontrollare», col giorno della lettura nel fumetto) e si aggiornano man mano (Dario: «così vediamo tutti
+     i dati seppur vecchi»). Non entrano nei conteggi in alto. -->
 <!-- version: 2.37.0 (17/11/2026) - sulle foto delle telecamere «da spostare» la heatmap degli abbandoni giudicati, in piccolo
      e in grande (Dario: «nelle foto di abbandoni sul margine metti la heatmap?»; punti da kit.json, come in kit.html). -->
 <!-- version: 2.36.0 (17/11/2026) - in «Telecamere da sistemare» la foto si vede già nella riga, piccola; toccandola si apre
@@ -434,8 +437,12 @@ function costruisci(d) {
     // dove ci sono ODM totali, se in passato hai avuto dei dati mostrali»)
     const nonRisponde = k.stato === "fallito";
     if (nonRisponde) kitFermi.push({ ...k, perche: "non risponde: " + chiaro(e.collegamento || e.errore || "?") });
-    if (!k.stato || (nonRisponde && !am[k.uid])) continue;
-    const t = new Date(k.finito_il), minOra = t.getHours() * 60 + t.getMinutes();
+    // 2.38.0: un registratore che il giro non ha ancora ricontrollato (in coda) mostra i dati vecchi dell'archivio, che si
+    // aggiornano man mano che il giro passa (Dario, 17/11: «di quei 495 puoi far vedere le versioni vecchie?»)
+    const vecchio = !k.stato && !!am[k.uid];
+    if ((!k.stato && !vecchio) || (nonRisponde && !am[k.uid])) continue;
+    const lettoArc = Object.values(am[k.uid] || {}).map((a) => a.letto_il).filter(Boolean).sort().pop();
+    const t = new Date(k.finito_il || lettoArc || Date.now()), minOra = t.getHours() * 60 + t.getMinutes();
     const oggiIso = new Date(t.getTime() - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
     const canali = new Map();
     for (const c of e.canali || []) canali.set(c.numero, { giro: c });
@@ -479,13 +486,13 @@ function costruisci(d) {
       const um = x.giro && x.giro.ultimo_minuto != null ? Number(x.giro.ultimo_minuto) : null;
       const ultimo = tr.length || um != null ? Math.max(um ?? -1, ...tr.map((z) => z[1])) : null;
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
-      const adesso = nonRisponde ? "non risponde oggi" : ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
+      const adesso = vecchio ? "da ricontrollare" : nonRisponde ? "non risponde oggi" : ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
       const perc = elenco.map(([g, m]) => [g, m == null ? null : Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440))), m, g === oggiIso ? minOra : 1440]);
       const passati = perc.filter(([g, p]) => g !== oggiIso && p != null && g >= DAL);
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
-        info: [nonRisponde ? "Oggi il registratore non risponde: i giorni sono quelli letti nei giri di prima" : "", `Ultimo controllo: ${new Date(k.finito_il).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
+        info: [vecchio ? `Dati vecchi, del giro del ${new Date(t).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}: il registratore è in coda e si aggiorna quando il giro ci arriva` : "", nonRisponde ? "Oggi il registratore non risponde: i giorni sono quelli letti nei giri di prima" : "", `Ultimo controllo: ${new Date(k.finito_il).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
           sensore ? "Registra a sensore (solo quando succede qualcosa)" : tr.length ? "Registrazione continua" : "",
           x.giro && x.giro.registrato_oggi ? "Oggi: " + x.giro.registrato_oggi : "", (x.giro && x.giro.titolo) ? "Nome nel registratore: " + x.giro.titolo : ""].filter(Boolean).join("\n"),
         adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
@@ -495,10 +502,10 @@ function costruisci(d) {
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
         foto: (cm[k.uid] || {})[n],
         ore: { ...(((ORE || {})[k.uid] || {})[n] || {}), ...(x.giro && x.giro.ore_oggi ? { [oggiIso]: x.giro.ore_oggi } : tr.length ? { [oggiIso]: oreDaTratti(tr, String(x.giro.registrato_oggi).length >= 200 ? Math.max(...tr.map((z) => z[1])) : minOra) } : {}) },
-        oggiIso, minOra, nonRisponde,
+        oggiIso, minOra, nonRisponde: nonRisponde || vecchio, vecchio,
       });
     }
-    if (!funzionanti && !nonRisponde) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
+    if (!funzionanti && !nonRisponde && !vecchio) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
     k.funzionanti = funzionanti;
   }
   confronta(d);
@@ -800,7 +807,7 @@ function disegna() {
   $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td><td rowspan="${rs.length}" class="${r.stato === "attivo" ? "ok" : r.stato === "ODM parziale" ? "mezzo" : "no"}"${r.note ? ` title="${esc(r.note)}"` : ""}>${r.stato}</td><td rowspan="${rs.length}" class="${r.alim === "batteria" ? "mezzo" : ""}"${r.batt ? ` title="BATT: ${esc(r.batt)}"` : ""}>${r.alim}</td>` : ""}
     ${r.fermo ? `<td class="num">-</td><td class="no" colspan="3">${esc(r.adesso)}<div class="tenue" style="font-size:11px">ultimo controllo ${r.finito_il ? new Date(r.finito_il).toLocaleString("it-IT") : ""}</div></td></tr>` : `<td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>`}
-    ${r.fermo ? "" : `<td class="${r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
+    ${r.fermo ? "" : `<td class="${r.vecchio ? "tenue" : r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
     <td>${griglia(r)}${notaPrima(r) ? `<div class="prima">${notaPrima(r)}</div>` : ""}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
   </tr>`}`).join("") + rigaOdm(String(rs[0].nome).match(/^\s*(\d+)/)?.[1], 8, ik % 2 ? "kitB" : "kitA")).join("");
