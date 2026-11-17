@@ -45,6 +45,12 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito fps1 0.1.0 (pronto il 17/11 e NON mandato; `compiti/fps1/LEGGIMI.md`, zip in `compito_fps1/compito.zip` dello
+  scratchpad): gli fps veri di tutte le telecamere dal registratore Focus in P2P (i video sembrano accelerati: alcune
+  fanno 17,857 e lette a 25 vanno 1,4 volte più veloci). 24 ore sul giro del sito al posto del ponte (stessi invii a
+  op=esito con il codice del ponte 0.20.1 in `ponte_pezzi.py`, foto una volta al giorno per kit), e per ogni canale non
+  ancora misurato 10 secondi di un'ora di giorno: fps dai tempi del registratore, dal file grezzo e dall'SPS. Per kit le
+  ore in cui ha risposto e quante volte no; riassunto «telecamere sotto 24 fps». Segnaposto `risultato_fps1.zip`.
 - Compito dahua1 0.1.0 (pronto il 17/11 e NON mandato; `compiti/dahua1/LEGGIMI.md`): SOLA LETTURA degli fps impostati
   nelle telecamere Dahua dei kit (i video sembrano accelerati), via VPN L2TP/IPsec del router Teltonika in split
   tunneling. Serve `accesso_dahua.txt` nello zip (solo su Drive di Alma) con gli indirizzi pubblici del giorno, e il

@@ -1,0 +1,15 @@
+{
+ "_perche": "fps1 0.1.0 (17/11/2026): gli fps veri di ogni telecamera dal registratore Focus (P2P), 24 ore sul giro del sito come il ponte",
+ "_nota": "i valori mancanti prendono quelli di DIFETTI in compito.py; «insieme» oltre 1 non e' ancora provato (compito parallelo1)",
+ "durata_ore": 24,
+ "insieme": 1,
+ "tetto_kit_min": 8,
+ "attesa": 20,
+ "secondi": 10,
+ "ore_giorno": [9, 17],
+ "max_tentativi_canale": 6,
+ "soglia_fps": 24.0,
+ "foto": true,
+ "fonte": "sito",
+ "giro_ogni_min": 60
+}
