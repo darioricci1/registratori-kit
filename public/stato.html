@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.35.0 (17/11/2026) - i kit che oggi non rispondono (anche con un ODM di guasto totale) mostrano le
+     telecamere e i giorni che l'archivio aveva letto nei giri di prima (Dario: «se in passato hai avuto dei dati mostrali»). -->
 <!-- version: 2.34.0 (17/11/2026) - «Non registrano, senza ODM» e «Fermi con un ODM aperto» si aprono da due bottoni in alto,
      accanto a «Schemi delle ore», «Errori di salvataggio» e «Telecamere da sistemare» (Dario: «metti queste sezioni accessibili
      con bottone»), col numero dei kit sul bottone; prima stavano in fondo alla pagina. -->
@@ -417,8 +419,11 @@ function costruisci(d) {
   righe = []; kitFermi = [];
   for (const k of d.kit) {
     const e = k.esito || {};
-    if (k.stato === "fallito") { kitFermi.push({ ...k, perche: "non risponde: " + chiaro(e.collegamento || e.errore || "?") }); continue; }
-    if (!k.stato) continue;
+    // 2.35.0: un kit che oggi non risponde mostra comunque i giorni che l'archivio aveva letto prima (Dario, 17/11: «anche
+    // dove ci sono ODM totali, se in passato hai avuto dei dati mostrali»)
+    const nonRisponde = k.stato === "fallito";
+    if (nonRisponde) kitFermi.push({ ...k, perche: "non risponde: " + chiaro(e.collegamento || e.errore || "?") });
+    if (!k.stato || (nonRisponde && !am[k.uid])) continue;
     const t = new Date(k.finito_il), minOra = t.getHours() * 60 + t.getMinutes();
     const oggiIso = new Date(t.getTime() - t.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
     const canali = new Map();
@@ -463,13 +468,13 @@ function costruisci(d) {
       const um = x.giro && x.giro.ultimo_minuto != null ? Number(x.giro.ultimo_minuto) : null;
       const ultimo = tr.length || um != null ? Math.max(um ?? -1, ...tr.map((z) => z[1])) : null;
       const sensore = /sensore|moviment/.test(String(x.giro && x.giro.registrato_oggi || ""));
-      const adesso = ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
+      const adesso = nonRisponde ? "non risponde oggi" : ultimo == null ? "niente oggi" : minOra - ultimo <= 15 ? "registra" : sensore ? "a sensore, ultima " + hm(ultimo) : "ferma dalle " + hm(ultimo);
       // la percentuale di un giorno: su 1440 minuti; oggi sulle ore passate fino al controllo
       const perc = elenco.map(([g, m]) => [g, m == null ? null : Math.min(100, Math.round(100 * m / (g === oggiIso ? Math.max(1, minOra) : 1440))), m, g === oggiIso ? minOra : 1440]);
       const passati = perc.filter(([g, p]) => g !== oggiIso && p != null && g >= DAL);
       righe.push({
         uid: k.uid, gruppo: k.gruppo, nome: k.nome, modello: k.modello, canale: n, adesso,
-        info: [`Ultimo controllo: ${new Date(k.finito_il).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
+        info: [nonRisponde ? "Oggi il registratore non risponde: i giorni sono quelli letti nei giri di prima" : "", `Ultimo controllo: ${new Date(k.finito_il).toLocaleString("it-IT", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`,
           sensore ? "Registra a sensore (solo quando succede qualcosa)" : tr.length ? "Registrazione continua" : "",
           x.giro && x.giro.registrato_oggi ? "Oggi: " + x.giro.registrato_oggi : "", (x.giro && x.giro.titolo) ? "Nome nel registratore: " + x.giro.titolo : ""].filter(Boolean).join("\n"),
         adessoOrd: adesso === "registra" || adesso.startsWith("a sensore") ? 2 : adesso.startsWith("ferma") ? 1 : 0,
@@ -479,10 +484,10 @@ function costruisci(d) {
         media: passati.length ? Math.round(passati.reduce((s, [, p]) => s + p, 0) / passati.length) : null,
         foto: (cm[k.uid] || {})[n],
         ore: { ...(((ORE || {})[k.uid] || {})[n] || {}), ...(x.giro && x.giro.ore_oggi ? { [oggiIso]: x.giro.ore_oggi } : tr.length ? { [oggiIso]: oreDaTratti(tr, String(x.giro.registrato_oggi).length >= 200 ? Math.max(...tr.map((z) => z[1])) : minOra) } : {}) },
-        oggiIso, minOra,
+        oggiIso, minOra, nonRisponde,
       });
     }
-    if (!funzionanti) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
+    if (!funzionanti && !nonRisponde) kitFermi.push({ ...k, perche: "nessuna telecamera ha registrato oggi" });
     k.funzionanti = funzionanti;
   }
   confronta(d);
@@ -774,10 +779,11 @@ function disegna() {
       const d = (a.k > b.k ? 1 : a.k < b.k ? -1 : 0) * ordine.verso;
       return d || (a.rs[0].gruppo + a.rs[0].nome > b.rs[0].gruppo + b.rs[0].nome ? 1 : -1);
     });
-  const kitOk = new Set(righe.map((r) => r.uid));
+  const vive = righe.filter((r) => !r.nonRisponde);   // 2.35.0: i giorni passati dei kit che non rispondono non contano qui
+  const kitOk = new Set(vive.map((r) => r.uid));
   $("#conti").innerHTML = [
-    ["Telecamere che funzionano", righe.length], ["Registrano adesso", righe.filter((r) => r.adessoOrd === 2).length],
-    ["Ferme o niente oggi", righe.filter((r) => r.adessoOrd < 2).length], ["Kit con telecamere che funzionano", kitOk.size],
+    ["Telecamere che funzionano", vive.length], ["Registrano adesso", vive.filter((r) => r.adessoOrd === 2).length],
+    ["Ferme o niente oggi", vive.filter((r) => r.adessoOrd < 2).length], ["Kit con telecamere che funzionano", kitOk.size],
     ["Kit che non rispondono o senza registrazioni", kitFermi.length], ["Registratori in coda al PC", dati.coda || 0],
   ].map(([t, n]) => `<div class="conto">${t}<br><b>${n}</b></div>`).join("");
   $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
