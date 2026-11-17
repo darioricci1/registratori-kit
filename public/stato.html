@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.34.0 (17/11/2026) - «Non registrano, senza ODM» e «Fermi con un ODM aperto» si aprono da due bottoni in alto,
+     accanto a «Schemi delle ore», «Errori di salvataggio» e «Telecamere da sistemare» (Dario: «metti queste sezioni accessibili
+     con bottone»), col numero dei kit sul bottone; prima stavano in fondo alla pagina. -->
 <!-- version: 2.33.0 (16/11/2026) - sezione «Errori di salvataggio» (Dario: «voglio una sezione di registratori kit»): nomi dei
      file sbagliati, telecamere non salvate dalle operatrici, segnalazioni da chiarire (op=errori, dati/errori_salvataggio.json),
      tabella ordinabile e filtrabile, scaricabile in Excel. -->
@@ -217,6 +220,8 @@ th:focus-within { z-index:5 }
   <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
   <button id="vediErrori" aria-pressed="false" title="Apre gli errori nel salvataggio delle clip sul NAS: nomi dei file scritti diversi fra le telecamere della stessa clip, telecamere che le operatrici non salvano, segnalazioni da chiarire">Errori di salvataggio</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
+  <button id="vediSenzaOdm" aria-pressed="false" title="Apre i kit che non registrano (non rispondono o niente registrato oggi) e non hanno un ODM aperto: sono quelli da segnalare">Non registrano, senza ODM</button>
+  <button id="vediFermi" aria-pressed="false" title="Apre i kit che non rispondono o non hanno registrazioni oggi ma hanno già un ODM aperto">Fermi con un ODM aperto</button>
 </header>
 <div class="conti" id="conti"></div>
 <main>
@@ -258,6 +263,14 @@ th:focus-within { z-index:5 }
     <th data-chiave="haFoto" title="La foto della telecamera all'ultimo giro dei registratori">Foto</th>
   </tr></thead><tbody></tbody></table>
   </div>
+  <div id="sezSenzaOdm" hidden>
+  <h2><span id="titolo-senzaOdm"></span> <button data-scarica="senzaOdm" title="Scarica in un file Excel (.xlsx) i kit che non registrano e non hanno un ODM aperto">Scarica in Excel</button></h2>
+  <table id="senzaOdm"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="attese">Telecamere</th></tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezFermi" hidden>
+  <h2><span id="titolo-fermi"></span> <button data-scarica="fermi" title="Scarica i kit che non rispondono">Scarica in Excel</button></h2>
+  <table id="fermi"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="odm_n">ODM</th><th data-ordina="no">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
+  </div>
   <h2>Kit e telecamere <button data-scarica="telecamere" title="Scarica tutte le telecamere con le percentuali dei giorni">Scarica in Excel</button></h2>
   <table id="tab">
     <colgroup><col style="width:11%"><col style="width:12%"><col style="width:8%"><col style="width:8%"><col style="width:6%"><col style="width:10%"><col style="width:37%"><col style="width:8%"></colgroup>
@@ -269,10 +282,6 @@ th:focus-within { z-index:5 }
     </tr></thead>
     <tbody></tbody>
   </table>
-  <h2><span id="titolo-senzaOdm"></span> <button data-scarica="senzaOdm" title="Scarica in un file Excel (.xlsx) i kit che non registrano e non hanno un ODM aperto">Scarica in Excel</button></h2>
-  <table id="senzaOdm"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="attese">Telecamere</th></tr></thead><tbody></tbody></table>
-  <h2><span id="titolo-fermi"></span> <button data-scarica="fermi" title="Scarica i kit che non rispondono">Scarica in Excel</button></h2>
-  <table id="fermi"><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="perche">Cosa risponde</th><th data-chiave="controllo" data-verso="giu">Ultimo controllo</th><th data-chiave="odm_n">ODM</th><th data-ordina="no">Aperto il</th><th data-chiave="odm_tipo">Tipo ODM</th></tr></thead><tbody></tbody></table>
 </main>
 <div id="grande" hidden></div>
 <script>
@@ -790,12 +799,14 @@ function disegna() {
     const x = v(a), y = v(b); return (x > y ? 1 : x < y ? -1 : 0) * ordSo.verso;
   });
   $("#titolo-senzaOdm").textContent = `Non registrano e non hanno un ODM (${so.length})`;
+  $("#vediSenzaOdm").textContent = `Non registrano, senza ODM (${so.length})`;
   $("#senzaOdm tbody").innerHTML = so.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${attesaDi(k)}</td></tr>`).join("");
   const f = kitFermi.filter((k) => k.odm_n && ok(k) && passaFiltri("fermi", k)).sort((a, b) => {
     const v = (k) => (ordFe.chiave === "controllo" ? k.finito_il || "" : VALORE.fermi[ordFe.chiave](k));
     const x = v(a), y = v(b); return (x > y ? 1 : x < y ? -1 : 0) * ordFe.verso;
   });
   $("#titolo-fermi").textContent = f.length ? `Non rispondono o senza registrazioni oggi, con un ODM aperto (${f.length})` : "";
+  $("#vediFermi").textContent = `Fermi con un ODM aperto (${f.length})`;
   $("#fermi tbody").innerHTML = f.map((k) => `<tr><td>${k.gruppo}</td><td>${k.nome}</td><td><span class="no">${k.perche}</span></td><td class="tenue">${k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : ""}</td><td class="num">${esc(k.odm_n)}</td><td>${esc(k.odm_ap)}</td><td>${esc(k.odm_tipo)}</td></tr>${notaSotto(k.odm_note, 7)}`).join("");
   $("#fermi thead").hidden = !kitFermi.length;
   $("#senzaOdm thead").hidden = !senzaOdm().length;
@@ -853,6 +864,12 @@ $("#vediErrori").addEventListener("click", () => {
   const sez = $("#sezErrori"), apri = sez.hidden;
   sez.hidden = !apri; $("#vediErrori").setAttribute("aria-pressed", String(apri));
   if (apri) { $("main").scrollTop = 0; caricaErrori(); }
+});
+// 2.34.0: anche i kit fermi si aprono da un bottone in alto (Dario, 17/11)
+for (const [btn, sid] of [["#vediSenzaOdm", "#sezSenzaOdm"], ["#vediFermi", "#sezFermi"]]) $(btn).addEventListener("click", () => {
+  const sez = $(sid), apri = sez.hidden;
+  sez.hidden = !apri; $(btn).setAttribute("aria-pressed", String(apri));
+  if (apri) $("main").scrollTop = 0;
 });
 $("#vediSistemare").addEventListener("click", () => {
   const sez = $("#sezSistemare"), apri = sez.hidden;
