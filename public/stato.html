@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.42.0 (17/11/2026) - sezione «Avviso alle operatrici»: gli errori di salvataggio per operatrice, col testo da copiare
+     (Dario: «fai una sezione in cui li elenchi»). -->
 <!-- version: 2.41.0 (17/11/2026) - la torta delle telecamere che inquadrano male (fuoco, puntate, lontane, bordi,
      dietro i cassonetti), clic = elenco con le foto; la heatmap sulle foto come in kit.html: dal giallo all'arancio al rosso dove gli abbandoni
      si accumulano (Dario: «era orribile tutta rossa, gialla con rosso al centro»). -->
@@ -242,6 +244,11 @@ th:focus-within { z-index:5 }
 #tortaLegenda i { flex:none; width:12px; height:12px; border-radius:3px; transform:translateY(1px) }
 #tortaLegenda b { font-variant-numeric:tabular-nums; min-width:3.2em; text-align:right }
 #tortaLegenda small { color:var(--tenue) }
+.avvisi { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr)); gap:12px }
+.avviso { background:var(--carta); border:1px solid var(--bordo); border-radius:var(--raggio); padding:12px 16px; min-width:0 }
+.avviso h3 { margin:0 0 8px; font-size:15px; display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+.avviso ul { margin:0 0 10px; padding-left:18px } .avviso li { margin:4px 0; font-size:14px; overflow-wrap:anywhere }
+.avviso small { color:var(--tenue) }
 </style>
 </head>
 <body>
@@ -264,6 +271,7 @@ th:focus-within { z-index:5 }
   <button id="vediNonTorna" aria-pressed="false" title="Apre l'elenco delle cose che non tornano fra UVMS, il giro e l'ANAGRAFICA KIT">Cose che non tornano</button>
   <button id="vediSchemi" aria-pressed="false" title="Apre gli schemi delle ore registrate kit per kit (si spegne di giorno, solare che si spegne di notte, una telecamera sola...), con la causa probabile e cosa fare">Schemi delle ore</button>
   <button id="vediErrori" aria-pressed="false" title="Apre gli errori nel salvataggio delle clip sul NAS: nomi dei file scritti diversi fra le telecamere della stessa clip, telecamere che le operatrici non salvano, segnalazioni da chiarire">Errori di salvataggio</button>
+  <button id="vediAvviso" aria-pressed="false" title="Gli errori di salvataggio divisi per operatrice (dall'ASSEGNAZIONE di Elenco KIT), con un testo pronto da copiare e mandare a ognuna">Avviso alle operatrici</button>
   <button id="vediTorta" aria-pressed="true" title="Mostra o nasconde il grafico di come stanno i kit installati">Come stanno i kit</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
   <button id="vediSenzaOdm" aria-pressed="false" title="Apre i kit che non registrano (non rispondono o niente registrato oggi) e non hanno un ODM aperto: sono quelli da segnalare">Non registrano, senza ODM</button>
@@ -308,6 +316,10 @@ th:focus-within { z-index:5 }
     <th data-chiave="quante" title="Quante clip">Clip</th>
     <th data-chiave="esempio">Esempio</th><th data-chiave="cosa_fare">Cosa fare</th>
   </tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezAvviso" hidden>
+  <h2 title="Per ogni operatrice i kit dove sul NAS ci sono errori di salvataggio: nomi dei file scritti male (la clip si spezza), telecamere non salvate (quella telecamera non si può più analizzare), copie di Windows nella cartella. Il testo si copia col bottone e si manda a mano">Avviso alle operatrici</h2>
+  <div id="avvisi" class="avvisi"></div>
   </div>
   <div id="sezSistemare" hidden>
   <h2><span id="titolo-sistemare" title="">Telecamere da sistemare</span> <button data-scarica="sistemare" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
@@ -713,10 +725,40 @@ function disegnaErrori() {
   const cls = (x) => (x.tipo === "telecamera non salvata" ? "no" : x.tipo === "segnalazione da chiarire" ? "mezzo" : "");
   $("#errori tbody").innerHTML = l.map((x) => `<tr><td class="${cls(x)}">${esc(x.tipo)}</td><td>${esc(x.kit)}</td><td>${esc(x.comune)}</td><td class="num">${x.quante}</td><td style="font-size:13px">${esc(x.esempio)}</td><td style="font-size:13px">${esc(x.cosa_fare)}</td></tr>`).join("");
 }
+/** 2.42.0 (Dario, 17/11: «fai una sezione in cui li elenchi»): gli errori di salvataggio per operatrice, col testo
+ * dell'avviso da copiare. L'operatrice viene dall'ASSEGNAZIONE di Elenco KIT (campo operatrice_nome del file). */
+const FRASE = { "nome del file sbagliato": "nome del file scritto diverso dalle altre telecamere (la clip si spezza)",
+  "telecamera non salvata": "telecamere non salvate (quella telecamera non si può più analizzare)",
+  "copia di Windows nella cartella": "copia di Windows salvata nella cartella" };
+function testoAvviso(nome, righe) {
+  const per = new Map();
+  for (const x of righe) (per.get(x.tipo) || per.set(x.tipo, []).get(x.tipo)).push(x);
+  let t = `Ciao ${nome}, sul NAS ho trovato alcuni errori di salvataggio nei tuoi kit:\n`;
+  for (const [tipo, l] of per) {
+    t += `\n${FRASE[tipo] || tipo}:\n` + l.map((x) => `- ${x.kit}${x.comune && x.comune !== "-" ? " " + x.comune : ""}: ${x.esempio}`).join("\n") + "\n";
+  }
+  return t + "\nQuando salvi una clip, salva sempre tutte le telecamere del kit e controlla che il nome del file sia uguale per tutte. Grazie!";
+}
+function disegnaAvvisi() {
+  if (!ERRORI) return;
+  const g = new Map();
+  for (const x of ERRORI.righe) {
+    if (x.tipo === "segnalazione da chiarire") continue;
+    const n = x.operatrice_nome || "-";
+    (g.get(n) || g.set(n, []).get(n)).push(x);
+  }
+  const ord = [...g].sort((a, b) => (a[0] === "-") - (b[0] === "-") || b[1].length - a[1].length || a[0].localeCompare(b[0], "it"));
+  $("#vediAvviso").textContent = `Avviso alle operatrici (${ord.filter(([n]) => n !== "-").length})`;
+  $("#avvisi").innerHTML = ord.map(([n, l], i) => `<div class="avviso"><h3>${n === "-" ? "Kit senza operatrice in ASSEGNAZIONE" : esc(n)} <small>${l.length} ${l.length === 1 ? "errore" : "errori"}</small>
+    ${n === "-" ? "" : `<button data-copia="${i}" title="Copia il testo dell'avviso, da incollare in una mail o in un messaggio">Copia il testo</button>`}</h3>
+    <ul>${l.map((x) => `<li><b>${esc(x.kit)}</b> ${esc(x.comune && x.comune !== "-" ? x.comune : "")} · ${esc(x.tipo)}: ${esc(x.esempio)}</li>`).join("")}</ul></div>`).join("");
+  disegnaAvvisi.testi = ord.map(([n, l]) => testoAvviso(n, l));
+}
 async function caricaErrori() {
-  if (ERRORI) return disegnaErrori();
+  if (ERRORI) { disegnaErrori(); return disegnaAvvisi(); }
   try { const r = await fetch("/api/p2p?op=errori"); if (r.ok) ERRORI = await r.json(); } catch { /* resta il bottone senza conto */ }
   disegnaErrori();
+  disegnaAvvisi();
 }
 async function caricaSchemi() {
   if (SCHEMI) return disegnaSchemi();
@@ -1079,6 +1121,16 @@ $("#vediSchemi").addEventListener("click", () => {
   const sez = $("#sezSchemi"), apri = sez.hidden;
   sez.hidden = !apri; $("#vediSchemi").setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
+});
+$("#vediAvviso").addEventListener("click", () => {
+  const sez = $("#sezAvviso"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediAvviso").setAttribute("aria-pressed", String(apri));
+  if (apri) { $("main").scrollTop = 0; caricaErrori(); }
+});
+$("#avvisi").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-copia]"); if (!b) return;
+  try { await navigator.clipboard.writeText(disegnaAvvisi.testi[+b.dataset.copia]); b.textContent = "Copiato ✓"; } catch { b.textContent = "Non riesco a copiare"; }
+  setTimeout(() => { b.textContent = "Copia il testo"; }, 2000);
 });
 $("#vediErrori").addEventListener("click", () => {
   const sez = $("#sezErrori"), apri = sez.hidden;

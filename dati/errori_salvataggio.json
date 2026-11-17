@@ -1,5 +1,5 @@
 {
- "versione": "0.1.0",
+ "versione": "0.2.0",
  "fatto_il": "2026-11-16",
  "fonte": "kit-rifiuti-programma: analisi/telecamere-mancanti-2026-11-16.md e casi-limite-2026-11-16.md, elenco del NAS del 10/11",
  "righe": [
@@ -9,7 +9,9 @@
    "comune": "GRANAROLO",
    "quante": 1,
    "esempio": "05/08: «targa FM993BN 6491900S» accanto a «16491901S» e «16491902S»: manca l'1 dell'ora",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BG",
+   "operatrice_nome": "Barbara Grillini"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -17,7 +19,9 @@
    "comune": "-",
    "quante": 1,
    "esempio": "«targa DC764RA 0462402S»: manca una cifra dell'ora",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "",
+   "operatrice_nome": "-"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -25,7 +29,9 @@
    "comune": "FOGGIA",
    "quante": 1,
    "esempio": "«no targa 7202702S»: manca una cifra dell'ora",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "VF",
+   "operatrice_nome": "VF"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -33,7 +39,9 @@
    "comune": "SANT ILARIO D ENZA",
    "quante": 1,
    "esempio": "«targa FA047DT 9012000S»: manca una cifra dell'ora",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "A",
+   "operatrice_nome": "Alice"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -41,7 +49,9 @@
    "comune": "TRANI",
    "quante": 1,
    "esempio": "«no targa 4032100S»: manca una cifra dell'ora",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BP",
+   "operatrice_nome": "Barbara Papazzoni"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -49,7 +59,9 @@
    "comune": "-",
    "quante": 1,
    "esempio": "01/11: «targa FE029VA 6205002S»: manca una cifra dell'ora",
-   "cosa_fare": "dire alle operatrici; la clip va rifatta col nome giusto"
+   "cosa_fare": "dire alle operatrici; la clip va rifatta col nome giusto",
+   "operatrice": "R",
+   "operatrice_nome": "Roberta"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -57,7 +69,9 @@
    "comune": "GRANAROLO",
    "quante": 1,
    "esempio": "06/09: «a mano 20342802S» e «no targa 20342800S», «no targa 20342801S»: parola diversa nella stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BG",
+   "operatrice_nome": "Barbara Grillini"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -65,7 +79,9 @@
    "comune": "CARPINETI",
    "quante": 1,
    "esempio": "«a mano 090536» per le telecamere 1-2 e «targa GS726YD 090536» per la 3-4",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -73,7 +89,9 @@
    "comune": "CASALFIUMANESE",
    "quante": 2,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -81,7 +99,9 @@
    "comune": "REGGIO EMILIA",
    "quante": 2,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "RM",
+   "operatrice_nome": "Roberta Manno"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -89,7 +109,9 @@
    "comune": "AMAGA-ABBIATEGRASSO",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BP",
+   "operatrice_nome": "Barbara Papazzoni"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -97,7 +119,9 @@
    "comune": "BUSTO ARSIZIO",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -105,7 +129,9 @@
    "comune": "LECCO",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BG",
+   "operatrice_nome": "Barbara Grillini"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -113,7 +139,9 @@
    "comune": "MANFREDONIA",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "VF",
+   "operatrice_nome": "VF"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -121,7 +149,9 @@
    "comune": "REGGIO EMILIA",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "R",
+   "operatrice_nome": "Roberta"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -129,7 +159,9 @@
    "comune": "SAN BONIFACIO",
    "quante": 1,
    "esempio": "«a mano no tarrga» e «mano 21131900S» senza la «a»",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "FM",
+   "operatrice_nome": "FM"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -137,7 +169,9 @@
    "comune": "TRANI",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "A",
+   "operatrice_nome": "Alice"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -145,7 +179,9 @@
    "comune": "VERGATO",
    "quante": 1,
    "esempio": "parola diversa fra le telecamere della stessa clip",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "nome del file sbagliato",
@@ -153,7 +189,9 @@
    "comune": "MOLFETTA",
    "quante": 1,
    "esempio": "«no targa no targa»: parola ripetuta",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "ES",
+   "operatrice_nome": "Elisa Scalini"
   },
   {
    "tipo": "copia di Windows nella cartella",
@@ -161,7 +199,9 @@
    "comune": "PALMANOVA",
    "quante": 1,
    "esempio": "«...09030001S(2) - Copia.ssf»: copia di Windows salvata nella cartella",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "CM",
+   "operatrice_nome": "Camilla Montanari"
   },
   {
    "tipo": "copia di Windows nella cartella",
@@ -169,7 +209,9 @@
    "comune": "SCHIO",
    "quante": 1,
    "esempio": "«a mano 21043500S - .ssf»: copia di Windows salvata nella cartella",
-   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce"
+   "cosa_fare": "dire alle operatrici; il programma 0.99.7 le ricuce",
+   "operatrice": "BG",
+   "operatrice_nome": "Barbara Grillini"
   },
   {
    "tipo": "telecamera non salvata",
@@ -177,7 +219,9 @@
    "comune": "BUSTO ARSIZIO",
    "quante": 84,
    "esempio": "84 clip su 268 senza telecamera 3 (84 clip); in 13 c'era una clip completa lo stesso giorno, entro 3 ore (2026-09-09 - 2026-10-18)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "telecamera non salvata",
@@ -185,7 +229,9 @@
    "comune": "REGGIO EMILIA",
    "quante": 14,
    "esempio": "14 clip su 940 senza telecamera 3 (11 clip), telecamera 2 (8 clip), telecamera 1 (4 clip); in 12 c'era una clip completa lo stesso giorno, entro 3 ore (2026-07-23 - 2026-10-18)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "A",
+   "operatrice_nome": "Alice"
   },
   {
    "tipo": "telecamera non salvata",
@@ -193,7 +239,9 @@
    "comune": "LERICI",
    "quante": 10,
    "esempio": "10 clip su 348 senza telecamera 3 (10 clip); in 8 c'era una clip completa lo stesso giorno, entro 3 ore (2026-07-31 - 2026-10-18)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "telecamera non salvata",
@@ -201,7 +249,9 @@
    "comune": "FORTE DEI MARMI",
    "quante": 483,
    "esempio": "483 clip su 484 senza telecamera 4 (483 clip); in 5 c'era una clip completa lo stesso giorno, entro 3 ore (2026-07-26 - 2026-11-02)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "",
+   "operatrice_nome": "-"
   },
   {
    "tipo": "telecamera non salvata",
@@ -209,7 +259,9 @@
    "comune": "BOLZANO",
    "quante": 7,
    "esempio": "7 clip su 275 senza telecamera 4 (3 clip), telecamera 2 (3 clip); in 5 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-02 - 2026-09-07)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "telecamera non salvata",
@@ -217,7 +269,9 @@
    "comune": "SAN PIETRO IN CASALE",
    "quante": 5,
    "esempio": "5 clip su 239 senza telecamera 3 (5 clip), telecamera 1 (2 clip); in 3 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-26 - 2026-10-11)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "MM",
+   "operatrice_nome": "Matteo Mancini"
   },
   {
    "tipo": "telecamera non salvata",
@@ -225,7 +279,9 @@
    "comune": "FOGGIA",
    "quante": 3,
    "esempio": "3 clip su 748 senza telecamera 1 (3 clip), telecamera 2 (2 clip); in 3 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-12 - 2026-10-20)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "CM",
+   "operatrice_nome": "Camilla Montanari"
   },
   {
    "tipo": "telecamera non salvata",
@@ -233,7 +289,9 @@
    "comune": "REGGIO EMILIA",
    "quante": 3,
    "esempio": "3 clip su 1005 senza telecamera 3 (3 clip), telecamera 2 (2 clip), telecamera 4 (2 clip); in 3 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-09 - 2026-09-20)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "RM",
+   "operatrice_nome": "Roberta Manno"
   },
   {
    "tipo": "telecamera non salvata",
@@ -241,7 +299,9 @@
    "comune": "BOLZANO",
    "quante": 3,
    "esempio": "3 clip su 159 senza telecamera 1 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-01 - 2026-09-18)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "R",
+   "operatrice_nome": "Roberta"
   },
   {
    "tipo": "telecamera non salvata",
@@ -249,7 +309,9 @@
    "comune": "SAN BONIFACIO",
    "quante": 3,
    "esempio": "3 clip su 393 senza telecamera 3 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-01 - 2026-09-18)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "telecamera non salvata",
@@ -257,7 +319,9 @@
    "comune": "AMAGA-Abbiategrasso",
    "quante": 2,
    "esempio": "2 clip su 5 senza telecamera 1 (2 clip), telecamera 2 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-19 - 2026-08-19)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "VF",
+   "operatrice_nome": "VF"
   },
   {
    "tipo": "telecamera non salvata",
@@ -265,7 +329,9 @@
    "comune": "BOLZANO",
    "quante": 2,
    "esempio": "2 clip su 257 senza telecamera 2 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-10-18 - 2026-10-19)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "BP",
+   "operatrice_nome": "Barbara Papazzoni"
   },
   {
    "tipo": "telecamera non salvata",
@@ -273,7 +339,9 @@
    "comune": "FOGGIA",
    "quante": 2,
    "esempio": "2 clip su 165 senza telecamera 1 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-07-28 - 2026-10-03)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "ES",
+   "operatrice_nome": "Elisa Scalini"
   },
   {
    "tipo": "telecamera non salvata",
@@ -281,7 +349,9 @@
    "comune": "MERANO",
    "quante": 2,
    "esempio": "2 clip su 180 senza telecamera 3 (2 clip), telecamera 4 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-09-04 - 2026-09-20)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "A",
+   "operatrice_nome": "Alice"
   },
   {
    "tipo": "telecamera non salvata",
@@ -289,7 +359,9 @@
    "comune": "MERANO",
    "quante": 2,
    "esempio": "2 clip su 109 senza telecamera 3 (2 clip), telecamera 4 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-21 - 2026-09-07)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "FD",
+   "operatrice_nome": "Filomena"
   },
   {
    "tipo": "telecamera non salvata",
@@ -297,7 +369,9 @@
    "comune": "PIANORO",
    "quante": 2,
    "esempio": "2 clip su 90 senza telecamera 1 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-07-31 - 2026-07-31)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "MM",
+   "operatrice_nome": "Matteo Mancini"
   },
   {
    "tipo": "telecamera non salvata",
@@ -305,7 +379,9 @@
    "comune": "SASSUOLO",
    "quante": 2,
    "esempio": "2 clip su 168 senza telecamera 1 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-08-19 - 2026-10-09)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "VF",
+   "operatrice_nome": "VF"
   },
   {
    "tipo": "telecamera non salvata",
@@ -313,7 +389,9 @@
    "comune": "VIPITENO",
    "quante": 2,
    "esempio": "2 clip su 18 senza telecamera 3 (2 clip), telecamera 4 (2 clip); in 2 c'era una clip completa lo stesso giorno, entro 3 ore (2026-10-04 - 2026-10-25)",
-   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere"
+   "cosa_fare": "dire alle operatrici di salvare tutte le telecamere",
+   "operatrice": "",
+   "operatrice_nome": "-"
   },
   {
    "tipo": "telecamera non salvata",
@@ -321,7 +399,9 @@
    "comune": "PORDENONE",
    "quante": 80,
    "esempio": "80 clip senza la telecamera 2, una sola clip completa vicina: sembra ferma più che dimenticata",
-   "cosa_fare": "da guardare: telecamera 2 ferma?"
+   "cosa_fare": "da guardare: telecamera 2 ferma?",
+   "operatrice": "CM",
+   "operatrice_nome": "Camilla Montanari"
   },
   {
    "tipo": "segnalazione da chiarire",
@@ -329,7 +409,9 @@
    "comune": "COMO",
    "quante": 21,
    "esempio": "18 clip dubbie su 21: strada di campagna senza cassonetti, quasi sempre nessuno in campo",
-   "cosa_fare": "chiedere alle operatrici da dove viene la segnalazione"
+   "cosa_fare": "chiedere alle operatrici da dove viene la segnalazione",
+   "operatrice": "BP",
+   "operatrice_nome": "Barbara Papazzoni"
   },
   {
    "tipo": "segnalazione da chiarire",
@@ -337,7 +419,9 @@
    "comune": "-",
    "quante": 95,
    "esempio": "svuotamenti del camion della raccolta segnalati come abbandono",
-   "cosa_fare": "chiedere se li segnalano apposta"
+   "cosa_fare": "chiedere se li segnalano apposta",
+   "operatrice": "",
+   "operatrice_nome": "-"
   },
   {
    "tipo": "segnalazione da chiarire",
@@ -345,7 +429,10 @@
    "comune": "-",
    "quante": 84,
    "esempio": "persone che spostano o sistemano roba già lì, segnalate come abbandono",
-   "cosa_fare": "chiedere se li segnalano apposta"
+   "cosa_fare": "chiedere se li segnalano apposta",
+   "operatrice": "",
+   "operatrice_nome": "-"
   }
- ]
+ ],
+ "operatrici_da": "ASSEGNAZIONE di Elenco KIT, ultima colonna con un valore (17/11/2026)"
 }
