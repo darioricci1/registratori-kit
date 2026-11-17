@@ -45,6 +45,10 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito dahua1 0.1.0 (pronto il 17/11 e NON mandato; `compiti/dahua1/LEGGIMI.md`): SOLA LETTURA degli fps impostati
+  nelle telecamere Dahua dei kit (i video sembrano accelerati), via VPN L2TP/IPsec del router Teltonika in split
+  tunneling. Serve `accesso_dahua.txt` nello zip (solo su Drive di Alma) con gli indirizzi pubblici del giorno, e il
+  segnaposto `risultato_dahua1.zip`.
 - Compito parallelo1 0.1.0 (pronto il 16/11 e NON mandato, zip in `compito_parallelo1/compito.zip` dello scratchpad; codice
   e spiegazione in `compiti/parallelo1/LEGGIMI.md`): più registratori insieme. Sugli stessi 40 kit che rispondono, sola
   lettura leggera: N=1 come il ponte, strada A (una libreria, N=4/8/16 Connect insieme, ritorni smistati per hSERVER) e

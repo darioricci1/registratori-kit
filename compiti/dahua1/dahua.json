@@ -1,0 +1,13 @@
+{
+ "_perche": "dahua1 0.1.0 (17/11/2026): sola lettura degli fps delle telecamere Dahua dei kit, via VPN L2TP del router Teltonika",
+ "_nota": "i valori mancanti prendono quelli di DIFETTI in compito.py; «solo» restringe ai kit con quelle sigle",
+ "solo": [],
+ "massimo_kit": 30,
+ "tetto_kit_min": 10,
+ "tetto_min": 90,
+ "autenticazioni": [["MSChapv2", "Chap"], ["Pap"]],
+ "cifratura": "Optional",
+ "rete_kit": "192.168.1.0/24",
+ "salta": ["192.168.1.1", "192.168.1.2"],
+ "noti": ["192.168.1.120", "192.168.1.170"]
+}
