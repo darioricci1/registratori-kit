@@ -1,4 +1,5 @@
-// prova-nvr-remoto/api/p2p.js - version: 1.14.0 (14/11/2026)
+// prova-nvr-remoto/api/p2p.js - version: 1.16.0 (18/11/2026)
+// 1.16.0: op=fps, gli fps veri di ogni telecamera dal compito fps1 (dati/fps.json, fatto da dati/fps.py) dietro l'accesso.
 // 1.15.0: op=errori, gli errori di salvataggio delle clip (dati/errori_salvataggio.json) dietro l'accesso.
 // 1.14.0: op=schemi, gli schemi delle ore per kit (dati/schemi_ore.json, fatto da dati/schemi_ore.py) dietro l'accesso.
 // 1.13.0: op=sistemare, l'elenco delle telecamere sfocate o coperte (dati/telecamere_da_sistemare.json, fatto da
@@ -50,6 +51,7 @@ const RE_UID = /^[A-Z0-9]{20}$/;
 let pronto = null;
 let sistemare = null, errori = null;   // 1.13.0: il json si legge una volta per processo
 let schemi = null;      // 1.14.0: idem
+let fps = null;         // 1.16.0: idem
 
 function db() {
   const url = process.env.ALMA_DATABASE_URL || process.env.ALMA_POSTGRES_URL;
@@ -260,6 +262,10 @@ export default async function handler(req, res) {
     if (op === "schemi") {   // 1.14.0: come op=sistemare, il file viaggia con la funzione
       if (!schemi) schemi = JSON.parse(readFileSync(new URL("../dati/schemi_ore.json", import.meta.url), "utf8"));
       return res.json(schemi);
+    }
+    if (op === "fps") {   // 1.16.0: come op=sistemare, il file viaggia con la funzione
+      if (!fps) fps = JSON.parse(readFileSync(new URL("../dati/fps.json", import.meta.url), "utf8"));
+      return res.json(fps);
     }
     if (op === "ore") {   // 1.9.0: le ore di ogni giorno, una volta per apertura di pagina
       return res.json(await sql`select uid, canale, ore from nvr_remoto.archivio where ore is not null`);

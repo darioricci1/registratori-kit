@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registrazioni dei kit</title>
+<!-- version: 2.43.0 (18/11/2026) - «Velocità delle telecamere» (Dario, 17/11: «I FPS LI METTI IN REGISTRAZIONI KIT?»): gli fps veri
+     di ogni telecamera misurati dal compito fps1 (op=fps, dati/fps.json), prima quelle sotto 24 fps, con quanto scorre veloce un
+     video letto a 25; i kit che non hanno mai risposto; e gli fps accanto al canale in «Kit e telecamere». -->
 <!-- version: 2.42.0 (17/11/2026) - sezione «Avviso alle operatrici»: gli errori di salvataggio per operatrice, col testo da copiare
      (Dario: «fai una sezione in cui li elenchi»). -->
 <!-- version: 2.41.0 (17/11/2026) - la torta delle telecamere che inquadrano male (fuoco, puntate, lontane, bordi,
@@ -219,6 +222,17 @@ th:focus-within { z-index:5 }
 .riquadro-entra h1{font-size:26px;margin:0}
 .riquadro-entra p{margin:0;opacity:.75}
 .riquadro-entra .grande{font-size:18px;min-height:48px;padding:10px 28px}
+/* 2.43.0: la velocità delle telecamere */
+.fpsCh { font-size:11px; white-space:nowrap }
+@media (max-width:700px) {
+  .fpsCh .unita { display:none }
+  #fps col:nth-child(6), #fps col:nth-child(7), #fps col:nth-child(8), #fps col:nth-child(9),
+  #fps tr > :nth-child(6), #fps tr > :nth-child(7), #fps tr > :nth-child(8), #fps tr > :nth-child(9) { display:none }
+  #fps col:nth-child(1) { width:21% !important } #fps col:nth-child(2) { width:23% !important } #fps col:nth-child(3) { width:12% !important }
+  #fps col:nth-child(4) { width:13% !important } #fps col:nth-child(5) { width:14% !important } #fps col:nth-child(10) { width:17% !important }
+  #fps td, #fps th, #fpsMai td, #fpsMai th { font-size:13px; padding:4px 3px }
+  #fps th, #fpsMai th { white-space:normal }
+}
 /* 2.36.0: la foto si vede subito nella riga (Dario: «puoi far vedere le foto senza cliccare vedi foto?») */
 #sistemare button.mini { padding:2px; min-height:40px; line-height:0; background:none }
 #sistemare button.mini img { display:block; width:200px; max-width:100%; height:auto; border-radius:6px; background:#0001 }
@@ -249,6 +263,8 @@ th:focus-within { z-index:5 }
 .avviso h3 { margin:0 0 8px; font-size:15px; display:flex; gap:10px; align-items:center; flex-wrap:wrap }
 .avviso ul { margin:0 0 10px; padding-left:18px } .avviso li { margin:4px 0; font-size:14px; overflow-wrap:anywhere }
 .avviso small { color:var(--tenue) }
+/* 2.43.0: al telefono la legenda delle torte va sotto la torta invece di stringersi accanto (usciva a destra) */
+#tortaLegenda, #teleLegenda, #causeLegenda { flex:1 1 220px; grid-template-columns:minmax(0,1fr) } .torta li > span { min-width:0; overflow-wrap:anywhere }
 </style>
 </head>
 <body>
@@ -274,6 +290,7 @@ th:focus-within { z-index:5 }
   <button id="vediAvviso" aria-pressed="false" title="Gli errori di salvataggio divisi per operatrice (dall'ASSEGNAZIONE di Elenco KIT), con un testo pronto da copiare e mandare a ognuna">Avviso alle operatrici</button>
   <button id="vediTorta" aria-pressed="true" title="Mostra o nasconde il grafico di come stanno i kit installati">Come stanno i kit</button>
   <button id="vediSistemare" aria-pressed="false" title="Apre l'elenco delle telecamere sfocate, morbide o coperte (un palo, dei rami) e di quelle da riposizionare perché gli abbandoni avvengono lontano, sul margine o dietro i cassonetti: prima quelle viste a occhio, poi quelle da riposizionare, poi quelle segnalate solo dalla misura di nitidezza">Telecamere da sistemare</button>
+  <button id="vediFps" aria-pressed="false" title="Apre gli fps veri di ogni telecamera (fotogrammi al secondo, misurati dal registratore il 17-18/11): prima quelle sotto 24 fps, che lette a 25 come fa Kit_Rifiuti scorrono più veloci del vero">Velocità delle telecamere</button>
   <button id="vediSenzaOdm" aria-pressed="false" title="Apre i kit che non registrano (non rispondono o niente registrato oggi) e non hanno un ODM aperto: sono quelli da segnalare">Non registrano, senza ODM</button>
   <button id="vediFermi" aria-pressed="false" title="Apre i kit che non rispondono o non hanno registrazioni oggi ma hanno già un ODM aperto">Fermi con un ODM aperto</button>
 </header>
@@ -333,6 +350,21 @@ th:focus-within { z-index:5 }
     <th data-chiave="giro" title="Il giro di Kit_Rifiuti (e il giorno) del video su cui è stata misurata">Esempio di giro</th>
     <th data-chiave="haFoto" title="La foto della telecamera all'ultimo giro dei registratori">Foto</th>
   </tr></thead><tbody></tbody></table>
+  </div>
+  <div id="sezFps" hidden>
+  <h2><span id="titolo-fps" title="">Velocità delle telecamere</span> <button data-scarica="fps" title="Scarica queste righe in un file Excel (.xlsx)">Scarica in Excel</button></h2>
+  <table id="fps"><colgroup><col style="width:14%"><col style="width:17%"><col style="width:6%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:8%"><col style="width:10%"><col style="width:10%"><col style="width:9%"></colgroup><thead><tr>
+    <th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="cam" title="Il canale come in UVMS (telecamera 1 = CH 01)">Tel.</th>
+    <th data-chiave="fps" title="Fotogrammi al secondo veri: quanti fotogrammi sono arrivati in circa 10 secondi di registrazione, diviso il tempo fra il primo e l'ultimo. Sotto 24 in rosso">fps</th>
+    <th data-chiave="accelerazione" data-verso="giu" title="Quante volte più veloce del vero scorre un video di questa telecamera letto a 25 fps, come fa oggi Kit_Rifiuti: ×1,39 vuol dire che 10 secondi veri passano in 7,2">Letta a 25</th>
+    <th data-chiave="fps_registratore" title="Gli fps dai tempi dei fotogrammi scritti dal registratore (mediana degli intervalli). Quando i fotogrammi arrivano a gruppi dice 25 anche se ne arrivano meno: per questo conta la colonna fps">Registratore</th>
+    <th data-chiave="fps_dichiarato" title="Gli fps che il flusso video dichiara di sé (SPS del file H.264/H.265); - se non li dichiara">Dichiarati</th>
+    <th data-chiave="risoluzione">Risoluzione</th>
+    <th data-chiave="tratto" data-verso="giu" title="Il minuto di registrazione misurato (di giorno, oggi o ieri, se c'era)">Misurata su</th>
+    <th data-chiave="risposte_n" title="Quante volte il kit ha risposto durante il compito e a che ora">Ha risposto</th>
+  </tr></thead><tbody></tbody></table>
+  <h2 id="titolo-fpsMai" title="I kit che durante il compito non hanno mai risposto al collegamento: per loro gli fps non si sanno">Mai risposto</h2>
+  <table id="fpsMai"><colgroup><col style="width:28%"><col style="width:28%"><col style="width:12%"><col style="width:32%"></colgroup><thead><tr><th data-chiave="gruppo">Comune o cliente</th><th data-chiave="nome">Kit</th><th data-chiave="prove" title="Quante volte il compito ha provato a collegarsi">Prove</th><th data-chiave="errore">Cosa risponde</th></tr></thead><tbody></tbody></table>
   </div>
   <div id="sezSenzaOdm" hidden>
   <h2><span id="titolo-senzaOdm"></span> <button data-scarica="senzaOdm" title="Scarica in un file Excel (.xlsx) i kit che non registrano e non hanno un ODM aperto">Scarica in Excel</button></h2>
@@ -573,6 +605,76 @@ function costruisci(d) {
   for (const k of kitFermi) k.kitN = parseInt(k.kit, 10);
   preparaFiltri("tab", [...righe, ...righeFermi()]); preparaFiltri("nonTorna", nonTorna); preparaFiltri("fermi", kitFermi.filter((k) => k.odm_n)); preparaFiltri("senzaOdm", senzaOdm());
 }
+/** 2.43.0: la velocità delle telecamere (op=fps, letto una volta, dal compito fps1). L'etichetta del kit è quella del
+ * compito: «KIT<numero>» dal testo «gruppo · nome» della richiesta, o il nome se non comincia con un numero. */
+let FPS = null, FPSMAP = new Map(), ordFps = { chiave: "fps", verso: 1 }, ordMai = { chiave: "gruppo", verso: 1 };
+function etichettaFps(k) {
+  const t = `${k.gruppo || ""} · ${k.nome || ""}`, m = t.match(/(?:^|·)\s*(\d{1,4})\b/);
+  return m ? "KIT" + parseInt(m[1], 10) : (t.split("·").pop().trim().slice(0, 40) || "senza nome");
+}
+const fpsIt = (f) => (f == null ? "-" : Number(f).toLocaleString("it-IT", { maximumFractionDigits: 1 }));
+const classeFps = (f) => (f == null ? "senza misura" : f < ((FPS || {}).soglia || 24) ? "sotto 24" : "24 e più");
+const oreRisposta = (x) => (x.ore_risposta || []).map((h) => String(h).padStart(2, "0")).join(", ");
+/** Il kit della pagina per ogni etichetta del compito (prima gli installati), e comune e nome sulle righe del json. */
+function legaFps() {
+  if (!FPS) return;
+  const per = new Map();
+  for (const k of (dati.kit || []).slice().sort((a, b) => /NON INSTALLATI/i.test(a.gruppo || "") - /NON INSTALLATI/i.test(b.gruppo || ""))) {
+    const e = etichettaFps(k); if (!per.has(e)) per.set(e, k);
+  }
+  for (const x of [...FPS.telecamere, ...FPS.mai_risposto]) { const k = per.get(x.kit); x.gruppo = k ? k.gruppo : "-"; x.nome = k ? k.nome : x.kit; }
+}
+/** Gli fps sotto il canale in «Kit e telecamere». */
+function fpsCella(r) {
+  const x = FPS && FPSMAP.get(etichettaFps(r) + "|" + r.canale);
+  if (!x || x.fps == null) return "";
+  const lenta = x.fps < FPS.soglia;
+  return `<div class="fpsCh ${lenta ? "no" : "tenue"}" title="${esc(`Fotogrammi al secondo veri, misurati il ${breve(x.misurato_il)}${lenta ? `: letta a 25 come fa Kit_Rifiuti scorre ${fpsIt(x.accelerazione)} volte più veloce del vero` : ""}`)}">${fpsIt(x.fps)}<span class="unita"> fps</span></div>`;
+}
+function ordinaCon(l, o, val) {
+  return l.sort((a, b) => { const p = val(a), q = val(b);
+    if (p == null && q != null) return 1; if (q == null && p != null) return -1;
+    const c = typeof p === "number" && typeof q === "number" ? p - q : String(p ?? "").localeCompare(String(q ?? ""), "it", { numeric: true });
+    return c * o.verso; });
+}
+function righeFps() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const l = ((FPS || {}).telecamere || []).filter((x) => parole.every((p) => norm(x.gruppo + " " + x.nome + " " + x.kit).includes(p)) && passaFiltri("fps", x));
+  const v = (x) => (ordFps.chiave === "cam" ? x.canale : ordFps.chiave === "tratto" ? Number(String(x.tratto).replace(/\D/g, "")) || null : x[ordFps.chiave]);
+  return ordinaCon(l, ordFps, v);
+}
+function righeMai() {
+  const parole = norm($("#cerca").value).split(/\s+/).filter(Boolean);
+  const l = ((FPS || {}).mai_risposto || []).filter((x) => parole.every((p) => norm(x.gruppo + " " + x.nome + " " + x.kit).includes(p)) && passaFiltri("fpsMai", x));
+  return ordinaCon(l, ordMai, (x) => (ordMai.chiave === "errore" ? chiaro(x.errore) : x[ordMai.chiave]));
+}
+function disegnaFps() {
+  if (!FPS) return;
+  legaFps();
+  preparaFiltri("fps", FPS.telecamere); preparaFiltri("fpsMai", FPS.mai_risposto);
+  const c = FPS.conti, l = righeFps(), lente = l.filter((x) => x.fps != null && x.fps < FPS.soglia).length;
+  $("#vediFps").textContent = `Velocità delle telecamere (${c.sotto_soglia} sotto 24 fps)`;
+  $("#titolo-fps").textContent = `Velocità delle telecamere (${lente} sotto 24 fps su ${l.filter((x) => x.fps != null).length})`;
+  $("#titolo-fps").title = `Misurate dal ${FPS.fonte}. ${c.telecamere_misurate} telecamere misurate in ${c.kit_risposto} kit; ${c.sotto_soglia} sotto 24 fps in ${c.kit_con_lente} kit. Kit_Rifiuti legge i video a ${FPS.letto_a} fps: una telecamera più lenta scorre più veloce del vero. Elenco ${FPS.versione} del ${giornoIt(FPS.fatto_il)}: si rifà con dati/fps.py.`;
+  $("#fps tbody").innerHTML = l.map((x) => { const lenta = x.fps != null && x.fps < FPS.soglia;
+    const nota = [x.discordanti ? "Le stime non vanno d'accordo fra loro: vale quella dei fotogrammi contati" : "", `${x.fotogrammi ?? "-"} fotogrammi in ${fpsIt(x.secondi)} s`, x.fps_file ? `dal file grezzo ${fpsIt(x.fps_file)} fps` : "", x.codec !== "-" ? x.codec : ""].filter(Boolean).join(" · ");
+    return `<tr${x.fps == null ? ' class="tenue"' : ""}><td>${esc(x.gruppo)}</td><td>${esc(x.nome)}</td><td class="num">CH ${String(x.canale + 1).padStart(2, "0")}</td>
+    <td class="num ${lenta ? "no" : x.fps == null ? "tenue" : "ok"}" title="${esc(x.fps == null ? `Non misurata: ${x.esito} (${x.prove} prove)` : nota)}">${fpsIt(x.fps)}</td>
+    <td class="num${lenta ? " no" : ""}">${x.accelerazione == null ? "-" : "×" + fpsIt(x.accelerazione)}</td>
+    <td class="num">${fpsIt(x.fps_registratore)}</td><td class="num">${fpsIt(x.fps_dichiarato)}</td><td>${esc(x.risoluzione)}</td>
+    <td class="tenue" title="${esc(x.scelta)}">${esc(breve(x.tratto) || "-")}</td>
+    <td class="num" title="${esc(`Ha risposto ${x.risposte_n} ${x.risposte_n === 1 ? "volta" : "volte"} alle ore ${oreRisposta(x) || "-"}${x.non_risposto ? `, non ha risposto ${x.non_risposto}` : ""}`)}">${x.risposte_n} · ore ${esc(oreRisposta(x) || "-")}</td></tr>`; }).join("");
+  const m = righeMai();
+  $("#titolo-fpsMai").textContent = `Mai risposto (${m.length} kit)`;
+  $("#fpsMai tbody").innerHTML = m.map((x) => `<tr><td>${esc(x.gruppo)}</td><td>${esc(x.nome)}</td><td class="num">${x.prove}</td><td class="no">${esc(chiaro(x.errore))}</td></tr>`).join("");
+}
+async function caricaFps() {
+  if (FPS) return;
+  try { const r = await fetch("/api/p2p?op=fps"); if (r.ok) FPS = await r.json(); } catch { /* resta il bottone senza conto */ }
+  if (!FPS) return;
+  for (const x of FPS.telecamere) FPSMAP.set(x.kit + "|" + x.canale, x);
+  disegna();
+}
 /** 2.19.0: gli ODM aperti di un kit come elenco di campi; legge anche il testo dei ponti prima del 0.9.0. */
 function odmLista(n) {
   const o = (ANA.get(n) || {}).odm || "";
@@ -586,7 +688,7 @@ const odmCol = (n) => { const l = odmLista(n); return { n: l.map((x) => x.n).fil
 const aaaammgg = (d) => { const m = String(d || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/); return m ? m[3] + m[2].padStart(2, "0") + m[1].padStart(2, "0") : ""; };
 const odmDi = (k) => odmCol(parseInt(k.kit, 10)).n;
 /** I filtri delle intestazioni: per ogni tabella e colonna l'insieme dei valori scelti (vuoto = tutti). */
-const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {}, schemi: {}, errori: {} };
+const FILTRI = { tab: {}, nonTorna: {}, fermi: {}, senzaOdm: {}, sistemare: {}, schemi: {}, errori: {}, fps: {}, fpsMai: {} };
 const tipoAdesso = (a) => (a === "registra" ? "registra" : a.startsWith("a sensore") ? "a sensore" : a.startsWith("ferma") ? "ferma" : "niente oggi");
 const canaleIt = (r) => "CH " + String(r.canale + 1).padStart(2, "0");
 const giornoControllo = (k) => (k.finito_il ? new Date(k.finito_il).toLocaleDateString("it-IT") : "-");
@@ -597,6 +699,8 @@ const VALORE = {
   senzaOdm: { gruppo: (k) => k.gruppo || "-", nome: (k) => k.nome || "-", perche: (k) => k.perche, controllo: giornoControllo, attese: (k) => attesaDi(k) },
   schemi: { kit: (x) => String(x.kit), comune: (x) => x.comune || "-", alim: (x) => x.alim || "-", gruppo: (x) => x.gruppo || "-", causa: (x) => x.causa || "-", certezza: (x) => x.certezza || "-", fare: (x) => x.fare || "-" },
   errori: { tipo: (x) => x.tipo, comune: (x) => x.comune || "-", cosa_fare: (x) => x.cosa_fare || "-" },
+  fps: { gruppo: (x) => x.gruppo || "-", nome: (x) => x.nome || "-", cam: (x) => "CH " + String(x.canale + 1).padStart(2, "0"), fps: (x) => classeFps(x.fps), risoluzione: (x) => x.risoluzione || "-" },
+  fpsMai: { gruppo: (x) => x.gruppo || "-", nome: (x) => x.nome || "-", errore: (x) => chiaro(x.errore) },
   sistemare: { kit: (x) => x.kit || "-", comune: (x) => x.comune || "-", cam: (x) => "CH " + String(x.cam).padStart(2, "0"), problema: (x) => x.problema || "-", certezza: (x) => x.certezza || "-", cosa_fare: (x) => x.cosa_fare || "-", haFoto: (x) => (x.foto ? "c'è" : "no") },
 };
 /** 2.30.0: le telecamere da sistemare (op=sistemare, letto una volta) con la foto dell'ultimo giro, se c'è. */
@@ -1044,7 +1148,7 @@ function disegna() {
   ].map(([t, n]) => `<div class="conto">${t}<br><b>${n}</b></div>`).join("");
   $("#tab tbody").innerHTML = kitOrdinati.map(({ rs }, ik) => rs.map((r, ic) => `<tr class="${ik % 2 ? "kitB" : "kitA"}${ic === 0 ? " primaKit" : ""}">
     ${ic === 0 ? `<td rowspan="${rs.length}">${r.gruppo}</td><td rowspan="${rs.length}">${r.nome}<div class="tenue">${r.modello || ""}</div></td><td rowspan="${rs.length}" class="${r.stato === "attivo" ? "ok" : r.stato === "ODM parziale" ? "mezzo" : "no"}"${r.note ? ` title="${esc(r.note)}"` : ""}>${r.stato}</td><td rowspan="${rs.length}" class="${r.alim === "batteria" ? "mezzo" : ""}"${r.batt ? ` title="BATT: ${esc(r.batt)}"` : ""}>${r.alim}</td>` : ""}
-    ${r.fermo ? `<td class="num">-</td><td class="no" colspan="3">${esc(r.adesso)}<div class="tenue" style="font-size:11px">ultimo controllo ${r.finito_il ? new Date(r.finito_il).toLocaleString("it-IT") : ""}</div></td></tr>` : `<td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}</td>`}
+    ${r.fermo ? `<td class="num">-</td><td class="no" colspan="3">${esc(r.adesso)}<div class="tenue" style="font-size:11px">ultimo controllo ${r.finito_il ? new Date(r.finito_il).toLocaleString("it-IT") : ""}</div></td></tr>` : `<td class="num" title="Il canale come in UVMS">CH ${String(r.canale + 1).padStart(2, "0")}${fpsCella(r)}</td>`}
     ${r.fermo ? "" : `<td class="${r.vecchio ? "tenue" : r.adessoOrd === 2 ? "ok" : r.adessoOrd === 1 ? "mezzo" : "no"}" title="${esc(r.info)}">${r.adesso}</td>
     <td>${griglia(r)}${notaPrima(r) ? `<div class="prima">${notaPrima(r)}</div>` : ""}</td>
     <td>${r.foto && r.foto.ha_foto ? `<img class="mini" loading="lazy" src="/api/p2p?op=fotocam&uid=${r.uid}&canale=${r.canale}&v=${encodeURIComponent(r.foto.il)}" alt="CH ${String(r.canale + 1).padStart(2, "0")}" title="${r.foto.vista}"><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : r.foto ? `<span class="${r.foto.vista === "si vede" ? "ok" : "no"}">${r.foto.vista}</span><div class="tenue" style="font-size:11px">${quandoFoto(r.foto)}</div>` : ""}</td>
@@ -1075,6 +1179,7 @@ function disegna() {
   disegnaSistemare();
   disegnaSchemi();
   disegnaErrori();
+  disegnaFps();   // 2.43.0
 }
 let ORE = null;   // 2.17.0: {uid: {canale: {giorno: "24 lettere"}}}, letto una volta
 async function carica() {
@@ -1099,6 +1204,7 @@ async function carica() {
   caricaSistemare();
   caricaSchemi();
   caricaErrori();   // 2.33.0
+  caricaFps();   // 2.43.0
 }
 tabellaOrdinabile($("#nonTorna"), { alCambio: (chiave, verso) => { ordNT = { chiave, verso }; disegna(); } });
 tabellaOrdinabile($("#senzaOdm"), { alCambio: (chiave, verso) => { ordSo = { chiave, verso }; disegna(); } });
@@ -1106,6 +1212,8 @@ tabellaOrdinabile($("#fermi"), { alCambio: (chiave, verso) => { ordFe = { chiave
 tabellaOrdinabile($("#errori"), { alCambio: (chiave, verso) => { ordEr = { chiave, verso }; disegnaErrori(); } });
 tabellaOrdinabile($("#schemi"), { alCambio: (chiave, verso) => { ordSc = { chiave, verso }; disegnaSchemi(); } });
 tabellaOrdinabile($("#sistemare"), { alCambio: (chiave, verso) => { ordSi = { chiave, verso }; disegnaSistemare(); } });
+tabellaOrdinabile($("#fps"), { alCambio: (chiave, verso) => { ordFps = { chiave, verso }; disegnaFps(); } });
+tabellaOrdinabile($("#fpsMai"), { alCambio: (chiave, verso) => { ordMai = { chiave, verso }; disegnaFps(); } });
 tabellaOrdinabile($("#tab"), { alCambio: (chiave, verso) => { ordine = { chiave, verso }; disegna(); } });
 $("#cerca").addEventListener("input", disegna);
 for (const b of document.querySelectorAll("button[data-filtro]")) b.addEventListener("click", () => {
@@ -1147,6 +1255,11 @@ for (const [btn, sid] of [["#vediSenzaOdm", "#sezSenzaOdm"], ["#vediFermi", "#se
   const sez = $(sid), apri = sez.hidden;
   sez.hidden = !apri; $(btn).setAttribute("aria-pressed", String(apri));
   if (apri) $("main").scrollTop = 0;
+});
+$("#vediFps").addEventListener("click", () => {
+  const sez = $("#sezFps"), apri = sez.hidden;
+  sez.hidden = !apri; $("#vediFps").setAttribute("aria-pressed", String(apri));
+  if (apri) { $("main").scrollTop = 0; caricaFps(); }
 });
 $("#vediSistemare").addEventListener("click", () => {
   const sez = $("#sezSistemare"), apri = sez.hidden;
@@ -1224,6 +1337,9 @@ document.addEventListener("click", (e) => {
   if (b.dataset.scarica === "sistemare")
     scaricaXlsx("Telecamere da sistemare", ["Kit", "Comune", "Telecamera", "Problema", "Certezza", "Cosa fare", "Nota", "Nitidezza", "Rango", "Giro", "Giorno"],
       righeSistemare().map((x) => [x.kit, x.comune, x.cam, x.problema, x.certezza, x.cosa_fare, x.nota, x.nitidezza, x.rango, x.giro, x.giorno]), [36, 26, 10, 22, 14, 20, 50, 10, 8, 22, 12]);
+  if (b.dataset.scarica === "fps")
+    scaricaXlsx("Velocità delle telecamere", ["Comune o cliente", "Kit", "Telecamera", "fps", "Letta a 25 (volte più veloce)", "Tempi del registratore", "Dal file grezzo", "Dichiarati", "Fotogrammi", "Secondi", "Risoluzione", "Codec", "Misurata su", "Esito", "Risposte", "Ore di risposta"],
+      righeFps().map((x) => [x.gruppo, x.nome, "CH " + String(x.canale + 1).padStart(2, "0"), x.fps ?? "", x.accelerazione ?? "", x.fps_registratore ?? "", x.fps_file ?? "", x.fps_dichiarato ?? "", x.fotogrammi ?? "", x.secondi ?? "", x.risoluzione, x.codec, x.tratto, x.esito, x.risposte_n, oreRisposta(x)]), [24, 30, 10, 7, 12, 10, 10, 9, 10, 8, 12, 8, 18, 30, 8, 12]);
   if (b.dataset.scarica === "senzaOdm")
     scaricaXlsx("Non registrano senza ODM", ["Comune o cliente", "Kit", "Cosa risponde", "Ultimo controllo", "Telecamere", "Nota (Barbara)", "ODM aperto (numero)"], senzaOdm().map((k) => [k.gruppo, k.nome, k.perche, k.finito_il ? new Date(k.finito_il).toLocaleString("it-IT") : "", attesaDi(k), "", ""]), [26, 36, 44, 20, 11, 40, 18]);
   if (b.dataset.scarica === "fermi")

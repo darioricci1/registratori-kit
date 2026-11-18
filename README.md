@@ -21,6 +21,14 @@ quello che serve per continuare senza la conversazione di prima.
     tramonto, solare che si spegne di notte, una telecamera sola...), la causa probabile e cosa fare, dalle ore registrate e
     dall'ANAGRAFICA KIT. Il file `dati/schemi_ore.json` lo rifà `python3 dati/schemi_ore.py <cartella> --scarica <chiave>`
     (sola lettura) e lo serve `op=schemi`; il ragionamento e la riga per kit in `analisi-ore-registrazione-2026-11-14.md`.
+  - Dal 18/11 (2.43.0) anche «Velocità delle telecamere»: gli fps veri di ogni telecamera (fotogrammi contati in ~10 s
+    di registrazione diviso il tempo vero), prima quelle sotto 24 fps con quanto scorre veloce il video letto a 25 come fa
+    Kit_Rifiuti, i kit che non hanno mai risposto, e gli fps sotto il canale in «Kit e telecamere». Il file `dati/fps.json`
+    lo rifà `python3 -I dati/fps.py <risultato.json>` dal risultato del compito fps1 (`risultato_fps1.zip` su Drive
+    «Analisi video», file `risultato.json`) e lo serve `op=fps`. Misura del 17-18/11: 865 telecamere in 298 kit, 82 sotto
+    24 fps in 44 kit (63 a ~18 fps), 156 kit mai risposti. Attenzione: il campo `fps` del compito è la mediana degli
+    intervalli del registratore e dice 25 anche quando i fotogrammi arrivano a gruppi (il compito ne contava 72 sotto 24);
+    `dati/fps.py` usa `fps_conteggio`.
   - `api/p2p.js`: la coda e i dati (Neon, database Alma, schema `nvr_remoto`: richieste, registratori, camera,
     camera_storia, archivio, anagrafica, pc). Il PC entra col biglietto Google dell'account di servizio di Alma
     (aud https://mappakit.alma/nvr-remoto), la pagina con la sessione dell'accesso unico (o un token RMS valido).
@@ -45,7 +53,8 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
-- Compito fps1 0.1.0 (pronto il 17/11 e NON mandato; `compiti/fps1/LEGGIMI.md`, zip in `compito_fps1/compito.zip` dello
+- Compito fps1 0.1.0: FATTO (COMPUTERONE, 17/11 11:54 - 18/11 06:27, 1113 minuti, chiuso da un compito nuovo; ogni kit
+  provato una volta sola). Risultato in `dati/fps.json` e nella pagina. Il compito (`compiti/fps1/LEGGIMI.md`, zip in `compito_fps1/compito.zip` dello
   scratchpad): gli fps veri di tutte le telecamere dal registratore Focus in P2P (i video sembrano accelerati: alcune
   fanno 17,857 e lette a 25 vanno 1,4 volte più veloci). 24 ore sul giro del sito al posto del ponte (stessi invii a
   op=esito con il codice del ponte 0.20.1 in `ponte_pezzi.py`, foto una volta al giorno per kit), e per ogni canale non
