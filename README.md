@@ -53,6 +53,13 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte39 (mandato al COMPUTERONE il 18/11 alle 21:40, 72 ore): il ponte 0.20.1 rimandato dopo fps1, che
+  chiudendosi alle 6:27 del 18/11 aveva lasciato «Registrazioni dei kit» senza aggiornamenti e gli allungamenti senza
+  nessuno che li scaricasse. Codice uguale al compito 38 (`compiti/p2p_ponte6`, coda_allunga 0.3.0: allungamenti solo da
+  op=allungare del sito kit-rifiuti, niente coda automatica né `allunga_urgenti.json`); zip in
+  `compito_p2p_ponte39/compito.zip` dello scratchpad col suo LEGGIMI.txt. Il segnaposto `risultato_p2p_ponte39.zip` lo crea
+  Dario (l'account di servizio non ha spazio su Drive: 403 storageQuotaExceeded); senza, il risultato resta sul PC. Nomi
+  già usati per il ponte: fino a p2p_ponte38 (il 38 è vissuto 35 minuti il 16/11): il prossimo è p2p_ponte40.
 - Compito fps1 0.1.0: FATTO (COMPUTERONE, 17/11 11:54 - 18/11 06:27, 1113 minuti, chiuso da un compito nuovo; ogni kit
   provato una volta sola). Risultato in `dati/fps.json` e nella pagina. Il compito (`compiti/fps1/LEGGIMI.md`, zip in `compito_fps1/compito.zip` dello
   scratchpad): gli fps veri di tutte le telecamere dal registratore Focus in P2P (i video sembrano accelerati: alcune
