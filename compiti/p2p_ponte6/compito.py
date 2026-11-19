@@ -31,6 +31,14 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.23.0 (19/11/2026): il guardiano (guardiano.py 0.1.0). Il compito p2p_ponte40 e' caduto il 19/11 alle 8:50
+  dopo 78 minuti con 3221225477 (0xC0000005), come il 28: guasto_memoria.txt dice focus_nvr.Registratore.chiudi, sulla
+  Disconnect di una prova P2P, dentro la DLL. Kit_Rifiuti non lo rilancia e la pagina si fermava. Ora compito.py, se
+  non ha PONTE_FIGLIO=1, fa solo il guardiano: lancia lo stesso exe con «--compito <cartella>» e PONTE_FIGLIO=1, che
+  fa il ponte di sempre, e se la libreria lo fa cadere lo rilancia (al massimo 6 volte in un'ora, 40 in tutto, mai
+  dopo 3 cadute di fila nei primi 2 minuti), con una riga nell'avanzamento. PONTE_FINE tiene l'ora di fine del
+  compito (non si allunga a ogni rilancio); un figlio rilanciato non rilegge subito UVMS e ANAGRAFICA KIT (lo fa
+  dopo 12 ore). PONTE_SENZA_GUARDIANO=1 lo spegne.
 version: 0.22.0 (19/11/2026): compito p2p_ponte40, il ponte come movimento1 senza rifare l'indice di movimento (niente
   movimento.json nel compito), 72 ore, e quanto pesa il giro (Dario, 19/11: «richiede molto?»): per ogni prova i MB
   grezzi delle foto di 3 s e dello scarico di 15 s, i byte del processo (GetProcessIoCounters: anche il collegamento e
@@ -170,7 +178,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.22.0"
+VERSIONE = "p2p_ponte 0.23.0"
 DURATA = 24 * 3600
 
 
@@ -209,6 +217,16 @@ def tieni(reg):
 
 def av(t):
     AV.write(time.strftime("%H:%M:%S ") + t + "\n"); AV.flush()
+
+
+# 0.23.0: il guardiano. Senza PONTE_FIGLIO=1 questo processo non tocca la libreria Focus: fa girare il ponte in un
+# processo figlio (lo stesso exe, «--compito <cartella>») e lo rilancia se la DLL lo fa cadere con 0xC0000005.
+RILANCIO = int(os.environ.get("PONTE_RILANCIO") or 0) if (os.environ.get("PONTE_RILANCIO") or "0").isdigit() else 0
+# Solo quando Kit_Rifiuti lo lancia (__main__): allunga_lavoro, pilota_lavoro e scorta_lavoro ne eseguono le definizioni.
+if (__name__ == "__main__" and os.environ.get("PONTE_FIGLIO") != "1"
+        and os.environ.get("PONTE_SENZA_GUARDIANO") != "1"):
+    import guardiano
+    sys.exit(guardiano.codice_per_uscire(guardiano.guarda(C, time.time() + DURATA, av)))
 
 
 _big = {"t": "", "fino": 0}
@@ -2319,9 +2337,12 @@ def peso_dopo(r, ok, es, prima):
 
 
 t_fine = time.time() + DURATA
-ultimo_uvms = 0.0
+import guardiano   # noqa: E402 - 0.23.0: l'ora di fine la decide il guardiano, che non la allunga a ogni rilancio
+t_fine = guardiano.fine_da_ambiente(os.environ, t_fine)
+ultimo_uvms = time.time() - 12 * 3600 if RILANCIO else 0.0   # 0.23.0: rilanciato, UVMS e anagrafica fra 12 ore
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
-av(f"parto: {VERSIONE} sul PC {PC}, ascolto fino alle {time.strftime('%H:%M', time.localtime(t_fine))}")
+av(f"parto: {VERSIONE} sul PC {PC}" + (f" (rilancio {RILANCIO} dal guardiano)" if RILANCIO else "")
+   + f", ascolto fino alle {time.strftime('%H:%M', time.localtime(t_fine))}")
 # ------------------------------------------------------------------ 0.12.0: movimento.json (una volta sola)
 def decodifica_miniatura(dati, formato, nome):
     """Una miniatura del registratore (un fotogramma H.264/H.265 codificato) -> JPEG da 320 pixel in

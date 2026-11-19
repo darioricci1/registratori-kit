@@ -1,7 +1,7 @@
 """Prove a tavolino di peso_giro.py (ponte 0.22.0) e di peso_dopo del ponte: quando comincia un giro, cosa si somma,
 cosa arriva al sito e in uscita. Niente rete, niente DLL.
 Uso: python3 prova_peso_giro.py
-version: 0.1.0 (19/11/2026)
+version: 0.1.1 (19/11/2026): il ponte puo' essere dopo la 0.22.0 (0.23.0, il guardiano)
 """
 import ast
 import json
@@ -92,7 +92,8 @@ g["av"] = g["avvisi"].append
 for nodo in ast.parse(src).body:
     if isinstance(nodo, ast.FunctionDef) and nodo.name in ("peso_prima", "peso_dopo", "scrivi_json"):
         exec(compile(ast.Module([nodo], []), "compito.py", "exec"), g)   # noqa: S102 - il nostro codice
-ok("p2p_ponte 0.22.0" in src, "il ponte e' alla 0.22.0")
+_v = __import__("re").search(r'VERSIONE = "p2p_ponte 0\.(\d+)', src)
+ok(bool(_v) and int(_v.group(1)) >= 22, "il ponte e' alla 0.22.0 o dopo")
 ok('"movimento.json", "movimento_fatto.txt"' in src, "il lavoro del movimento c'e' ancora, ma parte solo con movimento.json")
 prima = g["peso_prima"]()
 ok(prima is not None and len(prima) == 3, "peso_prima: un'istantanea")
