@@ -53,7 +53,7 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
-- Compito movimento1 (ponte 0.21.0, movimento.py 0.2.0, pronto il 19/11 alle 5 e NON ancora mandato: decide Dario, vedi
+- Compito movimento1 (ponte 0.21.0, movimento.py 0.2.0, caricato su Drive il 19/11 alle 5:06, preso alle 5:19 e partito alle 5:20 sul COMPUTERONE; il p2p_ponte39 si è chiuso alle 5:15 e il suo lavoro lo fa movimento1 fino al 21/11 sera; vedi
   sotto). L'indice di movimento dei registratori Focus, che può essere il primo filtro gratis prima dell'analisi (la
   prova ferma dice 77 s per ora-telecamera: senza un filtro servono circa 7 PC). `movimento.json` di
   `prepara_movimento.py` (sola lettura: registratori.json di positive1d, le ore della prova ferma, op=video del sito
