@@ -55,7 +55,7 @@ quello che serve per continuare senza la conversazione di prima.
 ## Da fare
 - Compito p2p_ponte42 (ponte 0.24.0 col guardiano, guardiano.py 0.1.0, allunga.py 0.2.0; zip in `c42/compito.zip` dello
   scratchpad, segnaposto `risultato_p2p_ponte42.zip` creato da Dario): caricato in compito_2.zip con tipo leggero il 19/11
-  al posto del 41, COMPUTERONE, 72 ore. Due cose nuove:
+  alle 9:41 al posto del 41, preso alle 9:42 e partito alle 9:45 sul COMPUTERONE, 72 ore (fino al 22/11 verso le 9:45). Due cose nuove:
   - Il guardiano. Il 40 si era chiuso il 19/11 alle 8:50 dopo 78 minuti con 3221225477 (0xC0000005): `guasto_memoria.txt`
     dice focus_nvr.Registratore.chiudi, riga 543, la Disconnect di una prova P2P dentro il `with`, quindi dentro la DLL,
     dove un try non arriva. Ora compito.py senza `PONTE_FIGLIO=1` fa solo il guardiano: rilancia lo stesso exe con
