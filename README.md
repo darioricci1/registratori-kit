@@ -53,6 +53,7 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Per il ponte 40 (Dario, 19/11: «richiede molto?»): segnare per ogni giro i MB scaricati da ogni registratore (le foto di 3 s e gli archivi) e i secondi di processore, così si sa quanto pesa il giro sulle SIM dei kit e sul COMPUTERONE. Oggi non è misurato.
 - Compito p2p_ponte39 (mandato al COMPUTERONE il 18/11 alle 21:40, preso alle 21:49 e partito alle 21:50, 72 ore): il ponte 0.20.1 rimandato dopo fps1, che
   chiudendosi alle 6:27 del 18/11 aveva lasciato «Registrazioni dei kit» senza aggiornamenti e gli allungamenti senza
   nessuno che li scaricasse. Codice uguale al compito 38 (`compiti/p2p_ponte6`, coda_allunga 0.3.0: allungamenti solo da
