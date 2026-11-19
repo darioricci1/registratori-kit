@@ -27,19 +27,32 @@ dopo il blocco di 3 ore nel dimezzamento, una chiamata che non torna ferma il ca
 Tutto qui e' senza rete e senza la libreria: il registratore e il decodificatore arrivano come funzioni
 (prove a tavolino in prova_movimento.py, con una libreria finta). La classe che parla con la DLL vera e'
 `classe_registratore()`, che importa focus_nvr solo quando serve.
+version: 0.2.0 (19/11/2026): il giro dei registratori (compito movimento1, ponte 0.21.0; Dario, 19/11: «mettilo in
+  coda», e poi «adesso»). movimento.json con «registratori» invece di «casi»: per ognuno, in un collegamento solo
+  quando basta, il modo di registrazione di ogni canale (OnRecordModeStatus) e i tipi dei 1440 minuti di ieri; dove il
+  movimento si registra (registra_movimento), i tipi dei giorni con un abbandono vero e delle ore vuote note. Per ogni
+  abbandono (esito_caso) se un minuto della sua finestra (+-2 minuti) e' «movimento» o «sensore»; per le stesse
+  telecamere la quota di minuti e di ore con movimento nelle ore senza clip note (quota_vuote) e nelle ore vuote del
+  banco (quota_finestra). In uscita anche i 1440 tipi di ogni giorno letto, in testo (una cifra al minuto), per rifare i
+  conti a tavolino. Con «tutti_da_stato» dopo i registratori con un caso vengono tutti quelli che hanno risposto al
+  ponte nelle ultime 24 ore (aggiungi_da_stato). Niente miniature: GetThumbImage si lega solo quando serve (prima un
+  nome sbagliato nella DLL avrebbe fermato anche il giro). LIMITI alzati solo per i totali, perche' ora i registratori
+  sono ~300 invece di 5 casi: collegamenti 30 -> 420, chiamate 600 -> 5000, minuti 60 -> 420; MB, per caso (= per
+  registratore) e miniature come prima. Il tempo del collegamento passa da 75 a 150 s: collega_con prova piu'
+  credenziali da 40 s l'una, e un collegamento lento non deve contare come una chiamata bloccata.
 version: 0.1.0 (11/11/2026): prima versione.
 """
 import datetime
 import threading
 import time
 
-VERSIONE = "0.1.0"
+VERSIONE = "0.2.0"
 
 TIPI = {0: "niente", 1: "continua", 2: "movimento", 3: "sensore", 4: "emergenza", 5: "ora legale"}
 TIPI_MOVIMENTO = (2, 3)       # quelli che nascono da un evento (movimento o sensore)
 MODI = {0: "spenta", 1: "continua", 2: "movimento", 3: "sensore", 4: "continua + movimento",
         5: "continua + sensore", 6: "movimento + sensore"}
-TEMPI = {"nuovo": 30, "collega": 75, "canali": 20, "giorno": 30, "intervallo": 20, "miniatura": 20, "chiudi": 20}
+TEMPI = {"nuovo": 30, "collega": 150, "canali": 20, "giorno": 30, "intervallo": 20, "miniatura": 20, "chiudi": 20}
 ATTESA_MINIATURA = 12         # secondi che si aspetta OnThumbStream dopo GetThumbImage
 FRESCO = 200                  # secondi di un collegamento (il relay P2P si chiude dopo 5 minuti)
 RESTA_PASSI = 5               # «cambio che resta»: la miniatura prima contro quella 5 passi dopo
@@ -49,13 +62,15 @@ LATO_GRIGIO = (96, 54)        # la miniatura ridotta in grigi per il confronto
 # ferma alla chiamata successiva (il collegamento si chiude, il lucchetto della libreria si lascia), i casi dopo non si
 # fanno, uscita/movimento.json dice quale limite e' scattato e con quali conti; il segno di fatto si scrive comunque
 # (il lavoro non riparte da solo).
+# 0.2.0: nel giro dei registratori un «caso» e' un registratore. Alzati solo i totali (erano per 5 casi): ~300
+# registratori, un collegamento l'uno (due o tre se i giorni da leggere sono tanti), ~10 chiamate l'uno, 30-80 s l'uno.
 LIMITI = {"mb_totali": 100.0,         # MB ricevuti dal registratore (miniature; i tipi del giorno sono 6 kB a canale)
           "mb_per_caso": 25.0,
-          "minuti_totali": 60.0,      # tempo di tutto il lavoro, dal primo collegamento
+          "minuti_totali": 420.0,     # tempo di tutto il lavoro, dal primo collegamento (0.1.0: 60)
           "minuti_per_caso": 15.0,
-          "chiamate_totali": 600,     # chiamate alla libreria (collegamento, canali, giorno, intervallo, miniatura, chiudi)
-          "chiamate_per_caso": 120,
-          "collegamenti_totali": 30,  # collegamenti P2P aperti (circa 2-5 per caso)
+          "chiamate_totali": 5000,    # chiamate alla libreria (collegamento, canali, giorno, intervallo, miniatura, chiudi)
+          "chiamate_per_caso": 120,   # (0.1.0: 600)
+          "collegamenti_totali": 420,  # collegamenti P2P aperti (0.1.0: 30, circa 2-5 per caso)
           "miniature_per_caso": 61}
 
 
@@ -497,7 +512,9 @@ def un_caso(caso, cfg, mezzi, scrivi=lambda: None, av=lambda t: None):
 
 def lavoro(cfg, mezzi, scrivi_out, av=lambda t: None):
     """Tutti i casi di movimento.json, uno dopo l'altro; dopo BLOCCHI_MAX chiamate bloccate ci si ferma. scrivi_out(out)
-    scrive uscita/movimento.json."""
+    scrive uscita/movimento.json. 0.2.0: con «registratori» il giro dei registratori (giro_registratori)."""
+    if cfg.get("registratori") is not None:
+        return giro_registratori(cfg, mezzi, scrivi_out, av)
     mezzi = dict(mezzi)
     lim, tempi = limiti_da(cfg)
     mezzi.setdefault("limiti", lim)
@@ -520,6 +537,312 @@ def lavoro(cfg, mezzi, scrivi_out, av=lambda t: None):
         except Exception as ex:   # noqa: BLE001 - un caso rotto non ferma gli altri
             out["casi"].append({"nome": caso.get("nome"), "esito": f"errore {type(ex).__name__}: {str(ex)[:300]}"})
         scrivi_out(out)
+    out["conti"] = {"chiamate": c["chiamate"], "collegamenti": c["collegamenti"], "mb": round(c["byte"] / 1e6, 3),
+                    "minuti": round((time.time() - c["t0"]) / 60, 1)}
+    out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
+    scrivi_out(out)
+    return out
+
+
+# ------------------------------------------------------------------ 0.2.0: il giro dei registratori (compito movimento1)
+
+MODI_CON_MOVIMENTO = ("movimento", "sensore", "continua + movimento", "continua + sensore", "movimento + sensore")
+ATTESA_MODI = 4.0     # secondi che si aspetta OnRecordModeStatus dopo il collegamento (arriva da solo)
+ORA_PIENA = 30        # un'ora vuota conta se ha almeno 30 minuti registrati
+
+
+def tipi_in_testo(tipi):
+    """1440 tipi -> 1440 caratteri, una cifra al minuto («?» per un tipo oltre il 9). Funzione pura."""
+    return "".join(str(x) if 0 <= int(x) <= 9 else "?" for x in pulisci_tipi(tipi))
+
+
+def da_testo(s):
+    """Il contrario di tipi_in_testo («?» vale 9, che non e' ne' continua ne' movimento). Funzione pura."""
+    return [int(c) if c.isdigit() else 9 for c in str(s or "")[:1440]] + [0] * max(0, 1440 - len(str(s or "")))
+
+
+def minuto_di(hhmm):
+    h, m = str(hhmm).split(":")[:2]
+    return int(h) * 60 + int(m)
+
+
+def registra_movimento(modi, tipi_ieri):
+    """(«si» / «no» / «?», perche') dai modi dei canali ({numero: {"modo"}}) e dai tipi di ieri ({numero: lista}):
+    «si» se ieri c'e' un minuto movimento o sensore, o se un canale e' impostato con il movimento; «no» se i modi
+    dicono tutti senza movimento, o se non sono arrivati e ieri ogni minuto e' «continua» o «niente»; «?» se non si e'
+    letto niente. Funzione pura."""
+    con = [n for n, t in (tipi_ieri or {}).items() if t and any(x in TIPI_MOVIMENTO for x in t)]
+    if con:
+        return "si", f"ieri minuti con movimento sui canali {sorted(int(n) for n in con)}"
+    impostati = [n for n, m in (modi or {}).items() if (m or {}).get("modo") in MODI_CON_MOVIMENTO]
+    if impostati:
+        return "si", f"impostato a movimento sui canali {sorted(int(n) for n in impostati)}, ieri nessun minuto"
+    if modi:
+        return "no", "modo: " + ", ".join(sorted({str((m or {}).get("modo")) for m in modi.values()}))
+    if any(t for t in (tipi_ieri or {}).values()):
+        return "no", "il modo non e' arrivato; ieri solo «continua» o «niente»"
+    return "?", "ne' il modo ne' i tipi di ieri"
+
+
+def esito_caso(caso, tipi_di):
+    """Un abbandono: per ogni sua telecamera i minuti della finestra (da-a, il margine e' gia' dentro) registrati e con
+    movimento; «coperto» se un minuto della finestra e' movimento o sensore su una telecamera (su quella sola se il
+    canale e' certo, che e' il caso di difetto), «non coperto», «non sul disco» (nessun minuto registrato nella
+    finestra), «non letto». tipi_di(canale) -> 1440 tipi o None. Funzione pura."""
+    a, b = minuto_di(caso["da"]), minuto_di(caso["a"])
+    per, letti = {}, 0
+    for c in caso["canali"]:
+        t = tipi_di(c)
+        if t is None:
+            per[str(c)] = None
+            continue
+        letti += 1
+        f = t[a:b + 1]
+        per[str(c)] = {"registrati": sum(1 for x in f if x), "movimento": sum(1 for x in f if x in TIPI_MOVIMENTO),
+                       "tipi": "".join(str(x) if 0 <= x <= 9 else "?" for x in f)}
+    vivi = [v for v in per.values() if v]
+    if not letti:
+        esito = "non letto"
+    elif not any(v["registrati"] for v in vivi):
+        esito = "non sul disco"
+    elif any(v["movimento"] for v in vivi):
+        esito = "coperto"
+    else:
+        esito = "non coperto"
+    return {"nome": caso.get("nome"), "giorno": caso["giorno"], "da": caso["da"], "a": caso["a"],
+            "canali": caso["canali"], "fonti": caso.get("fonti"), "eventi": caso.get("eventi"), "esito": esito,
+            "per_canale": per}
+
+
+def ore_escluse(noti, margine=1):
+    """Le ore che non contano fra le vuote: quella di ogni minuto noto («HH:MM») e `margine` ore prima e dopo.
+    Funzione pura."""
+    out = set()
+    for n in noti or []:
+        h = minuto_di(n) // 60
+        out.update(range(max(0, h - margine), min(23, h + margine) + 1))
+    return out
+
+
+def quota_vuote(tipi, escluse, piena=ORA_PIENA):
+    """Nelle ore fuori da `escluse` con almeno `piena` minuti registrati: quante ore, quante con almeno un minuto
+    movimento, minuti registrati e minuti movimento. Funzione pura."""
+    out = {"ore": 0, "ore_con_movimento": 0, "minuti_registrati": 0, "minuti_movimento": 0}
+    for h in range(24):
+        if h in escluse:
+            continue
+        f = tipi[h * 60:(h + 1) * 60]
+        reg = sum(1 for x in f if x)
+        if reg < piena:
+            continue
+        mov = sum(1 for x in f if x in TIPI_MOVIMENTO)
+        out["ore"] += 1
+        out["ore_con_movimento"] += 1 if mov else 0
+        out["minuti_registrati"] += reg
+        out["minuti_movimento"] += mov
+    return out
+
+
+def quota_finestra(tipi, da, a):
+    """Un'ora vuota nota (da-a): minuti registrati e con movimento, e i tratti di 5 minuti con movimento su quelli
+    registrati (un filtro a 5 minuti farebbe analizzare quelli). Funzione pura."""
+    x, y = minuto_di(da), minuto_di(a)
+    f = tipi[x:y]
+    pezzi = [f[i:i + 5] for i in range(0, len(f), 5)]
+    return {"minuti_registrati": sum(1 for v in f if v), "minuti_movimento": sum(1 for v in f if v in TIPI_MOVIMENTO),
+            "pezzi_5_registrati": sum(1 for p in pezzi if any(p)),
+            "pezzi_5_movimento": sum(1 for p in pezzi if any(v in TIPI_MOVIMENTO for v in p))}
+
+
+def somma(a, b):
+    return {k: a.get(k, 0) + b.get(k, 0) for k in set(a) | set(b)}
+
+
+def conti_registratore(r, letti):
+    """Dai tipi letti ({(giorno, canale): lista}) i casi, le vuote del banco e la quota delle ore vuote di ogni giorno e
+    telecamera letti. Funzione pura."""
+    casi = [esito_caso(c, lambda can, g=c["giorno"]: letti.get((g, int(can)))) for c in r.get("casi") or []]
+    vuote = []
+    for v in r.get("vuote") or []:
+        t = letti.get((v["giorno"], int(v["canale"])))
+        vuote.append(dict(v, **(quota_finestra(t, v["da"], v["a"]) if t is not None else {"esito": "non letto"})))
+    quota = {}
+    for (g, c), t in letti.items():
+        q = quota_vuote(t, ore_escluse(((r.get("giorni") or {}).get(g) or {}).get("noti")))
+        quota = somma(quota, q)
+    return casi, vuote, quota
+
+
+def aggiungi_da_stato(registratori, stato, escludi=("998",)):
+    """Ai registratori di movimento.json (prima) quelli di op=stato del sito che hanno risposto al ponte nelle ultime
+    24 ore e che non ci sono gia' (per UID e per kit), dal piu' risposto. Funzione pura."""
+    out = list(registratori or [])
+    visti = {str(r.get("uid") or "").upper() for r in out} | {str(r.get("kit")) for r in out}
+    righe = []
+    for i, x in enumerate((stato or {}).get("kit") or []):
+        uid = str(x.get("uid") or "").strip()
+        kit = str(x.get("kit") or "").strip().lstrip("0")
+        if not uid or not kit.isdigit() or kit in escludi or uid.upper() in visti or kit in visti:
+            continue
+        risposte = int(x.get("risposte_24h") or 0)
+        if risposte <= 0:
+            continue
+        visti.update((uid.upper(), kit))
+        righe.append((-risposte, i, {"kit": int(kit), "uid": uid, "giorni": {}, "casi": [], "vuote": [],
+                                     "da_stato": True}))
+    return out + [r for *_, r in sorted(righe, key=lambda z: z[:2])]
+
+
+def un_registratore(r, cfg, mezzi, av=lambda t: None):
+    """Un registratore del giro: collegamento, canali, tipi di ieri di ogni canale, modo; se il movimento si registra,
+    i tipi dei giorni chiesti (riaprendo il collegamento quando non e' piu' fresco). Ritorna il dict del registratore."""
+    ieri = datetime.datetime.strptime(cfg["ieri"], "%Y-%m-%d") if cfg.get("ieri") else \
+        datetime.datetime.combine(datetime.date.today() - datetime.timedelta(days=1), datetime.time())
+    x = {"kit": r["kit"], "collegamenti": [], "inizio": time.strftime("%Y-%m-%d %H:%M:%S"), "ieri": f"{ieri:%Y-%m-%d}"}
+    if r.get("da_stato"):
+        x["da_stato"] = True
+    m = dict(mezzi, collega=lambda reg: mezzi["collega"](reg, r["uid"], int(r["kit"])))
+    conti = mezzi["conti"]
+    conti.update(chiamate_caso=0, byte_caso=0, t0_caso=time.time())
+    t0 = time.time()
+    da_leggere = [(g, int(c)) for g, gg in (r.get("giorni") or {}).items() for c in gg.get("canali") or []]
+    letti, tipi_ieri = {}, {}
+    try:
+        with Sessione(m, x["collegamenti"]) as s:
+            elenco = s.chiama("canali", s.reg.canali)
+            per = {int(n): h for n, h, _ in elenco}
+            x["canali"] = [{"numero": n, "titolo": t} for n, _, t in elenco]
+            for n, h in per.items():
+                t = s.chiama("giorno", lambda: s.reg.tipi_del_giorno(h, ieri))
+                tipi_ieri[n] = pulisci_tipi(t) if t is not None else None
+            fino = time.time() + ATTESA_MODI
+            modi_h = getattr(s.reg, "modi", None)
+            while time.time() < fino and len(modi_h or {}) < len(per):
+                time.sleep(0.25)
+            da_h = {h: n for n, h in per.items()}
+            x["modi"] = {str(da_h.get(k, k)): v for k, v in dict(modi_h or {}).items()}
+            x["eventi_in_diretta"] = list(getattr(s.reg, "eventi", None) or [])[:50]
+            x["registra_movimento"], x["perche"] = registra_movimento(
+                {int(k): v for k, v in x["modi"].items() if str(k).isdigit()}, {k: v for k, v in tipi_ieri.items() if v})
+            if x["registra_movimento"] == "si":
+                while da_leggere and s.fresca():   # (il primo collegamento ha gia' fatto ieri: puo' non restare tempo)
+                    g, c = da_leggere.pop(0)
+                    if c not in per:
+                        letti[(g, c)] = None
+                        continue
+                    t = s.chiama("giorno", lambda: s.reg.tipi_del_giorno(per[c], datetime.datetime.strptime(g, "%Y-%m-%d")))
+                    letti[(g, c)] = pulisci_tipi(t) if t is not None else None
+        while x.get("registra_movimento") == "si" and da_leggere and len(mezzi["blocchi"]) < BLOCCHI_MAX:
+            with Sessione(m, x["collegamenti"]) as s:   # il relay si chiude dopo 5 minuti: un collegamento nuovo
+                per = {int(n): h for n, h, _ in s.chiama("canali", s.reg.canali)}
+                primo = True
+                while da_leggere and (primo or s.fresca()):   # almeno un giorno per collegamento: si va sempre avanti
+                    primo = False
+                    g, c = da_leggere.pop(0)
+                    t = s.chiama("giorno", lambda: s.reg.tipi_del_giorno(per[c], datetime.datetime.strptime(g, "%Y-%m-%d"))) \
+                        if c in per else None
+                    letti[(g, c)] = pulisci_tipi(t) if t is not None else None
+    except Bloccata as ex:
+        mezzi["blocchi"].append(str(ex))
+        x["esito"] = f"bloccato: {ex}"
+    except Limite as ex:
+        x["esito"] = x["limite"] = f"limite scattato: {ex}"
+    except (ConnectionError, OSError, RuntimeError) as ex:
+        x["esito"] = f"registratore non raggiunto: {ex}"
+    x.setdefault("esito", "letto")
+    x["ieri_tipi"] = {str(n): (tipi_in_testo(t) if t is not None else None) for n, t in tipi_ieri.items()}
+    x["ieri_conti"] = {str(n): conta_tipi(t) for n, t in tipi_ieri.items() if t is not None}
+    validi = {k: v for k, v in letti.items() if v is not None}
+    x["casi"], x["vuote"], x["quota_vuote"] = conti_registratore(r, validi)
+    if x.get("registra_movimento") != "si":
+        for c in x["casi"]:
+            c["esito"] = "movimento non registrato" if x.get("registra_movimento") == "no" else "non letto"
+    x["giorni_letti"] = {f"{g} ch{c + 1}": (tipi_in_testo(t) if t is not None else None) for (g, c), t in letti.items()}
+    x["giorni_non_letti"] = [f"{g} ch{c + 1}" for g, c in da_leggere]
+    x["conti"] = {"chiamate": conti["chiamate_caso"], "collegamenti": len(x["collegamenti"]),
+                  "secondi": round(time.time() - t0, 1)}
+    av(f"movimento kit {r['kit']}: {x['esito']}, registra movimento {x.get('registra_movimento', '-')}"
+       + (f", casi {sum(1 for c in x['casi'] if c['esito'] == 'coperto')}/{len(x['casi'])} coperti" if x["casi"] else ""))
+    return x
+
+
+def riassunto_giro(regs):
+    """I numeri del giro: registratori per esito e per modo, casi per esito e per fonte, quota delle ore vuote sui
+    registratori che segnano il movimento. Funzione pura."""
+    out = {"registratori": len(regs), "letti": sum(1 for x in regs if x.get("esito") == "letto"),
+           "registra_movimento": {}, "modi": {}, "casi": {}, "casi_per_fonte": {}, "quota_vuote": {}, "vuote_banco": {}}
+    for x in regs:
+        k = x.get("registra_movimento") or "non letto"
+        out["registra_movimento"][k] = out["registra_movimento"].get(k, 0) + 1
+        for v in (x.get("modi") or {}).values():
+            mo = str((v or {}).get("modo"))
+            out["modi"][mo] = out["modi"].get(mo, 0) + 1
+        for c in x.get("casi") or []:
+            out["casi"][c["esito"]] = out["casi"].get(c["esito"], 0) + 1
+            for f in c.get("fonti") or []:
+                d = out["casi_per_fonte"].setdefault(f, {})
+                d[c["esito"]] = d.get(c["esito"], 0) + 1
+        if x.get("registra_movimento") == "si":
+            out["quota_vuote"] = somma(out["quota_vuote"], x.get("quota_vuote") or {})
+            for v in x.get("vuote") or []:
+                if "minuti_registrati" in v:
+                    out["vuote_banco"] = somma(out["vuote_banco"], {k: v[k] for k in ("minuti_registrati",
+                                               "minuti_movimento", "pezzi_5_registrati", "pezzi_5_movimento")})
+    q = out["quota_vuote"]
+    if q.get("ore"):
+        q["quota_ore"] = round(q["ore_con_movimento"] / q["ore"], 3)
+    if q.get("minuti_registrati"):
+        q["quota_minuti"] = round(q["minuti_movimento"] / q["minuti_registrati"], 3)
+    vb = out["vuote_banco"]
+    if vb.get("pezzi_5_registrati"):
+        vb["quota_pezzi_5"] = round(vb["pezzi_5_movimento"] / vb["pezzi_5_registrati"], 3)
+    letti = out["casi"].get("coperto", 0) + out["casi"].get("non coperto", 0)
+    if letti:
+        out["casi_coperti_quota"] = round(out["casi"].get("coperto", 0) / letti, 3)
+    return out
+
+
+def giro_registratori(cfg, mezzi, scrivi_out, av=lambda t: None):
+    """movimento.json con «registratori»: uno dopo l'altro (stessi limiti e blocchi dei casi). scrivi_out(out)."""
+    lim, tempi = limiti_da(cfg)
+    mezzi = dict(mezzi)
+    mezzi.setdefault("limiti", lim)
+    mezzi.setdefault("tempi", tempi)
+    mezzi.setdefault("blocchi", [])
+    mezzi.setdefault("conti", nuovi_conti())
+    c = mezzi["conti"]
+    regs = list(cfg.get("registratori") or [])
+    if cfg.get("tutti_da_stato") and mezzi.get("stato"):
+        try:
+            regs = aggiungi_da_stato(regs, mezzi["stato"]())
+        except Exception as ex:   # noqa: BLE001 - senza il sito si fanno quelli con un caso
+            av(f"movimento: op=stato non letto ({type(ex).__name__}: {str(ex)[:120]}), solo i registratori con un caso")
+    out = {"movimento": VERSIONE, "limiti": mezzi["limiti"], "tempi_per_chiamata_s": mezzi["tempi"],
+           "registratori_in_elenco": len(regs), "registratori": [], "blocchi": mezzi["blocchi"],
+           "inizio": time.strftime("%Y-%m-%d %H:%M:%S")}
+    av(f"movimento: {len(regs)} registratori ({sum(1 for r in regs if r.get('casi'))} con un caso)")
+    for i, r in enumerate(regs):
+        if len(mezzi["blocchi"]) >= BLOCCHI_MAX:
+            out["fermato"] = f"{len(mezzi['blocchi'])} chiamate alla libreria senza risposta: i registratori dopo non si fanno"
+            break
+        perche = controlla(dict(c, chiamate_caso=0, byte_caso=0, t0_caso=time.time()), mezzi["limiti"])
+        if perche:
+            out["fermato"] = "limite scattato: " + perche
+            break
+        try:
+            out["registratori"].append(un_registratore(r, cfg, mezzi, av))
+        except Exception as ex:   # noqa: BLE001 - un registratore rotto non ferma gli altri
+            out["registratori"].append({"kit": r.get("kit"), "esito": f"errore {type(ex).__name__}: {str(ex)[:300]}"})
+        x = out["registratori"][-1]
+        if x.get("limite") and "per_caso" not in x["limite"]:
+            out["fermato"] = x["limite"]
+            break
+        if i % 5 == 4 or i == len(regs) - 1:
+            out["riassunto"] = riassunto_giro(out["registratori"])
+            scrivi_out(out)
+    if "fermato" in out:
+        out["non_fatti"] = [r.get("kit") for r in regs[len(out["registratori"]):]]
+    out["riassunto"] = riassunto_giro(out["registratori"])
     out["conti"] = {"chiamate": c["chiamate"], "collegamenti": c["collegamenti"], "mb": round(c["byte"] / 1e6, 3),
                     "minuti": round((time.time() - c["t0"]) / 60, 1)}
     out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -563,13 +886,19 @@ def classe_registratore():
         def __init__(self, cartella=None, log=print):
             self.modi, self.eventi = {}, []
             self._mini = {"h": None, "dati": None, "evento": threading.Event()}
+            self._cartella = cartella
             super().__init__(cartella, log)
-            if RegistratoreMovimento._miniatura is None:
+
+        @classmethod
+        def _lega_miniatura(cls, cartella):
+            """0.2.0: GetThumbImage si lega solo quando serve una miniatura: un nome sbagliato non ferma i tipi."""
+            if cls._miniatura is None:
                 lib = ctypes.CDLL(os.path.join(fn.cartella_sdk(cartella), "FocusNetSDK.dll"))
                 f = getattr(lib, NOME_MINIATURA)
                 f.restype = ctypes.c_uint8
                 f.argtypes = [ctypes.c_void_p, fn.c_handle, fn.c_handle, ctypes.POINTER(fn.ST_VM_TIME)]
-                RegistratoreMovimento._miniatura = f
+                cls._miniatura = f
+            return cls._miniatura
 
         def _prepara_ritorni(self):
             super()._prepara_ritorni()
@@ -628,7 +957,7 @@ def classe_registratore():
             self._mini.update(h=canale_h, dati=None)
             self._mini["evento"].clear()
             t = fn.tempo_vm(quando)
-            if not RegistratoreMovimento._miniatura(self.this, self.server, canale_h, ctypes.byref(t)):
+            if not RegistratoreMovimento._lega_miniatura(self._cartella)(self.this, self.server, canale_h, ctypes.byref(t)):
                 return {"errore": "GetThumbImage ha risposto «no»"}
             if not self._mini["evento"].wait(attesa):
                 return {"errore": f"nessuna miniatura in {attesa} s"}

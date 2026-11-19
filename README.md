@@ -53,6 +53,26 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito movimento1 (ponte 0.21.0, movimento.py 0.2.0, pronto il 19/11 alle 5 e NON ancora mandato: decide Dario, vedi
+  sotto). L'indice di movimento dei registratori Focus, che può essere il primo filtro gratis prima dell'analisi (la
+  prova ferma dice 77 s per ora-telecamera: senza un filtro servono circa 7 PC). `movimento.json` di
+  `prepara_movimento.py` (sola lettura: registratori.json di positive1d, le ore della prova ferma, op=video del sito
+  kit-rifiuti del 18/11, banco_ore_120.json, banco_positive.json di positive1/1c/1d): 422 abbandoni dal 22/10 in 184
+  registratori (sito «ok» 229, scorta 14/11 155, prova ferma 142, positive1 58, 1c 24, 1d 24; uniti se si toccano),
+  187 ore vuote note, 660 giorni-telecamera. Il compito, dopo quei 184, prende anche tutti i registratori che hanno
+  risposto al ponte nelle ultime 24 ore (op=stato). Per ognuno: modo di registrazione di ogni canale
+  (OnRecordModeStatus) e tipi dei 1440 minuti di ieri; dove il movimento si registra, i tipi dei giorni chiesti, e per
+  ogni abbandono «coperto» (un minuto movimento o sensore nella finestra, ±2 minuti) / «non coperto» / «non sul disco»,
+  con la quota di minuti e di ore «movimento» nelle ore senza clip note delle stesse telecamere e nelle ore vuote del
+  banco (anche a pezzi di 5 minuti). In uscita/movimento.json anche i tipi grezzi in testo, per rifare i conti qui.
+  LIMITI: alzati solo i totali (collegamenti 30 → 420, chiamate 600 → 5000, minuti 60 → 420), collegamento 75 → 150 s.
+  Stima: 3-5 ore. Gira dentro il ponte (in un filo suo, il giro continua come il 39), `ponte.json` 64 ore (fino al 21/11
+  sera, quando sarebbe finito il 39). Perché così: il ponte 39 per un compito nuovo del COMPUTERONE scrive «su Drive c'è
+  un compito nuovo: chiudo questo» e poi «fatto», e Kit_Rifiuti 0.99.16 (`sospeso_da_righe`: «compito nuovo» più
+  «ferm» o «non fatt») non lo conta come sospeso: il 39 si chiuderebbe per sempre. Zip in
+  `compito_movimento1/compito.zip` dello scratchpad (con focus_nvr.py, FocusNetSDK/ e focus_accesso.txt dal 39);
+  proprietà compito=movimento1, pc=COMPUTERONE; il segnaposto `risultato_movimento1.zip` c'è già. Prima di caricarlo,
+  compito.zip su Drive deve essere già stato preso (il 19/11 alle 5 era positive1d per il 2026-002, preso).
 - Per il ponte 40 (Dario, 19/11: «richiede molto?»): segnare per ogni giro i MB scaricati da ogni registratore (le foto di 3 s e gli archivi) e i secondi di processore, così si sa quanto pesa il giro sulle SIM dei kit e sul COMPUTERONE. Oggi non è misurato.
 - Compito p2p_ponte39 (mandato al COMPUTERONE il 18/11 alle 21:40, preso alle 21:49 e partito alle 21:50, 72 ore): il ponte 0.20.1 rimandato dopo fps1, che
   chiudendosi alle 6:27 del 18/11 aveva lasciato «Registrazioni dei kit» senza aggiornamenti e gli allungamenti senza
@@ -146,7 +166,7 @@ quello che serve per continuare senza la conversazione di prima.
   Python: IPOTESI una funzione di ritorno chiamata dalla libreria su un Registratore già liberato; dalla 0.13.0 i
   Registratori non si liberano (CIMITERO) e faulthandler scrive le pile in `uscita/guasto_memoria.txt`. Per mandarlo
   serve anche il segnaposto `risultato_p2p_ponte30.zip` su Drive (Kit_Rifiuti 0.90: un posto per compito).
-- Ponte 0.12.0 (compito p2p28, pronto e NON mandato: fase di audit, decide Dario): `movimento.json` (movimento.py,
+- Ponte 0.12.0 (compito p2p28; dal 19/11 il codice è in movimento1, sopra): `movimento.json` (movimento.py,
   prove in prova_movimento.py). La libreria Focus non ha ricerca di file né registro degli allarmi: l'unico indice
   storico del movimento è il tipo di ognuno dei 1440 minuti di GetRecordDaily (continua / movimento / sensore), che
   esiste solo se il registratore è impostato a registrare il movimento; il compito lo legge per i 5 casi di

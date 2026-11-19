@@ -31,6 +31,14 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.21.0 (19/11/2026): compito movimento1, l'indice di movimento dei registratori Focus (Dario, 19/11: «adesso»,
+  non dopo il ponte 39). movimento.json di prepara_movimento.py con «registratori» (movimento.py 0.2.0): per ogni
+  registratore con un abbandono vero, poi per tutti quelli che hanno risposto al ponte nelle ultime 24 ore (op=stato),
+  il modo di registrazione e i tipi dei minuti di ieri; dove il movimento si registra, i tipi dei giorni con un
+  abbandono e se il minuto dell'abbandono (+-2) e' «movimento». Il ponte intanto fa il suo giro come il 39 (che si
+  chiude per lui: il suo avanzamento dice «chiudo questo», non «fermato», e Kit_Rifiuti 0.99.16 non lo riprenderebbe).
+  Se il processo cade a meta' del lavoro (la parte OnRecordModeStatus non era mai girata su una DLL vera), alla ripresa
+  movimento_in_corso.txt dice di non rifarlo: niente giri di riprese per lo stesso guasto.
 version: 0.20.0 (16/11/2026): si allunga solo quello che chiede Dario (16/11 mattina: «facciamo che allunghi solo quelle
   che ti chiedo di allungare»; «sono semplicemente delle dubbie, che io se ritengo posso anche chiedere di allungare»).
   Il giro della coda non legge piu' ~/kr_lavori/allunga/coda.json (Kit_Rifiuti 0.99.10 la lascia vuota: le 460 del 16/11
@@ -154,7 +162,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.20.1"
+VERSIONE = "p2p_ponte 0.21.0"
 DURATA = 24 * 3600
 
 
@@ -2301,11 +2309,27 @@ def lavoro_movimento(cfg):
     movimento.Sessione solo per il tempo di un collegamento (al massimo 200 s) e lasciato anche se una chiamata si
     blocca."""
     import movimento as mv
+    in_corso = os.path.join(U, "movimento_in_corso.txt")
+    if os.path.exists(in_corso):   # 0.21.0: il processo e' caduto a meta': non si rifa' (il json scritto finora resta)
+        av("movimento: la volta prima il processo e' caduto a meta' (movimento_in_corso.txt): non lo rifaccio")
+        return
+    open(in_corso, "w").write(time.strftime("%Y-%m-%d %H:%M"))
     classe = mv.classe_registratore()
+
+    def stato():   # 0.21.0: i registratori che hanno risposto al ponte nelle ultime 24 ore
+        req = urllib.request.Request(f"{API}?op=stato", headers={"Authorization": "Bearer " + biglietto()})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            return json.loads(r.read().decode())
     mezzi = {"nuovo": lambda: tieni(classe(os.path.join(C, "FocusNetSDK"), log=lambda *_: None)),
-             "collega": collega_con, "lucchetto": SDK, "decodifica": decodifica_miniatura}
+             "collega": collega_con, "lucchetto": SDK, "decodifica": decodifica_miniatura, "stato": stato}
     out = mv.lavoro(cfg, mezzi, lambda o: scrivi_json("movimento.json", dict(o, pc=PC, versione=VERSIONE)), av)
     av(f"movimento: fatto, {out.get('conti')}" + (f", fermato: {out['fermato']}" if out.get("fermato") else ""))
+    if out.get("riassunto"):
+        av(f"movimento: {json.dumps(out['riassunto'], ensure_ascii=False)[:1500]}")
+    try:
+        os.remove(in_corso)
+    except OSError:
+        pass
 
 
 def parti_qwen():

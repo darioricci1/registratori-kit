@@ -1,5 +1,6 @@
 """Prove a tavolino di movimento.py: libreria finta (registratore che risponde da tabelle, miniature finte in grigi),
 niente rete, niente DLL. Uso: python3 prova_movimento.py
+version: 0.2.0 (19/11/2026): il giro dei registratori (movimento.py 0.2.0).
 version: 0.1.0 (11/11/2026)
 """
 import datetime
@@ -183,6 +184,127 @@ ok(out["conti"]["chiamate"] <= 11, "limite chiamate: al massimo una in piu' (il 
 cfg = dict(CFG, limiti={"collegamenti_totali": 1})
 out = mv.lavoro(cfg, mezzi(Finto({0: giorno_tipi()})), lambda o: None)
 ok("collegamenti_totali" in out["casi"][0].get("limite", ""), "limite collegamenti: le miniature non partono")
+
+# --- 0.2.0: il giro dei registratori
+class FintoGiorni(Finto):
+    """Tipi per (giorno, canale); «ieri» e' il 2026-11-18."""
+
+    def __init__(self, per_giorno, modi=None, **kw):
+        super().__init__({c: None for _, c in per_giorno}, **kw)
+        self.per_giorno = per_giorno
+        self.modi = {} if modi is None else modi
+        self.letti = []
+
+    def canali(self):
+        return [(n, 100 + n, f"CH{n + 1}") for n in sorted({c for _, c in self.per_giorno})]
+
+    def tipi_del_giorno(self, h, giorno):
+        self._forse_blocca("giorno")
+        self.letti.append((f"{giorno:%Y-%m-%d}", h - 100))
+        return self.per_giorno.get((f"{giorno:%Y-%m-%d}", h - 100))
+
+
+ok(mv.da_testo(mv.tipi_in_testo(giorno_tipi([(10, 12)])))[:13] == [1] * 10 + [2, 2, 1], "testo dei tipi, andata e ritorno")
+ok(len(mv.tipi_in_testo([1] * 5)) == 1440 and mv.tipi_in_testo([12])[0] == "?", "testo dei tipi: 1440 cifre, «?» oltre il 9")
+ok(mv.registra_movimento({}, {0: giorno_tipi([(5, 6)])})[0] == "si", "registra: minuti movimento ieri")
+ok(mv.registra_movimento({0: {"modo": "continua + movimento"}}, {0: giorno_tipi()})[0] == "si", "registra: impostato")
+ok(mv.registra_movimento({0: {"modo": "continua"}}, {0: giorno_tipi()})[0] == "no", "registra: solo continua")
+ok(mv.registra_movimento({}, {0: giorno_tipi()})[0] == "no", "registra: modo non arrivato, tipi solo continua")
+ok(mv.registra_movimento({}, {})[0] == "?", "registra: niente")
+CA = {"nome": "c1", "giorno": "2026-11-01", "da": "12:58", "a": "13:02", "canali": [0], "canale_certo": True}
+ok(mv.esito_caso(CA, lambda c: giorno_tipi([(780, 781)]))["esito"] == "coperto", "caso coperto")
+ok(mv.esito_caso(CA, lambda c: giorno_tipi([(790, 800)]))["esito"] == "non coperto", "caso non coperto")
+ok(mv.esito_caso(CA, lambda c: [0] * 1440)["esito"] == "non sul disco", "caso non sul disco")
+ok(mv.esito_caso(CA, lambda c: None)["esito"] == "non letto", "caso non letto")
+e = mv.esito_caso(dict(CA, canali=[0, 1]), lambda c: giorno_tipi([(782, 783)]) if c == 1 else giorno_tipi())
+ok(e["esito"] == "coperto" and e["per_canale"]["0"]["movimento"] == 0 and e["per_canale"]["1"]["movimento"] == 1,
+   "caso su piu' telecamere: basta una")
+ok(mv.esito_caso(CA, lambda c: giorno_tipi([(782, 783)]))["esito"] == "coperto", "la finestra comprende il suo ultimo minuto")
+ok(mv.ore_escluse(["13:05"]) == {12, 13, 14} and mv.ore_escluse(["00:10"]) == {0, 1}, "ore escluse")
+q = mv.quota_vuote(giorno_tipi([(60, 61), (600, 610)]), {10})
+ok(q["ore"] == 23 and q["ore_con_movimento"] == 1 and q["minuti_movimento"] == 1 and q["minuti_registrati"] == 23 * 60,
+   "quota delle ore vuote (l'ora esclusa non conta)")
+t = giorno_tipi()
+for i in range(0, 720):
+    t[i] = 0
+ok(mv.quota_vuote(t, set())["ore"] == 12, "un'ora con meno di 30 minuti registrati non conta")
+qf = mv.quota_finestra(giorno_tipi([(62, 63)]), "01:00", "02:00")
+ok(qf == {"minuti_registrati": 60, "minuti_movimento": 1, "pezzi_5_registrati": 12, "pezzi_5_movimento": 1}, "quota di un'ora vuota")
+st = {"kit": [{"uid": "A", "kit": "581", "risposte_24h": 3}, {"uid": "B", "kit": "600", "risposte_24h": 9},
+              {"uid": "C", "kit": "601", "risposte_24h": 0}, {"uid": "D", "kit": "998", "risposte_24h": 5},
+              {"uid": "E", "kit": "602", "risposte_24h": 1}, {"uid": "b", "kit": "600", "risposte_24h": 9}]}
+ag = mv.aggiungi_da_stato([{"kit": 581, "uid": "A", "casi": [1]}], st)
+ok([r["kit"] for r in ag] == [581, 600, 602] and ag[1]["da_stato"], "da op=stato: chi ha risposto, senza doppioni ne' il 998")
+
+IERI = "2026-11-18"
+REG = {"kit": 581, "uid": "X", "giorni": {"2026-11-01": {"canali": [0, 1], "noti": ["12:58", "13:02"]},
+                                          "2026-10-20": {"canali": [0], "noti": []}},
+       "casi": [dict(CA, nome="c1", fonti=["prova ferma"]), dict(CA, nome="c2", giorno="2026-11-01", da="18:00", a="18:04",
+                                                                   canali=[1], fonti=["sito ok"]),
+                dict(CA, nome="c3", giorno="2026-10-20", fonti=["scorta 14/11"])],
+       "vuote": [{"giorno": "2026-11-01", "da": "03:00", "a": "04:00", "canale": 0, "fonte": "prova ferma"}]}
+PG = {(IERI, 0): giorno_tipi([(100, 101)]), (IERI, 1): giorno_tipi(),
+      ("2026-11-01", 0): giorno_tipi([(779, 782), (200, 202)]), ("2026-11-01", 1): giorno_tipi([(1200, 1210)]),
+      ("2026-10-20", 0): [0] * 1440}
+fin = FintoGiorni(PG, modi={100: {"modo": "continua + movimento"}, 101: {"modo": "continua + movimento"}})
+scritti = []
+out = mv.lavoro({"registratori": [REG], "ieri": IERI}, mezzi(fin), lambda o: scritti.append(1))
+x = out["registratori"][0]
+ok(x["esito"] == "letto" and x["registra_movimento"] == "si", "giro: letto, registra il movimento")
+ok(x["modi"] == {"0": {"modo": "continua + movimento"}, "1": {"modo": "continua + movimento"}}, "giro: i modi per numero di canale")
+es = {c["nome"]: c["esito"] for c in x["casi"]}
+ok(es == {"c1": "coperto", "c2": "non coperto", "c3": "non sul disco"}, f"giro: esiti dei casi {es}")
+ok(x["vuote"][0]["minuti_registrati"] == 60 and x["vuote"][0]["minuti_movimento"] == 2, "giro: l'ora vuota del banco")
+ok(x["quota_vuote"]["ore"] == 20 + 20 and x["quota_vuote"]["ore_con_movimento"] == 2, "giro: quota delle ore vuote")
+ok(len(x["ieri_tipi"]["0"]) == 1440 and x["ieri_tipi"]["0"][100] == "2" and "2026-11-01 ch2" in x["giorni_letti"],
+   "giro: i tipi in testo")
+r = out["riassunto"]
+ok(r["casi"] == {"coperto": 1, "non coperto": 1, "non sul disco": 1} and r["casi_coperti_quota"] == 0.5
+   and r["registra_movimento"] == {"si": 1} and r["casi_per_fonte"]["sito ok"] == {"non coperto": 1}, "giro: riassunto")
+ok(fin.chiuso and scritti and not mezzi(fin)["lucchetto"].locked(), "giro: chiuso e scritto")
+
+# solo continua: i giorni non si leggono e i casi dicono perche'
+fin = FintoGiorni({(IERI, 0): giorno_tipi(), (IERI, 1): giorno_tipi(), ("2026-11-01", 0): giorno_tipi([(779, 782)])},
+                  modi={100: {"modo": "continua"}})
+out = mv.lavoro({"registratori": [REG], "ieri": IERI}, mezzi(fin), lambda o: None)
+x = out["registratori"][0]
+ok(x["registra_movimento"] == "no" and all(c["esito"] == "movimento non registrato" for c in x["casi"]),
+   "giro: solo continua, nessun giorno letto")
+ok(fin.letti == [(IERI, 0), (IERI, 1)], "giro: solo continua, solo le due letture di ieri")
+ok(out["riassunto"]["quota_vuote"] == {}, "giro: le ore vuote contano solo dove il movimento si registra")
+
+# il relay da 200 s: i giorni che restano si leggono con un collegamento nuovo
+vecchio = mv.FRESCO
+mv.FRESCO = 0.0
+fin = FintoGiorni(PG, modi={100: {"modo": "movimento"}})
+out = mv.lavoro({"registratori": [REG], "ieri": IERI}, mezzi(fin), lambda o: None)
+mv.FRESCO = vecchio
+x = out["registratori"][0]
+ok(len(x["collegamenti"]) == 1 + 3 and not x["giorni_non_letti"] and len(x["giorni_letti"]) == 3,
+   "giro: un collegamento nuovo per ogni giorno quando il primo non e' piu' fresco")
+
+# registratore che non risponde, op=stato che aggiunge, limite dei collegamenti, blocchi
+m = mezzi(FintoGiorni(PG), collega_ok=False)
+m["stato"] = lambda: st
+out = mv.lavoro({"registratori": [REG], "ieri": IERI, "tutti_da_stato": True}, m, lambda o: None)
+ok(out["registratori_in_elenco"] == 3 and all(x["esito"].startswith("registratore non raggiunto") for x in out["registratori"]),
+   "giro: op=stato aggiunge, chi non risponde e' «non raggiunto»")
+ok(all(c["esito"] == "non letto" for c in out["registratori"][0]["casi"]), "giro: non raggiunto, casi «non letto»")
+m = mezzi(FintoGiorni(PG, modi={100: {"modo": "movimento"}}))
+m["stato"] = lambda: st
+out = mv.lavoro({"registratori": [REG], "ieri": IERI, "tutti_da_stato": True, "limiti": {"collegamenti_totali": 2}}, m,
+                lambda o: None)
+ok(len(out["registratori"]) == 2 and out["fermato"].startswith("limite scattato: collegamenti_totali")
+   and out["non_fatti"] == [602], "giro: il limite dei collegamenti ferma il giro e dice chi resta")
+m = mezzi(FintoGiorni(PG, blocca={"giorno"}), tempi={"giorno": 0.3})
+m["stato"] = lambda: st
+t0 = time.time()
+out = mv.lavoro({"registratori": [REG], "ieri": IERI, "tutti_da_stato": True}, m, lambda o: None)
+ok(time.time() - t0 < 4 and len(out["blocchi"]) == 2 and len(out["registratori"]) == 2 and "fermato" in out,
+   "giro: due blocchi e ci si ferma")
+ok(not m["lucchetto"].locked(), "giro: lucchetto libero dopo i blocchi")
+ok(mv.LIMITI["collegamenti_totali"] == 420 and mv.LIMITI["mb_totali"] == 100.0 and mv.LIMITI["chiamate_per_caso"] == 120,
+   "LIMITI: alzati solo i totali")
 
 print(f"\n{'TUTTE PASSATE' if not fallite else str(len(fallite)) + ' FALLITE: ' + ', '.join(fallite)}")
 if __name__ == "__main__":
