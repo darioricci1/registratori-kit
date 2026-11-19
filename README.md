@@ -53,9 +53,15 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte43 (ponte 0.24.0, lo zip del 42 senza allunga.json, con il nome nuovo in LEGGIMI.txt e ponte.json;
+  `c43/compito.zip` dello scratchpad): caricato in compito_2.zip con tipo leggero il 19/11 alle 11:11 al posto del 42
+  (già preso), preso alle 11:12 e partito alle 11:15 sul COMPUTERONE, 72 ore. Il 42 aveva già scaricato le 7 ore da guardare (5 col video, pos008 e pos070 non più sul
+  registratore) e ricaricava il risultato con gli mp4, circa 290 MB, ogni ora: gli mp4 sono su R2 come
+  ore/<id>_vero.mp4 (kit-rifiuti-programma, analisi/ore_da_guardare.py video_vero) e il nuovo riparte leggero. Il
+  segnaposto `risultato_p2p_ponte43.zip` lo deve creare Dario: finché manca il risultato resta sul PC.
 - Compito p2p_ponte42 (ponte 0.24.0 col guardiano, guardiano.py 0.1.0, allunga.py 0.2.0; zip in `c42/compito.zip` dello
   scratchpad, segnaposto `risultato_p2p_ponte42.zip` creato da Dario): caricato in compito_2.zip con tipo leggero il 19/11
-  alle 9:41 al posto del 41, preso alle 9:42 e partito alle 9:45 sul COMPUTERONE, 72 ore (fino al 22/11 verso le 9:45). Due cose nuove:
+  alle 9:41 al posto del 41, preso alle 9:42 e partito alle 9:45 sul COMPUTERONE. Sostituito dal 43 alle 11:11. Due cose nuove:
   - Il guardiano. Il 40 si era chiuso il 19/11 alle 8:50 dopo 78 minuti con 3221225477 (0xC0000005): `guasto_memoria.txt`
     dice focus_nvr.Registratore.chiudi, riga 543, la Disconnect di una prova P2P dentro il `with`, quindi dentro la DLL,
     dove un try non arriva. Ora compito.py senza `PONTE_FIGLIO=1` fa solo il guardiano: rilancia lo stesso exe con
