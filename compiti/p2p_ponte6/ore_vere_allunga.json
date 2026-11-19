@@ -1,0 +1,128 @@
+{
+ "pc": "COMPUTERONE",
+ "come": "allunga.py con durata_clip 0 e un canale senza durata: un tratto «intera» di 10 minuti (5 prima e 5 dopo il momento) per ognuna delle 7 ore da guardare di video.html (Dario, 19/11: «posso avere anche tutto il video da guardare qui?»); dalla piu' vecchia, che il registratore sovrascrive prima",
+ "preparato_il": "2026-11-19",
+ "prima_s": 300,
+ "dopo_s": 300,
+ "eventi": [
+  {
+   "evento": "ore_pos108_kit657_verita",
+   "kit": 657,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "06:06:05",
+   "durata_clip": 0,
+   "canali": [
+    0
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (pos108_kit657#verita): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "7GXDM2A6XAEYTH1L111A"
+  },
+  {
+   "evento": "ore_pos148_kit483_verita",
+   "kit": 483,
+   "giorno": "2026-10-30",
+   "ora_inizio_clip": "12:12:43",
+   "durata_clip": 0,
+   "canali": [
+    0
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (pos148_kit483#verita): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "359UWYX652MUHANB111A"
+  },
+  {
+   "evento": "ore_pos008_kit384_verita",
+   "kit": 384,
+   "giorno": "2026-11-01",
+   "ora_inizio_clip": "07:12:21",
+   "durata_clip": 0,
+   "canali": [
+    3
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (pos008_kit384#verita): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "9LSS75MFLX8R8YWM111A"
+  },
+  {
+   "evento": "ore_pos070_kit443_verita",
+   "kit": 443,
+   "giorno": "2026-11-03",
+   "ora_inizio_clip": "14:17:41",
+   "durata_clip": 0,
+   "canali": [
+    2
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (pos070_kit443#verita): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "55R623L3HMTV2USD111A"
+  },
+  {
+   "evento": "ore_pos136_kit561_banco",
+   "kit": 561,
+   "giorno": "2026-11-03",
+   "ora_inizio_clip": "21:20:41",
+   "durata_clip": 0,
+   "canali": [
+    0
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (pos136_kit561#candidato): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "A4BJY9PUN5E9X3SV111A"
+  },
+  {
+   "evento": "ore_neg038_kit375_banco",
+   "kit": 375,
+   "giorno": "2026-11-07",
+   "ora_inizio_clip": "06:31:00",
+   "durata_clip": 0,
+   "canali": [
+    0
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (neg038_kit375#candidato): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "4JWHPZFCBWRWTAX3111A"
+  },
+  {
+   "evento": "ore_neg014_kit566_banco",
+   "kit": 566,
+   "giorno": "2026-11-09",
+   "ora_inizio_clip": "10:06:00",
+   "durata_clip": 0,
+   "canali": [
+    3
+   ],
+   "prima_s": 300,
+   "dopo_s": 300,
+   "motivi": [
+    "ore da guardare di video.html (neg014_kit566#candidato): 10 minuti attorno al momento, Dario 19/11"
+   ],
+   "copia_video": true,
+   "uid": "BSSAJLD1WHWT3FGX111A"
+  }
+ ]
+}

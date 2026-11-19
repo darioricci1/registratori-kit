@@ -30,6 +30,11 @@ chiamata alla libreria ha un tempo massimo (movimento.entro) e ogni evento un te
 I MB: nessun tetto (Dario: niente tetti fissi di banda), ma si scrivono sempre: per richiesta, per evento, per kit e in
 tutto. Il lavoro vero (registratore, ffmpeg, processo) arriva da fuori come funzioni: le prove a tavolino sono in
 prova_allunga.py con una libreria finta.
+version: 0.2.0 (19/11/2026): «copia_video» (Dario, 19/11: il video vero delle 7 «ore da guardare» di video.html). Per
+  un evento con "copia_video": true gli mp4 di video/ vanno anche nell'uscita del compito (uscita/allunga/<evento>/video/),
+  ricompressi se si puo' (comprimi da fuori: ffmpeg H.264 a 1280 pixel nel ponte), cosi' arrivano su Drive nel
+  risultato; gli originali restano sul PC. gia_fatto: un evento gia' finito (in uscita) non si rifa' quando il ponte
+  riparte (il guardiano del ponte 0.23.0 lo rilancia dopo un guasto della libreria).
 version: 0.1.0 (11/11/2026): prima versione.
 """
 import datetime
@@ -37,7 +42,7 @@ import math
 import os
 import time
 
-VERSIONE = "0.1.0"
+VERSIONE = "0.2.0"
 
 PRIMA_S, DOPO_S = 60, 120     # di difetto (Dario, 11/11)
 PEZZO_MAX_S = 180             # una richiesta: al massimo 3 minuti (come la prova lunga)
@@ -522,6 +527,56 @@ def lavoro(cfg, lancia, scrivi_out, av=lambda t: None, adesso=time.time):
     out["fine"] = time.strftime("%Y-%m-%d %H:%M:%S")
     scrivi_out(out)
     return out
+
+
+# ------------------------------------------------------------------ 0.2.0: i video nell'uscita, e gli eventi gia' fatti
+
+FINITI = ("fatto", "parziale", "non piu' sul registratore")
+
+
+def mp4_di(cartella_video):
+    """Gli mp4 finiti di un evento (non quelli di video/tmp), in ordine di nome. Non solleva."""
+    try:
+        return sorted(os.path.join(cartella_video, f) for f in os.listdir(cartella_video)
+                      if f.lower().endswith(".mp4") and os.path.isfile(os.path.join(cartella_video, f)))
+    except OSError:
+        return []
+
+
+def copia_video(cartella_video, dest, comprimi=None):
+    """Gli mp4 di cartella_video in dest: ricompressi con comprimi(src, dst) -> bool quando riesce e il file viene piu'
+    piccolo, se no copiati com'erano. Ritorna {"file": [{nome, mb, mb_originale, compresso}], "mb": totale}."""
+    import shutil
+    os.makedirs(dest, exist_ok=True)
+    out = {"file": [], "mb": 0.0}
+    for src in mp4_di(cartella_video):
+        nome = os.path.basename(src)
+        dst = os.path.join(dest, nome)
+        mb0 = os.path.getsize(src) / 1e6
+        compresso = False
+        if comprimi:
+            tmp = dst + ".tmp.mp4"
+            try:
+                if comprimi(src, tmp) and os.path.exists(tmp) and 0 < os.path.getsize(tmp) < os.path.getsize(src):
+                    os.replace(tmp, dst)
+                    compresso = True
+            except Exception:   # noqa: BLE001 - se non si comprime, si copia
+                pass
+            _togli(tmp)
+        if not compresso:
+            shutil.copy2(src, dst)
+        mb = os.path.getsize(dst) / 1e6
+        out["file"].append({"nome": nome, "mb": round(mb, 2), "mb_originale": round(mb0, 2), "compresso": compresso})
+        out["mb"] = round(out["mb"] + mb, 2)
+    return out
+
+
+def gia_fatto(ev, prima, video_copiati=0):
+    """L'evento e' gia' finito in un giro di prima (prima: il suo allunga_evento.json in uscita, o None) e, se chiede
+    copia_video, i video sono gia' nell'uscita: non si rifa'. Funzione pura."""
+    if not isinstance(prima, dict) or prima.get("in_corso") or str(prima.get("esito") or "") not in FINITI:
+        return False
+    return not ev.get("copia_video") or str(prima.get("esito")) == "non piu' sul registratore" or video_copiati > 0
 
 
 # ------------------------------------------------------------------ la DLL vera e ffmpeg (solo sul PC)

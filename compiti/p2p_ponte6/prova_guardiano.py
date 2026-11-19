@@ -2,7 +2,7 @@
 libreria, quando si rilancia, si aspetta o si smette, e il giro con un figlio finto e con un figlio vero che cade per
 accesso alla memoria (ctypes legge l'indirizzo 0). Niente rete, niente DLL.
 Uso: python3 prova_guardiano.py
-version: 0.1.0 (19/11/2026)
+version: 0.1.1 (19/11/2026): il ponte puo' essere dopo la 0.23.0
 """
 import ast
 import os
@@ -155,8 +155,8 @@ k_g = src.find("guardiano.guarda(")
 ok(0 < k_g < src.find("def credenziali(") and k_g < src.find("def prova(") and "PONTE_FIGLIO" in src[:k_g],
    "compito.py: senza PONTE_FIGLIO fa il guardiano prima di definire le prove")
 ok("\nt_fine = time.time() + DURATA\nimport guardiano" in src and "guardiano.fine_da_ambiente(os.environ, t_fine)" in src
-   and '__name__ == "__main__" and os.environ.get("PONTE_FIGLIO")' in src and 'VERSIONE = "p2p_ponte 0.23.0"' in src,
-   "compito.py: t_fine da PONTE_FINE dopo la riga dove si fermano i lavori a parte, guardiano solo in __main__, 0.23.0")
+   and '__name__ == "__main__" and os.environ.get("PONTE_FIGLIO")' in src and int(__import__("re").search(r'VERSIONE = "p2p_ponte 0\.(\d+)', src).group(1)) >= 23,
+   "compito.py: t_fine da PONTE_FINE dopo la riga dove si fermano i lavori a parte, guardiano solo in __main__, 0.23.0 o dopo")
 p = subprocess.run([sys.executable, "-c", "import ast,sys; ast.parse(open(sys.argv[1]).read())",
                     os.path.join(QUI, "guardiano.py")])
 ok(p.returncode == 0, "guardiano.py si legge")

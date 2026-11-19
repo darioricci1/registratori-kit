@@ -31,6 +31,11 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.24.0 (19/11/2026): il video vero delle 7 «ore da guardare» di video.html (Dario, 19/11), con allunga.json
+  (durata_clip 0, un canale, 10 minuti attorno al momento): per gli eventi con "copia_video": true copia_indietro mette
+  anche gli mp4 in uscita/allunga/<evento>/video/ (allunga.py 0.2.0 copia_video), ricompressi con ffmpeg (H.264 a 1280
+  pixel, crf 28; se non riesce, l'originale) e con video.json, cosi' arrivano su Drive nel risultato del compito. Un
+  evento gia' finito in uscita non si rifa' se il guardiano rilancia il ponte (allunga.gia_fatto).
 version: 0.23.0 (19/11/2026): il guardiano (guardiano.py 0.1.0). Il compito p2p_ponte40 e' caduto il 19/11 alle 8:50
   dopo 78 minuti con 3221225477 (0xC0000005), come il 28: guasto_memoria.txt dice focus_nvr.Registratore.chiudi, sulla
   Disconnect di una prova P2P, dentro la DLL. Kit_Rifiuti non lo rilancia e la pagina si fermava. Ora compito.py, se
@@ -178,7 +183,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.23.0"
+VERSIONE = "p2p_ponte 0.24.0"
 DURATA = 24 * 3600
 
 
@@ -1858,7 +1863,15 @@ def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
             except Exception as ex:   # noqa: BLE001
                 av(f"allunga: elenco dei registratori non letto: {type(ex).__name__}: {str(ex)[:200]}")
 
-    def copia_indietro(d, evento):
+    def comprimi(src, dst):
+        """0.24.0: H.264 a 1280 pixel al massimo, crf 28, senza audio: un'ora da guardare da 50-150 MB a circa 10-25."""
+        r = subprocess.run([ffmpeg(), "-v", "error", "-y", "-i", src, "-vf", "scale='min(1280,iw)':-2", "-c:v", "libx264",
+                            "-preset", "veryfast", "-crf", "28", "-pix_fmt", "yuv420p", "-an", "-movflags", "+faststart",
+                            dst], capture_output=True, timeout=1800, creationflags=NOFIN)
+        return r.returncode == 0
+
+    def copia_indietro(d, ev):
+        evento = ev["evento"] if isinstance(ev, dict) else ev
         u = os.path.join(U, "allunga", evento)
         os.makedirs(u, exist_ok=True)
         for nome in ("allunga_evento.json", "avanzamento.txt", "registro_python.txt", "guasto_memoria.txt"):
@@ -1871,6 +1884,22 @@ def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
             for f in os.listdir(fogli):
                 if f.lower().endswith(".jpg"):
                     shutil.copy2(os.path.join(fogli, f), os.path.join(u, "fogli", f))
+        if isinstance(ev, dict) and ev.get("copia_video"):   # 0.24.0: gli mp4 nel risultato su Drive
+            try:
+                cv = al.copia_video(os.path.join(d, "video"), os.path.join(u, "video"), comprimi)
+                scrivi_json(os.path.join("allunga", evento, "video.json"), cv)
+                av(f"allunga {evento}: {len(cv['file'])} video nell'uscita, {cv['mb']} MB")
+            except Exception as ex:   # noqa: BLE001
+                av(f"allunga {evento}: video non copiati: {type(ex).__name__}: {str(ex)[:200]}")
+
+    def gia_fatto(ev):
+        """0.24.0: un evento finito in un giro di prima (il ponte rilanciato dal guardiano) non si rifa'."""
+        u = os.path.join(U, "allunga", ev["evento"])
+        try:
+            prima = json.load(open(os.path.join(u, "allunga_evento.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            return False
+        return al.gia_fatto(ev, prima, len(al.mp4_di(os.path.join(u, "video"))))
 
     def in_filo(ev, d):
         with SDK:
@@ -1888,11 +1917,14 @@ def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
 
     def lancia(ev, secondi_max):
         d = os.path.join(base, ev["evento"])
+        if nome_uscita == "allunga.json" and gia_fatto(ev):   # 0.24.0 (la coda di Dario decide da se' cosa rifare)
+            av(f"allunga {ev['evento']}: gia' fatto in un giro di prima, non lo rifaccio")
+            return 0, json.load(open(os.path.join(U, "allunga", ev["evento"], "allunga_evento.json"), encoding="utf-8"))
         os.makedirs(os.path.join(d, "uscita"), exist_ok=True)
         shutil.rmtree(os.path.join(d, "video", "tmp"), ignore_errors=True)
         if nel_filo["si"]:
             x = in_filo(ev, d)
-            copia_indietro(d, ev["evento"])
+            copia_indietro(d, ev)
             return 0, x
         shutil.copy2(os.path.join(C, "compito.py"), os.path.join(d, "ponte.py"))
         shutil.copy2(os.path.join(C, "allunga_lavoro.py"), os.path.join(d, "compito.py"))
@@ -1921,7 +1953,7 @@ def lavoro_allunga(cfg, base=None, nome_uscita="allunga.json"):
             x = json.load(open(risultato, encoding="utf-8"))
         except (OSError, ValueError):
             pass
-        copia_indietro(d, ev["evento"])
+        copia_indietro(d, ev)
         av(f"allunga {ev['evento']}: processo finito ({codice})")
         if x and str(x.get("esito", "")).startswith("libreria non caricata"):
             av("allunga: la libreria non si carica nel processo a parte, gli eventi dopo nel filo del ponte")

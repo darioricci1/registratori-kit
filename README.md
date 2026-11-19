@@ -53,23 +53,32 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
-- Ponte 0.23.0 col guardiano (guardiano.py 0.1.0, prove in prova_guardiano.py), compito p2p_ponte42 pronto e NON
-  mandato: manca il segnaposto `risultato_p2p_ponte42.zip` (lo crea Dario). Zip in `c42/compito.zip` dello scratchpad
-  (come il 41 più guardiano.py). Il 40 si era chiuso il 19/11 alle 8:50 dopo 78 minuti con 3221225477 (0xC0000005):
-  `guasto_memoria.txt` dice focus_nvr.Registratore.chiudi, riga 543, la Disconnect di una prova P2P dentro il `with`,
-  quindi dentro la DLL, dove un try non arriva. Ora compito.py senza `PONTE_FIGLIO=1` fa solo il guardiano: rilancia lo
-  stesso exe con «--compito <cartella>» (Kit_Rifiuti lo trova e lo ferma come prima) e il figlio fa il ponte di sempre;
-  se cade per un guasto della libreria (0xC0000005, 0xC0000374, 0xC0000409, ...) lo rilancia dopo 20 s con una riga
-  «guardiano: il ponte e' caduto con ... in focus_nvr.py:543 chiudi. Lo rilancio» in avanzamento.txt. Tetti: 6 rilanci
-  in un'ora (oltre aspetta che l'ora si liberi), 40 in tutto, mai dopo 3 cadute di fila nei primi 2 minuti; un codice che
-  non è un guasto (1, chiuso da Kit_Rifiuti) passa a Kit_Rifiuti com'è. `PONTE_FINE` tiene l'ora di fine del compito,
-  un figlio rilanciato rilegge UVMS e ANAGRAFICA KIT dopo 12 ore, non subito. La riga `t_fine = time.time() + DURATA`
-  resta dov'era: allunga_lavoro, pilota_lavoro e scorta_lavoro eseguono il ponte fino a lì (il guardiano scatta solo in
-  `__main__`). Si carica come il 41 (`posto_compito.py --compito p2p_ponte42 --pc COMPUTERONE --tipo leggero`), che si
-  chiude da solo entro 10 minuti.
+- Compito p2p_ponte42 (ponte 0.24.0 col guardiano, guardiano.py 0.1.0, allunga.py 0.2.0; zip in `c42/compito.zip` dello
+  scratchpad, segnaposto `risultato_p2p_ponte42.zip` creato da Dario): caricato in compito_2.zip con tipo leggero il 19/11
+  al posto del 41, COMPUTERONE, 72 ore. Due cose nuove:
+  - Il guardiano. Il 40 si era chiuso il 19/11 alle 8:50 dopo 78 minuti con 3221225477 (0xC0000005): `guasto_memoria.txt`
+    dice focus_nvr.Registratore.chiudi, riga 543, la Disconnect di una prova P2P dentro il `with`, quindi dentro la DLL,
+    dove un try non arriva. Ora compito.py senza `PONTE_FIGLIO=1` fa solo il guardiano: rilancia lo stesso exe con
+    «--compito <cartella>» (Kit_Rifiuti lo trova e lo ferma come prima) e il figlio fa il ponte di sempre; se cade per un
+    guasto della libreria (0xC0000005, 0xC0000374, 0xC0000409, ...) lo rilancia dopo 20 s con una riga «guardiano: il
+    ponte e' caduto con ... in focus_nvr.py:543 chiudi. Lo rilancio» in avanzamento.txt. Tetti: 6 rilanci in un'ora
+    (oltre aspetta che l'ora si liberi), 40 in tutto, mai dopo 3 cadute di fila nei primi 2 minuti; un codice che non è
+    un guasto (1, chiuso da Kit_Rifiuti) passa a Kit_Rifiuti com'è. `PONTE_FINE` tiene l'ora di fine del compito, un
+    figlio rilanciato rilegge UVMS e ANAGRAFICA KIT dopo 12 ore. La riga `t_fine = time.time() + DURATA` resta dov'era:
+    allunga_lavoro, pilota_lavoro e scorta_lavoro eseguono il ponte fino a lì (il guardiano scatta solo in `__main__`).
+    Prove in prova_guardiano.py (anche un figlio vero che cade per accesso alla memoria).
+  - Le 7 «ore da guardare» di video.html (Dario, 19/11: il video vero), in `allunga.json` del compito (copia in
+    `ore_vere_allunga.json`, con gli UID già messi): 10 minuti attorno al momento su un canale, dalla più vecchia
+    (pos108 e pos148 del 30/10). Con `"copia_video": true` copia_indietro mette gli mp4 anche in
+    `uscita/allunga/<evento>/video/`, ricompressi in H.264 a 1280 pixel crf 28 (se ffmpeg non ce la fa, l'originale),
+    con `video.json` (MB prima e dopo): arrivano su Drive nel risultato, che Kit_Rifiuti ricarica ogni 30 minuti; gli
+    originali restano in `~/kr_lavori/allunga/p2p_ponte42/<evento>/video`. Mentre un evento scarica, il ponte non prende
+    prove (la libreria è sua). Un evento già finito in uscita non si rifà se il guardiano rilancia il ponte
+    (allunga.gia_fatto; solo per allunga.json, la coda di Dario decide da sé). Nello zip c'è di nuovo movimento.py:
+    allunga.entro lo importa (nel 40 e nel 41 mancava, ma nessun allungamento era partito). Prove in prova_copia_video.py.
 - Compito p2p_ponte41 (ponte 0.22.0, lo zip del 40 con il nome nuovo in LEGGIMI.txt e ponte.json; `c41/compito.zip`
   dello scratchpad): caricato in compito_2.zip con tipo leggero alle 9:08 del 19/11, preso alle 9:12 e partito alle 9:13
-  sul COMPUTERONE, 72 ore. Senza guardiano: se la libreria lo fa cadere di nuovo, va mandato il 42 subito.
+  sul COMPUTERONE. Sostituito dal 42.
 - Compito p2p_ponte40 (ponte 0.22.0, peso_giro.py 0.1.0; COMPUTERONE alla 0.99.18 dalle 7:25 del 19/11, caricato in compito_2.zip
   con tipo leggero alle 7:26, partito alle 7:32 del 19/11, fino al 22/11 verso le 7:30): il ponte rimesso in giro sul COMPUTERONE
   dopo movimento1, che il 19/11 alle 5:50 si era chiuso per il compito conteggi20261119 delle statistiche su
