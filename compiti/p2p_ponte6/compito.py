@@ -31,6 +31,14 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.22.0 (19/11/2026): compito p2p_ponte40, il ponte come movimento1 senza rifare l'indice di movimento (niente
+  movimento.json nel compito), 72 ore, e quanto pesa il giro (Dario, 19/11: «richiede molto?»): per ogni prova i MB
+  grezzi delle foto di 3 s e dello scarico di 15 s, i byte del processo (GetProcessIoCounters: anche il collegamento e
+  l'archivio, che non sono file) e i secondi di processore (time.process_time), a parte quelli dell'archivio; nell'esito
+  per il sito («peso», «archivio_peso», le «mb» di ogni foto), in uscita/peso_prove.jsonl e per giro in
+  uscita/peso_giri.json (peso_giro.py 0.1.0). Con Kit_Rifiuti 0.99.18 il compito sta in compito_2.zip o compito_3.zip:
+  compito_nuovo_su_drive cerca «compito.zip» con drive_alma 0.6.0, che dentro il compito lo traduce nel suo posto
+  (KR_POSTO_COMPITO), quindi il ponte si chiude solo per un compito nuovo nel suo posto.
 version: 0.21.0 (19/11/2026): compito movimento1, l'indice di movimento dei registratori Focus (Dario, 19/11: «adesso»,
   non dopo il ponte 39). movimento.json di prepara_movimento.py con «registratori» (movimento.py 0.2.0): per ogni
   registratore con un abbandono vero, poi per tutti quelli che hanno risposto al ponte nelle ultime 24 ore (op=stato),
@@ -162,7 +170,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.21.0"
+VERSIONE = "p2p_ponte 0.22.0"
 DURATA = 24 * 3600
 
 
@@ -340,7 +348,10 @@ def prova_con(r, cr):
         if leggera:
             es["canali"] = canali
             if r.get("serve_archivio"):   # prima delle foto: il collegamento e' fresco
+                import peso_giro as pg   # 0.22.0: quanto pesa l'archivio, a parte
+                prima = pg.istantanea()
                 es["archivio"] = archivio(reg)
+                es["archivio_peso"] = pg.differenza(prima, pg.istantanea())
             es["camere"] = foto_camere(reg, oggi, canali, r["id"])
             return True, es, None
             if (r.get("canale") in (None, num)) and ultimo is not None and (scelta is None or ultimo > scelta[2]):
@@ -354,6 +365,7 @@ def prova_con(r, cr):
         t1 = time.time()
         res = reg.scarica(num, h, inizio, 15, os.path.join(U, "video"), ffmpeg=ffmpeg())
         mb = res.get("mb")
+        es["scarico_mb"] = mb   # 0.22.0
         es["scarico"] = (f"canale {num}, 15 s dalle {inizio:%H:%M}: {mb} MB in {time.time() - t1:.0f} s"
                          + (f" ({res['errore']})" if res.get("errore") else ""))
         f = res.get("file")
@@ -436,12 +448,13 @@ def foto_camere(reg, oggi, canali, rid):
                     pass
             if os.path.exists(jpg):
                 vista, luce, contrasto = giudica_immagine(jpg)
-                out.append({"canale": num, "vista": vista, "luce": luce, "contrasto": contrasto,
+                out.append({"canale": num, "vista": vista, "luce": luce, "contrasto": contrasto, "mb": res.get("mb"),   # 0.22.0
                             "dalle": f"{inizio:%d/%m %H:%M}" if vecchia else f"{inizio:%H:%M}",
                             "foto": base64.b64encode(open(jpg, "rb").read()).decode()})
                 os.remove(jpg)
             else:
-                out.append({"canale": num, "vista": "niente", "dalle": f"{inizio:%H:%M}: scarico non riuscito {res.get('errore') or ''}"[:120]})
+                out.append({"canale": num, "vista": "niente", "mb": res.get("mb"),
+                            "dalle": f"{inizio:%H:%M}: scarico non riuscito {res.get('errore') or ''}"[:120]})
         except Exception as ex:   # noqa: BLE001
             out.append({"canale": num, "vista": "niente", "dalle": f"errore {type(ex).__name__}"})
     return out
@@ -2270,6 +2283,41 @@ def lavoro_scorta(cfg):
     scrivi_json("catena.json", dict(fin, versione=VERSIONE, pc=PC))
     av(f"scorta: fatta. Qwen: {perche}, {fin['carte_giudicate']} carte giudicate; catena.json scritto")
 
+PESO = {"stato": None}   # 0.22.0: peso_giro, lo stato dei giri
+
+
+def peso_prima():
+    try:
+        import peso_giro as pg
+        return pg.istantanea()
+    except Exception:   # noqa: BLE001
+        return None
+
+
+def peso_dopo(r, ok, es, prima):
+    """0.22.0 (Dario, 19/11: «richiede molto?»): i MB e i secondi di processore della prova, nell'esito per il sito
+    («peso»), in uscita/peso_prove.jsonl e nel riassunto per giro uscita/peso_giri.json. Non deve mai fermare il ponte."""
+    if prima is None:
+        return
+    try:
+        import peso_giro as pg
+        d = pg.differenza(prima, pg.istantanea())
+        mb_foto, mb_scarico = pg.mb_dall_esito(es)
+        ap = es.get("archivio_peso") or {}
+        voce = dict(d, uid=r.get("uid"), kit=r.get("kit"), priorita=r.get("priorita"), ok=bool(ok), mb_foto=mb_foto,
+                    mb_scarico=mb_scarico, archivio=bool(es.get("archivio")), archivio_s=ap.get("s_durata"),
+                    archivio_mb_rete=ap.get("mb_rete"))
+        PESO["stato"], n = pg.segna(PESO["stato"], voce, time.time(), time.process_time())
+        es["peso"] = {k: voce[k] for k in ("mb_foto", "mb_scarico", "mb_rete", "s_processore", "s_durata")}
+        es["peso"]["giro"] = n
+        with open(os.path.join(U, "peso_prove.jsonl"), "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(dict(voce, id=r.get("id"), giro=n, ora=time.strftime("%Y-%m-%d %H:%M:%S")),
+                                ensure_ascii=False) + "\n")
+        scrivi_json("peso_giri.json", dict(pg.riassunto(PESO["stato"]), pc=PC, ponte=VERSIONE))
+    except Exception as ex:   # noqa: BLE001
+        av(f"peso del giro: {type(ex).__name__}: {str(ex)[:200]}")
+
+
 t_fine = time.time() + DURATA
 ultimo_uvms = 0.0
 ultimo_elenco = time.time() - 23 * 3600   # la prima volta dopo un'ora: prima il giro aggiorna lo stato
@@ -2514,12 +2562,14 @@ while time.time() < t_fine:
             time.sleep(15)
             continue
         av(f"prova {r['id']} ({r.get('kit') or '-'})")
+        prima = peso_prima()   # 0.22.0
         try:
             with SDK:   # 0.11.0: il dimezzamento usa la libreria nel suo filo
                 ok, es, foto = prova(r)
         except Exception as ex:   # noqa: BLE001
             ok, es, foto = False, {"errore": f"{type(ex).__name__}: {str(ex)[:300]}"}, None
             av(traceback.format_exc()[-1500:])
+        peso_dopo(r, ok, es, prima)   # 0.22.0
         chiama("esito", {"pc": PC, "versione": VERSIONE, "id": r["id"], "ok": ok, "esito": es, "foto": foto})
         av(f"prova {r['id']}: {'ok' if ok else 'fallita'} - {es.get('collegamento') or es.get('errore')}")
     except Exception as ex:   # noqa: BLE001

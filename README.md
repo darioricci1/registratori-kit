@@ -53,6 +53,24 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte40 (ponte 0.22.0, peso_giro.py 0.1.0; PARTENZA: da scrivere): il ponte rimesso in giro sul COMPUTERONE
+  dopo movimento1, che il 19/11 alle 5:50 si era chiuso per il compito conteggi20261119 delle statistiche su
+  compito.zip (l'indice di movimento era già fatto, movimento_fatto alle 5:32): da allora «Registrazioni dei kit» non si
+  aggiornava e gli allungamenti non si scaricavano. Come movimento1 (giro, archivi, allungamenti di op=allungare, UVMS e
+  ANAGRAFICA KIT) senza rifare l'indice di movimento (niente movimento.json né movimento.py nel compito), 72 ore
+  (`ponte.json`). Caricato con `analisi/posto_compito.py` di kit-rifiuti-programma in compito_2.zip/compito_3.zip con
+  `--tipo leggero` (Kit_Rifiuti 0.99.18: gira insieme agli altri compiti e il ponte si chiude solo per un compito
+  nuovo nel suo posto, KR_POSTO_COMPITO, drive_alma 0.6.0 `posto_cercato`; compito_nuovo_su_drive non è cambiato).
+  Zip in `compito_p2p_ponte40/compito.zip` dello scratchpad (focus_nvr.py, FocusNetSDK/ e focus_accesso.txt da
+  movimento1); segnaposto `risultato_p2p_ponte40.zip` creato da Dario. Il prossimo nome libero è p2p_ponte41.
+  - Quanto pesa il giro (Dario, 19/11: «richiede molto?»): per ogni prova i MB grezzi dal registratore delle foto di 3 s
+    (`mb` di ogni foto) e dello scarico di 15 s delle prove a mano, i MB letti e scritti dal processo del ponte mentre
+    dura la prova (GetProcessIoCounters: comprende il collegamento P2P e le domande dell'archivio, che non sono file),
+    i secondi di processore (time.process_time del ponte, tutti i fili; ffmpeg a parte no) e, a parte, quelli
+    dell'archivio. Va nell'esito al sito (`peso`, `archivio_peso`), in `uscita/peso_prove.jsonl` (una riga per prova) e
+    in `uscita/peso_giri.json` (per giro: prove, registratori, MB, MB per prova, secondi di processore del ponte e quota
+    di un processore, i 15 registratori più pesanti). Il giro non ha un numero dal sito: ne comincia uno nuovo quando
+    torna un registratore già visto o dopo 20 minuti senza prove del giro. Prove: `compiti/p2p_ponte6/prova_peso_giro.py`.
 - Compito movimento1 (ponte 0.21.0, movimento.py 0.2.0, caricato su Drive il 19/11 alle 5:06, preso alle 5:19 e partito alle 5:20 sul COMPUTERONE; il p2p_ponte39 si è chiuso alle 5:15 e il suo lavoro lo fa movimento1 fino al 21/11 sera; vedi
   sotto). L'indice di movimento dei registratori Focus, che può essere il primo filtro gratis prima dell'analisi (la
   prova ferma dice 77 s per ora-telecamera: senza un filtro servono circa 7 PC). `movimento.json` di
@@ -73,7 +91,6 @@ quello che serve per continuare senza la conversazione di prima.
   `compito_movimento1/compito.zip` dello scratchpad (con focus_nvr.py, FocusNetSDK/ e focus_accesso.txt dal 39);
   proprietà compito=movimento1, pc=COMPUTERONE; il segnaposto `risultato_movimento1.zip` c'è già. Prima di caricarlo,
   compito.zip su Drive deve essere già stato preso (il 19/11 alle 5 era positive1d per il 2026-002, preso).
-- Per il ponte 40 (Dario, 19/11: «richiede molto?»): segnare per ogni giro i MB scaricati da ogni registratore (le foto di 3 s e gli archivi) e i secondi di processore, così si sa quanto pesa il giro sulle SIM dei kit e sul COMPUTERONE. Oggi non è misurato.
 - Compito p2p_ponte39 (mandato al COMPUTERONE il 18/11 alle 21:40, preso alle 21:49 e partito alle 21:50, 72 ore): il ponte 0.20.1 rimandato dopo fps1, che
   chiudendosi alle 6:27 del 18/11 aveva lasciato «Registrazioni dei kit» senza aggiornamenti e gli allungamenti senza
   nessuno che li scaricasse. Codice uguale al compito 38 (`compiti/p2p_ponte6`, coda_allunga 0.3.0: allungamenti solo da
