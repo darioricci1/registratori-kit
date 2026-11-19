@@ -53,7 +53,8 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
-- Compito p2p_ponte40 (ponte 0.22.0, peso_giro.py 0.1.0; PARTENZA: da scrivere): il ponte rimesso in giro sul COMPUTERONE
+- Compito p2p_ponte40 (ponte 0.22.0, peso_giro.py 0.1.0; COMPUTERONE alla 0.99.18 dalle 7:25 del 19/11, caricato in compito_2.zip
+  con tipo leggero alle 7:26, partito alle 7:32 del 19/11, fino al 22/11 verso le 7:30): il ponte rimesso in giro sul COMPUTERONE
   dopo movimento1, che il 19/11 alle 5:50 si era chiuso per il compito conteggi20261119 delle statistiche su
   compito.zip (l'indice di movimento era già fatto, movimento_fatto alle 5:32): da allora «Registrazioni dei kit» non si
   aggiornava e gli allungamenti non si scaricavano. Come movimento1 (giro, archivi, allungamenti di op=allungare, UVMS e
