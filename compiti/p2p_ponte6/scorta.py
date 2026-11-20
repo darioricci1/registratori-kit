@@ -20,7 +20,10 @@ Nel ponte (compito.py, lavoro_scorta): le ore si fanno solo nella finestra seral
 tutto. Le miniature vanno su Drive in zip da al massimo «mb_parte_drive» MB (i segnaposto scorta35_N.zip). Alla fine
 Qwen giudica tutte le carte (vlm.py, staccato) e catena.json unisce ore, candidati, giudizi e verita'.
 Il lavoro vero (registratore, ffmpeg, kit_rifiuti) arriva da fuori: prove a tavolino in prova_scorta.py.
-version: 0.1.0 (14/11/2026): prima versione.
+version: 0.2.0 (20/11/2026): i fotogrammi in più (compito p2p_ponte44, fitti.py 0.1.0): con cfg["fitti"] ogni ora, dopo le
+  miniature dei minuti, chiede le miniature in più degli intervalli agitati (o di tutti) in <ora>/fitti/; con
+  cfg["ordine_dato"] le ore si fanno nell'ordine di cfg["ore"] (per urgenza, negative comprese), non positive prima.
+0.1.0 (14/11/2026): prima versione.
 """
 import datetime
 import json
@@ -28,7 +31,7 @@ import os
 import re
 import time
 
-VERSIONE = "0.1.0"
+VERSIONE = "0.2.0"
 
 LIMITI = {"ore_di_lavoro": 11.0,      # poi le ore dopo non si fanno (si scrive)
           "minuti_per_ora": 20.0,     # poi il processo dell'ora si uccide
@@ -332,7 +335,7 @@ def giro(cfg, lancia, manda_parte, mb_minuti, scrivi_out, av=lambda t: None, ade
             st["da_zip"] = [o for o in st["da_zip"] if o not in g]
         scrivi()
 
-    q = coda(cfg.get("ore") or [])
+    q = list(cfg.get("ore") or []) if cfg.get("ordine_dato") else coda(cfg.get("ore") or [])   # 0.2.0
     rifatte = {}
     while q:
         ora = q.pop(0)
@@ -492,7 +495,8 @@ def lavora_ora(ora, cfg, mezzi, scrivi=lambda x: None, av=lambda t: None):
 
     def salva():
         mm = (x.get("minuti") or {}).get("conti") or {}
-        x["conti"] = {"mb": round(conti["mb"] + (mm.get("mb") or 0), 3),
+        mf = float((x.get("fitti") or {}).get("mb") or 0)   # 0.2.0
+        x["conti"] = {"mb": round(conti["mb"] + (mm.get("mb") or 0) + mf, 3), "mb_fitti": round(mf, 3),
                       "mb_minuti": mm.get("mb") or 0, "mb_video": round(sum(v.get("mb") or 0 for v in x.get("video") or []), 2),
                       "mb_catena": round(sum(p.get("mb") or 0 for p in x["catena"].get("pezzi") or []), 2),
                       "chiamate": conti["chiamate"] + (mm.get("chiamate") or 0),
@@ -509,6 +513,13 @@ def lavora_ora(ora, cfg, mezzi, scrivi=lambda x: None, av=lambda t: None):
         x.update(esito=m.get("esito"), bloccato=True, valutabile=False, in_corso=False)
         salva()
         return x
+    if cfg.get("fitti") and m.get("valutabile"):   # 0.2.0: le miniature in più, prima del video (che qui non c'e')
+        import fitti as ft
+        try:
+            x["fitti"] = ft.fai(ora, cfg["fitti"], mezzi, PC, av, lambda r: (x.__setitem__("fitti", r), salva()))
+        except Exception as ex:   # noqa: BLE001 - le miniature dei minuti restano buone
+            x["fitti"] = {"esito": f"errore: {type(ex).__name__}: {str(ex)[:200]}"}
+        salva()
     mz = dict(mezzi, tempi=dict(al.TEMPI, **(mezzi.get("tempi") or {})))
     mz.setdefault("cimitero", [])
     col = al.Collegamento(mz, conti)

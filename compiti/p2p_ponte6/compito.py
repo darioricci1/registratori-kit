@@ -31,6 +31,13 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.25.0 (20/11/2026): i fotogrammi in piu' dei minuti agitati (compito p2p_ponte44; Kit_Rifiuti
+  analisi/piu-fotogrammi-criterio-2026-11-20.md). fitti.json (prepara_fitti.py) e' una scorta (scorta.py 0.2.0, stesso
+  giro, un processo per ora con scorta_lavoro.py) con cfg["fitti"]: per ogni ora le 72 miniature dei minuti e le
+  miniature in piu' (fitti.py 0.1.0) in <ora>/fitti/, niente video e niente catena; le ore nell'ordine dato (le piu'
+  vicine a uscire dal disco prima). Le miniature vanno su Drive negli zip dei segnaposto di fitti.json («posti_drive»),
+  il resto in uscita/fitti/ e uscita/fitti.json; segno fitti_fatto.txt. ponte.json «giro»: false spegne il giro dei
+  registratori del sito (lo fa gia' un altro ponte): il compito fa solo i suoi lavori e si chiude quando finiscono.
 version: 0.24.0 (19/11/2026): il video vero delle 7 «ore da guardare» di video.html (Dario, 19/11), con allunga.json
   (durata_clip 0, un canale, 10 minuti attorno al momento): per gli eventi con "copia_video": true copia_indietro mette
   anche gli mp4 in uscita/allunga/<evento>/video/ (allunga.py 0.2.0 copia_video), ricompressi con ffmpeg (H.264 a 1280
@@ -183,7 +190,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.24.0"
+VERSIONE = "p2p_ponte 0.25.0"
 DURATA = 24 * 3600
 
 
@@ -197,8 +204,16 @@ def durata_da(cfg, difetto=DURATA):
     return int(min(168.0, max(1.0, ore)) * 3600) if ore == ore else difetto
 
 
+def giro_da(cfg):
+    """0.25.0: il giro dei registratori del sito si fa (True, il difetto) o no (ponte.json «giro»: false). Funzione pura."""
+    return not (isinstance(cfg, dict) and cfg.get("giro") is False)
+
+
+GIRO = True
 try:
-    DURATA = durata_da(json.load(open(os.path.join(C, "ponte.json"), encoding="utf-8")))
+    _PJ = json.load(open(os.path.join(C, "ponte.json"), encoding="utf-8"))
+    DURATA = durata_da(_PJ)
+    GIRO = giro_da(_PJ)
 except (OSError, ValueError):
     pass
 PC = os.environ.get("COMPUTERNAME", "PC")[:40]
@@ -2168,17 +2183,19 @@ def _cartella_mb(d):
     return tot / 1e6
 
 
-def _manda_parte(base, ud, ore, k, posti, nome_c):
-    """Uno zip delle miniature di `ore` (<ora>/minuti/*.jpg e <ora>/ora.json) nel segnaposto posti[k-1] su Drive.
-    Lo zip resta sul PC in <base>/parti. Ritorna la voce di scorta.json."""
+def _manda_parte(base, ud, ore, k, posti, nome_c, lavoro="scorta"):
+    """Uno zip delle miniature di `ore` (<ora>/minuti/*.jpg, 0.25.0 anche <ora>/fitti/*.jpg, e <ora>/ora.json) nel
+    segnaposto posti[k-1] su Drive. Lo zip resta sul PC in <base>/parti. Ritorna la voce di scorta.json."""
     import drive_alma
     os.makedirs(os.path.join(base, "parti"), exist_ok=True)
     posto = posti[k - 1] if k - 1 < len(posti) else None
-    z = os.path.join(base, "parti", posto or f"scorta_parte{k}.zip")
+    z = os.path.join(base, "parti", posto or f"{lavoro}_parte{k}.zip")
     with zipfile.ZipFile(z, "w", zipfile.ZIP_STORED) as zz:   # JPEG: comprimere non serve
         for o in ore:
-            for f in sorted(glob.glob(os.path.join(base, o, "minuti", "*.jpg"))):
-                zz.write(f, f"{o}/minuti/{os.path.basename(f)}")
+            # i fitti: le miniature dei minuti sono gia' su Drive negli zip della scorta 35/35b (stesse ore, stessi momenti)
+            for sotto in (("fitti",) if lavoro == "fitti" else ("minuti", "fitti")):
+                for f in sorted(glob.glob(os.path.join(base, o, sotto, "*.jpg"))):
+                    zz.write(f, f"{o}/{sotto}/{os.path.basename(f)}")
             j = os.path.join(ud, o, "ora.json")
             if os.path.exists(j):
                 zz.write(j, f"{o}/ora.json")
@@ -2234,23 +2251,24 @@ def _qwen_sulla_catena(sc, cat, base, ore_x, attesa_max=4 * 3600):
     return None, f"Qwen non ha finito in {attesa_max // 3600} ore"
 
 
-def lavoro_scorta(cfg):
+def lavoro_scorta(cfg, lavoro="scorta"):
     """scorta.json (0.18.0, compito 35): la scorta serale (miniature dei minuti e video a piena risoluzione degli
     abbandoni sicuri) e la catena dell'ora con Qwen (scorta.py 0.1.0, prove in prova_scorta.py). Il giro delle ore e'
     scorta.giro; qui i mezzi veri: ogni ora in un processo suo (scorta_lavoro.py, come pilota_lavoro.py), le parti su
     Drive, il disco, la chiusura del ponte. Le ore finite (uscita/scorta/<ora>/ora.json) non si rifanno. Alla fine
-    Qwen sulle carte e uscita/catena.json."""
+    Qwen sulle carte e uscita/catena.json. 0.25.0: lavoro="fitti" per fitti.json (le miniature in piu', fitti.py):
+    cartelle, uscita e zip col suo nome, niente Qwen e niente catena.json."""
     import scorta as sc
     cat = sc.catena_da(cfg)
     nome_c = os.path.basename(os.path.normpath(C))
-    base = os.path.join(os.path.expanduser("~"), "kr_lavori", "scorta", nome_c)
-    ud = os.path.join(U, "scorta")
+    base = os.path.join(os.path.expanduser("~"), "kr_lavori", lavoro, nome_c)
+    ud = os.path.join(U, lavoro)
     for d in (base, ud):
         os.makedirs(d, exist_ok=True)
     posti = list(cfg.get("posti_drive") or [])
     prima = {}
     try:
-        prima = json.load(open(os.path.join(U, "scorta.json"), encoding="utf-8"))
+        prima = json.load(open(os.path.join(U, f"{lavoro}.json"), encoding="utf-8"))
     except (OSError, ValueError):
         pass
     gia = {}
@@ -2313,10 +2331,13 @@ def lavoro_scorta(cfg):
         except OSError:
             return 999.0
 
-    sc.giro(cfg, lancia, lambda ore, k: _manda_parte(base, ud, ore, k, posti, nome_c),
-            lambda o: _cartella_mb(os.path.join(base, o, "minuti")),
-            lambda o: scrivi_json("scorta.json", dict(o, pc=PC, versione=VERSIONE, cartella_pc=base)), av,
+    sc.giro(cfg, lancia, lambda ore, k: _manda_parte(base, ud, ore, k, posti, nome_c, lavoro),
+            lambda o: _cartella_mb(os.path.join(base, o, "minuti")) + _cartella_mb(os.path.join(base, o, "fitti")),
+            lambda o: scrivi_json(f"{lavoro}.json", dict(o, pc=PC, versione=VERSIONE, cartella_pc=base)), av,
             perche_chiudere=perche_chiudere, gb_liberi=gb_liberi, gia=gia, prima=prima)
+    if lavoro != "scorta":   # 0.25.0: i fitti non hanno carte ne' catena
+        av(f"{lavoro}: fatto")
+        return
     # Qwen sulle carte, poi catena.json: tutto quello che serve per misurare (ora, candidati, giudizio, verita')
     ore_x = []
     for o in cfg.get("ore") or []:
@@ -2534,7 +2555,8 @@ for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_
                                ("movimento.json", "movimento_fatto.txt", lavoro_movimento),   # 0.12.0
                                ("allunga.json", "allunga_fatto.txt", lavoro_allunga),   # 0.13.0
                                ("pilota.json", "pilota_fatto.txt", lavoro_pilota),   # 0.14.0
-                               ("scorta.json", "scorta_fatto.txt", lavoro_scorta)):   # 0.18.0
+                               ("scorta.json", "scorta_fatto.txt", lavoro_scorta),   # 0.18.0
+                               ("fitti.json", "fitti_fatto.txt", lambda c: lavoro_scorta(c, "fitti"))):   # 0.25.0
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001
@@ -2558,6 +2580,12 @@ def finisci_lunghe():
 
 while time.time() < t_fine:
     finisci_lunghe()
+    if not GIRO:   # 0.25.0: niente giro del sito; si chiude quando i lavori (fitti.json...) sono finiti
+        if not analisi_lunghe and not da_scaricare and not any(t.is_alive() for t in MISURE_VIVE):
+            av("niente giro (ponte.json «giro»: false) e lavori finiti: chiudo")
+            break
+        time.sleep(30)
+        continue
     if da_scaricare and len(analisi_lunghe) >= 2:   # 0.16.0: al massimo 2 analisi insieme
         time.sleep(5)
         continue

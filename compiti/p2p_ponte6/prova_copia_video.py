@@ -3,7 +3,8 @@ video.html con "copia_video": true. Il lavoro_allunga vero del ponte (le definiz
 allunga_lavoro.py), nel filo del ponte, con lavora_evento finto che fa mp4 veri con ffmpeg; la compressione e' quella
 vera del ponte. Poi il ponte rilanciato non rifa' gli eventi gia' finiti. Niente rete, niente DLL.
 Uso: python3 prova_copia_video.py
-version: 0.1.0 (19/11/2026)
+version: 0.1.1 (20/11/2026): il ponte 0.24.0 o dopo (non solo la 0.24.0)
+0.1.0 (19/11/2026)
 """
 import json
 import os
@@ -58,7 +59,7 @@ src = open(os.path.join(QUI, "compito.py"), encoding="utf-8").read()
 pre = src[:src.index("\nt_fine = time.time() + DURATA")]
 gp = {"__name__": "ponte", "__file__": os.path.join(comp, "compito.py")}
 exec(compile(pre, "compito.py", "exec"), gp)   # noqa: S102 - il nostro codice
-ok(gp["VERSIONE"] == "p2p_ponte 0.24.0", f"ponte 0.24.0 ({gp['VERSIONE']})")
+ok(tuple(int(x) for x in gp["VERSIONE"].split()[-1].split(".")) >= (0, 24, 0), f"ponte 0.24.0 o dopo ({gp['VERSIONE']})")
 
 fatti = []
 

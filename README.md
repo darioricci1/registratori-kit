@@ -53,6 +53,22 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte44 (ponte 0.25.0, PRONTO E NON MANDATO: l'uscita la decide Dario; zip in `compito_p2p_ponte44/compito.zip`
+  dello scratchpad, 2,8 MB, con FocusNetSDK e focus_accesso.txt del 43): i fotogrammi in più dei minuti agitati per
+  Kit_Rifiuti (kit-rifiuti-programma `analisi/piu-fotogrammi-criterio-2026-11-20.md` e `piu-fotogrammi-2026-11-20.md`).
+  `fitti.json` di `prepara_fitti.py` 0.1.0 (sola lettura: scorta.json e op=stato) = una scorta (scorta.py 0.2.0, un
+  processo per ora con scorta_lavoro.py) con `cfg["fitti"]`: per ognuna delle 115 ore delle scorte 35/35b/36 ancora sul
+  registratore il 20/11 alle 10:28, dalla più vicina a uscire dal disco, le 72 miniature dei minuti e 5 miniature in più
+  (ogni 10 s) negli intervalli attorno ai minuti agitati della zona (`fitti.py` 0.1.0, kit_rifiuti.minuti_agitati del PC;
+  per le 5 ore perse dalla 0.99.20 ancora sul disco, pos114, pos133, pos129, pos126 e pos148, tutti i 71 intervalli).
+  Niente video, niente catena, niente Qwen; su Drive solo le miniature in più (quelle dei minuti ci sono già negli zip
+  della scorta 35). ponte.json `{"durata_ore": 24, "giro": false}`: niente giro dei registratori del sito (lo fa il 43),
+  si chiude quando ha finito. Pensato per il **2026-002** (`pc` in fitti.json), tipo leggero, in compito_2.zip (il 43 l'ha
+  già preso e non si chiude per un compito di un altro PC) o compito_3.zip quando è libero, **mai compito.zip** (lì
+  positive1d del 2026-002 si fermerebbe). Stima ~830 MB dai registratori, ~420 MB su Drive, 2-3 minuti per ora, 4-6 ore.
+  Segnaposto da creare: `fitti44_1.zip` ... `fitti44_4.zip` e `risultato_p2p_ponte44.zip`. Le ore escono dal disco
+  ogni giorno (pos114 il 20/11 nel pomeriggio): se parte dopo, rifare fitti.json con prepara_fitti.py e un op=stato
+  fresco. Prove: `prova_fitti.py` (anche il ponte vero col registratore finto, «fitti» nei processi a parte).
 - Compito p2p_ponte43 (ponte 0.24.0, lo zip del 42 senza allunga.json, con il nome nuovo in LEGGIMI.txt e ponte.json;
   `c43/compito.zip` dello scratchpad): caricato in compito_2.zip con tipo leggero il 19/11 alle 11:11 al posto del 42
   (già preso), preso alle 11:12 e partito alle 11:15 sul COMPUTERONE, 72 ore. Il 42 aveva già scaricato le 7 ore da guardare (5 col video, pos008 e pos070 non più sul
