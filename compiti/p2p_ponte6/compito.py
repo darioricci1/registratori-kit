@@ -31,6 +31,17 @@ collegamento P2P con l'UID, modello, canali, ore registrate oggi, 15 secondi sca
 un fotogramma JPEG; rimanda tutto alla pagina. Gira 10 ore, poi si chiude da solo.
 Le credenziali: focus_accesso.txt (righe indirizzo;utente;password, «*» vale per tutti) nella cartella del compito o
 accanto a Kit_Rifiuti. Non escono dal PC: alla pagina arriva solo l'esito.
+version: 0.26.0 (20/11/2026): compito p2p_ponte45, il ponte che prende il posto del 43 sul COMPUTERONE (giro, archivi, UVMS e
+  ANAGRAFICA KIT come il 43) con due cose nuove.
+  1) Gli allungamenti subito (coda_allunga 0.4.0): dei 20 arrivati a Kit_Rifiuti, 11 «non piu' sul registratore». Il
+  ponte guardava op=allungare ogni ora e mai mentre girava un lavoro una volta sola. Ora ogni 2 minuti un'occhiata
+  (occhiata_allunga: una GET, nessun file scritto se non c'e' niente) e, se Dario ha chiesto qualcosa che non e' ancora
+  fatto, il giro della coda parte subito; i fotogrammi in piu' (fitti) non lo tengono fermo: fra un'ora e l'altra
+  lasciano passare l'allungamento (ALLUNGA_PRIMA), e la coda parte anche mentre gira un lavoro «che cede»
+  (lavori_che_tengono). Nel registro e in allunga_coda_stato.json i minuti fra la richiesta e la partenza (attesa_min).
+  2) I fitti con l'elenco rifatto alla partenza (prepara_fitti 0.2.0): fitti_fonte.json (le ore del 44 non ancora su
+  Drive) diventa l'elenco delle ore ancora sul registratore con op=stato letto quando il ponte parte (e a ogni rilancio
+  del guardiano: le ore gia' fatte non si rifanno), in uscita/fitti_scelte.json; poi come il 44 (lavoro_scorta «fitti»).
 version: 0.25.0 (20/11/2026): i fotogrammi in piu' dei minuti agitati (compito p2p_ponte44; Kit_Rifiuti
   analisi/piu-fotogrammi-criterio-2026-11-20.md). fitti.json (prepara_fitti.py) e' una scorta (scorta.py 0.2.0, stesso
   giro, un processo per ora con scorta_lavoro.py) con cfg["fitti"]: per ogni ora le 72 miniature dei minuti e le
@@ -190,7 +201,7 @@ API = "https://prova-nvr-remoto.vercel.app/api/p2p"
 DESTINATARIO = "https://mappakit.alma/nvr-remoto"
 SITO_KIT = "https://kit-rifiuti.vercel.app/api/fogli"   # 0.20.0: op=allungare, le clip chieste da Dario
 DESTINATARIO_KIT = "https://mappakit.alma/kit-rifiuti"
-VERSIONE = "p2p_ponte 0.25.0"
+VERSIONE = "p2p_ponte 0.26.0"
 DURATA = 24 * 3600
 
 
@@ -1482,6 +1493,15 @@ def misure_in_corso():
     return any(t.is_alive() for t in MISURE_VIVE)
 
 
+CEDONO = ("fitti.json", "fitti_fonte.json")   # 0.26.0: i lavori che lasciano passare gli allungamenti fra un'ora e l'altra
+ALLUNGA_PRIMA = threading.Event()   # 0.26.0: c'e' un allungamento da fare: i lavori che cedono non prendono la libreria
+
+
+def lavori_che_tengono():
+    """0.26.0: gira un lavoro una volta sola che non cede la libreria agli allungamenti?"""
+    return any(t.is_alive() and t.name not in CEDONO for t in MISURE_VIVE)
+
+
 # ------------------------------------------------------------------ 0.11.0: dimezza.json e nas_extra.json (una volta sola)
 def parti_filo(nome_json, segno_nome, lavoro, solo_computerone=True):
     """Se c'e' `nome_json` nella cartella del compito e il segno in uscita non c'e', lavoro(cfg) in un filo suo (il
@@ -1506,7 +1526,7 @@ def parti_filo(nome_json, segno_nome, lavoro, solo_computerone=True):
         open(segno, "w").write(time.strftime("%Y-%m-%d %H:%M"))
         av(f"{nome_json}: fatto")
 
-    t = threading.Thread(target=gira, daemon=True)
+    t = threading.Thread(target=gira, daemon=True, name=nome_json)   # 0.26.0: il nome dice se cede (CEDONO)
     t.start()
     MISURE_VIVE.append(t)
 
@@ -2023,11 +2043,17 @@ def giro_coda_allunga(adesso=None):
         av(f"diagnosi degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
     if scelti:
         urg = {r["evento"] for r in scelti if r.get("urgente")}
+        t0 = time.time()
+        attese = {r["evento"]: ca.minuti_da(r.get("chiesta_il"), t0) for r in scelti}   # 0.26.0
         av(f"coda degli allungamenti: {len(scelti)} eventi su {len(lista)} chiesti da Dario sul sito: "
-           f"{', '.join(r['evento'] for r in scelti)}")
-        out = lavoro_allunga({"eventi": [ca.per_ponte(r) for r in scelti]}, base=base, nome_uscita="allunga_coda.json")
+           + ", ".join(f"{r['evento']} (chiesto {attese[r['evento']]} minuti fa)" for r in scelti))
+        ALLUNGA_PRIMA.set()   # 0.26.0: i fitti aspettano
+        try:
+            out = lavoro_allunga({"eventi": [ca.per_ponte(r) for r in scelti]}, base=base, nome_uscita="allunga_coda.json")
+        finally:
+            ALLUNGA_PRIMA.clear()
         for x in (out or {}).get("eventi") or []:
-            ca.segna(registro, x, time.time(), urgente=x.get("evento") in urg)
+            ca.segna(registro, x, time.time(), urgente=x.get("evento") in urg, attesa_min=attese.get(x.get("evento")))
         tmp = f_reg + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(registro, fh, ensure_ascii=False, indent=1)
@@ -2071,15 +2097,46 @@ def diagnosi_allunga():
                                                   os.path.join(lavoro, "_compiti"))))
 
 
-def parti_coda_allunga():
+OCCHIATE = {"sito_giu": 0}   # 0.26.0: le occhiate fallite di fila (si scrive la prima e ogni 30)
+
+
+def occhiata_allunga(adesso=None):
+    """0.26.0: ogni 2 minuti, leggera: la lista di op=allungare (una GET, niente scritto sul disco) contro il registro
+    della coda. Ritorna gli eventi da fare adesso ([] se niente o se il sito non risponde: il giro di ogni ora c'e'
+    sempre)."""
+    import coda_allunga as ca
+    try:
+        risposta = sito_kit("allungare")
+        OCCHIATE["sito_giu"] = 0
+    except Exception as ex:   # noqa: BLE001
+        OCCHIATE["sito_giu"] += 1
+        if OCCHIATE["sito_giu"] % 30 == 1:
+            av(f"occhiata agli allungamenti: il sito non risponde ({OCCHIATE['sito_giu']}): {type(ex).__name__}: {str(ex)[:150]}")
+        return []
+    f_reg = os.path.join(os.path.expanduser("~"), "kr_lavori", "allunga", "coda", "registro.json")
+    return ca.nuove(ca.dal_sito(risposta), _leggi(f_reg, {}), adesso or time.time())
+
+
+def prossima_occhiata(ultima, adesso, vivo, ogni=120):
+    """0.26.0: e' ora di un'occhiata agli allungamenti? Ogni 2 minuti, mai mentre gira il giro della coda. Pura."""
+    return not vivo and adesso - ultima >= ogni
+
+
+def parti_coda_allunga(solo_se_nuove=False):
     """0.19.0: il giro della coda in un filo suo (il ponte intanto risponde, tranne mentre la libreria e' presa), solo
-    sul COMPUTERONE, mai due insieme e mai mentre gira un lavoro una volta sola (pilota, allunga, scorta...: la
-    libreria e la banda sono loro). Ritorna True se e' partito."""
-    if PC.upper() != "COMPUTERONE" or any(t.is_alive() for t in CODA_VIVA) or misure_in_corso():
+    sul COMPUTERONE, mai due insieme e mai mentre gira un lavoro una volta sola che tiene la libreria (pilota, allunga,
+    scorta...: la libreria e la banda sono loro; 0.26.0: i fitti cedono). solo_se_nuove (0.26.0, l'occhiata): il giro
+    parte solo se occhiata_allunga trova qualcosa da fare. Ritorna True se il filo e' partito."""
+    if PC.upper() != "COMPUTERONE" or any(t.is_alive() for t in CODA_VIVA) or lavori_che_tengono():
         return False
 
     def gira():
         try:
+            if solo_se_nuove:
+                nuove = occhiata_allunga()
+                if not nuove:
+                    return
+                av(f"occhiata agli allungamenti: {len(nuove)} da fare ({', '.join(nuove[:8])}): parto subito")
             CODA_FATTI[0] = giro_coda_allunga()
         except Exception as ex:   # noqa: BLE001
             CODA_FATTI[0] = 0
@@ -2251,6 +2308,34 @@ def _qwen_sulla_catena(sc, cat, base, ore_x, attesa_max=4 * 3600):
     return None, f"Qwen non ha finito in {attesa_max // 3600} ore"
 
 
+def leggi_stato():
+    """0.26.0: op=stato di prova-nvr-remoto (archivio di ogni canale con «primo» e letto_il), come in lavoro_movimento."""
+    req = urllib.request.Request(f"{API}?op=stato", headers={"Authorization": "Bearer " + biglietto()})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        return json.loads(r.read().decode())
+
+
+def lavoro_fitti_fresco(fonte):
+    """0.26.0 (compito 45): fitti_fonte.json -> l'elenco delle ore ancora sul registratore ADESSO (prepara_fitti 0.2.0
+    cfg_da_fonte con op=stato letto ora; se il sito non risponde, i margini della fonte meno i giorni passati), scritto
+    in uscita/fitti_scelte.json, poi i fitti come il 44 (lavoro_scorta «fitti»). A ogni partenza e a ogni rilancio del
+    guardiano l'elenco si rifa': le ore gia' finite (uscita/fitti/<ora>/ora.json) lavoro_scorta non le rifa'."""
+    import prepara_fitti as pf
+    stato = None
+    try:
+        stato = leggi_stato()
+    except Exception as ex:   # noqa: BLE001 - si va coi margini della fonte
+        av(f"fitti: op=stato non letto ({type(ex).__name__}: {str(ex)[:150]}): uso i margini di fitti_fonte.json")
+    cfg = pf.cfg_da_fonte(fonte, stato, datetime.datetime.now(datetime.timezone.utc))
+    scrivi_json("fitti_scelte.json", dict({k: v for k, v in cfg.items() if k != "ore"}, versione=VERSIONE,
+                                          ore=[{"nome": o["nome"], "margine_giorni": o.get("margine_giorni"),
+                                                "persa": o.get("persa")} for o in cfg["ore"]]))
+    av(f"fitti: {len(cfg['ore'])} ore ancora sul registratore su {cfg['candidate']} candidate ({cfg['rifatto_con']}), "
+       f"stima {cfg['stima_mb']} MB dal registratore, {cfg['stima_mb_drive']} MB su Drive")
+    if cfg["ore"]:
+        lavoro_scorta(cfg, "fitti")
+
+
 def lavoro_scorta(cfg, lavoro="scorta"):
     """scorta.json (0.18.0, compito 35): la scorta serale (miniature dei minuti e video a piena risoluzione degli
     abbandoni sicuri) e la catena dell'ora con Qwen (scorta.py 0.1.0, prove in prova_scorta.py). Il giro delle ore e'
@@ -2293,6 +2378,12 @@ def lavoro_scorta(cfg, lavoro="scorta"):
         with open(os.path.join(d, "ora.json"), "w", encoding="utf-8") as fh:
             json.dump({"ora": ora, "cfg": {k: v for k, v in cfg.items() if k not in ("ore", "scelta")}, "compito": C,
                        "pc": pc, "drive": dr}, fh, ensure_ascii=False)
+        if lavoro + ".json" in CEDONO:   # 0.26.0: prima gli allungamenti chiesti da Dario
+            aspetto = time.time()
+            while ALLUNGA_PRIMA.is_set() and time.time() - aspetto < 3 * 3600:
+                time.sleep(5)
+            if time.time() - aspetto > 30:
+                av(f"{lavoro} {ora['nome']}: ho aspettato {round((time.time() - aspetto) / 60)} minuti un allungamento")
         with SDK:   # la libreria e' del processo dell'ora: il ponte intanto non la usa
             p = subprocess.Popen([sys.executable, "--compito", d], cwd=d, env=ambiente_figlio(), stdin=subprocess.DEVNULL,
                                  stdout=open(os.path.join(d, "uscita_processo.txt"), "a"), stderr=subprocess.STDOUT,
@@ -2556,7 +2647,8 @@ for _nome, _segno, _lavoro in (("owl.json", "owl_fatto.txt", lavoro_owl), ("nas_
                                ("allunga.json", "allunga_fatto.txt", lavoro_allunga),   # 0.13.0
                                ("pilota.json", "pilota_fatto.txt", lavoro_pilota),   # 0.14.0
                                ("scorta.json", "scorta_fatto.txt", lavoro_scorta),   # 0.18.0
-                               ("fitti.json", "fitti_fatto.txt", lambda c: lavoro_scorta(c, "fitti"))):   # 0.25.0
+                               ("fitti.json", "fitti_fatto.txt", lambda c: lavoro_scorta(c, "fitti")),   # 0.25.0
+                               ("fitti_fonte.json", "fitti_fatto.txt", lavoro_fitti_fresco)):   # 0.26.0: l'elenco rifatto alla partenza
     try:
         parti_filo(_nome, _segno, _lavoro)
     except Exception as ex:   # noqa: BLE001
@@ -2569,6 +2661,7 @@ if PC.upper() == "COMPUTERONE" and os.path.exists(f_lungo) and not os.path.exist
     da_scaricare = json.load(open(f_lungo, encoding="utf-8"))
 ultimo_guardato = time.time()
 ultima_coda = time.time() - 3600 + 300   # 0.19.0: la coda degli allungamenti la prima volta dopo 5 minuti
+ultima_occhiata = time.time() - 60   # 0.26.0: la prima occhiata dopo un minuto, poi ogni 2
 def finisci_lunghe():
     """0.16.0: le analisi finite si copiano in uscita (prima solo a scarichi finiti: con 138 pezzi si accumulavano)."""
     for a in list(analisi_lunghe):
@@ -2602,11 +2695,17 @@ while time.time() < t_fine:
             open(os.path.join(U, "lungo_fatto.txt"), "w").write(time.strftime("%Y-%m-%d %H:%M"))
         continue
     if not CODA_FERMA[0] and prossimo_giro_coda(ultima_coda, time.time(), CODA_FATTI[0], any(t.is_alive() for t in CODA_VIVA)):   # 0.19.0
-        ultima_coda = time.time()
+        ultima_coda = ultima_occhiata = time.time()
         try:
             parti_coda_allunga()
         except Exception as ex:   # noqa: BLE001
             av(f"coda degli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
+    elif not CODA_FERMA[0] and prossima_occhiata(ultima_occhiata, time.time(), any(t.is_alive() for t in CODA_VIVA)):   # 0.26.0
+        ultima_occhiata = time.time()
+        try:
+            parti_coda_allunga(solo_se_nuove=True)
+        except Exception as ex:   # noqa: BLE001
+            av(f"occhiata agli allungamenti: {type(ex).__name__}: {str(ex)[:200]}")
     if time.time() - ultimo_guardato > 600:
         ultimo_guardato = time.time()
         # 0.20.1: un compito nuovo su Drive ferma la coda degli allungamenti (finisce quello in corso, non ne parte un altro):

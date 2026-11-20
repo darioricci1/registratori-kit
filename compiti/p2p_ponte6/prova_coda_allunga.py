@@ -2,7 +2,9 @@
 durata_da, prossimo_giro_coda): quali richieste di Kit_Rifiuti si allungano in un giro, in che ordine, cosa si ricorda
 di ognuna, e quando il ponte si chiude. Niente rete, niente DLL.
 Uso: python3 prova_coda_allunga.py
-version: 0.3.0 (16/11/2026): la lista viene dal sito (dal_sito, fatti_per_sito): solo le clip chieste da Dario; il giro
+version: 0.4.0 (20/11/2026): subito (coda_allunga 0.4.0, ponte 0.26.0): nuove, minuti_da, l'attesa nel registro,
+prossima_occhiata, l'occhiata e il giro che parte da lei col ponte vero, i lavori che cedono (fitti) e quelli che no.
+0.3.0 (16/11/2026): la lista viene dal sito (dal_sito, fatti_per_sito): solo le clip chieste da Dario; il giro
 intero col sito finto (niente coda.json, niente allunga_urgenti.json).
 0.2.0 (16/11/2026): le urgenti (unisci, fuori dal tetto per kit), il riassunto, e le funzioni del ponte.
 0.1.0 (12/11/2026)
@@ -108,6 +110,28 @@ ok(not any(k in pp for k in ("chiesta_da", "canali_stimati", "e", "urgente")) an
 ok(ca.fatti_per_sito({"s1": {"stato": "finito", "esito": "fatto"}, "s2": {"stato": "da_riprovare"}, "zz": {"stato": "finito"}}, ds)
    == [{"evento": "s1", "esito": "fatto"}], "al sito tornano solo i chiusi della lista")
 
+# ------------------------------------------------------------------ 0.4.0: subito
+ok(ca.nuove(coda, {}, ADESSO, OGGI) == ["a", "b", "c"], "nuove: quello che un giro farebbe adesso")
+many = [dict(r(f"m{i}"), urgente=True) for i in range(9)]   # quelle di Dario: fuori dal tetto per kit
+ok(len(ca.nuove(many, {}, ADESSO, OGGI)) == 9 and len(ca.da_fare(many, {}, ADESSO, OGGI)) == 6, "nuove: senza il tetto per giro")
+ok(ca.nuove(coda, {"a": {"stato": "finito"}, "b": {"stato": "rinunciato"},
+                   "c": {"stato": "da_riprovare", "ultimo": ADESSO - 60}}, ADESSO, OGGI) == [],
+   "nuove: niente se tutto e' finito o aspetta di riprovare")
+t_utc = datetime.datetime(2026, 11, 12, 13, 30, tzinfo=datetime.timezone.utc).timestamp()
+ok(ca.minuti_da("2026-11-12T13:00:00.000Z", t_utc) == 30.0, "minuti_da: l'ora del sito in UTC")
+loc = datetime.datetime(2026, 11, 12, 10, 0).timestamp()
+ok(ca.minuti_da("2026-11-12 09:15:00", loc) == 45.0, "minuti_da: un'ora senza fuso e' locale")
+ok(ca.minuti_da(None, ADESSO) is None and ca.minuti_da("ieri", ADESSO) is None and ca.minuti_da("2026-11-12T16:00:00Z", t_utc) == 0.0,
+   "minuti_da: niente, illeggibile o nel futuro")
+reg = {}
+ca.segna(reg, {"evento": "w", "esito": "registratore non raggiunto"}, ADESSO, OGGI, attesa_min=3.5)
+ca.segna(reg, {"evento": "w", "esito": "fatto"}, ADESSO + 4000, OGGI, attesa_min=70.0)
+ok(reg["w"]["attesa_min"] == 3.5 and reg["w"]["stato"] == "finito", "l'attesa e' quella della prima partenza")
+ca.segna(reg, {"evento": "y", "esito": "fatto"}, ADESSO, OGGI)
+ok("attesa_min" not in reg["y"], "senza chiesta_il niente attesa")
+ca.segna(reg, {"evento": "z", "esito": "fatto"}, ADESSO, OGGI, attesa_min=12.0)
+ok(ca.riassunto(reg, [], OGGI)["attesa_min"] == {"quanti": 2, "mediana": 12.0, "massima": 12.0}, "l'attesa nel riassunto")
+
 # ------------------------------------------------------------------ 0.2.0: la diagnosi dei risultati gia' sul disco
 dg = ca.diagnosi([{"cartella": "p2p_ponte30", "evento": "a", "esito": "fatto"},
                   {"cartella": "p2p_ponte30", "evento": "b", "esito": "non piu' sul registratore"},
@@ -123,7 +147,8 @@ ok(dg["per_azione"] == {"montato": 1, "chiudi": 1, "mai guardato": 1, "aspetta":
 src = open(os.path.join(QUI, "compito.py"), encoding="utf-8").read()
 g = {"DURATA": 24 * 3600}
 for nodo in ast.parse(src).body:
-    if isinstance(nodo, ast.FunctionDef) and nodo.name in ("compito_mi_chiude", "durata_da", "prossimo_giro_coda"):
+    if isinstance(nodo, ast.FunctionDef) and nodo.name in ("compito_mi_chiude", "durata_da", "prossimo_giro_coda",
+                                                            "prossima_occhiata"):
         exec(compile(ast.Module([nodo], []), "compito.py", "exec"), g)   # noqa: S102 - il nostro codice
 ok(all(k in g for k in ("compito_mi_chiude", "durata_da", "prossimo_giro_coda")), "le tre funzioni ci sono")
 chiude = g["compito_mi_chiude"]
@@ -139,6 +164,8 @@ ok(du({"durata_ore": 72}) == 72 * 3600 and du({"durata_ore": 1000}) == 168 * 360
 pg = g["prossimo_giro_coda"]
 ok(not pg(0, 100, 0, False) and pg(0, 3600, 0, False) and pg(0, 300, 3, False) and not pg(0, 299, 3, False)
    and not pg(0, 10 ** 6, 0, True), "il giro: ogni ora, ogni 5 minuti se c'e' lavoro, mai due insieme")
+po = g["prossima_occhiata"]
+ok(po(0, 120, False) and not po(0, 119, False) and not po(0, 10 ** 6, True), "l'occhiata: ogni 2 minuti, mai mentre gira il giro")
 
 # ------------------------------------------------------------------ 0.19.0: un giro intero della coda, col ponte vero
 # (le definizioni del ponte fino all'ascolto, come allunga_lavoro.py; lavoro_allunga finto che scrive i risultati dove li
@@ -190,8 +217,13 @@ def sito_finto(op, dati=None):
     if dati is not None:
         mandati.append((op, dati))
         return {"ok": True}
-    return {"oggi": oggi.isoformat(), "eventi": [dict(r(e, kit=k, giorno=g_), scade_il=None, chiesta_da="dario@alma")
-                                                 for e, k in (("u9", 6), ("q1", 5), ("q2", 5))]}
+    quando = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=7)).isoformat().replace("+00:00", "Z")
+    return {"oggi": oggi.isoformat(), "eventi": [dict(r(e, kit=k, giorno=g_), scade_il=None, chiesta_da="dario@alma",
+                                                      chiesta_il=quando) for e, k in (("u9", 6), ("q1", 5), ("q2", 5))]
+            + [dict(r(e, kit=5, giorno=g_), scade_il=None, chiesta_il=quando) for e in extra]}
+
+
+extra = []
 
 
 gp["sito_kit"] = sito_finto
@@ -204,6 +236,8 @@ ok(mandati == [("allungare", {"fatti": [{"evento": "u9", "esito": "fatto"}, {"ev
    f"al sito tornano le chiuse ({mandati})")
 ok(reg_v["u9"]["stato"] == "finito" and reg_v["u9"].get("urgente") and reg_v["q2"]["stato"] == "da_riprovare",
    "il registro del ponte: finiti, urgenti, da riprovare")
+ok(all(6.5 <= reg_v[e].get("attesa_min", -1) <= 9 for e in ("u9", "q1", "q2")), "0.26.0: nel registro da quanti minuti era chiesta")
+ok(not gp["ALLUNGA_PRIMA"].is_set(), "0.26.0: finito il giro, i fitti non aspettano piu'")
 stato = json.load(open(os.path.join(comp, "uscita", "allunga_coda_stato.json")))
 ok(stato["stati"] == {"finito": 2, "da_riprovare": 1} and stato["urgenti"][0]["stato"] == "finito" and stato["al_sito"] == 2, "lo stato in uscita")
 dgv = json.load(open(os.path.join(comp, "uscita", "allunga_diagnosi.json")))
@@ -216,6 +250,38 @@ ok(gp["giro_coda_allunga"]() == 0 and chiesti == [], "subito dopo niente (q2 si 
 dgv = json.load(open(os.path.join(comp, "uscita", "allunga_diagnosi.json")))
 ok(dgv["per_azione"] == {"mai guardato": 3} and dgv["fatti_non_montati"] == ["q1", "u9"],
    "al giro dopo la diagnosi vede i risultati che Kit_Rifiuti non ha ancora guardato")
+# 0.26.0: l'occhiata di ogni 2 minuti
+ok(gp["occhiata_allunga"]() == [] and gp["OCCHIATE"]["sito_giu"] == 1, "occhiata col sito giu': niente, e si conta")
+sito_su[0] = True
+ok(gp["occhiata_allunga"]() == [], "occhiata: niente di nuovo (q2 aspetta l'ora per riprovare)")
+extra.append("q3")
+ok(gp["occhiata_allunga"]() == ["q3"] and gp["OCCHIATE"]["sito_giu"] == 0, "occhiata: Dario ha chiesto q3")
+mandati.clear()
+ok(gp["parti_coda_allunga"](solo_se_nuove=True), "l'occhiata fa partire il filo")
+for t in gp["CODA_VIVA"]:
+    t.join(60)
+ok(chiesti == ["q3"], f"e il filo allunga subito q3 ({chiesti})")
+chiesti.clear()
+ok(gp["parti_coda_allunga"](solo_se_nuove=True), "un'altra occhiata")
+for t in gp["CODA_VIVA"]:
+    t.join(60)
+ok(chiesti == [], "senza niente di nuovo il giro non parte")
+import threading   # noqa: E402
+fermo = threading.Event()
+lav = threading.Thread(target=fermo.wait, name="fitti_fonte.json", daemon=True)
+lav.start()
+gp["MISURE_VIVE"].append(lav)
+ok(gp["misure_in_corso"]() and not gp["lavori_che_tengono"](), "i fitti sono un lavoro che cede")
+extra.append("q4")
+ok(gp["parti_coda_allunga"](solo_se_nuove=True), "la coda parte anche mentre girano i fitti")
+for t in gp["CODA_VIVA"]:
+    t.join(60)
+ok(chiesti == ["q4"], f"e allunga q4 ({chiesti})")
+lav2 = threading.Thread(target=fermo.wait, name="scorta.json", daemon=True)
+lav2.start()
+gp["MISURE_VIVE"].append(lav2)
+ok(gp["lavori_che_tengono"]() and not gp["parti_coda_allunga"](solo_se_nuove=True), "un lavoro che tiene la libreria la ferma")
+fermo.set()
 try:
     gp["AV"].close()
 except Exception:   # noqa: BLE001

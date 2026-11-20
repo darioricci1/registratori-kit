@@ -2,7 +2,9 @@
 scorta.py 0.2.0 (cfg["fitti"], ordine_dato) e giro_da di compito.py. Niente rete, niente DLL: un registratore finto
 dà le miniature di una scena in cui al minuto 30 passa una persona davanti ai cassonetti (minuti agitati).
 Uso: python3 prova_fitti.py   (kit_rifiuti.py da KR_SCRIPTS, se no da ../../../kit-rifiuti-programma/scripts)
-version: 0.1.0 (20/11/2026)
+version: 0.2.0 (20/11/2026): prepara_fitti 0.2.0 (l'elenco rifatto alla partenza: giorni_passati, margini di adesso,
+fonte_da, cfg_da_fonte con op=stato e senza) e il ponte vero da fitti_fonte.json (lavoro_fitti_fresco, ponte 0.26.0).
+0.1.0 (20/11/2026)
 """
 import ast
 import datetime
@@ -67,6 +69,36 @@ ok([x["nome"] for x in s] == ["a", "c"] and s[0]["video"] == [] and s[0]["catena
 ok(pft.stima_mb(10, "tutti", 6) == 213.5 and pft.stima_mb(10, "agitati", 6, 12) == 66.0
    and pft.stima_mb(10, "agitati", 6, 12, minuti=False) == 30.0, "stima dei MB")
 ok(s[1].get("fitti_modo") == "tutti" and "fitti_modo" not in s[0], "le ore perse: tutti gli intervalli")
+# 0.2.0: l'elenco rifatto alla partenza
+UTC = datetime.timezone.utc
+ADESSO_U = D(2026, 11, 22, 23, 30, tzinfo=UTC)
+ok(round(pft.giorni_passati("2026-11-20T23:30:00.000Z", ADESSO_U), 3) == 2.0 and pft.giorni_passati(None, ADESSO_U) == 0
+   and pft.giorni_passati("2026-11-23T00:00:00Z", ADESSO_U) == 0 and pft.giorni_passati("x", ADESSO_U) == 0
+   and pft.giorni_passati("2026-11-20T23:30:00Z", None) == 0, "giorni passati da letto_il, mai negativi")
+arch2 = [dict(a, letto_il="2026-11-22T11:30:00Z") for a in arch]
+m2 = dict((o["nome"], v) for o, v in pft.margini(ore, arch2, ADESSO_U))
+ok(m2 == {"a": -0.18, "b": -1.08, "c": 0.5, "d": None}, f"margini di adesso: meno il mezzo giorno da letto_il ({m2})")
+ok(dict((o["nome"], v) for o, v in pft.margini(ore, arch2)) == m, "senza adesso i margini di prima")
+fo = pft.fonte_da([dict(o, persa=True, fitti_modo="tutti", margine_giorni=mg) for o, mg in zip(ore, (3.0, 0.4, 2.0, None))]
+                  + [{"nome": "z", "uid": "U1", "canale": 0, "inizio": "2026-11-09 10:00:00", "tipo": "negativa"}],
+                  ["z"], ["c"], nome="p2p_ponte45", parti=3, stato_letto="2026-11-20T10:28:00Z", adesso=D(2026, 11, 20, 19))
+ok([o["nome"] for o in fo["ore"]] == ["a", "b", "c", "d"] and fo["gia_fatte"] == ["z"] and fo["perse"] == ["c"]
+   and not any("persa" in o or "fitti_modo" in o for o in fo["ore"]) and fo["stato_letto"] == "2026-11-20T10:28:00Z",
+   "fonte: le candidate senza le gia' fatte, coi margini di allora")
+c1 = pft.cfg_da_fonte(fo, {"ora": "2026-11-22T22:00:00Z", "archivio": [dict(a, letto_il="2026-11-22T23:30:00Z") for a in arch]},
+                      ADESSO_U)
+ok([o["nome"] for o in c1["ore"]] == ["a", "c"] and c1["ore"][1]["persa"] and c1["ore"][1]["fitti_modo"] == "tutti"
+   and c1["rifatto_con"].startswith("op=stato") and c1["stato_letto"] == "2026-11-22T22:00:00Z" and c1["candidate"] == 4
+   and c1["posti_drive"] == ["fitti45_1.zip", "fitti45_2.zip", "fitti45_3.zip"] and c1["pc"] == "COMPUTERONE"
+   and c1["ordine_dato"] and c1["fitti"] == {"modo": "agitati", "per_minuto": 6}, "cfg_da_fonte con op=stato fresco")
+c2 = pft.cfg_da_fonte(dict(fo, gia_fatte=["z", "a"]), {"ora": "x", "archivio": arch2}, ADESSO_U)
+ok([o["nome"] for o in c2["ore"]] == ["c"], "le gia' fatte non tornano, e un'ora uscita dal disco nel frattempo neanche")
+c3 = pft.cfg_da_fonte(fo, None, ADESSO_U)
+ok([(o["nome"], o["margine_giorni"]) for o in c3["ore"]] == [("a", 0.46)] and "meno 2.54 giorni" in c3["rifatto_con"],
+   f"senza op=stato: i margini della fonte meno i giorni passati ({[(o['nome'], o['margine_giorni']) for o in c3['ore']]}, {c3['rifatto_con']})")
+c4 = pft.cfg_da_fonte(dict(fo, gb_liberi_min=0.3, limiti={"ore_di_lavoro": 4}), {"archivio": []}, ADESSO_U)
+ok(c4["gb_liberi_min"] == 0.3 and c4["limiti"]["ore_di_lavoro"] == 4 and c4["limiti"]["mb_parte_drive"] == 170.0
+   and "non letto" in c4["rifatto_con"], "la fonte cambia disco e limiti; archivio vuoto = come senza stato")
 # giro_da di compito.py (senza eseguire il compito)
 src = open(os.path.join(QUI, "compito.py"), encoding="utf-8").read()
 fn = next(n for n in ast.parse(src).body if isinstance(n, ast.FunctionDef) and n.name == "giro_da")
@@ -193,7 +225,8 @@ def ponte_finto_fitti():
     casa, comp = os.path.join(base, "casa"), os.path.join(base, "p2p_ponte44")
     os.makedirs(os.path.join(comp, "FocusNetSDK"))
     os.makedirs(casa)
-    for f in ("compito.py", "scorta.py", "scorta_lavoro.py", "pilota.py", "dimezza.py", "allunga.py", "fitti.py"):
+    for f in ("compito.py", "scorta.py", "scorta_lavoro.py", "pilota.py", "dimezza.py", "allunga.py", "fitti.py",
+              "prepara_fitti.py"):
         shutil.copy2(os.path.join(QUI, f), comp)
     open(os.path.join(comp, "movimento.py"), "w").write(open(os.path.join(QUI, "movimento.py")).read() + ps["MOV_FINTO"])
     open(os.path.join(comp, "focus_nvr.py"), "w").write(ps["FINTO_NVR"])
@@ -206,9 +239,14 @@ def ponte_finto_fitti():
     ora = {"nome": "neg901_kit581", "tipo": "negativa", "kit": 581, "uid": "X" * 20, "canale": 0,
            "inizio": "2026-11-13 21:00:00", "zona": {"riquadri": [[0.6, 0.5, 0.15, 0.15]], "escludi": []},
            "notte": True, "video": [], "catena": False}
-    cfg = {"pc": "*", "ordine_dato": True, "fitti": {"modo": "agitati", "per_minuto": 6},
-           "finestra": {"dalle": "00:00", "alle": "23:59"}, "posti_drive": ["fitti44_1.zip"], "gb_liberi_min": 0.3,
-           "ore": [dict(ora, fitti_modo="tutti"), dict(ora, nome="neg902_kit581")]}
+    # 0.26.0: da fitti_fonte.json, con op=stato letto alla partenza: neg903 gia' fatta, neg904 uscita dal disco
+    fonte = {"pc": "*", "nome": "p2p_ponte44", "parti": 1, "gb_liberi_min": 0.3, "perse": ["neg901_kit581"],
+             "gia_fatte": ["neg903_kit581"], "stato_letto": "2026-11-14T10:00:00Z",
+             "ore": [dict(ora, nome="neg902_kit581"), ora, dict(ora, nome="neg903_kit581"),
+                     dict(ora, nome="neg904_kit581", canale=1)]}
+    adesso_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    stato_finto = {"ora": adesso_iso, "archivio": [{"uid": "X" * 20, "canale": 0, "primo": "2026-11-01 00:00", "letto_il": adesso_iso},
+                                                   {"uid": "X" * 20, "canale": 1, "primo": "2026-11-14 00:00", "letto_il": adesso_iso}]}
     vecchie = {k: os.environ.get(k) for k in ("HOME", "PROVA_QUI", "PYTHONPATH")}
     os.environ.update(HOME=casa, PROVA_QUI=base, PYTHONPATH=os.pathsep.join([os.path.abspath(SCRIPTS), base]))
     vecchio_argv, vecchio_path = sys.argv, list(sys.path)
@@ -223,7 +261,8 @@ def ponte_finto_fitti():
         g["time"] = ps["_Tempo"]()
         g["compito_nuovo_su_drive"] = lambda: False
         g["subprocess"] = ps["_Sottoprocessi"]()
-        g["lavoro_scorta"](cfg, "fitti")
+        g["leggi_stato"] = lambda: stato_finto
+        g["lavoro_fitti_fresco"](fonte)
     finally:
         sys.argv, sys.path[:] = vecchio_argv, vecchio_path
         for k, v in vecchie.items():
@@ -239,6 +278,9 @@ if shutil.which("ffmpeg") and os.path.exists(os.path.join(QUI, "prova_scorta.py"
     base, casa, comp = ponte_finto_fitti()
     try:
         U = os.path.join(comp, "uscita")
+        sce = json.load(open(os.path.join(U, "fitti_scelte.json")))
+        ok([o["nome"] for o in sce["ore"]] == ["neg901_kit581", "neg902_kit581"] and sce["rifatto_con"].startswith("op=stato")
+           and sce["candidate"] == 3 and sce["ore"][0]["persa"], f"ponte: l'elenco rifatto alla partenza ({sce['ore']})")
         out = json.load(open(os.path.join(U, "fitti.json")))
         es = {x["nome"]: x for x in out["ore"]}
         ok(list(es) == ["neg901_kit581", "neg902_kit581"] and all(x["esito"] == "fatto" for x in es.values()),

@@ -53,6 +53,44 @@ quello che serve per continuare senza la conversazione di prima.
 - Neon: le variabili ALMA_* del progetto sono «sensitive».
 
 ## Da fare
+- Compito p2p_ponte45 (ponte 0.26.0, coda_allunga 0.4.0, prepara_fitti 0.2.0; PRONTO E NON CARICATO: lo carica Dario il
+  22/11; zip in `compito_p2p_ponte45/compito.zip` dello scratchpad, 2,8 MB, con FocusNetSDK, focus_nvr.py, elenco_kit.py e
+  focus_accesso.txt del 43): il ponte che prende il posto del 43 sul COMPUTERONE, che finisce il 22/11 verso le 23:30.
+  - **Come si carica.** Cartella Drive «Analisi video», al posto di `compito_2.zip` (oggi c'è il 44 del 2026-002, già
+    preso e finito), con le proprietà `compito=p2p_ponte45`, `pc=COMPUTERONE`, `tipo=leggero`, `sospendi_altri=0`
+    (`python3 analisi/posto_compito.py --chiave <copia della chiave> --compito p2p_ponte45 --pc COMPUTERONE --zip
+    <scratchpad>/compito_p2p_ponte45/compito.zip --tipo leggero --carica` di kit-rifiuti-programma: prima senza
+    `--carica`, deve dire compito_2.zip; se dice compito_3.zip non caricare, perché il 43 non si chiuderebbe e sul
+    COMPUTERONE girerebbero due ponti con la libreria Focus). Si può caricare anche prima delle 23:30:
+    il 43 sta nello stesso posto, vede un compito nuovo per il suo PC e si chiude entro 10 minuti lasciando il posto
+    (meglio così: nessuna ora senza ponte). Mai in `compito.zip` (lì vanno i compiti pesanti). Segnaposto da creare
+    prima (li crea Dario): `risultato_p2p_ponte45.zip` e `fitti45_1.zip` ... `fitti45_4.zip`. Vive 72 ore
+    (`ponte.json`): il prossimo, p2p_ponte46, va pronto per il 25/11 sera.
+  - Stesso lavoro del 43: giro dei registratori del sito, archivi (stato), UVMS e ANAGRAFICA KIT, peso del giro,
+    guardiano.
+  - **Allungamenti subito.** In `fatti_pc1.txt` del COMPUTERONE (20/11 sera) ci sono 20 «allungati»: 9 arrivati (3
+    telecamere da 261-428 s), 11 «non più sul registratore». Il 43 guardava op=allungare una volta all'ora, mai mentre
+    girava un lavoro una volta sola, e fra un ponte e l'altro nessuno; quanto abbia pesato il ritardo non si sa (non si
+    segnava quando la richiesta era stata fatta, e alcune clip erano di settembre: perse comunque). Ora: ogni 2 minuti
+    un'occhiata (`occhiata_allunga`: una GET a op=allungare, niente scritto se non c'è niente; 720 GET al giorno) e, se
+    c'è una richiesta di Dario non ancora fatta (`coda_allunga.nuove`), il giro della coda parte in quel momento. I fitti
+    cedono la libreria: la coda parte anche mentre girano (`lavori_che_tengono`, `CEDONO`) e fra un'ora e l'altra dei
+    fitti l'allungamento passa avanti (`ALLUNGA_PRIMA`); una prova del giro in corso finisce prima (un minuto al massimo).
+    Nel registro della coda e in `uscita/allunga_coda_stato.json` i minuti fra la richiesta e la partenza (`attesa_min`,
+    da `chiesta_il` del sito), così dal 45 il ritardo si misura. Il giro di ogni ora resta (riprova i falliti).
+  - **Fitti con l'elenco che non invecchia.** Il 44 (2026-002, 20/11 12:48-14:24) ha messo su Drive 60 ore delle 115 di
+    fitti.json (letto dagli indici degli zip `fitti44_1..4.zip`, in `gia_fatte`); le altre 55 vanno in
+    `fitti_fonte.json` (`python3 -I prepara_fitti.py --fonte <fitti.json del 44> <ore_fatte.json> fitti_fonte.json --pc
+    COMPUTERONE --nome p2p_ponte45`). Quando il ponte parte, e a ogni rilancio del guardiano, `lavoro_fitti_fresco` legge
+    op=stato in quel momento e rifà l'elenco (`prepara_fitti.cfg_da_fonte`): margine = inizio dell'ora meno «primo» del
+    canale meno il tempo passato da `letto_il` (il disco gira di un giorno al giorno); entrano solo le ore ancora sul
+    disco, dalla più vicina a uscire, le ore già finite non si rifanno. Se op=stato non risponde, i margini della fonte
+    meno i giorni passati. L'elenco in `uscita/fitti_scelte.json`, il resto come il 44 (`uscita/fitti.json`,
+    `uscita/fitti/<ora>/ora.json`, segno `fitti_fatto.txt`). Con lo stato del 20/11 10:28 restavano 50 ore (~330 MB dal
+    registratore, ~150 MB su Drive); il 22/11 sera saranno meno (6 hanno meno di 2 giorni di margine).
+  - Prove: `prova_coda_allunga.py` 0.4.0 (nuove, minuti_da, l'attesa, l'occhiata e il giro che parte da lei col ponte
+    vero, i lavori che cedono e quelli che no) e `prova_fitti.py` 0.2.0 (l'elenco rifatto con op=stato e senza, il ponte
+    vero da `fitti_fonte.json` col registratore finto).
 - Compito p2p_ponte44 (ponte 0.25.0, PRONTO E NON MANDATO: l'uscita la decide Dario; zip in `compito_p2p_ponte44/compito.zip`
   dello scratchpad, 2,8 MB, con FocusNetSDK e focus_accesso.txt del 43): i fotogrammi in più dei minuti agitati per
   Kit_Rifiuti (kit-rifiuti-programma `analisi/piu-fotogrammi-criterio-2026-11-20.md` e `piu-fotogrammi-2026-11-20.md`).

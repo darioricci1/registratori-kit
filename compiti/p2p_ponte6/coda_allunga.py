@@ -9,6 +9,12 @@ sceglie qui cosa fare (da_fare), allunga con allunga.py in ~/kr_lavori/allunga/c
 ~/kr_lavori/allunga/coda/registro.json (segna). Kit_Rifiuti guarda quelle cartelle e il registro: monta l'evento
 «<id>-al», o chiude la richiesta quando il ponte rinuncia.
 
+0.4.0 (20/11/2026): subito, appena Dario chiede (compito p2p_ponte45, ponte 0.26.0). Dei 20 allungamenti arrivati a
+Kit_Rifiuti sul COMPUTERONE fino al 20/11, 11 dicono «non piu' sul registratore». Il ponte guardava op=allungare solo
+ogni ora, mai mentre girava un lavoro una volta sola, e fra un ponte e l'altro nessuno: quanto abbia pesato il ritardo
+non si sa, perche' non si segnava quando la richiesta era stata fatta (alcune clip erano di settembre, perse comunque).
+Ora il ponte da' un'occhiata alla lista ogni 2 minuti (nuove: c'e' qualcosa da fare adesso?) e parte subito; il
+registro ricorda da quanti minuti era stata chiesta ogni richiesta quando e' partita (minuti_da, «attesa_min»).
 0.3.0 (16/11/2026): si allunga solo quello che chiede Dario (16/11 mattina: «facciamo che allunghi solo quelle che ti
 chiedo di allungare»; «sono semplicemente delle dubbie, che io se ritengo posso anche chiedere di allungare»). La lista
 non e' piu' la coda automatica di Kit_Rifiuti (coda.json, che dalla 0.99.10 resta vuota e qui non si legge: le 460 del
@@ -31,12 +37,14 @@ Regole (provate in prova_coda_allunga.py):
   - per giro al massimo PER_GIRO eventi e per kit al massimo PER_KIT_AL_GIORNO al giorno (la banda delle SIM dei kit:
     nessun tetto fisso deciso da Dario, ma i MB si scrivono); le urgenti fuori dal tetto per kit;
   - l'ordine: prima le urgenti per scadenza, poi la coda com'e' (Kit_Rifiuti la scrive gia' in ordine d'urgenza).
-version: 0.3.0 (16/11/2026); la lista dal sito (dal_sito, fatti_per_sito)
+version: 0.4.0 (20/11/2026); nuove, minuti_da, l'attesa nel registro e nel riassunto
+0.3.0 (16/11/2026): la lista dal sito (dal_sito, fatti_per_sito)
 0.2.0: diagnosi per i risultati gia' sul disco che Kit_Rifiuti non ha montato
 """
 import datetime
+import time
 
-VERSIONE = "0.3.0"
+VERSIONE = "0.4.0"
 TENTATIVI_MAX = 3
 RIPROVA_S = 3600
 PER_GIRO = 6
@@ -144,13 +152,34 @@ def da_fare(coda, registro, adesso, oggi=None, per_giro=PER_GIRO, per_kit=PER_KI
     return out
 
 
+def nuove(lista, registro, adesso, oggi=None):
+    """0.4.0: per l'occhiata di ogni 2 minuti: gli eventi della lista che un giro farebbe adesso (da_fare senza il
+    tetto per giro), cioe' chiesti e non ancora finiti, rinunciati, scaduti o in attesa di riprovare. Funzione pura."""
+    return [r["evento"] for r in da_fare(lista, registro, adesso, oggi, per_giro=10 ** 6)]
+
+
+def minuti_da(quando, adesso):
+    """0.4.0: i minuti passati da `quando` (chiesta_il del sito: «2026-11-20T10:12:33.123Z», o «2026-11-20 11:12:33»
+    ora italiana senza fuso) ad `adesso` (epoch); None se non si legge. Funzione pura."""
+    s = str(quando or "").strip()
+    if not s:
+        return None
+    try:
+        t = datetime.datetime.fromisoformat(s.replace("Z", "+00:00").replace(" ", "T", 1))
+    except ValueError:
+        return None
+    t = t.timestamp() if t.tzinfo else time.mktime(t.timetuple())
+    return round(max(0.0, adesso - t) / 60, 1)
+
+
 def per_ponte(r):
     """La richiesta come voce di allunga.json, senza i nomi delle cartelle delle operatrici. Funzione pura."""
     return {k: v for k, v in r.items() if k not in DA_TOGLIERE}
 
 
-def segna(registro, x, adesso, oggi=None, tentativi_max=TENTATIVI_MAX, urgente=False):
-    """Ricorda l'esito di un evento (x: la voce di uscita di allunga.lavoro). Ritorna lo stato nuovo. Funzione pura
+def segna(registro, x, adesso, oggi=None, tentativi_max=TENTATIVI_MAX, urgente=False, attesa_min=None):
+    """Ricorda l'esito di un evento (x: la voce di uscita di allunga.lavoro). Ritorna lo stato nuovo. 0.4.0: attesa_min
+    (da quanti minuti era chiesta quando e' partita la prima volta) resta quella del primo tentativo. Funzione pura
     (cambia `registro`)."""
     ev = x.get("evento")
     prima = registro.get(ev) or {}
@@ -165,6 +194,9 @@ def segna(registro, x, adesso, oggi=None, tentativi_max=TENTATIVI_MAX, urgente=F
     registro[ev] = {"stato": stato, "tentativi": tentativi, "ultimo": adesso, "esito": es[:160], "kit": x.get("kit"),
                     "giorno_lavoro": (oggi or datetime.date.fromtimestamp(adesso)).isoformat(),
                     "mb": (x.get("conti") or {}).get("mb"), **({"urgente": True} if urgente or prima.get("urgente") else {})}
+    att = prima.get("attesa_min", attesa_min)
+    if att is not None:
+        registro[ev]["attesa_min"] = att
     return stato
 
 
@@ -177,7 +209,10 @@ def riassunto(registro, lista, oggi):
     aperte = [r for r in lista or [] if ((registro or {}).get(r.get("evento")) or {}).get("stato") not in ("finito", "rinunciato")
               and not ((_giorno(r.get("scade_il")) or oggi) < oggi)]
     urg = [r for r in lista or [] if r.get("urgente")]
+    att = sorted(float(x["attesa_min"]) for x in (registro or {}).values() if x.get("attesa_min") is not None)
     return {"stati": stati, "aperte": len(aperte), "in_lista": len(lista or []),
+            "attesa_min": {"quanti": len(att), "mediana": att[len(att) // 2] if att else None,
+                           "massima": att[-1] if att else None},
             "urgenti": [{"evento": r["evento"], "kit": r.get("kit"), "scade_il": r.get("scade_il"),
                          "stato": ((registro or {}).get(r["evento"]) or {}).get("stato", "da fare"),
                          "esito": ((registro or {}).get(r["evento"]) or {}).get("esito", "")[:80]} for r in urg]}
